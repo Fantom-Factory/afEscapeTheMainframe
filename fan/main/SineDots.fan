@@ -27,18 +27,25 @@ class SineDots {
 				xx := x - imgW / 2
 				yy := y - imgH / 2
 				dot := (scope.build(Dot#) as Dot) {
-					it.x = (xx*3) - yy	// forced perspective
-					it.x = (xx*3)
-					it.y = yy*3
+					it.x  = (xx*3) - yy	// forced perspective
+					it.y  = (yy*3) - xx
+					it.v  = 30
 					it.ax = ((xx*3) - (yy * 2f)).toInt
 					it.ay = ((xx*3) - (yy * 2f)).toInt
+					it.av = 90
+					it.sx = 7
+					it.sy = 7
+					it.sv = 0
 					
-//					it.ax = ((xx*7) - (yy * 0f)).toInt
-//					it.ay = ((xx*7) - (yy * 0f)).toInt
-//					it.ay = ((xx*1) - (yy * 6f)).toInt
-					
-					it.sx = 10
-					it.sy = 10
+					it.x  = (xx*3) - yy
+					it.y  = (yy*3) - xx
+					it.v  = 30
+					it.ax = ((xx*7) - (yy * 0f)).toInt + 90
+					it.ay = ((xx*0) - (yy * 7f)).toInt + 90
+					it.av = 0
+					it.sx = 0
+					it.sy = 0
+					it.sv = 5
 					
 					it.col = pix
 				}
@@ -74,10 +81,13 @@ class Dot {
 	
 	Int x
 	Int y
+	Int v
 	Int ax
 	Int ay
+	Int av
 	Int sx
 	Int sy
+	Int sv
 	Color?	col
 	
 	new make(|This| in) { in(this) }
@@ -89,12 +99,16 @@ class Dot {
 		ay -= sy
 		if (ay <   0) ay += 360
 		if (ay > 360) ay -= 360
+		av -= sv
+		if (av <   0) av += 360
+		if (av > 360) av -= 360
 		return this
 	}
 	
 	This draw(Gfx g) {
-		xx := x + sin.sin(30, ax)
-		yy := y + sin.sin(30, ay)
+		vv := sin.sin(v, av)
+		xx := x + sin.sin(vv, ax)
+		yy := y + sin.sin(vv, ay)
 		g.brush = col
 //		g.drawPoint(xx + (g.bounds.w/2), yy+(g.bounds.h/2))
 		g.drawRect(xx + (g.bounds.w/2), yy+(g.bounds.h/2), 1, 1)
