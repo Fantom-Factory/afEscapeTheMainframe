@@ -25,7 +25,7 @@ class Screen : Canvas {
 	
 	override Void onPaint(Graphics graphics) {
 		g := Gfx(graphics)
-		g.clear
+//		g.clear
 		eventHub.fireEvent(DemoEvents#draw, [g])
 	}	
 }
