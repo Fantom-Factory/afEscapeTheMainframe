@@ -43,9 +43,11 @@ class Demdow : DemoEvents {
 		registry.shutdown
 	}
 	
-	@Inject	private SineDots sineDots
+	@Autobuild	private Jump		jump
+	@Inject	private SineDots	sineDots
 
 	override Void draw(Gfx g) {
-		sineDots.draw(g)
+//		sineDots.draw(g)
+		jump.draw(g)
 	}
 }

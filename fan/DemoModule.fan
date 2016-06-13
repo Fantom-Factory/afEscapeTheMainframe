@@ -6,6 +6,7 @@ const class DemoModule {
 		bob.addScope("thread", true)
 		
 		bob.addService(Sin#)
+		bob.addService(SinOld#)
 		bob.addService(Screen#)
 		
 		bob.addService(SineDots#)

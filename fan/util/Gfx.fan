@@ -23,6 +23,12 @@ class Gfx {
 		ox += x
 		oy += y
 	}
+
+	This offsetCentre() {
+		ox = (bounds.w / 2) + bounds.x 
+		oy = (bounds.h / 2) + bounds.y
+		return this
+	}
 	
 	Brush brush {
 		get { g.brush }
@@ -50,6 +56,11 @@ class Gfx {
 	
 	This drawRect(Int x, Int y, Int w, Int h) {
 		g.drawRect(ox+x, oy+y, w, h)
+		return this
+	}
+	
+	This drawLine(Int x1, Int y1, Int x2, Int y2) {
+		g.drawLine(ox+x1, oy+y1, ox+x2, oy+y2)
 		return this
 	}
 	

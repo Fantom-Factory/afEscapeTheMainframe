@@ -24,28 +24,29 @@ class SineDots {
 		imgW.times |x| {
 			imgH.times |y| {
 				pix := Color("#" + imgBuffer.getRGB(x, y).and(0xffff_ffff).toHex(8))
+//				pix = Color.white
 				xx := x - imgW / 2
 				yy := y - imgH / 2
 				dot := (scope.build(Dot#) as Dot) {
 					it.x  = (xx*3) - yy	// forced perspective
 					it.y  = (yy*3) - xx
 					it.v  = 30
-					it.ax = ((xx*3) - (yy * 2f)).toInt
+					it.ax = ((xx*9) - (yy * 2f)).toInt
 					it.ay = ((xx*3) - (yy * 2f)).toInt
 					it.av = 90
 					it.sx = 7
 					it.sy = 7
 					it.sv = 0
 					
-					it.x  = (xx*3) - yy
-					it.y  = (yy*3) - xx
-					it.v  = 30
-					it.ax = ((xx*7) - (yy * 0f)).toInt + 90
-					it.ay = ((xx*0) - (yy * 7f)).toInt + 90
-					it.av = 0
-					it.sx = 0
-					it.sy = 0
-					it.sv = 5
+//					it.x  = (xx*3) - yy
+//					it.y  = (yy*3) - xx
+//					it.v  = 30
+//					it.ax = ((xx*7) - (yy * 0f)).toInt + 90
+//					it.ay = ((xx*0) - (yy * 7f)).toInt + 90
+//					it.av = 0
+//					it.sx = 0
+//					it.sy = 0
+//					it.sv = 7
 					
 					it.col = pix
 				}
@@ -77,7 +78,7 @@ class SineDots {
 }
 
 class Dot {
-	@Inject private Sin sin
+	@Inject private SinOld sin
 	
 	Int x
 	Int y
