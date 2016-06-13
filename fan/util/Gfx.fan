@@ -101,15 +101,11 @@ class Gfx {
 		return this
 	}
 	
-	Void clear() {
-		fill(Color.black)
-	}
-
-	Void fill(Color colour) {
-		brush = colour
+	Void clear(Color c := Color.black) {
+		brush = c
 		fillRect(0, 0, g.clipBounds.w, g.clipBounds.h)
 	}
-	
+
 	private Void drawFont(Str text, Int initX, Int initY, Image font, Int fontSize) {
 		x := initX
 		y := initY

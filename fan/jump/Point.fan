@@ -32,9 +32,9 @@ const class Point3d {
 		Point3d(x + dx, y + dy, z + dz)
 	}
 
-//	Point3d scale(Float s) {
-//		Point3d(x * s, y * s, z * s)
-//	}
+	Point3d scale(Float sx, Float sy := sx, Float sz := sx) {
+		Point3d(x * sx, y * sy, z * sz)
+	}
 
 	Point2d applyPerspective(Float mul, Float add) {
 		Point2d(x * mul / (z + add), y * mul / (z + add))

@@ -8,8 +8,10 @@ class Main {
 		demdow := Demdow()
 		Window {
 			win  := it
-			it.size = Size(640, 480)
-			it.size = Size(320, 240)
+			// https://pacoup.com/2011/06/12/list-of-true-169-resolutions/
+			it.size = Size(512, 288)
+			it.size = Size(400, 288)
+//			it.size = Size(640, 360)
 			it.title = "Demo"
 //			it.icon = Image(`fan://afFish/res/console.png`)
 			it.add(demdow.widget)
