@@ -30,20 +30,20 @@ class Gfx3d {
 		this.dy			= targetPos.y - cameraPos.y
 		this.dz			= targetPos.z - cameraPos.z
 		
-		this.ax			= (dy / dz).atan / (Float.pi / 2)
-		this.ay			= (dx / dz).atan / (Float.pi / 2)
-		this.az			= (dy / dx).atan / (Float.pi / 2)
-		
+		this.ax			= (dy / dz).atan * (0.5f / Float.pi)
+		this.ay			= (dx / dz).atan * (0.5f / Float.pi)
+		this.az			= (dy / dx).atan * (0.5f / Float.pi)
+
 		return this
 	}
 
 	Void drawModel(Model model) {
 		
 		points := (Point2d[]) model.points.map {
-			it	.rotate(model.ax+ax, model.ay+ay, model.az+az)
-				.translate(model.x+dx, model.y+dy, model.z+dz)
-//				.rotate(ax, ay, az)
-//				.translate(dx, dy, dz)
+			it	.rotate(model.ax, model.ay, model.az)
+				.translate(model.x, model.y, model.z)
+				.rotate(ax, ay, az)
+				.translate(-cameraPos.x, -cameraPos.y, -cameraPos.z)
 				.applyPerspective(300f)
 				.scale(0.5f)
 		}
@@ -55,7 +55,7 @@ class Gfx3d {
 				
 				if (li != -1) {
 					p1 := points[li]
-					gfx.drawLine(p1.x.toInt, p1.y.toInt, p2.x.toInt, p2.y.toInt)
+					gfx.drawLine(p1.x.toInt, -p1.y.toInt, p2.x.toInt, -p2.y.toInt)
 				}
 				
 				li = i
