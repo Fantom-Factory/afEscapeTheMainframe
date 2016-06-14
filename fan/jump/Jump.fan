@@ -26,7 +26,8 @@ class Jump {
 	Void draw(Gfx g) {
 		g.clear(Color(0xFF_00_00_33))
 		
-		g3d := Gfx3d(g.offsetCentre).lookAt(camera, Point3d(camera.x, 0f, 0f))
+//		g3d := Gfx3d(g.offsetCentre).lookAt(camera, Point3d(camera.x, 0f, 0f))
+		g3d := Gfx3d(g.offsetCentre).lookAt(camera)
 
 		grid.dup.translate(-x.toFloat, 0f, 0f).scale(5f, 1.0f, 1.0f).draw(g3d)
 
@@ -42,12 +43,12 @@ class Jump {
 //		if (x > 20)
 //			x -= 20
 
-		camera = camera.translate(1f, 1f, 0f)
+		camera = camera.translate(0f, 1f, 0f)
 		spin++
 	}
 	
 	Float x
 	Float spin
 	
-	Point3d camera	:= Point3d(0f, 0f, -400f) 
+	Point3d camera	:= Point3d(0f, 0f, -500f) 
 }
