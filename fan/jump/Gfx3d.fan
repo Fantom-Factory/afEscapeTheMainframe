@@ -27,8 +27,8 @@ class Gfx3d {
 		dy	:= targetPos.y - cameraPos.y
 		dz	:= targetPos.z - cameraPos.z
 		
-		this.ax	= (dy / dz).atan * (0.5f / Float.pi)
-		this.ay	= (dx / dz).atan * (0.5f / Float.pi)
+		this.ax	= -(dy / dz).atan * (0.5f / Float.pi)
+		this.ay	= -(dx / dz).atan * (0.5f / Float.pi)
 		this.az	= 0f
 
 		this.ax += cameraAngles.x
