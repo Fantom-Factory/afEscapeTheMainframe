@@ -1,7 +1,7 @@
 
 const class Sin {
-	private static const Int		min		:=      0
-	private static const Int		max		:= 10_000
+	private static const Int		min		:=    0
+	private static const Int		max		:= 1000
 	private static const Float[]	sinTable 
 	private static const Float[]	cosTable
 	

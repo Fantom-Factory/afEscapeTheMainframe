@@ -6,9 +6,6 @@ class Gfx3d {
 
 	private Point3d	cameraPos	:= Point3d(0f, 0f, -1f)
 	private Point3d	targetPos	:= Point3d(0f, 0f,  0f)
-	private	Float	dx
-	private	Float	dy
-	private	Float	dz
 	private	Float	ax
 	private	Float	ay
 	private	Float	az
@@ -22,28 +19,31 @@ class Gfx3d {
 		set { gfx.brush = it }
 	}
 
-	This lookAt(Point3d cameraPos, Point3d targetPos, Obj? upVector_todo := null) {
+	This lookAt(Point3d cameraPos, Point3d targetPos, Point3d cameraAngles := Point3d.defVal) {
 		this.cameraPos	= cameraPos
 		this.targetPos	= targetPos
 
-		this.dx			= targetPos.x - cameraPos.x
-		this.dy			= targetPos.y - cameraPos.y
-		this.dz			= targetPos.z - cameraPos.z
+		dx	:= targetPos.x - cameraPos.x
+		dy	:= targetPos.y - cameraPos.y
+		dz	:= targetPos.z - cameraPos.z
 		
-		this.ax			= (dy / dz).atan * (0.5f / Float.pi)
-		this.ay			= (dx / dz).atan * (0.5f / Float.pi)
-		this.az			= (dy / dx).atan * (0.5f / Float.pi)
+		this.ax	= (dy / dz).atan * (0.5f / Float.pi)
+		this.ay	= (dx / dz).atan * (0.5f / Float.pi)
+		this.az	= 0f
 
+		this.ax += cameraAngles.x
+		this.ay += cameraAngles.y
+		this.az += cameraAngles.z
+		
 		return this
 	}
 
-	Void drawModel(Model model) {
-		
+	Void drawModel(Model model) {		
 		points := (Point2d[]) model.points.map {
 			it	.rotate(model.ax, model.ay, model.az)
 				.translate(model.x, model.y, model.z)
-				.rotate(ax, ay, az)
 				.translate(-cameraPos.x, -cameraPos.y, -cameraPos.z)
+				.rotate(this.ax, this.ay, this.az)
 				.applyPerspective(300f)
 				.scale(0.5f)
 		}
