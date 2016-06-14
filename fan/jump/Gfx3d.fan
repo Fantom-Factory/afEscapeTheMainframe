@@ -19,7 +19,7 @@ class Gfx3d {
 		set { gfx.brush = it }
 	}
 
-	This lookAt(Point3d cameraPos, Point3d targetPos, Point3d cameraAngles := Point3d.defVal) {
+	This lookAt(Point3d cameraPos, Point3d targetPos := Point3d.defVal, Point3d cameraAngles := Point3d.defVal) {
 		this.cameraPos	= cameraPos
 		this.targetPos	= targetPos
 
@@ -42,10 +42,9 @@ class Gfx3d {
 		points := (Point2d[]) model.points.map {
 			it	.rotate(model.ax, model.ay, model.az)
 				.translate(model.x, model.y, model.z)
-				.translate(-cameraPos.x, -cameraPos.y, -cameraPos.z)
+				.translate(cameraPos.x, cameraPos.y, cameraPos.z)
 				.rotate(this.ax, this.ay, this.az)
 				.applyPerspective(300f)
-				.scale(0.5f)
 		}
 		
 		model.lines.each |lines| {
@@ -55,7 +54,7 @@ class Gfx3d {
 				
 				if (li != -1) {
 					p1 := points[li]
-					gfx.drawLine(p1.x.toInt, -p1.y.toInt, p2.x.toInt, -p2.y.toInt)
+					gfx.drawLine(p1.x.toInt, p1.y.toInt, p2.x.toInt, p2.y.toInt)
 				}
 				
 				li = i
