@@ -10,7 +10,6 @@ class Main {
 			win  := it
 			// https://pacoup.com/2011/06/12/list-of-true-169-resolutions/
 			it.size = Size(512, 288)
-			it.size = Size(400, 288)
 //			it.size = Size(640, 360)
 			it.title = "Demo"
 //			it.icon = Image(`fan://afFish/res/console.png`)
