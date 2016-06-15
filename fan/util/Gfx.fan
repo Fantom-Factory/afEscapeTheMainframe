@@ -17,6 +17,7 @@ class Gfx {
 	new make(Graphics g, |This|? f := null) {
 		f?.call(this)
 		this.g = g
+		g.antialias = true
 	}
 	
 	Void offset(Int x, Int y) {
@@ -55,30 +56,41 @@ class Gfx {
 	}
 	
 	This drawRect(Int x, Int y, Int w, Int h) {
-		g.drawRect(ox+x, oy+y, w, h)
-		return this
-	}
-	
-	This drawLine(Int x1, Int y1, Int x2, Int y2) {
-		g.drawLine(ox+x1, oy+y1, ox+x2, oy+y2)
+		g.drawRect(x + ox, y + oy, w, h)
 		return this
 	}
 	
 	This fillRect(Int x, Int y, Int w, Int h) {
 		g.fillRect(ox+x, oy+y, w, h)
-		return this		
-	}
-	
-	This drawPoint(Int x, Int y) {
-		g.drawLine(ox+x, oy+y, ox+x, oy+y)
-		return this		
-	}
-	
-	This fillRoundRect(Int x, Int y, Int w, Int h, Int wArc, Int hArc) {
-		g.fillRoundRect(ox+x, oy+y, w, h, wArc, hArc)
 		return this
 	}
 
+	This fillRoundRect(Int x, Int y, Int w, Int h, Int wArc, Int hArc) {
+		g.fillRoundRect(x + ox, y + oy, w, h, wArc, hArc)
+		return this
+	}
+
+	This drawLine(Int x1, Int y1, Int x2, Int y2) {
+		g.drawLine(x1 + ox, y1 + oy, x2 + ox, y2 + oy)
+		return this
+	}
+	
+	This drawPolyline(Point2d[] points) {
+		g.drawPolyline(points.map |pt| { Point(pt.x.toInt + ox, pt.y.toInt + oy) })
+		return this
+	}
+	
+	This drawPolygon(Point2d[] points) {
+		g.drawPolygon(points.map |pt| { Point(pt.x.toInt + ox, pt.y.toInt + oy) })
+		return this
+	}
+	
+	This drawPoint(Int x, Int y) {
+		// FIXME add drawPoint() to FWT
+		g.drawLine(x + ox, y + oy, x + ox, y + oy)
+		return this		
+	}
+	
 	This drawFont8Centred(Str text, Int y) {
 		x := (g.clipBounds.w - (text.size * 8)) / 2
 		drawFont8(text, x, y)

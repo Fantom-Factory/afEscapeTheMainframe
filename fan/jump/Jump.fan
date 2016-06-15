@@ -18,7 +18,6 @@ class Jump {
 		grid	= Models.grid {
 			it.rotate(0.25f, 0f, 0f)
 			it.translate(-10f, -150f, 0f)
-			it.colour = Color(0xFF_33_66_FF)
 		}
 		fanny	= Image(`fan://afDemo/res/Fanny-x80.png`)
 	}
