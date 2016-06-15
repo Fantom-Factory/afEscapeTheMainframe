@@ -80,8 +80,8 @@ class Gfx {
 		return this
 	}
 	
-	This drawPolygon(Point2d[] points) {
-		g.drawPolygon(points.map |pt| { Point(pt.x.toInt + ox, pt.y.toInt + oy) })
+	This fillPolygon(Point2d[] points) {
+		g.fillPolygon(points.map |pt| { Point(pt.x.toInt + ox, pt.y.toInt + oy) })
 		return this
 	}
 	

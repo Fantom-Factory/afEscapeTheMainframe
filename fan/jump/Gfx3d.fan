@@ -39,15 +39,20 @@ class Gfx3d {
 	}
 
 	Void drawModel(Model model) {		
-		points := (Point2d[]) model.points.map {
+		pts3d := (Point3d[]) model.points.map {
 			it	.rotate(model.ax, model.ay, model.az)
 				.translate(model.x, model.y, model.z)
 				.translate(cameraPos.x, cameraPos.y, cameraPos.z)
 				.rotate(this.ax, this.ay, this.az)
-				.applyPerspective(300f)
+				.project(300f)
 		}
+
+		pts2d := pts3d.map { Point2d(it.x, it.y) }
+//		pts2d := (Point2d[]) pts3d.map {
+//			it	.applyPerspective(300f)
+//		}
 		
-		model.drawables.each { it.draw(this, points) }
+		model.drawables.each { it.draw(this, pts2d, pts3d) }
 	}
 	
 	This drawPolyline(Point2d[] points) {
@@ -55,9 +60,8 @@ class Gfx3d {
 		return this
 	}
 	
-	This drawPolygon(Point2d[] points) {
-		gfx.drawPolygon(points)
+	This fillPolygon(Point2d[] points) {
+		gfx.fillPolygon(points)
 		return this
 	}
-
 }
