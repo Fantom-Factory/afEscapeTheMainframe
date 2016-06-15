@@ -47,18 +47,17 @@ class Gfx3d {
 				.applyPerspective(300f)
 		}
 		
-		model.lines.each |lines| {
-			li := -1
-			lines.each |i| {
-				p2 := points[i]
-				
-				if (li != -1) {
-					p1 := points[li]
-					gfx.drawLine(p1.x.toInt, p1.y.toInt, p2.x.toInt, p2.y.toInt)
-				}
-				
-				li = i
-			}
-		}
+		model.drawables.each { it.draw(this, points) }
 	}
+	
+	This drawPolyline(Point2d[] points) {
+		gfx.drawPolyline(points)
+		return this
+	}
+	
+	This drawPolygon(Point2d[] points) {
+		gfx.drawPolygon(points)
+		return this
+	}
+
 }

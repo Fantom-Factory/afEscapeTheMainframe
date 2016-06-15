@@ -1,9 +1,10 @@
 using gfx::Color
+using gfx::Brush
 
 class Model {
-		Point3d[]	points
-	const Int[][]	lines
-			Color	colour	:= Color.white
+			Point3d[]	points
+	const	Drawable[]	drawables
+			Color		colour	:= Color.white
 	
 			Float	x
 			Float	y
@@ -33,7 +34,7 @@ class Model {
 	Model dup() {
 		Model {
 			it.points	= this.points.dup
-			it.lines	= this.lines
+			it.drawables= this.drawables
 			it.colour	= this.colour
 			it.ax		= this.ax
 			it.ay		= this.ay
@@ -41,8 +42,46 @@ class Model {
 		}
 	}
 	
-	Void draw(Gfx3d gfx) {
-		gfx.brush = colour
-		gfx.drawModel(this)
+	Void draw(Gfx3d g3d) {
+		g3d.brush = colour
+		g3d.drawModel(this)
+	}
+}
+
+const mixin Drawable {
+	abstract Void draw(Gfx3d g3d, Point2d[] pts2d)
+}
+
+const class Line : Drawable {
+	const	Int[]	points
+	const	Brush?	colour
+	
+	new makeItBlock(|This| in) { in(this) }
+	
+	new makeWithPoints(Int[] points) {
+		this.points = points
+	}
+	
+	override Void draw(Gfx3d g3d, Point2d[] pts2d) {
+		if (colour != null)
+			g3d.brush = colour
+		
+		pts := points.map { pts2d[it] }
+		g3d.drawPolyline(pts)
+	}
+}
+
+const class Poly : Drawable {
+	const	Int[]	points
+	const	Brush?	fill
+	
+	new make(|This| in) { in(this) }
+
+	override Void draw(Gfx3d g3d, Point2d[] pts2d) {
+		if (fill != null)
+			g3d.brush = fill
+		
+		pts := points.map { pts2d[it] }
+		g3d.drawPolygon(pts)
 	}
 }

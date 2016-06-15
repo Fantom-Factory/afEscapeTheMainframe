@@ -41,6 +41,13 @@ const class Point3d {
 	Point2d applyPerspective(Float mul) {
 		Point2d(x * mul / z, y * mul / z)
 	}
+
+	static Point3d normal(Point3d p1, Point3d p2, Point3d p3) {
+		nx := ((p2.y - p1.y)*(p3.z - p1.z)) - ((p2.z - p1.z)*(p3.y - p1.y))
+		ny := ((p2.z - p1.z)*(p3.x - p1.x)) - ((p2.x - p1.x)*(p3.z - p1.z))
+		nz := ((p2.x - p1.x)*(p3.y - p1.y)) - ((p2.y - p1.y)*(p3.x - p1.x))
+		return Point3d(nx, ny, nz)
+	}
 }
 
 
@@ -61,7 +68,7 @@ const class Point2d {
 		yy := (y * Sin.cos(a)) + (x * Sin.sin(a))
 		return Point2d(xx, yy)
 	}
-	
+
 	Point2d translate(Float dx, Float dy) {
 		Point2d(x + dx, y + dy)
 	}
