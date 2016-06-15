@@ -18,7 +18,15 @@ class Models {
 			]
 			
 			drawables = [
-				Line([0, 1, 2, 3, 0]),
+				Poly([0, 1, 2, 3]).withColour(Color(0xFF_FF_FF_FF)),
+				Poly([7, 6, 5, 4]).withColour(Color(0xFF_88_88_88)),
+//				Poly([4, 5, 6, 7, 4]).withColour(Color(0xFF_AA_AA_AA)),
+//				Poly([0, 4]),
+//				Poly([1, 5]),
+//				Poly([2, 6]),
+//				Poly([3, 7]),
+				
+				Line([0, 1, 2, 3, 0]).withColour(Color(0xFF_FF_00_00)),
 				Line([4, 5, 6, 7, 4]),
 				Line([0, 4]),
 				Line([1, 5]),
@@ -71,7 +79,10 @@ class Models {
 			]
 			
 			drawables = [
-				Line([ 0, 11]),
+				Poly([11, 21, 10, 0]).withColour(Color(0xFF_00_00_33)),
+				
+				
+				Line([ 0, 11]).withColour(Color(0xFF_33_66_FF)),
 				Line([ 1, 12]),
 				Line([ 2, 13]),
 				Line([ 3, 14]),

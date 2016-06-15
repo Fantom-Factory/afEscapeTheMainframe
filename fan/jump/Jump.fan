@@ -23,8 +23,7 @@ class Jump {
 	}
 
 	Void draw(Gfx g) {
-		g.clear(Color(0xFF_00_00_33))
-		
+		echo("---")
 		g3d := Gfx3d(g.offsetCentre).lookAt(camera, Point3d(0f, -25f, 0f))
 
 		grid.dup.translate(-x.toFloat, 0f, 0f).scale(6.0f, 1.0f, 3.5f).draw(g3d)
@@ -33,9 +32,9 @@ class Jump {
 
 		g.drawImage(fanny, -200, 25)
 
-		cube.ax += 1f/100f
+//		cube.ax += 1f/100f
 		cube.ay += 1f/280f
-		cube.az -= 1f/500f
+//		cube.az -= 1f/500f
 
 		x -= 1f
 		if (x < -20f)

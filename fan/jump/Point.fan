@@ -15,7 +15,6 @@ const class Point3d {
 	
 	new makeItBlock(|This| in) { in(this) }
 
-	
 	Point3d rotate(Float ax, Float ay, Float az) {
 		// https://en.wikipedia.org/wiki/Rotation_matrix#In_three_dimensions
 		y2 :=  ( y * Sin.cos(-ax)) -( z * Sin.sin(-ax))
@@ -38,15 +37,23 @@ const class Point3d {
 		Point3d(x * sx, y * sy, z * sz)
 	}
 
-	Point2d applyPerspective(Float mul) {
-		Point2d(x * mul / z, y * mul / z)
+	Point3d project(Float mul) {
+		Point3d(x * mul / z, y * mul / z, z)
 	}
+
+//	Point2d applyPerspective(Float mul) {
+//		Point2d(x * mul / z, y * mul / z)
+//	}
 
 	static Point3d normal(Point3d p1, Point3d p2, Point3d p3) {
 		nx := ((p2.y - p1.y)*(p3.z - p1.z)) - ((p2.z - p1.z)*(p3.y - p1.y))
 		ny := ((p2.z - p1.z)*(p3.x - p1.x)) - ((p2.x - p1.x)*(p3.z - p1.z))
 		nz := ((p2.x - p1.x)*(p3.y - p1.y)) - ((p2.y - p1.y)*(p3.x - p1.x))
 		return Point3d(nx, ny, nz)
+	}
+	
+	override Str toStr() {
+		"(" + x.toLocale("0.00") + "," + y.toLocale("0.00") + "," + z.toLocale("0.00") + ")"
 	}
 }
 
@@ -75,5 +82,8 @@ const class Point2d {
 
 	Point2d scale(Float s) {
 		Point2d(x * s, y * s)
+	}
+	override Str toStr() {
+		"(" + x.toLocale("0.00") + "," + y.toLocale("0.00") + ")"
 	}
 }
