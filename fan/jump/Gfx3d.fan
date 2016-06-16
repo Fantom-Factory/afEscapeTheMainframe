@@ -1,3 +1,4 @@
+using gfx::Color
 using gfx::Point
 using gfx::Brush
 using util
@@ -11,14 +12,13 @@ class Gfx3d {
 	private	Float	ay
 	private	Float	az
 
+			Color?	fill
+			Color?	edge
+
 	new make(Gfx g2d) {
 		this.g2d = g2d
 	}
 
-	Brush brush {
-		get { g2d.brush }
-		set { g2d.brush = it }
-	}
 
 	This lookAt(Point3d cameraPos, Point3d targetPos := Point3d.defVal, Point3d cameraAngles := Point3d.defVal) {
 		this.cameraPos	= cameraPos
@@ -55,17 +55,28 @@ class Gfx3d {
 	This drawPolyline(Point3d[] points) {
 		ox := g2d.ox
 		oy := g2d.oy
+		g2d.g.brush = edge
 		g2d.g.drawPolyline(points.map |pt| { Point(ox + pt.x.toInt, oy - pt.y.toInt) })
 		return this
 	}
 	
-	This fillPolygon(Point3d[] points) {
-		ox := g2d.ox
-		oy := g2d.oy
-		g2d.g.fillPolygon(points.map |pt| { Point(ox + pt.x.toInt, oy - pt.y.toInt) })
+	This drawPolygon(Point3d[] points) {
+		ox	:= g2d.ox
+		oy	:= g2d.oy
+		pts := points.map |pt| { Point(ox + pt.x.toInt, oy - pt.y.toInt) }
+		
+		if (fill != null) {
+			g2d.g.brush = fill
+			g2d.g.fillPolygon(pts)
+		}
+
+		if (edge != null) {
+			g2d.g.brush = edge
+			g2d.g.drawPolygon(pts)
+		}
 		return this
 	}
-	
+
 	This drawFont8(Str text, Point3d pt) {
 		g2d.drawFont(text, g2d.ox+pt.x.toInt, g2d.oy- pt.y.toInt, g2d.font8x8, 8)
 		return this
