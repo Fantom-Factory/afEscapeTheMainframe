@@ -5,6 +5,11 @@ class Model {
 			Point3d[]	points
 	const	Drawable[]	drawables
 			Color		colour	:= Color.white
+			|Model|?	anim
+			|Gfx3d| 	draw := |Gfx3d g3d| {
+				g3d.brush = colour
+				g3d.drawModel(this)				
+			}
 	
 			Float	x
 			Float	y
@@ -39,17 +44,17 @@ class Model {
 			it.ax		= this.ax
 			it.ay		= this.ay
 			it.az		= this.az
+			it.x		= this.x
+			it.y		= this.y
+			it.z		= this.z
+			// anim
+			// draw
 		}
-	}
-	
-	Void draw(Gfx3d g3d) {
-		g3d.brush = colour
-		g3d.drawModel(this)
 	}
 }
 
 const mixin Drawable {
-	abstract Void draw(Gfx3d g3d, Point2d[] pts2d, Point3d[] pts3d)
+	abstract Void draw(Gfx3d g3d, Point3d[] pts3d)
 }
 
 const class Line : Drawable {
@@ -62,11 +67,11 @@ const class Line : Drawable {
 		this.points = points
 	}
 	
-	override Void draw(Gfx3d g3d, Point2d[] pts2d, Point3d[] pts3d) {
+	override Void draw(Gfx3d g3d, Point3d[] pts3d) {
 		if (colour != null)
 			g3d.brush = colour
 		
-		pts := points.map { pts2d[it] }
+		pts := points.map { pts3d[it] }
 		g3d.drawPolyline(pts)
 	}
 	
@@ -88,17 +93,19 @@ const class Poly : Drawable {
 		this.points = points
 	}
 	
-	override Void draw(Gfx3d g3d, Point2d[] pts2d, Point3d[] pts3d) {
+	override Void draw(Gfx3d g3d, Point3d[] pts3d) {
 		if (colour != null)
 			g3d.brush = colour
 		
-		norm := Point3d.normal(pts3d[points[0]], pts3d[points[1]], pts3d[points[2]])
-		
-		echo(norm.z > 0f ? "ON  $norm" : "OFF $norm")
-		if (norm.z > 0f) {
-			pts := points.map { pts2d[it] }
+		if (isHidden(pts3d)) {
+			pts := points.map { pts3d[it] }
 			g3d.fillPolygon(pts)
 		}
+	}
+	
+	Bool isHidden(Point3d[] pts3d) {
+		norm := Point3d.normal(pts3d[points[0]], pts3d[points[1]], pts3d[points[2]])
+		return norm.z <= 0f
 	}
 
 	This withColour(Color colour) {

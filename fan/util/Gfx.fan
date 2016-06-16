@@ -6,13 +6,13 @@ using gfx
 class Gfx {
 	
 //	@Inject 
-	private Image?		font8x8
+	private Image?		font8x8	:= Image(`fan://afDemo/res/XenonFont8x8.png`)
 //	@Inject 
 	private Image?		font16x16
 	
-	private Graphics	g
-	private Int 		ox
-	private Int 		oy
+	Graphics	g
+	Int 		ox
+	Int 		oy
 
 	new make(Graphics g, |This|? f := null) {
 		f?.call(this)

@@ -1,8 +1,9 @@
+using gfx::Point
 using gfx::Brush
 using util
 
 class Gfx3d {
-	Gfx gfx
+	Gfx g2d
 
 	private Point3d	cameraPos	:= Point3d(0f, 0f, -1f)
 	private Point3d	targetPos	:= Point3d(0f, 0f,  0f)
@@ -10,13 +11,13 @@ class Gfx3d {
 	private	Float	ay
 	private	Float	az
 
-	new make(Gfx gfx) {
-		this.gfx = gfx
+	new make(Gfx g2d) {
+		this.g2d = g2d
 	}
 
 	Brush brush {
-		get { gfx.brush }
-		set { gfx.brush = it }
+		get { g2d.brush }
+		set { g2d.brush = it }
 	}
 
 	This lookAt(Point3d cameraPos, Point3d targetPos := Point3d.defVal, Point3d cameraAngles := Point3d.defVal) {
@@ -28,7 +29,7 @@ class Gfx3d {
 		dz	:= targetPos.z - cameraPos.z
 		
 		this.ax	= -(dy / dz).atan * (0.5f / Float.pi)
-		this.ay	= -(dx / dz).atan * (0.5f / Float.pi)
+		this.ay	= (dx / dz).atan * (0.5f / Float.pi)
 		this.az	= 0f
 
 		this.ax += cameraAngles.x
@@ -38,7 +39,7 @@ class Gfx3d {
 		return this
 	}
 
-	Void drawModel(Model model) {		
+	Point3d[] drawModel(Model model) {		
 		pts3d := (Point3d[]) model.points.map {
 			it	.rotate(model.ax, model.ay, model.az)
 				.translate(model.x, model.y, model.z)
@@ -47,21 +48,21 @@ class Gfx3d {
 				.project(300f)
 		}
 
-		pts2d := pts3d.map { Point2d(it.x, it.y) }
-//		pts2d := (Point2d[]) pts3d.map {
-//			it	.applyPerspective(300f)
-//		}
-		
-		model.drawables.each { it.draw(this, pts2d, pts3d) }
+		model.drawables.each { it.draw(this, pts3d) }
+		return pts3d
 	}
 	
-	This drawPolyline(Point2d[] points) {
-		gfx.drawPolyline(points)
+	This drawPolyline(Point3d[] points) {
+		ox := g2d.ox
+		oy := g2d.oy
+		g2d.g.drawPolyline(points.map |pt| { Point(pt.x.toInt + ox, pt.y.toInt + oy) })
 		return this
 	}
 	
-	This fillPolygon(Point2d[] points) {
-		gfx.fillPolygon(points)
+	This fillPolygon(Point3d[] points) {
+		ox := g2d.ox
+		oy := g2d.oy
+		g2d.g.fillPolygon(points.map |pt| { Point(pt.x.toInt + ox, pt.y.toInt + oy) })
 		return this
 	}
 }
