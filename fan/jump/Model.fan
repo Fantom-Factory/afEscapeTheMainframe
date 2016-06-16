@@ -2,13 +2,11 @@ using gfx::Color
 using gfx::Brush
 
 class Model {
-			Point3d[]	points
-	const	Drawable[]	drawables
-			Color		colour	:= Color.white
-			|Model|?	anim
-			|Gfx3d| 	draw := |Gfx3d g3d| {
-				g3d.brush = colour
-				g3d.drawModel(this)				
+			Point3d[]		points
+	const	Drawable[]		drawables
+			|Model|?		animFunc
+			|Model, Gfx3d| 	drawFunc := |Model model, Gfx3d g3d| {
+				g3d.drawModel(model)
 			}
 	
 			Float	x
@@ -36,21 +34,15 @@ class Model {
 		return this
 	}
 	
-	Model dup() {
-		Model {
-			it.points	= this.points.dup
-			it.drawables= this.drawables
-			it.colour	= this.colour
-			it.ax		= this.ax
-			it.ay		= this.ay
-			it.az		= this.az
-			it.x		= this.x
-			it.y		= this.y
-			it.z		= this.z
-			// anim
-			// draw
-		}
+	virtual This draw(Gfx3d g3d) {
+		drawFunc.call(this, g3d)
+		return this
 	}
+
+	virtual This anim() {
+		animFunc?.call(this)
+		return this
+	}	
 }
 
 const mixin Drawable {
@@ -59,59 +51,57 @@ const mixin Drawable {
 
 const class Line : Drawable {
 	const	Int[]	points
-	const	Brush?	colour
-	
-	new make(|This| in) { in(this) }
 	
 	new makeWithPoints(Int[] points) {
 		this.points = points
 	}
 	
 	override Void draw(Gfx3d g3d, Point3d[] pts3d) {
-		if (colour != null)
-			g3d.brush = colour
-		
 		pts := points.map { pts3d[it] }
 		g3d.drawPolyline(pts)
-	}
-	
-	This withColour(Color colour) {
-		Line {
-			it.points = this.points
-			it.colour = colour
-		}
 	}
 }
 
 const class Poly : Drawable {
 	const	Int[]	points
-	const	Brush?	colour
-	
-	new make(|This| in) { in(this) }
 	
 	new makeWithPoints(Int[] points) {
 		this.points = points
 	}
 	
 	override Void draw(Gfx3d g3d, Point3d[] pts3d) {
-		if (colour != null)
-			g3d.brush = colour
-		
-		if (isHidden(pts3d)) {
+		if (!isHidden(pts3d)) {
 			pts := points.map { pts3d[it] }
-			g3d.fillPolygon(pts)
+			g3d.drawPolygon(pts)
 		}
 	}
 	
 	Bool isHidden(Point3d[] pts3d) {
 		norm := Point3d.normal(pts3d[points[0]], pts3d[points[1]], pts3d[points[2]])
-		return norm.z <= 0f
+		return norm.z > 0f
 	}
+}
 
-	This withColour(Color colour) {
-		Poly {
-			it.points = this.points
-			it.colour = colour
-		}
+const class Edge : Drawable {
+	const	Color?	colour
+	
+	new makeWithColour(Color? colour) {
+		this.colour = colour
+	}
+	
+	override Void draw(Gfx3d g3d, Point3d[] pts3d) {
+		g3d.edge = colour
+	}
+}
+
+const class Fill : Drawable {
+	const	Color?	colour
+	
+	new makeWithColour(Color? colour) {
+		this.colour = colour
+	}
+	
+	override Void draw(Gfx3d g3d, Point3d[] pts3d) {
+		g3d.fill = colour
 	}
 }

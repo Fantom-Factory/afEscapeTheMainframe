@@ -71,6 +71,7 @@ const class Point3d {
 		Point3d(x * mul / z, y * mul / z, z)
 	}
 
+	** Points must go *clockwise* to be visible.
 	static Point3d normal(Point3d p1, Point3d p2, Point3d p3) {
 		nx := ((p2.y - p1.y)*(p3.z - p1.z)) - ((p2.z - p1.z)*(p3.y - p1.y))
 		ny := ((p2.z - p1.z)*(p3.x - p1.x)) - ((p2.x - p1.x)*(p3.z - p1.z))

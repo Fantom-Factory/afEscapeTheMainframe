@@ -24,24 +24,18 @@ class Jump {
 	Void draw(Gfx g) {
 		g3d := Gfx3d(g.offsetCentre).lookAt(camera, Point3d(0f, -25f, 0f))
 
-		grid.dup.translate(x.toFloat, 0f, 0f).scale(6.0f, 1.0f, 3.5f).draw(g3d)
-		blck.dup.scale(1.0f, 1.0f, 1.75f).draw(g3d)
+		grid.draw(g3d)
+		blck.draw(g3d)
 		cube.draw(g3d)
 
 		g.drawImage(fanny, -200, 25)
 
-		cube.anim(cube)
+		grid.anim
+		blck.anim
+		cube.anim
 	
-		x -= 1f
-		if (x < -20f)
-			x += 20f
-
-		blck.x -= 1f
-
 //		camera = camera.translate(-1f, 0f, 0f)
 	}
-	
-	Float x
 	
 	Point3d camera	:= Point3d(0f, 0f, -500f) 
 //	Point3d camera	:= Point3d(0f, 500f, 0f) 

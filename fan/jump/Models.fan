@@ -2,11 +2,13 @@ using gfx::Color
 
 class Models {
 	
+	static const Color	brand_darkBlue	:= Color(0xFF_00_00_33)
+	static const Color	brand_lightBlue	:= Color(0xFF_33_66_FF)
+	static const Color	brand_white		:= Color(0xFF_FF_FF_FF)
+	static const Color	brand_red		:= Color(0xFF_FF_22_22)
+	
 	static Model cube() {
 		Model {
-			model := it
-			colour = Color.white
-			
 			points = [
 				Point3d(-100f,  100f, -100f),
 				Point3d( 100f,  100f, -100f),
@@ -17,54 +19,48 @@ class Models {
 				Point3d( 100f, -100f,  100f),
 				Point3d(-100f, -100f,  100f),
 			]
-			
+			scale(0.5f)
+
 			drawables = [
-				Poly([0, 1, 2, 3]).withColour(Color(0xFF_FF_FF_FF)),
-				Poly([7, 6, 5, 4]).withColour(Color(0xFF_88_88_88)),
-//				Poly([4, 5, 6, 7, 4]).withColour(Color(0xFF_AA_AA_AA)),
-//				Poly([0, 4]),
-//				Poly([1, 5]),
-//				Poly([2, 6]),
-//				Poly([3, 7]),
+				Fill(brand_red),
+				Edge(brand_white),
+				Poly([0, 1, 2, 3]),	// front
+				Poly([7, 6, 5, 4]),	// back
+				Poly([4, 0, 3, 7]),	// left
+				Poly([1, 5, 6, 2]),	// right
+				Poly([4, 5, 1, 0]),	// top
+				Poly([3, 2, 6, 7]),	// bottom
 				
-				Line([0, 1, 2, 3, 0]).withColour(Color(0xFF_FF_00_00)),
-				Line([4, 5, 6, 7, 4]),
-				Line([0, 4]),
-				Line([1, 5]),
-				Line([2, 6]),
-				Line([3, 7]),
+//				Misc(brand_white),
+//				Line([0, 1, 2, 3, 0]),
+//				Line([4, 5, 6, 7, 4]),
+//				Line([0, 4]),
+//				Line([1, 5]),
+//				Line([2, 6]),
+//				Line([3, 7]),
 			]
 			
-			anim = |Model cube| {
-//				cube.ax += 1f/100f
-//				cube.ay += 1f/280f
-//				cube.az -= 1f/500f
-				cube.ay += 1f/500f
+			animFunc = |Model cube| {
+				cube.ax += 1f/100f
+				cube.ay += 1f/280f
+				cube.az -= 1f/500f
+//				cube.ay += 1f/500f
 //				cube.z  += 1f
 			}
 			
-			draw = |Gfx3d g3d| {
-				g3d.brush = model.colour
+			drawFunc = |Model model, Gfx3d g3d| {
 				pts := g3d.drawModel(model)
 				
-				pt := model.points[0].rotate(model.ax, model.ay, model.az)
-				g3d.drawFont8(pt.toStr, pts[0])
-
-				pt = model.points[1].rotate(model.ax, model.ay, model.az)
-				g3d.drawFont8(pt.toStr, pts[1])
-
-				pt = model.points[2].rotate(model.ax, model.ay, model.az)
-				g3d.drawFont8(pt.toStr, pts[2])
-			}			
-			
-			scale(0.75f)
+				[0, 1, 2].each {
+					pt := model.points[it].rotate(model.ax, model.ay, model.az)
+					g3d.drawFont8(pt.toStr, pts[it])					
+				}
+			}						
 		}
 	}
 
 	static Model grid() {
 		Model {
-			colour = Color(0xFF_33_66_FF)
-
 			points = [
 				Point3d(-100f,  50f, 0f),
 				Point3d(- 80f,  50f, 0f),
@@ -102,12 +98,17 @@ class Models {
 				Point3d( 100f, -30f, 0f),
 				Point3d( 100f, -50f, 0f),
 			]
+			rotate	(-0.25f,  0f, 0f)
+			translate(10f,  -150f, 0f)
+			scale	( 6.0f,   1f, 3.5f)
 			
 			drawables = [
-//				Poly([21, 11, 0, 10]).withColour(Color(0xFF_00_00_33)),
-				Poly([10, 0, 11, 21]).withColour(Color(0xFF_00_00_33)),
+				Fill(brand_darkBlue),
+				Edge(null),
+				Poly([21, 11, 0, 10]),
 				
-				Line([ 0, 11]).withColour(Color(0xFF_33_66_FF)),
+				Edge(brand_lightBlue),
+				Line([ 0, 11]),
 				Line([ 1, 12]),
 				Line([ 2, 13]),
 				Line([ 3, 14]),
@@ -128,54 +129,71 @@ class Models {
 				Line([25, 30]),
 				Line([26, 31]),
 			]
-			
-			it.rotate(-0.25f, 0f, 0f)
-			it.translate(10f, -150f, 0f)
 
-			model:= it
-			draw = |Gfx3d g3d| {
-				g3d.brush = model.colour
+			drawFunc = |Model model, Gfx3d g3d| {
 				pts := g3d.drawModel(model)
 				
-				[3, 6, 9, 12, 15, 18, 21].each {
+				[0, 10, 11, 21].each {
 					pt := model.points[it].rotate(model.ax, model.ay, model.az)
 					g3d.drawFont8(pt.toStr, pts[it])					
 				}
-			}			
+			}
+
+			animFunc = |Model model| {
+				model.x -= 5f
+				if (model.x < -120f)
+					model.x += 120f
+			}
 		}
 	}
 
 	static Model block() {
 		Model {
-			model := it
-
 			points = [
-				Point3d( -25f, -100f, -100f),
-				Point3d(  25f, -100f, -100f),
-				Point3d(  25f, -150f, -100f),
-				Point3d( -25f, -150f, -100f),
-				Point3d( -25f, -100f,  100f),
-				Point3d(  25f, -100f,  100f),
-				Point3d(  25f, -150f,  100f),
-				Point3d( -25f, -150f,  100f),
+				Point3d( -25f, -100f, -175f),
+				Point3d(  25f, -100f, -175f),
+				Point3d(  25f, -150f, -175f),
+				Point3d( -25f, -150f, -175f),
+				Point3d( -25f, -100f,  175f),
+				Point3d(  25f, -100f,  175f),
+				Point3d(  25f, -150f,  175f),
+				Point3d( -25f, -150f,  175f),
 			]
 			
 			drawables = [
-				Poly([3, 2, 1, 0]).withColour(Color(0xFF_FF_33_33)),
-				Poly([4, 5, 6, 7]).withColour(Color(0xFF_FF_33_33)),
-				
-				Line([0, 1, 2, 3, 0]).withColour(Color(0xFF_FF_FF_FF)),
-				Line([4, 5, 6, 7, 4]),
-				Line([0, 4]),
-				Line([1, 5]),
-				Line([2, 6]),
-				Line([3, 7]),
+				Fill(brand_darkBlue),
+				Edge(brand_lightBlue),
+				Poly([0, 1, 2, 3]),	// front
+				Poly([7, 6, 5, 4]),	// back
+				Poly([4, 0, 3, 7]),	// left
+				Poly([1, 5, 6, 2]),	// right
+				Poly([4, 5, 1, 0]),	// top
+				Poly([3, 2, 6, 7]),	// bottom
+
+//				Misc(brand_lightBlue),
+//				Line([0, 1, 2, 3, 0]),
+//				Line([4, 5, 6, 7, 4]),
+//				Line([0, 4]),
+//				Line([1, 5]),
+//				Line([2, 6]),
+//				Line([3, 7]),
 			]
+
+			it.x = -600f
 			
-			draw = |Gfx3d g3d| {
-				g3d.brush = model.colour
-				g3d.drawModel(model)				
-			}			
+			animFunc = |Model model| {
+				model.x -= 5f
+				if (model.x < -600f)
+					model.x += 1200f
+			}
+
+			drawFunc = |Model model, Gfx3d g3d| {
+				pts:=g3d.drawModel(model)
+				[1, 2].each {
+					pt := model.points[it].rotate(model.ax, model.ay, model.az)
+					g3d.drawFont8("$it : $pt", pts[it])					
+				}
+			}
 		}
 	}
 }
