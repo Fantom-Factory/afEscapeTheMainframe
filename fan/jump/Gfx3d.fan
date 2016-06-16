@@ -43,7 +43,7 @@ class Gfx3d {
 		pts3d := (Point3d[]) model.points.map {
 			it	.rotate(model.ax, model.ay, model.az)
 				.translate(model.x, model.y, model.z)
-				.translate(cameraPos.x, cameraPos.y, cameraPos.z)
+				.translate(-cameraPos.x, -cameraPos.y, -cameraPos.z)
 				.rotate(this.ax, this.ay, this.az)
 				.project(300f)
 		}
@@ -55,14 +55,19 @@ class Gfx3d {
 	This drawPolyline(Point3d[] points) {
 		ox := g2d.ox
 		oy := g2d.oy
-		g2d.g.drawPolyline(points.map |pt| { Point(pt.x.toInt + ox, pt.y.toInt + oy) })
+		g2d.g.drawPolyline(points.map |pt| { Point(ox + pt.x.toInt, oy - pt.y.toInt) })
 		return this
 	}
 	
 	This fillPolygon(Point3d[] points) {
 		ox := g2d.ox
 		oy := g2d.oy
-		g2d.g.fillPolygon(points.map |pt| { Point(pt.x.toInt + ox, pt.y.toInt + oy) })
+		g2d.g.fillPolygon(points.map |pt| { Point(ox + pt.x.toInt, oy - pt.y.toInt) })
+		return this
+	}
+	
+	This drawFont8(Str text, Point3d pt) {
+		g2d.drawFont(text, g2d.ox+pt.x.toInt, g2d.oy- pt.y.toInt, g2d.font8x8, 8)
 		return this
 	}
 }
