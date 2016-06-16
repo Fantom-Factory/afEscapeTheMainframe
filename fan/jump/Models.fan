@@ -48,13 +48,13 @@ class Models {
 				pts := g3d.drawModel(model)
 				
 				pt := model.points[0].rotate(model.ax, model.ay, model.az)
-				g3d.g2d.drawFont8(pt.toStr, pts[0].x.toInt, pts[0].y.toInt)
+				g3d.drawFont8(pt.toStr, pts[0])
 
 				pt = model.points[1].rotate(model.ax, model.ay, model.az)
-				g3d.g2d.drawFont8(pt.toStr, pts[1].x.toInt, pts[1].y.toInt)
+				g3d.drawFont8(pt.toStr, pts[1])
 
 				pt = model.points[2].rotate(model.ax, model.ay, model.az)
-				g3d.g2d.drawFont8(pt.toStr, pts[2].x.toInt, pts[2].y.toInt)
+				g3d.drawFont8(pt.toStr, pts[2])
 			}			
 			
 			scale(0.75f)
@@ -137,8 +137,10 @@ class Models {
 				g3d.brush = model.colour
 				pts := g3d.drawModel(model)
 				
-				pt := model.points[3].rotate(model.ax, model.ay, model.az)
-				g3d.g2d.drawFont8(pt.toStr, pts[3].x.toInt, pts[3].y.toInt)
+				[3, 6, 9, 12, 15, 18, 21].each {
+					pt := model.points[it].rotate(model.ax, model.ay, model.az)
+					g3d.drawFont8(pt.toStr, pts[it])					
+				}
 			}			
 		}
 	}

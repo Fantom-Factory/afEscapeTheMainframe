@@ -5,10 +5,8 @@ using gfx
 ** Wrapper around 'fwt::Graphics'.
 class Gfx {
 	
-//	@Inject 
-	private Image?		font8x8	:= Image(`fan://afDemo/res/XenonFont8x8.png`)
-//	@Inject 
-	private Image?		font16x16
+	Image?		font8x8
+	Image?		font16x16
 	
 	Graphics	g
 	Int 		ox
@@ -76,18 +74,18 @@ class Gfx {
 	}
 	
 	This drawPolyline(Point2d[] points) {
-		g.drawPolyline(points.map |pt| { Point(pt.x.toInt + ox, pt.y.toInt + oy) })
+		g.drawPolyline(points.map |pt| { Point(ox+pt.x.toInt, oy+pt.y.toInt) })
 		return this
 	}
 	
 	This fillPolygon(Point2d[] points) {
-		g.fillPolygon(points.map |pt| { Point(pt.x.toInt + ox, pt.y.toInt + oy) })
+		g.fillPolygon(points.map |pt| { Point(ox+pt.x.toInt, oy+pt.y.toInt) })
 		return this
 	}
 	
 	This drawPoint(Int x, Int y) {
 		// FIXME add drawPoint() to FWT
-		g.drawLine(x + ox, y + oy, x + ox, y + oy)
+		g.drawLine(ox+x, oy+y, ox+x, oy+y)
 		return this		
 	}
 	
@@ -118,7 +116,7 @@ class Gfx {
 		fillRect(0, 0, g.clipBounds.w, g.clipBounds.h)
 	}
 
-	private Void drawFont(Str text, Int initX, Int initY, Image font, Int fontSize) {
+	Void drawFont(Str text, Int initX, Int initY, Image font, Int fontSize) {
 		x := initX
 		y := initY
 

@@ -53,10 +53,10 @@ const class Point3d {
 		x2 :=  ( x * Sin.cos(-ay)) +(z2 * Sin.sin(-ay))
 		z3 := -( x * Sin.sin(-ay)) +(z2 * Sin.cos(-ay))
 
-		x3 :=  (x2 * Sin.cos(-az)) +(y2 * Sin.sin(-az))
-		y3 :=  (x2 * Sin.sin(-az)) -(y2 * Sin.cos(-az))
+		x3 :=  (x2 * Sin.cos(-az)) -(y2 * Sin.sin(-az))
+		y3 :=  (x2 * Sin.sin(-az)) +(y2 * Sin.cos(-az))
 
-		return Point3d(x3, y3, -z3)
+		return Point3d(x3, y3, z3)
 	}
 	
 	Point3d translate(Float dx, Float dy, Float dz) {
