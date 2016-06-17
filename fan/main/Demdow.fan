@@ -23,7 +23,7 @@ class Demdow : DemoEvents {
 		scope.inject(this)
 
 		pulsar = Pulsar()
-		pulsar.frequency = 25ms
+		pulsar.frequency = 25ms	//16ms
 		pulsar.addListener |->| { screen.repaint }
 		
 		eventHub.register(this)
