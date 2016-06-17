@@ -9,6 +9,8 @@ class Models {
 	static const Color	brand_red		:= Color(0xFF_FF_22_22)
 	static const Color	fanny_silver	:= Color(0xFF_DD_DD_DD)
 	
+	static const Float	scrollSpeed		:= 9f
+	
 	static Model cube() {
 		Model {
 			points = [
@@ -65,27 +67,37 @@ class Models {
 		Model {
 			points = [
 				Point3d(-100f,  50f, 0f),
-				Point3d(- 80f,  50f, 0f),
+				Point3d(-100f,  50f, 0f),
+//				Point3d(- 80f,  50f, 0f),
 				Point3d(- 60f,  50f, 0f),
-				Point3d(- 40f,  50f, 0f),
+				Point3d(- 60f,  50f, 0f),
+//				Point3d(- 40f,  50f, 0f),
 				Point3d(- 20f,  50f, 0f),
-				Point3d(   0f,  50f, 0f),
+				Point3d(- 20f,  50f, 0f),
+//				Point3d(   0f,  50f, 0f),
 				Point3d(  20f,  50f, 0f),
-				Point3d(  40f,  50f, 0f),
+				Point3d(  20f,  50f, 0f),
+//				Point3d(  40f,  50f, 0f),
 				Point3d(  60f,  50f, 0f),
-				Point3d(  80f,  50f, 0f),
+				Point3d(  60f,  50f, 0f),
+//				Point3d(  80f,  50f, 0f),
 				Point3d( 100f,  50f, 0f),
 
 				Point3d(-100f, -50f, 0f),
-				Point3d(- 80f, -50f, 0f),
+				Point3d(-100f, -50f, 0f),
+//				Point3d(- 80f, -50f, 0f),
 				Point3d(- 60f, -50f, 0f),
-				Point3d(- 40f, -50f, 0f),
+				Point3d(- 60f, -50f, 0f),
+//				Point3d(- 40f, -50f, 0f),
 				Point3d(- 20f, -50f, 0f),
-				Point3d(   0f, -50f, 0f),
+				Point3d(- 20f, -50f, 0f),
+//				Point3d(   0f, -50f, 0f),
 				Point3d(  20f, -50f, 0f),
-				Point3d(  40f, -50f, 0f),
+				Point3d(  20f, -50f, 0f),
+//				Point3d(  40f, -50f, 0f),
 				Point3d(  60f, -50f, 0f),
-				Point3d(  80f, -50f, 0f),
+				Point3d(  60f, -50f, 0f),
+//				Point3d(  80f, -50f, 0f),
 				Point3d( 100f, -50f, 0f),
 
 				Point3d(-100f,  30f, 0f),
@@ -101,7 +113,7 @@ class Models {
 				Point3d( 100f, -50f, 0f),
 			]
 			rotate	(-0.25f,  0f, 0f)
-			translate(10f,  -150f, 0f)
+			translate(20f,  -150f, 0f)
 			scale	( 6.0f,   1f, 3.5f)
 			
 			drawables = [
@@ -142,9 +154,9 @@ class Models {
 //			}
 
 			animFunc = |Model model| {
-				model.x -= 12f
-				if (model.x < -120f)
-					model.x += 120f
+				model.x -= scrollSpeed
+				if (model.x < -240f)
+					model.x += 240f
 			}
 		}
 	}
@@ -176,18 +188,10 @@ class Models {
 			it.x = 600f
 			
 			animFunc = |Model model| {
-				model.x -= 12f
+				model.x -= scrollSpeed
 				if (model.x < -600f)
 					model.x += 1200f
 			}
-
-//			drawFunc = |Model model, Gfx3d g3d| {
-//				pts:=g3d.drawModel(model)
-//				[1, 2].each {
-//					pt := model.points[it].rotate(model.ax, model.ay, model.az)
-//					g3d.drawFont8("$it : $pt", pts[it])					
-//				}
-//			}
 		}
 	}
 
@@ -214,6 +218,8 @@ class Models {
 			drawables = [
 				Fill(fanny_silver),
 				Edge(brand_white),
+//				Fill(null),
+//				Edge(fanny_silver),
 				Poly([0, 1, 2, 3]),	// front
 				Poly([7, 6, 5, 4]),	// back
 				Poly([4, 0, 3, 7]),	// left
@@ -226,7 +232,7 @@ class Models {
 				Poly([11, 9, 10, 8]),	// eyes
 			]
 
-			it.x = -240f
+			it.x = -270f
 			it.y = -110f
 			it.z = -70f
 			
@@ -253,6 +259,43 @@ class Fanny : Model {
 	Float	w
 	Float	h
 
+	Point3d[] normPoints := Point3d[
+		// body
+		Point3d(-15f,  40f, -25f),
+		Point3d( 30f,  40f, -25f),
+		Point3d( 30f, -40f, -35f),
+		Point3d(-40f, -40f, -35f),
+		Point3d(-15f,  40f,  25f),
+		Point3d( 30f,  40f,  25f),
+		Point3d( 30f, -40f,  35f),
+		Point3d(-40f, -40f,  35f),
+		
+		// eyes
+		Point3d( 30f,  30f, -15f),
+		Point3d( 30f,  30f,  15f),
+		Point3d( 30f,  10f,  15f),
+		Point3d( 30f,  10f, -15f),
+	]
+
+	Point3d[] squishPoints := Point3d[
+		// body
+		Point3d(-45f, -20f, -45f),
+		Point3d( 45f, -20f, -45f),
+		Point3d( 45f, -40f, -45f),
+		Point3d(-45f, -40f, -45f),
+		Point3d(-45f, -20f,  45f),
+		Point3d( 45f, -20f,  45f),
+		Point3d( 45f, -40f,  45f),
+		Point3d(-45f, -40f,  45f),
+		
+		// eyes
+		Point3d( 45f, -20f, -15f),
+		Point3d( 45f, -20f,  15f),
+		Point3d( 45f, -40f,  15f),
+		Point3d( 45f, -40f, -15f),
+	]
+
+	
 	new make(|This| in) : super(in) {
 		xs := (Float[]) points.map { it.x } 
 		ys := (Float[]) points.map { it.y } 
@@ -275,6 +318,12 @@ class Fanny : Model {
 
 	Void noJump() {
 		jumpHeld = false
+
+		this.points = normPoints
+	}
+	
+	Void squish() {
+		this.points = squishPoints
 	}
 	
 	override This anim() {

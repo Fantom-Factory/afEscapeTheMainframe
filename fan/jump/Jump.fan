@@ -28,6 +28,9 @@ class Jump {
 		else
 			fany.noJump
 
+		if (screen.keys[Key.down] == true)
+			fany.squish
+
 		grid.anim
 		blck.anim
 		cube.anim
@@ -41,7 +44,6 @@ class Jump {
 		g3d := Gfx3d(g.offsetCentre).lookAt(camera, Point3d(0f, -25f, 0f))
 		
 		grid.draw(g3d)
-		cube.draw(g3d)
 		
 		// this depends on camera angle
 		if (blck.x < fany.x) {
@@ -51,9 +53,22 @@ class Jump {
 			fany.draw(g3d)
 			blck.draw(g3d)
 		}
+
+		cube.draw(g3d)
 	
-//		camera = camera.translate(-1f, 0f, 0f)
+//		x := 0f	//-500 * Sin.cos(ca - 0.75f)
+//		y :=  500 * Sin.cos(ca - 0.75f)
+//		z := -500 * Sin.sin(ca - 0.75f)
+//		camera = Point3d(x, y, z)
+//		ca += cas
+//		if (ca > 0f || ca < -0.25f) {
+//			ca -= cas
+//			cas = -cas
+//		}
 	}
+	
+	Float ca	:= 0f
+	Float cas	:= -0.001f
 	
 	Point3d camera	:= Point3d(0f, 0f, -500f) 
 //	Point3d camera	:= Point3d(0f, 500f, 0f) 

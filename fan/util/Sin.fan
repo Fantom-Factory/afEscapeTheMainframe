@@ -46,13 +46,13 @@ const class Sin {
 //	}
 
 	static Float sin(Float angle) {
-		idx := ((angle - angle.floor) * max).toInt
+		idx := ((angle - angle.floor) * max).toInt % max
 		return sinTable[idx]
 	}
 
 	static Float cos(Float angle) {
-		idx := ((angle - angle.floor) * max).toInt
-		return cosTable[idx.toInt]
+		idx := ((angle - angle.floor) * max).toInt % max
+		return cosTable[idx]
 	}
 }
 
