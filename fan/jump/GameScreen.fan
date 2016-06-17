@@ -4,7 +4,7 @@ using gfx::Image
 using gfx::Brush
 using afIoc
 
-class Jump {
+class GameScreen {
 
 	@Inject	private Screen	screen
 			private Model	cube

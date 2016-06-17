@@ -27,7 +27,7 @@ class Build : BuildPod {
 			"afReflux        0+",
 		]
 
-		srcDirs = [`fan/`, `fan/gaming/`, `fan/infrastructure/`, `fan/jump/`, `fan/sinedots/`]
+		srcDirs = [`fan/`, `fan/gaming/`, `fan/infrastructure/`, `fan/jump/`, `fan/jump/models/`, `fan/sinedots/`]
 		resDirs = [`res/`]
 	}
 }

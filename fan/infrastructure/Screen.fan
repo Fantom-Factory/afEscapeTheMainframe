@@ -32,6 +32,6 @@ class Screen : Canvas {
 			it.font16x16	= this.font16x16
 		}
 //		g.clear
-		eventHub.fireEvent(DemoEvents#draw, [g])
+		eventHub.fireEvent(DemoEvents#onDraw, [g])
 	}	
 }

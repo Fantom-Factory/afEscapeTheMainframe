@@ -2,7 +2,7 @@ using afIoc
 using fwt
 using gfx
 
-class Frame : DemoEvents {
+class Frame {
 
 	@Inject	private Screen		screen
 	@Inject	private EventHub	eventHub
@@ -10,23 +10,18 @@ class Frame : DemoEvents {
 			private Scope		scope
 			private Pulsar		pulsar
 
-	new make(|This|? f := null) {
-		f?.call(this)
+	new make(Type[] modules, |This|? in := null) {
 		
 		registry	= RegistryBuilder() { suppressLogging=true }
 			.addModule(DemoModule#)
-//			.addModulesFromPod("afPlastic")
-//			.addModulesFromPod("afConcurrent")
-//			.addModulesFromPod("afIocConfig")
+			.addModules(modules)
 			.build
-		registry.rootScope.createChildScope("thread") { this.scope = it.jailBreak }
+		registry.rootScope.createChildScope("uiThread") { this.scope = it.jailBreak }
 		scope.inject(this)
 
 		pulsar = Pulsar()
 		pulsar.frequency = 1sec / 60 // 60 FPS
 		pulsar.addListener |->| { screen.repaint }
-		
-		eventHub.register(this)
 	}
 	
 	Widget widget() {
@@ -34,20 +29,14 @@ class Frame : DemoEvents {
 	}
 
 	Void startup() {
+		eventHub.fireEvent(DemoEvents#onStartup)
 		pulsar.start
 	}
 	
 	Void shutdown() {
 		pulsar.stop
+		eventHub.fireEvent(DemoEvents#onShutdown)
 		scope.destroy
 		registry.shutdown
-	}
-	
-	@Autobuild	private Jump		jump
-	@Inject	private SineDots	sineDots
-
-	override Void draw(Gfx g) {
-//		sineDots.draw(g)
-		jump.draw(g)
 	}
 }
