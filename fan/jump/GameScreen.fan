@@ -1,12 +1,11 @@
-using fwt
+using fwt::Key
 using gfx::Color
-using gfx::Image
-using gfx::Brush
-using afIoc
+using afIoc::Inject
 
 class GameScreen {
 
 	@Inject	private Screen	screen
+	@Inject	private |->App|	app
 			private Model	cube
 			private Model	grid
 			private Block	blck
@@ -34,9 +33,10 @@ class GameScreen {
 		cube.anim
 		fany.anim
 		
-		if (fany.collisionRect.intersects(blck.collisionRect))
+		if (fany.collisionRect.intersects(blck.collisionRect)) {
 			g.clear(Color.white)
-		else
+			app().gameOver
+		} else
 			g.clear
 
 		g3d := Gfx3d(g.offsetCentre).lookAt(camera, Point3d(0f, -25f, 0f))

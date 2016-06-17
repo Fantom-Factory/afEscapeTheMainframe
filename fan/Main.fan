@@ -1,5 +1,6 @@
 using fwt
 using gfx
+using afIoc
 
 class Main {
 	
@@ -15,13 +16,18 @@ class Main {
 
 	}	
 	
-	static Void doMain(Type[] modules, |Window|? setup := null) {
+	static Void doMain(Type[] modules, |Window, Scope|? onOpen := null) {
 		frame := Frame(modules)
-		Window {			
+		Window {
+			win := it
 			it.add(frame.widget)
-			it.onOpen.add  |->| { frame.startup }
+			it.onOpen.add  |->| { 
+				Desktop.callLater(50ms) |->| {
+					frame.startup
+					onOpen?.call(win, frame.scope)
+				}
+			}
 			it.onClose.add |->| { echo("Bye!") }
-			setup?.call(it)
 		}.open
 		frame.shutdown
 	}

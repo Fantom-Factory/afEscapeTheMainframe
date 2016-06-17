@@ -4,19 +4,19 @@ using gfx
 
 class Frame {
 
-	@Inject	private Screen		screen
-	@Inject	private EventHub	eventHub
-			private Registry	registry
-			private Scope		scope
-			private Pulsar		pulsar
+	@Inject	private		Screen		screen
+	@Inject	private		EventHub	eventHub
+			private		Registry	registry
+			private		Pulsar		pulsar
+			internal	Scope?		scope
 
 	new make(Type[] modules, |This|? in := null) {
-		
-		registry	= RegistryBuilder() { suppressLogging=true }
+		registry = RegistryBuilder() { suppressLogging=true }
 			.addModule(DemoModule#)
 			.addModules(modules)
 			.build
 		registry.rootScope.createChildScope("uiThread") { this.scope = it.jailBreak }
+		registry.setDefaultScope(scope)
 		scope.inject(this)
 
 		pulsar = Pulsar()

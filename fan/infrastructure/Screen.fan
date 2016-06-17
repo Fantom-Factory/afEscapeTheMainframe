@@ -4,6 +4,7 @@ using afIoc
 
 class Screen : Canvas {
 
+	@Inject private |->Scope|	scope	
 	@Inject private EventHub	eventHub
 					Key:Bool	keys		:= Key:Bool[:]
 
