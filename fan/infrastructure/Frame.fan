@@ -2,7 +2,7 @@ using afIoc
 using fwt
 using gfx
 
-class Demdow : DemoEvents {
+class Frame : DemoEvents {
 
 	@Inject	private Screen		screen
 	@Inject	private EventHub	eventHub

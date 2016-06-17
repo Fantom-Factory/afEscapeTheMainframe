@@ -3,7 +3,7 @@ using gfx::Brush
 
 class Model {
 			Point3d[]		points
-	const	Drawable[]		drawables
+			Drawable[]		drawables
 			|Model|?		animFunc
 			|Model, Gfx3d| 	drawFunc := |Model model, Gfx3d g3d| {
 				g3d.drawModel(model)

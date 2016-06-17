@@ -185,8 +185,6 @@ class Models {
 			drawables = [
 				Fill(fanny_silver),
 				Edge(brand_white),
-//				Fill(null),
-//				Edge(fanny_silver),
 				Poly([0, 1, 2, 3]),	// front
 				Poly([7, 6, 5, 4]),	// back
 				Poly([4, 0, 3, 7]),	// left
@@ -223,6 +221,7 @@ class Fanny : Model {
 	Float	sy
 	Bool	jumpHeld
 	Bool	jumpEnabled	:= true
+	Bool	squished
 	Float	w
 	Float	h
 
@@ -261,7 +260,6 @@ class Fanny : Model {
 		Point3d( 45f, -35f,  15f),
 		Point3d( 45f, -35f, -15f),
 	]
-
 	
 	new make(|This| in) : super(in) {
 		xs := (Float[]) points.map { it.x } 
@@ -270,27 +268,35 @@ class Fanny : Model {
 		h = ys.max - ys.min
 	}
 
-	Void jump() {
-		if (jumpEnabled || jumpHeld) {
-			sy += 15f
-			sy = sy.min(15f)
-			
-			jumpEnabled = false
-			jumpHeld = true
-			
-			if (y > 25f)
-				jumpHeld = false
-		}
+	Void jump(Bool jump) {
+		if (!jump) {
+			jumpHeld = false
+
+		} else
+			if (jumpEnabled || jumpHeld) {
+				sy += 15f
+				sy = sy.min(15f)
+				
+				jumpEnabled = false
+				jumpHeld = true
+				
+				if (y > 25f)
+					jumpHeld = false			
+			}
 	}
 
-	Void noJump() {
-		jumpHeld = false
-
-		this.points = normPoints
+	Void squish(Bool squish) {
+		squished = squish
 	}
 	
-	Void squish() {
-		this.points = squishPoints
+	Void ghost(Bool ghost) {
+		if (ghost) {
+			drawables[0] = Fill(null) 
+			drawables[1] = Edge(Models.fanny_silver)
+		} else {
+			drawables[0] = Fill(Models.fanny_silver) 
+			drawables[1] = Edge(Models.brand_white)
+		}
 	}
 	
 	override This anim() {
@@ -300,6 +306,26 @@ class Fanny : Model {
 			jumpEnabled = true 
 		}
 
+		// if we're not touching the floor
+		if (y > -110f) {
+			dy	  := sy * 0.4f
+			front := Int[0, 3, 4, 7]	// front
+			back  := Int[1, 2, 5, 6]	// back
+			pts	  := squished ? squishPoints : normPoints
+			
+			points = pts.map |pt, i| {
+				if (front.contains(i)) {
+					pt = pt.translate(0f, -dy, 0f)
+				} else
+				if (back.contains(i)) {
+					pt = pt.translate(0f, dy, 0f)
+				}
+				return pt
+			}
+		} else
+			points = squished ? squishPoints : normPoints
+
+		
 		// if we're not touching the floor
 		if (y > -110f) {
 			sy -= 1.5f

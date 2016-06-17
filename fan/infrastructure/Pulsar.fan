@@ -86,7 +86,8 @@ class Pulsar {
 		if (shouldLogOverload(timeToNextPulse, now)) {
 			lastOverloadTime 		= now
 			lastOverloadDuration	= (timeToNextPulse - 1ms)	// don't log less than this - see tests
-			log.warn("Computer Overload! Freq down to ${timeToNextPulse.toMillis}ms")			
+			// debug - meh, who cares!?
+			log.debug("Computer Overload! Freq down to ${timeToNextPulse.toMillis}ms")			
 		}
 	}
 	
@@ -117,4 +118,26 @@ enum class PulsarState {
 	stopped,
 	running,
 	stopping
+}
+
+** A runnable with error handling. The default impl simply logs the error and returns 'null'. 
+** Useful for FWT callbacks which have a habit of silently failing.
+internal class Safe {
+	private static const Log log := Log.get("Safe")
+	
+	private |->Obj?|? f
+	
+	new make(|->Obj?|? f) {
+		this.f = f
+	}
+	
+	// TODO: add alternative error handling
+	Obj? run() {
+		try {
+			return f?.call
+		} catch (Err e) {
+			log.err(e.msg, e)
+			return null
+		}
+	}
 }
