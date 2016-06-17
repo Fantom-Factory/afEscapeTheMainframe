@@ -67,7 +67,7 @@ class Pulsar {
 		timeOfNextPulse  = timeOfNextPulse + frequency
 		timeToNextPulse := timeOfNextPulse - Duration.now
 
-		if (timeToNextPulse < 2ms) {
+		if (timeToNextPulse <= 0ms) {
 			logOverloadWarning(timeToNextPulse, Duration.now)
 			
 			// keep a reasonable positive wait duration
@@ -106,7 +106,10 @@ class Pulsar {
 	}
 	
 	private Void pulseIn(Duration when) {
-		Desktop.callLater(when) |->| { pulseNow }
+		if (when < 1ms)
+			Desktop.callAsync |->| { pulseNow }
+		else
+			Desktop.callLater(when) |->| { pulseNow }
 	}
 }
 
