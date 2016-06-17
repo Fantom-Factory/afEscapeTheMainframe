@@ -65,39 +65,20 @@ class Models {
 
 	static Model grid() {
 		Model {
+			// (-480 -> 720, -150, -175 -> 175)
 			points = [
 				Point3d(-100f,  50f, 0f),
-				Point3d(-100f,  50f, 0f),
-//				Point3d(- 80f,  50f, 0f),
 				Point3d(- 60f,  50f, 0f),
-				Point3d(- 60f,  50f, 0f),
-//				Point3d(- 40f,  50f, 0f),
 				Point3d(- 20f,  50f, 0f),
-				Point3d(- 20f,  50f, 0f),
-//				Point3d(   0f,  50f, 0f),
 				Point3d(  20f,  50f, 0f),
-				Point3d(  20f,  50f, 0f),
-//				Point3d(  40f,  50f, 0f),
 				Point3d(  60f,  50f, 0f),
-				Point3d(  60f,  50f, 0f),
-//				Point3d(  80f,  50f, 0f),
 				Point3d( 100f,  50f, 0f),
 
 				Point3d(-100f, -50f, 0f),
-				Point3d(-100f, -50f, 0f),
-//				Point3d(- 80f, -50f, 0f),
 				Point3d(- 60f, -50f, 0f),
-				Point3d(- 60f, -50f, 0f),
-//				Point3d(- 40f, -50f, 0f),
 				Point3d(- 20f, -50f, 0f),
-				Point3d(- 20f, -50f, 0f),
-//				Point3d(   0f, -50f, 0f),
 				Point3d(  20f, -50f, 0f),
-				Point3d(  20f, -50f, 0f),
-//				Point3d(  40f, -50f, 0f),
 				Point3d(  60f, -50f, 0f),
-				Point3d(  60f, -50f, 0f),
-//				Point3d(  80f, -50f, 0f),
 				Point3d( 100f, -50f, 0f),
 
 				Point3d(-100f,  30f, 0f),
@@ -115,43 +96,29 @@ class Models {
 			rotate	(-0.25f,  0f, 0f)
 			translate(20f,  -150f, 0f)
 			scale	( 6.0f,   1f, 3.5f)
-			
+
 			drawables = [
 				Fill(brand_darkBlue),
 				Edge(null),
-				Poly([21, 11, 0, 10]),
+				Poly([11, 6, 0, 5]),
 				
 				Edge(brand_lightBlue),
-				Line([ 0, 11]),
-				Line([ 1, 12]),
-				Line([ 2, 13]),
-				Line([ 3, 14]),
-				Line([ 4, 15]),
-				Line([ 5, 16]),
-				Line([ 6, 17]),
-				Line([ 7, 18]),
-				Line([ 8, 19]),
-				Line([ 9, 20]),
-				Line([10, 21]),
+				Line([ 0,  6]),
+				Line([ 1,  7]),
+				Line([ 2,  8]),
+				Line([ 3,  9]),
+				Line([ 4, 10]),
+				Line([ 5, 11]),
 				
-				Line([ 0, 10]),
-				Line([11, 21]),
+				Line([ 0,  5]),
+				Line([ 6, 11]),
 				
-				Line([22, 27]),
-				Line([23, 28]),
-				Line([24, 29]),
-				Line([25, 30]),
-				Line([26, 31]),
+				Line([12, 17]),
+				Line([13, 18]),
+				Line([14, 19]),
+				Line([15, 20]),
+				Line([16, 21]),
 			]
-
-//			drawFunc = |Model model, Gfx3d g3d| {
-//				pts := g3d.drawModel(model)
-//				
-//				[0, 10, 11, 21].each {
-//					pt := model.points[it].rotate(model.ax, model.ay, model.az)
-//					g3d.drawFont8(pt.toStr, pts[it])					
-//				}
-//			}
 
 			animFunc = |Model model| {
 				model.x -= scrollSpeed
@@ -279,20 +246,20 @@ class Fanny : Model {
 
 	Point3d[] squishPoints := Point3d[
 		// body
-		Point3d(-45f, -20f, -45f),
-		Point3d( 45f, -20f, -45f),
+		Point3d(-25f, -15f, -35f),
+		Point3d( 45f, -15f, -35f),
 		Point3d( 45f, -40f, -45f),
 		Point3d(-45f, -40f, -45f),
-		Point3d(-45f, -20f,  45f),
-		Point3d( 45f, -20f,  45f),
+		Point3d(-25f, -15f,  35f),
+		Point3d( 45f, -15f,  35f),
 		Point3d( 45f, -40f,  45f),
 		Point3d(-45f, -40f,  45f),
 		
 		// eyes
-		Point3d( 45f, -20f, -15f),
-		Point3d( 45f, -20f,  15f),
-		Point3d( 45f, -40f,  15f),
-		Point3d( 45f, -40f, -15f),
+		Point3d( 45f, -15f, -15f),
+		Point3d( 45f, -15f,  15f),
+		Point3d( 45f, -35f,  15f),
+		Point3d( 45f, -35f, -15f),
 	]
 
 	
