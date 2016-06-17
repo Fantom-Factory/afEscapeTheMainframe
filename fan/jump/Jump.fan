@@ -22,14 +22,12 @@ class Jump {
 	}
 
 	Void draw(Gfx g) {
-
-		if (screen.keys[Key.space] == true || screen.keys[Key.up] == true)
-			fany.jump
-		else
-			fany.noJump
-
-		if (screen.keys[Key.down] == true)
-			fany.squish
+		jump 	:= screen.keys[Key.space] == true || screen.keys[Key.up] == true
+		squish	:= screen.keys[Key.down]  == true 
+		ghost	:= screen.keys[Key.num1]  == true 
+		fany.jump(jump)
+		fany.squish(squish)
+		fany.ghost(ghost)
 
 		grid.anim
 		blck.anim

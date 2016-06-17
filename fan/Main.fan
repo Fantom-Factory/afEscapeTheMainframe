@@ -5,7 +5,7 @@ class Main {
 	
 	static Void main(Str[] args) {
 		
-		demdow := Demdow()
+		frame := Frame()
 		Window {
 			win  := it
 			// https://pacoup.com/2011/06/12/list-of-true-169-resolutions/
@@ -13,15 +13,15 @@ class Main {
 //			it.size = Size(640, 360)
 			it.title = "Demo"
 //			it.icon = Image(`fan://afFish/res/console.png`)
-			it.add(demdow.widget)
+			it.add(frame.widget)
 			it.onOpen.add |->| {
-				demdow.startup
+				frame.startup
 			}
 			it.onClose.add |->| {
 				echo("Bye!")
 			}
 		}.open
 
-		demdow.shutdown
+		frame.shutdown
 	}
 }
