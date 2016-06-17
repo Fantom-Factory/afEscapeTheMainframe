@@ -1,6 +1,9 @@
 
 mixin DemoEvents {
 	
-	virtual Void draw(Gfx g) { }
+	virtual Void onStartup() { }
 	
+	virtual Void onDraw(Gfx g) { }
+	
+	virtual Void onShutdown() { }
 }

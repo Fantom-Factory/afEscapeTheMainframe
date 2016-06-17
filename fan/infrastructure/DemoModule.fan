@@ -3,14 +3,9 @@ using afIoc
 const class DemoModule {
 
 	Void defineServices(RegistryBuilder bob) {
-		bob.addScope("thread", true)
+		bob.addScope("uiThread", true)
 		
-		bob.addService(Sin#)
-		bob.addService(SinOld#)
-		bob.addService(Screen#)
-		
-		bob.addService(SineDots#)
-
+		bob.addService(Screen#)		
 		bob.addService(EventHub#)
 		bob.addService(EventTypes#)
 	}
