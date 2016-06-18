@@ -2,25 +2,26 @@ using fwt::Key
 using gfx::Color
 using afIoc::Inject
 
-class GameScreen {
+class GameScreen : GameSeg {
 
 	@Inject	private Screen	screen
 	@Inject	private |->App|	app
-			private Model	cube
-			private Model	grid
-			private Block	blck
-			private Fanny	fany
+			private Model?	cube
+			private Model?	grid
+			private Block?	blck
+			private Fanny?	fany
 	
-	new make(|This| in) {
-		in(this)		
-		
+	new make(|This| in) { in(this) }
+
+	override This init() {
 		cube	= Models.cube
 		grid	= Models.grid
 		blck	= Models.block
 		fany	= Models.fanny
+		return this
 	}
 
-	Void draw(Gfx g) {
+	override Void draw(Gfx g) {
 		jump 	:= screen.keys[Key.space] == true || screen.keys[Key.up] == true
 		squish	:= screen.keys[Key.down]  == true 
 		ghost	:= screen.keys[Key.num1]  == true 

@@ -5,27 +5,32 @@ class App : DemoEvents {
 	@Autobuild	private SineDots	sineDots
 	@Autobuild	private GameScreen	gameScreen
 	@Autobuild	private TitleScreen	titleScreen
-				private Obj			activeScreen
+				private GameSeg		activeScreen
 
 	new make(EventHub eventHub, |This| in) {
 		in(this)
 		eventHub.register(this)
 		
-		activeScreen = titleScreen
+		activeScreen = titleScreen.init
 	}
 
 	override Void onDraw(Gfx g) {
 //		sineDots.draw(g)
 		
 		
-		activeScreen->draw(g)
+		activeScreen.draw(g)
 	}
 	
 	Void startGame() {
-		activeScreen = gameScreen
+		activeScreen = gameScreen.init
 	}
 	
 	Void gameOver() {
-		activeScreen = titleScreen		
+		activeScreen = titleScreen.init
 	}
+}
+
+mixin GameSeg {
+	abstract This init()
+	abstract Void draw(Gfx g2d)
 }
