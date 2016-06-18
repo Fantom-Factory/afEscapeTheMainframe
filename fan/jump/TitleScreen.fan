@@ -3,21 +3,21 @@ using gfx::Color
 using afIoc::Inject
 using afIoc::Scope
 
-class TitleScreen {
+class TitleScreen : GameSeg {
 
-	@Inject	private Scope	scope
 	@Inject	private Screen	screen
 	@Inject	private |->App|	app
 	
-	new make(|This| in) {
-		in(this)		
-	}
+	new make(|This| in) { in(this) }
 
-	Void draw(Gfx g2d) {
+	override This init() {
+		return this
+	}
+	
+	override Void draw(Gfx g2d) {
 		anyKey	:= screen.keys.size > 0
 
 		if (anyKey) {
-			echo(scope.registry.activeScope)
 			app().startGame
 		}
 
