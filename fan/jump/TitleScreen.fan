@@ -10,11 +10,11 @@ class TitleScreen : GameSeg {
 	
 	new make(|This| in) { in(this) }
 
-	override This init() {
+	override This onInit() {
 		return this
 	}
 	
-	override Void draw(Gfx g2d) {
+	override Void onDraw(Gfx g2d) {
 		anyKey	:= screen.keys.size > 0
 
 		if (anyKey) {

@@ -6,8 +6,8 @@ class Frame {
 
 	@Inject	private		Screen		screen
 	@Inject	private		EventHub	eventHub
+	@Inject	private		Pulsar		pulsar
 			private		Registry	registry
-			private		Pulsar		pulsar
 			internal	Scope?		scope
 
 	new make(Type[] modules, |This|? in := null) {
@@ -17,9 +17,9 @@ class Frame {
 			.build
 		registry.rootScope.createChildScope("uiThread") { this.scope = it.jailBreak }
 		registry.setDefaultScope(scope)
+
 		scope.inject(this)
 
-		pulsar = Pulsar()
 		pulsar.frequency = 1sec / 60 // 60 FPS
 		pulsar.addListener |->| { screen.repaint }
 	}

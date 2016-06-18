@@ -2,7 +2,8 @@ using afIoc
 
 class App : DemoEvents {
 
-	@Autobuild	private SineDots	sineDots
+	@Inject		private Screen		screen
+//	@Autobuild	private SineDots	sineDots
 	@Autobuild	private GameScreen	gameScreen
 	@Autobuild	private TitleScreen	titleScreen
 				private GameSeg		activeScreen
@@ -11,26 +12,26 @@ class App : DemoEvents {
 		in(this)
 		eventHub.register(this)
 		
-		activeScreen = titleScreen.init
+		activeScreen = titleScreen.onInit
 	}
 
 	override Void onDraw(Gfx g) {
 //		sineDots.draw(g)
-		
-		
-		activeScreen.draw(g)
+		activeScreen.onDraw(g)
 	}
 	
 	Void startGame() {
-		activeScreen = gameScreen.init
+		screen.keys.clear
+		activeScreen = gameScreen.onInit
 	}
 	
 	Void gameOver() {
-		activeScreen = titleScreen.init
+		screen.keys.clear
+		activeScreen = titleScreen.onInit
 	}
 }
 
 mixin GameSeg {
-	abstract This init()
-	abstract Void draw(Gfx g2d)
+	abstract This onInit()
+	abstract Void onDraw(Gfx g2d)
 }

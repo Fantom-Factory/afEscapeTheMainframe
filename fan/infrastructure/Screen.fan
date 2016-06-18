@@ -4,8 +4,8 @@ using afIoc
 
 class Screen : Canvas {
 
-	@Inject private |->Scope|	scope	
 	@Inject private EventHub	eventHub
+	@Inject private Pulsar		pulsar
 					Key:Bool	keys		:= Key:Bool[:]
 
 			private Image		font8x8		:= Image(`fan://afDemo/res/XenonFont8x8.png`)
@@ -22,17 +22,18 @@ class Screen : Canvas {
 	private Void keyDown(Event e) {
 		keys[e.key.primary] = true
 	}
-	
+
 	private Void keyUp(Event e) {
 		keys.remove(e.key.primary)
 	}
-	
+
 	override Void onPaint(Graphics graphics) {
 		g := Gfx(graphics) {
 			it.font8x8		= this.font8x8
 			it.font16x16	= this.font16x16
 		}
 //		g.clear
-		eventHub.fireEvent(DemoEvents#onDraw, [g])
+		if (pulsar.isRunning)
+			eventHub.fireEvent(DemoEvents#onDraw, [g])
 	}	
 }

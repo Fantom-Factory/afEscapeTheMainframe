@@ -1,6 +1,7 @@
 using gfx::Rect
 
 class Fanny : Model {
+	GameData data
 	Float	sy
 	Bool	jumpHeld
 	Bool	jumpEnabled	:= true
@@ -44,11 +45,16 @@ class Fanny : Model {
 		Point3d( 45f, -35f, -15f),
 	]
 	
-	new make(|This| in) : super(in) {
+	new make(GameData data, |This| in) : super(in) {
+		this.data = data
 		xs := (Float[]) points.map { it.x } 
 		ys := (Float[]) points.map { it.y } 
 		w = xs.max - xs.min
 		h = ys.max - ys.min
+		
+		x = -270f
+		y = -110f
+		z = -70f
 	}
 
 	Void jump(Bool jump) {
@@ -118,8 +124,13 @@ class Fanny : Model {
 	}
 	
 	Rect collisionRect() {
-		x := (Float) points.map { it.x + this.x }.min
-		y := (Float) points.map { it.y + this.y }.max
-		return Rect(x.toInt, y.toInt, w.toInt, h.toInt)
+		xs := (Float[]) points.map { it.x } 
+		ys := (Float[]) points.map { it.y } 
+		w = xs.max - xs.min
+		h = ys.max - ys.min
+		
+		x := (Float) points.map { it.x }.min
+		y := (Float) points.map { it.y }.max
+		return Rect((this.x + x).toInt, -(this.y + y).toInt, w.toInt, h.toInt)
 	}
 }

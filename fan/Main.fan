@@ -3,6 +3,10 @@ using gfx
 using afIoc
 
 class Main {
+	static const Duration startTime := Duration.now
+	static Void logNow(Str msg) {
+		echo("$msg - " + (Duration.now - startTime).toLocale)
+	}
 	
 	static Void main(Str[] args) {
 		
@@ -18,12 +22,16 @@ class Main {
 	
 	static Void doMain(Type[] modules, |Window, Scope|? onOpen := null) {
 		frame := Frame(modules)
+		logNow("Made Frame")
 		Window {
 			win := it
 			it.add(frame.widget)
 			it.onOpen.add  |->| { 
+				logNow("On open")
 				Desktop.callLater(50ms) |->| {
+					logNow("frame start")
 					frame.startup
+					logNow("on open")
 					onOpen?.call(win, frame.scope)
 				}
 			}
