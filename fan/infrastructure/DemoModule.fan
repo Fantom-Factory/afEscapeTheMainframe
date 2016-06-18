@@ -5,7 +5,8 @@ const class DemoModule {
 	Void defineServices(RegistryBuilder bob) {
 		bob.addScope("uiThread", true)
 		
-		bob.addService(Screen#)		
+		bob.addService(Screen#)
+		bob.addService(Pulsar#)
 		bob.addService(EventHub#)
 		bob.addService(EventTypes#)
 	}
@@ -17,8 +18,8 @@ const class DemoModule {
 
 	Void onRegistryStartup(Configuration config) {
 		config.remove("afIoc.logServices")
-		config.remove("afIoc.logBanner")
-		config.remove("afIoc.logStartupTimes")
+//		config.remove("afIoc.logBanner")
+//		config.remove("afIoc.logStartupTimes")
 	}
 
 	Void onRegistryShutdown(Configuration config) {

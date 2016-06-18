@@ -9,8 +9,6 @@ class Models {
 	static const Color	brand_red		:= Color(0xFF_FF_22_22)
 	static const Color	fanny_silver	:= Color(0xFF_DD_DD_DD)
 	
-	static const Float	scrollSpeed		:= 9f
-	
 	static Model cube() {
 		Model {
 			points = [
@@ -63,8 +61,8 @@ class Models {
 		}
 	}
 
-	static Model grid() {
-		Model {
+	static Model grid(GameData data) {
+		Grid(data) {
 			// (-480 -> 720, -150, -175 -> 175)
 			points = [
 				Point3d(-100f,  50f, 0f),
@@ -119,26 +117,20 @@ class Models {
 				Line([15, 20]),
 				Line([16, 21]),
 			]
-
-			animFunc = |Model model| {
-				model.x -= scrollSpeed
-				if (model.x < -240f)
-					model.x += 240f
-			}
 		}
 	}
 
-	static Block block() {
-		Block {
+	static Block block(GameData data) {
+		Block(data) {
 			points = [
-				Point3d( -25f, -100f, -175f),
-				Point3d(  25f, -100f, -175f),
-				Point3d(  25f, -150f, -175f),
-				Point3d( -25f, -150f, -175f),
-				Point3d( -25f, -100f,  175f),
-				Point3d(  25f, -100f,  175f),
-				Point3d(  25f, -150f,  175f),
-				Point3d( -25f, -150f,  175f),
+				Point3d( -25f,  25f, -175f),
+				Point3d(  25f,  25f, -175f),
+				Point3d(  25f, -25f, -175f),
+				Point3d( -25f, -25f, -175f),
+				Point3d( -25f,  25f,  175f),
+				Point3d(  25f,  25f,  175f),
+				Point3d(  25f, -25f,  175f),
+				Point3d( -25f, -25f,  175f),
 			]
 			
 			drawables = [
@@ -152,18 +144,18 @@ class Models {
 				Poly([3, 2, 6, 7]),	// bottom
 			]
 
-			it.x = 600f
-			
-			animFunc = |Model model| {
-				model.x -= scrollSpeed
-				if (model.x < -600f)
-					model.x += 1200f
-			}
+//			drawFunc = |Model model, Gfx3d g3d| {
+//				pts:=g3d.drawModel(model)
+//				[3].each {
+//					pt := model.points[it].rotate(model.ax, model.ay, model.az).translate(model.x, model.y, model.z)
+//					g3d.drawFont8(pt.toStr, pts[it])
+//				}
+//			}
 		}
 	}
 
-	static Fanny fanny() {
-		Fanny {
+	static Fanny fanny(GameData data) {
+		Fanny(data) {
 			points = [
 				// body
 				Point3d(-15f,  40f, -25f),
@@ -196,23 +188,47 @@ class Models {
 				Edge(null),
 				Poly([11, 9, 10, 8]),	// eyes
 			]
-
-			it.x = -270f
-			it.y = -110f
-			it.z = -70f
 			
-			animFunc = |Model model| {
-			//	model.ay -= 1f/800f
-			}
-
 //			drawFunc = |Model model, Gfx3d g3d| {
 //				pts:=g3d.drawModel(model)
-//				[1, 2].each {
+//				[1].each {
 //					pt := model.points[it].rotate(model.ax, model.ay, model.az).translate(model.x, model.y, model.z)
 //					g3d.drawFont8(pt.toStr, pts[it])
 //				}
 //			}
+		}
+	}
 
+	static Model collision(Rect rect) {
+		Model {
+			xMin := (rect.x + rect.w).min(rect.x).toFloat
+			xMax := (rect.x + rect.w).max(rect.x).toFloat
+			yMax := (rect.y + rect.h).min(rect.y).toFloat.negate
+			yMin := (rect.y + rect.h).max(rect.y).toFloat.negate
+
+			points = [
+				Point3d( xMin, yMax, -35f),
+				Point3d( xMax, yMax, -35f),
+				Point3d( xMax, yMin, -35f),
+				Point3d( xMin, yMin, -35f),
+				Point3d( xMin, yMax,  35f),
+				Point3d( xMax, yMax,  35f),
+				Point3d( xMax, yMin,  35f),
+				Point3d( xMin, yMin,  35f),
+			]
+			
+			drawables = [
+				Fill(Color(0xFF_FF_22_22)),
+				Edge(brand_white),
+				Poly([0, 1, 2, 3]),	// front
+				Poly([7, 6, 5, 4]),	// back
+				Poly([4, 0, 3, 7]),	// left
+				Poly([1, 5, 6, 2]),	// right
+				Poly([4, 5, 1, 0]),	// top
+				Poly([3, 2, 6, 7]),	// bottom
+			]
+			
+			z = -70f
 		}
 	}
 }
