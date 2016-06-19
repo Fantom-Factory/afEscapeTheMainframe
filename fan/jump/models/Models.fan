@@ -21,13 +21,15 @@ class Models {
 				Point3d( 100f, -100f,  100f),
 				Point3d(-100f, -100f,  100f),
 			]
-			scale(0.25f)
-			x += 100
-			y += 50
+//			scale(0.75f)
+//			scale(0.25f)
+//			x += 100
+//			y += 50
 
 			drawables = [
 				Fill(brand_red),
 				Edge(brand_white),
+				Fill(null),
 				Poly([0, 1, 2, 3]),	// front
 				Poly([7, 6, 5, 4]),	// back
 				Poly([4, 0, 3, 7]),	// left
@@ -35,19 +37,19 @@ class Models {
 				Poly([4, 5, 1, 0]),	// top
 				Poly([3, 2, 6, 7]),	// bottom
 				
-//				Misc(brand_white),
-//				Line([0, 1, 2, 3, 0]),
-//				Line([4, 5, 6, 7, 4]),
-//				Line([0, 4]),
-//				Line([1, 5]),
-//				Line([2, 6]),
-//				Line([3, 7]),
+				Edge(brand_white),
+				Line([0, 1, 2, 3, 0]),
+				Line([4, 5, 6, 7, 4]),
+				Line([0, 4]),
+				Line([1, 5]),
+				Line([2, 6]),
+				Line([3, 7]),
 			]
 			
 			animFunc = |Model cube| {
-				cube.ax += 1f/100f
-				cube.ay += 1f/280f
-				cube.az -= 1f/500f
+//				cube.ax += 1f/100f
+//				cube.ay += 1f/280f
+//				cube.az -= 1f/500f
 			}
 			
 //			drawFunc = |Model model, Gfx3d g3d| {

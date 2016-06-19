@@ -14,9 +14,10 @@ class Block : Model {
 		h = ys.max - ys.min
 		
 		this.y = ((-2..3).random * 50f) - 25f
-		this.x = 1200f
+		this.x = 1000f
 
 		this.y = ((-2..0).random * 50f) - 25f
+		this.y = (0 * 50f) - 25f
 //		this.y = (-1 * 50f) - 25f
 	}
 

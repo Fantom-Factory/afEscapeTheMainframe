@@ -28,13 +28,19 @@ class Gfx3d {
 		dy	:= targetPos.y - cameraPos.y
 		dz	:= targetPos.z - cameraPos.z
 		
-		this.ax	= -(dy / dz).atan * (0.5f / Float.pi)
-		this.ay	= (dx / dz).atan * (0.5f / Float.pi)
-		this.az	= 0f
+		// see http://www.wikihow.com/Find-the-Angle-Between-Two-Vectors#Tips
+		p1 := Point3d(0f, 0f, 100f).abs.normalise
+		p2 := Point3d(0f, dy, dz).abs.normalise
+		p3 := Point3d(dx, 0f, dz).abs.normalise
+		
+		ax = Point3d.dotProduct(p1, p2).acos * (0.5f / Float.pi)
+		ay = Point3d.dotProduct(p1, p3).acos * (0.5f / Float.pi)
 
-		this.ax += cameraAngles.x
-		this.ay += cameraAngles.y
-		this.az += cameraAngles.z
+		if (dx < 0f)	ay = -ay
+		if (dz < 0f)	ay = 0.5f - ay
+		
+		if (dy > 0f)	ax = -ax
+		if (dz < 0f)	ax = 0.5f - ax
 		
 		return this
 	}
@@ -43,6 +49,7 @@ class Gfx3d {
 		pts3d := (Point3d[]) model.points.map {
 			it	.rotate(model.ax, model.ay, model.az)
 				.translate(model.x, model.y, model.z)
+				// minus the camera angle, so as the camera position gets more negative, (10,10) moves further away
 				.translate(-cameraPos.x, -cameraPos.y, -cameraPos.z)
 				.rotate(this.ax, this.ay, this.az)
 				.project(300f)
@@ -78,7 +85,13 @@ class Gfx3d {
 	}
 
 	This drawFont8(Str text, Point3d pt) {
-		g2d.drawFont(text, g2d.ox+pt.x.toInt, g2d.oy- pt.y.toInt, g2d.font8x8, 8)
+		g2d.drawFont(text, g2d.ox+pt.x.toInt, g2d.oy - pt.y.toInt, g2d.font8x8, 8)
 		return this
+	}
+	
+	static Float atan2(Float opo, Float adj) {
+		atan := (opo / adj).atan * (0.5f / Float.pi)
+		if (adj > 0f) atan += 0.5f		
+		return atan
 	}
 }

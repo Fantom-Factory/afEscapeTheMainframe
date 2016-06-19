@@ -7,4 +7,6 @@ class GameData {
 	
 	Bool	dying
 	Int		deathCryIdx
+	
+	Bool	invincible		:= true
 }
