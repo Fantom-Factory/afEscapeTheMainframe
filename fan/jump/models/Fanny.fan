@@ -6,8 +6,6 @@ class Fanny : Model {
 	Bool	jumpHeld
 	Bool	jumpEnabled	:= true
 	Bool	squished
-	Float	w
-	Float	h
 
 	Point3d[] normPoints := Point3d[
 		// body
@@ -47,12 +45,8 @@ class Fanny : Model {
 	
 	new make(GameData data, |This| in) : super(in) {
 		this.data = data
-		xs := (Float[]) points.map { it.x } 
-		ys := (Float[]) points.map { it.y } 
-		w = xs.max - xs.min
-		h = ys.max - ys.min
 		
-		x = -270f
+		x = -280f
 		y = -110f
 		z = -70f
 	}
@@ -126,9 +120,8 @@ class Fanny : Model {
 	Rect collisionRect() {
 		xs := (Float[]) points.map { it.x } 
 		ys := (Float[]) points.map { it.y } 
-		w = xs.max - xs.min
-		h = ys.max - ys.min
-		
+		w  := xs.max - xs.min
+		h  := ys.max - ys.min
 		x := (Float) points.map { it.x }.min
 		y := (Float) points.map { it.y }.max
 		return Rect((this.x + x).toInt, -(this.y + y).toInt, w.toInt, h.toInt)

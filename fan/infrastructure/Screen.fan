@@ -21,6 +21,10 @@ class Screen : Canvas {
 	
 	private Void keyDown(Event e) {
 		keys[e.key.primary] = true
+		if (e.key.isShift)
+			keys[Key.shift] = true
+		else
+			keys.remove(Key.shift)
 	}
 
 	private Void keyUp(Event e) {
