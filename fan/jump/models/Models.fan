@@ -8,6 +8,9 @@ class Models {
 	static const Color	brand_white		:= Color(0xFF_FF_FF_FF)
 	static const Color	brand_red		:= Color(0xFF_FF_22_22)
 	static const Color	fanny_silver	:= Color(0xFF_DD_DD_DD)
+	static const Color	block_collide	:= Color(0xFF_FF_22_22)
+	static const Color	cube_yellow		:= brand_red
+	static const Color	cube_edge		:= brand_white
 	
 	static Model cube() {
 		Model {
@@ -22,14 +25,14 @@ class Models {
 				Point3d(-100f, -100f,  100f),
 			]
 //			scale(0.75f)
-//			scale(0.25f)
-//			x += 100
-//			y += 50
+			scale(0.25f)
+			x += 200
+			y += 50
 
 			drawables = [
-				Fill(brand_red),
-				Edge(brand_white),
-				Fill(null),
+				Fill(cube_yellow),
+				Edge(cube_edge),
+//				Fill(null),
 				Poly([0, 1, 2, 3]),	// front
 				Poly([7, 6, 5, 4]),	// back
 				Poly([4, 0, 3, 7]),	// left
@@ -37,19 +40,19 @@ class Models {
 				Poly([4, 5, 1, 0]),	// top
 				Poly([3, 2, 6, 7]),	// bottom
 				
-				Edge(brand_white),
-				Line([0, 1, 2, 3, 0]),
-				Line([4, 5, 6, 7, 4]),
-				Line([0, 4]),
-				Line([1, 5]),
-				Line([2, 6]),
-				Line([3, 7]),
+//				Edge(brand_white),
+//				Line([0, 1, 2, 3, 0]),
+//				Line([4, 5, 6, 7, 4]),
+//				Line([0, 4]),
+//				Line([1, 5]),
+//				Line([2, 6]),
+//				Line([3, 7]),
 			]
 			
 			animFunc = |Model cube| {
-//				cube.ax += 1f/100f
-//				cube.ay += 1f/280f
-//				cube.az -= 1f/500f
+				cube.ax += 1f/100f
+				cube.ay += 1f/280f
+				cube.az -= 1f/500f
 			}
 			
 //			drawFunc = |Model model, Gfx3d g3d| {
@@ -67,31 +70,37 @@ class Models {
 		Grid(data) {
 			// (-480 -> 720, -150, -175 -> 175)
 			points = [
-				Point3d(-100f,  50f, 0f),
-				Point3d(- 60f,  50f, 0f),
-				Point3d(- 20f,  50f, 0f),
-				Point3d(  20f,  50f, 0f),
-				Point3d(  60f,  50f, 0f),
-				Point3d( 100f,  50f, 0f),
+				Point3d(-160f,  50f, 0f),
+				Point3d(-120f,  50f, 0f),
+				Point3d(- 80f,  50f, 0f),
+				Point3d(- 40f,  50f, 0f),
+				Point3d(   0f,  50f, 0f),
+				Point3d(  40f,  50f, 0f),
+				Point3d(  80f,  50f, 0f),
+				Point3d( 120f,  50f, 0f),
+				Point3d( 160f,  50f, 0f),
 
-				Point3d(-100f, -50f, 0f),
-				Point3d(- 60f, -50f, 0f),
-				Point3d(- 20f, -50f, 0f),
-				Point3d(  20f, -50f, 0f),
-				Point3d(  60f, -50f, 0f),
-				Point3d( 100f, -50f, 0f),
+				Point3d(-160f, -50f, 0f),
+				Point3d(-120f, -50f, 0f),
+				Point3d(- 80f, -50f, 0f),
+				Point3d(- 40f, -50f, 0f),
+				Point3d(   0f, -50f, 0f),
+				Point3d(  40f, -50f, 0f),
+				Point3d(  80f, -50f, 0f),
+				Point3d( 120f, -50f, 0f),
+				Point3d( 160f, -50f, 0f),
 
-				Point3d(-100f,  30f, 0f),
-				Point3d(-100f,  10f, 0f),
-				Point3d(-100f, -10f, 0f),
-				Point3d(-100f, -30f, 0f),
-				Point3d(-100f, -50f, 0f),
+				Point3d(-160f,  30f, 0f),
+				Point3d(-160f,  10f, 0f),
+				Point3d(-160f, -10f, 0f),
+				Point3d(-160f, -30f, 0f),
+				Point3d(-160f, -50f, 0f),
 
-				Point3d( 100f,  30f, 0f),
-				Point3d( 100f,  10f, 0f),
-				Point3d( 100f, -10f, 0f),
-				Point3d( 100f, -30f, 0f),
-				Point3d( 100f, -50f, 0f),
+				Point3d( 160f,  30f, 0f),
+				Point3d( 160f,  10f, 0f),
+				Point3d( 160f, -10f, 0f),
+				Point3d( 160f, -30f, 0f),
+				Point3d( 160f, -50f, 0f),
 			]
 			rotate	(-0.25f,  0f, 0f)
 			translate(20f,  -150f, 0f)
@@ -100,24 +109,27 @@ class Models {
 			drawables = [
 				Fill(brand_darkBlue),
 				Edge(null),
-				Poly([11, 6, 0, 5]),
+				Poly([17, 9, 0, 8]),
 				
 				Edge(brand_lightBlue),
-				Line([ 0,  6]),
-				Line([ 1,  7]),
-				Line([ 2,  8]),
-				Line([ 3,  9]),
-				Line([ 4, 10]),
-				Line([ 5, 11]),
+				Line([ 0,  9]),
+				Line([ 1, 10]),
+				Line([ 2, 11]),
+				Line([ 3, 12]),
+				Line([ 4, 13]),
+				Line([ 5, 14]),
+				Line([ 6, 15]),
+				Line([ 7, 16]),
+				Line([ 8, 17]),
 				
-				Line([ 0,  5]),
-				Line([ 6, 11]),
+				Line([ 0,  8]),
+				Line([ 9, 17]),
 				
-				Line([12, 17]),
-				Line([13, 18]),
-				Line([14, 19]),
-				Line([15, 20]),
-				Line([16, 21]),
+				Line([18, 23]),
+				Line([19, 24]),
+				Line([20, 25]),
+				Line([21, 26]),
+				Line([22, 27]),
 			]
 		}
 	}
@@ -125,14 +137,14 @@ class Models {
 	static Block block(GameData data) {
 		Block(data) {
 			points = [
-				Point3d( -25f,  25f, -175f),
+				Point3d( -125f,  25f, -175f),
 				Point3d(  25f,  25f, -175f),
 				Point3d(  25f, -25f, -175f),
-				Point3d( -25f, -25f, -175f),
-				Point3d( -25f,  25f,  175f),
+				Point3d( -125f, -25f, -175f),
+				Point3d( -125f,  25f,  175f),
 				Point3d(  25f,  25f,  175f),
 				Point3d(  25f, -25f,  175f),
-				Point3d( -25f, -25f,  175f),
+				Point3d( -125f, -25f,  175f),
 			]
 			
 			drawables = [
@@ -198,39 +210,6 @@ class Models {
 //					g3d.drawFont8(pt.toStr, pts[it])
 //				}
 //			}
-		}
-	}
-
-	static Model collision(Rect rect) {
-		Model {
-			xMin := (rect.x + rect.w).min(rect.x).toFloat
-			xMax := (rect.x + rect.w).max(rect.x).toFloat
-			yMax := (rect.y + rect.h).min(rect.y).toFloat.negate
-			yMin := (rect.y + rect.h).max(rect.y).toFloat.negate
-
-			points = [
-				Point3d( xMin, yMax, -35f),
-				Point3d( xMax, yMax, -35f),
-				Point3d( xMax, yMin, -35f),
-				Point3d( xMin, yMin, -35f),
-				Point3d( xMin, yMax,  35f),
-				Point3d( xMax, yMax,  35f),
-				Point3d( xMax, yMin,  35f),
-				Point3d( xMin, yMin,  35f),
-			]
-			
-			drawables = [
-				Fill(Color(0xFF_FF_22_22)),
-				Edge(brand_white),
-				Poly([0, 1, 2, 3]),	// front
-				Poly([7, 6, 5, 4]),	// back
-				Poly([4, 0, 3, 7]),	// left
-				Poly([1, 5, 6, 2]),	// right
-				Poly([4, 5, 1, 0]),	// top
-				Poly([3, 2, 6, 7]),	// bottom
-			]
-			
-			z = -70f
 		}
 	}
 }

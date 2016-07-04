@@ -46,7 +46,7 @@ class Fanny : Model {
 	new make(GameData data, |This| in) : super(in) {
 		this.data = data
 		
-		x = -280f
+		x = -420f
 		y = -110f
 		z = -70f
 	}
@@ -122,8 +122,13 @@ class Fanny : Model {
 		ys := (Float[]) points.map { it.y } 
 		w  := xs.max - xs.min
 		h  := ys.max - ys.min
-		x := (Float) points.map { it.x }.min
-		y := (Float) points.map { it.y }.max
+		x  := xs.min
+		y  := ys.max
 		return Rect((this.x + x).toInt, -(this.y + y).toInt, w.toInt, h.toInt)
+	}
+
+	Float xMin() {
+		xs := (Float[]) points.map { it.x } 
+		return xs.min + this.x
 	}
 }

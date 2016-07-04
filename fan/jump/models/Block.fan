@@ -13,11 +13,11 @@ class Block : Model {
 		w = xs.max - xs.min
 		h = ys.max - ys.min
 		
-		this.y = ((-2..3).random * 50f) - 25f
+//		this.y = ((-2..3).random * 50f) - 25f
 		this.x = 1000f
 
 		this.y = ((-2..0).random * 50f) - 25f
-		this.y = (0 * 50f) - 25f
+//		this.y = (2 * 50f) - 25f
 //		this.y = (-1 * 50f) - 25f
 	}
 
@@ -34,5 +34,10 @@ class Block : Model {
 		x := (Float) points.map { it.x }.min
 		y := (Float) points.map { it.y }.max
 		return Rect((this.x + x).toInt, -(this.y + y).toInt, w.toInt, h.toInt)
+	}
+	
+	Float xMax() {
+		xs := (Float[]) points.map { it.x }
+		return xs.max + this.x
 	}
 }
