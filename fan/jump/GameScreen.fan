@@ -3,13 +3,21 @@ using gfx::Color
 using gfx::Rect
 using afIoc::Inject
 
+//// http://fantom.org/forum/topic/2547
+//using gfx::Size
+//using gfx::Image
+//using [java] fan.fwt::Fwt
+//using [java] fan.fwt::FwtGraphics
+//using [java] fanx.interop::Interop
+//using [java] org.eclipse.swt.graphics::Image as SwtImage
+//using [java] org.eclipse.swt.widgets::Display as SwtDisplay
+
 class GameScreen : GameSeg {
 
 	@Inject	private Screen		screen
 	@Inject	private |->App|		app
 			private Model?		cube
 			private Model?		grid
-			private Model?		collision
 			private Block[]		blcks	:= Block[,]
 			private Fanny?		fany
 			private	GameData?	data
@@ -19,7 +27,6 @@ class GameScreen : GameSeg {
 	override This onInit() {
 		data	= GameData()
 		blcks.clear
-		collision = null
 		cube	= Models.cube
 		grid	= Models.grid(data)
 		fany	= Models.fanny(data)
@@ -31,28 +38,55 @@ class GameScreen : GameSeg {
 		gameLogic()
 		anim()
 		draw(g2d)
+		
+//		buf  := `res/Fanny-x80.png`.toFile.readAllBuf
+//		fanImg := makeImageFromBuf(buf)
+//		g2d.drawImage(fanImg, -100, -100)
 	}
 
+//	// http://fantom.org/forum/topic/2547
+//	Image makeImageFromBuf(Buf buf) {
+//		swtImg  := SwtImage(SwtDisplay.getCurrent ?: SwtDisplay(), Interop.toJava(buf.seek(0).in))
+//		imgSize := Size(swtImg.getBounds.width, swtImg.getBounds.height)
+//		imgUri	:= `mem-${Uuid()}`
+//		fanImg	:= Image.makeFields(imgUri, ``.toFile)
+//		images  := Interop.toJava(Fwt#).getDeclaredField("images")
+//		images.setAccessible(true)
+//		images.get(Fwt.get)->put(imgUri, swtImg)
+//		return fanImg
+//	}
+	
 	Void gameLogic() {
 		blcks = blcks.exclude { it.killMe }
 		if (blcks.size == 0 || (blcks.last.x < -100f && blcks.size < 3)) {
 //		if (data.newBlockPlease) {
+			// FIXME Top block MUST be drawn first! And then fanny in the middle
+//			blcks.add(Models.block(data) { it.y -= 200f })
 			blcks.add(Models.block(data))
 			data.newBlockPlease = false
 		}
 		
-		if (!data.dying && !data.invincible) {
+		if (!data.dying) {
 			fect  := fany.collisionRect
 			crash := blcks.eachWhile |blck->Rect?| {
 				col := fect.intersection(blck.collisionRect)
-				return col == Rect.defVal ? null : col
+				if (col == Rect.defVal) {
+					blck.drawables[0] = Fill(Models.brand_darkBlue)
+					blck.drawables[1] = Edge(Models.brand_lightBlue)
+					return null
+				}
+				blck.drawables[0] = Fill(Models.block_collide)
+				blck.drawables[1] = Edge(Models.brand_white)
+				return col
 			}
-			if (crash != null) {
-				data.dying = true
-				collision = Models.collision(crash)
+			if (crash != null && !data.invincible) {
 				
-				// make transparent
-				blcks.each { it.drawables[0] = Fill(null) }
+				if (overlap(crash, fany)) {
+					data.dying = true
+
+					// make transparent
+//					blcks.each { it.drawables[0] = Fill(null) }
+				}
 			}
 		}
 		
@@ -62,7 +96,7 @@ class GameScreen : GameSeg {
 		
 		if (data.deathCryIdx == 220) {
 			app().gameOver
-		}		
+		}
 	}
 	
 	Void keyLogic() {
@@ -104,14 +138,14 @@ class GameScreen : GameSeg {
 		grid.draw(g3d)
 		
 		// this depends on camera angle
-		fannyDrawn := false
+		fannyDrawn	:= false
+		fannyXmin	:= fany.xMin
 		blcks.each |blck| {	// blks should already X sorted
-			if (blck.x < fany.x)
+			if (blck.xMax < fannyXmin)
 				blck.draw(g3d)
 			else {
 				if (!fannyDrawn) {
 					fany.draw(g3d)
-					collision?.draw(g3d)
 					fannyDrawn = true
 				}
 				blck.draw(g3d)
@@ -119,7 +153,6 @@ class GameScreen : GameSeg {
 		}
 		if (!fannyDrawn) {
 			fany.draw(g3d)
-			collision?.draw(g3d)
 		}
 		
 		cube.draw(g3d)
@@ -148,5 +181,10 @@ class GameScreen : GameSeg {
 	Float ds	:= 1f
 	
 	Point3d camera	:= Point3d(0f, 0f, -500f) 
-	Point3d target	:= Point3d(0f, -75f, 0f) 
+	Point3d target	:= Point3d(0f, -75f, 0f)
+	
+	
+	Bool overlap(Rect col, Fanny fany) {
+		return false
+	}
 }
