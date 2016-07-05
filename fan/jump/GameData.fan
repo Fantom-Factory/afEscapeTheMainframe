@@ -1,7 +1,7 @@
 
 class GameData {
 	
-	Float	floorSpeed		:= 9f
+	Float	floorSpeed		:= 2f
 	
 	Bool	newBlockPlease	:= true
 	

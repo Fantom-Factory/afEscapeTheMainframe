@@ -23,7 +23,7 @@ class Block : Model {
 
 	override This anim() {
 		x -= data.floorSpeed
-		if (x < -600f) {
+		if (x < -900f) {
 			killMe = true
 			data.newBlockPlease = true
 		}

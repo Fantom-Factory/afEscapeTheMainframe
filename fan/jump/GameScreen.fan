@@ -68,25 +68,23 @@ class GameScreen : GameSeg {
 		
 		if (!data.dying) {
 			fect  := fany.collisionRect
-			crash := blcks.eachWhile |blck->Rect?| {
-				col := fect.intersection(blck.collisionRect)
-				if (col == Rect.defVal) {
+			crash := blcks.any |blck| {
+				col := fany.intersects(blck)
+				
+				if (!col) {
 					blck.drawables[0] = Fill(Models.brand_darkBlue)
 					blck.drawables[1] = Edge(Models.brand_lightBlue)
-					return null
+					return false
 				}
+				
 				blck.drawables[0] = Fill(Models.block_collide)
 				blck.drawables[1] = Edge(Models.brand_white)
 				return col
 			}
-			if (crash != null && !data.invincible) {
-				
-				if (overlap(crash, fany)) {
-					data.dying = true
-
-					// make transparent
-//					blcks.each { it.drawables[0] = Fill(null) }
-				}
+			if (crash && !data.invincible) {
+				data.dying = true
+				// make transparent
+//				blcks.each { it.drawables[0] = Fill(null) }
 			}
 		}
 		
@@ -166,9 +164,10 @@ class GameScreen : GameSeg {
 //		ax := dx/500f
 //		camera = Point3d(0f, 0f, -500f).rotate(ay+0.0f, ax, 0f)
 		
-		delta := 110f + fany.y
-		camera = Point3d(0f, 0f, -500f).translate(0f, delta / 2f, 0f) //{ echo("Cam: $it") }
-		target = Point3d(0f, -75f,  0f).translate(0f, delta / 2f, 0f) //{ echo("Tar: $it") }
+		// uncomment to alter camera view
+//		delta := 110f + fany.y
+//		camera = Point3d(0f, 0f, -500f).translate(0f, delta / 2f, 0f) //{ echo("Cam: $it") }
+//		target = Point3d(0f, -75f,  0f).translate(0f, delta / 2f, 0f) //{ echo("Tar: $it") }
 		
 //		if (fany.squished) {
 //			target = Point3d(0f, -75f, 0f).translate(0f, -50f, 0f) { echo("Tar: $it") }
@@ -182,9 +181,5 @@ class GameScreen : GameSeg {
 	
 	Point3d camera	:= Point3d(0f, 0f, -500f) 
 	Point3d target	:= Point3d(0f, -75f, 0f)
-	
-	
-	Bool overlap(Rect col, Fanny fany) {
-		return false
-	}
 }
+
