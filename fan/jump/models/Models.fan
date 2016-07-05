@@ -137,14 +137,14 @@ class Models {
 	static Block block(GameData data) {
 		Block(data) {
 			points = [
-				Point3d( -125f,  25f, -175f),
+				Point3d(-125f,  25f, -175f),
 				Point3d(  25f,  25f, -175f),
 				Point3d(  25f, -25f, -175f),
-				Point3d( -125f, -25f, -175f),
-				Point3d( -125f,  25f,  175f),
+				Point3d(-125f, -25f, -175f),
+				Point3d(-125f,  25f,  175f),
 				Point3d(  25f,  25f,  175f),
 				Point3d(  25f, -25f,  175f),
-				Point3d( -125f, -25f,  175f),
+				Point3d(-125f, -25f,  175f),
 			]
 			
 			drawables = [
