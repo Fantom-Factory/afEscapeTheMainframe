@@ -17,7 +17,7 @@ class Main {
 			win.size = Size(768, 288)
 //			it.size = Size(640, 360)
 			win.title = "Fanny the Fantom"
-//			win.icon = Image(`fan://afFish/res/console.png`)
+			win.icon = Image(`fan://afDemo/res/fanny-x32.png`)
 		}
 
 	}	
