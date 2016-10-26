@@ -15,8 +15,7 @@ class Frame {
 			.addModule(DemoModule#)
 			.addModules(modules)
 			.build
-		registry.rootScope.createChildScope("uiThread") { this.scope = it.jailBreak }
-		registry.setDefaultScope(scope)
+		registry.rootScope.createChild("uiThread") { this.scope = it.jailBreak }
 
 		scope.inject(this)
 

@@ -2,25 +2,18 @@ using fwt::Key
 using gfx::Color
 using gfx::Rect
 using afIoc::Inject
-
-//// http://fantom.org/forum/topic/2547
-//using gfx::Size
-//using gfx::Image
-//using [java] fan.fwt::Fwt
-//using [java] fan.fwt::FwtGraphics
-//using [java] fanx.interop::Interop
-//using [java] org.eclipse.swt.graphics::Image as SwtImage
-//using [java] org.eclipse.swt.widgets::Display as SwtDisplay
+using afIoc::Autobuild
 
 class GameScreen : GameSeg {
 
-	@Inject	private Screen		screen
-	@Inject	private |->App|		app
-			private Model?		cube
-			private Model?		grid
-			private Block[]		blcks	:= Block[,]
-			private Fanny?		fany
-			private	GameData?	data
+	@Inject		private Screen		screen
+	@Inject		private |->App|		app
+	@Autobuild	private	Funcs		funcs
+				private Model?		cube
+				private Model?		grid
+				private Block[]		blcks	:= Block[,]
+				private Fanny?		fany
+				private	GameData?	data
 	
 	new make(|This| in) { in(this) }
 
@@ -43,23 +36,16 @@ class GameScreen : GameSeg {
 //		fanImg := makeImageFromBuf(buf)
 //		g2d.drawImage(fanImg, -100, -100)
 	}
-
-//	// http://fantom.org/forum/topic/2547
-//	Image makeImageFromBuf(Buf buf) {
-//		swtImg  := SwtImage(SwtDisplay.getCurrent ?: SwtDisplay(), Interop.toJava(buf.seek(0).in))
-//		imgSize := Size(swtImg.getBounds.width, swtImg.getBounds.height)
-//		imgUri	:= `mem-${Uuid()}`
-//		fanImg	:= Image.makeFields(imgUri, ``.toFile)
-//		images  := Interop.toJava(Fwt#).getDeclaredField("images")
-//		images.setAccessible(true)
-//		images.get(Fwt.get)->put(imgUri, swtImg)
-//		return fanImg
-//	}
 	
 	Void gameLogic() {
 		blcks = blcks.exclude { it.killMe }
-		if (blcks.size == 0 || (blcks.last.x < -100f && blcks.size < 3)) {
-//		if (data.newBlockPlease) {
+		
+		data.distSinceLastBlock += data.floorSpeed
+		data.newBlockPlease = funcs.funcNewBlock(data.level, data.distSinceLastBlock, data.floorSpeed)
+		
+		if (data.newBlockPlease) {
+			data.distSinceLastBlock = 0f
+
 			// FIXME Top block MUST be drawn first! And then fanny in the middle
 //			blcks.add(Models.block(data) { it.y -= 200f })
 			blcks.add(Models.block(data))
@@ -105,19 +91,19 @@ class GameScreen : GameSeg {
 		fany.squish(squish)
 		fany.ghost(ghost)
 		
-		speed := null as Float
-		if (screen.keys[Key.num1] == true)	speed = 1f
-		if (screen.keys[Key.num2] == true)	speed = 2f
-		if (screen.keys[Key.num3] == true)	speed = 3f
-		if (screen.keys[Key.num4] == true)	speed = 4f
-		if (screen.keys[Key.num5] == true)	speed = 5f
-		if (screen.keys[Key.num6] == true)	speed = 6f
-		if (screen.keys[Key.num7] == true)	speed = 7f
-		if (screen.keys[Key.num8] == true)	speed = 8f
-		if (screen.keys[Key.num9] == true)	speed = 9f
-		if (speed != null) {
-			data.floorSpeed = ((25f - 8f) * (speed / 9f)) + 8f
-		}
+		level := null as Int
+		if (screen.keys[Key.num1] == true)	level = 1
+		if (screen.keys[Key.num2] == true)	level = 2
+		if (screen.keys[Key.num3] == true)	level = 3
+		if (screen.keys[Key.num4] == true)	level = 4
+		if (screen.keys[Key.num5] == true)	level = 5
+		if (screen.keys[Key.num6] == true)	level = 6
+		if (screen.keys[Key.num7] == true)	level = 7
+		if (screen.keys[Key.num8] == true)	level = 8
+		if (screen.keys[Key.num9] == true)	level = 9
+		if (screen.keys[Key.num0] == true)	level = 10
+		if (level != null)
+			data.level = level
 	}
 	
 	Void anim() {
