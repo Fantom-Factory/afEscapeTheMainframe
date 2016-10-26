@@ -19,7 +19,7 @@ const class DemoModule {
 	Void onRegistryStartup(Configuration config) {
 		config.remove("afIoc.logServices")
 //		config.remove("afIoc.logBanner")
-//		config.remove("afIoc.logStartupTimes")
+		config.remove("afIoc.logStartupTimes")
 	}
 
 	Void onRegistryShutdown(Configuration config) {

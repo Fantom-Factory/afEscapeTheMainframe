@@ -4,6 +4,7 @@ using afIoc
 
 class Main {
 	static const Duration startTime := Duration.now
+
 	static Void logNow(Str msg) {
 		echo("$msg - " + (Duration.now - startTime).toLocale)
 	}
