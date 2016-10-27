@@ -2,9 +2,9 @@ using gfx::Rect
 
 class Block : Model {
 	GameData	data
-	Float	w
-	Float	h
-	Bool	killMe
+	Float		w
+	Float		h
+	Bool		killMe
 	
 	new make(GameData data, |This| in) : super(in) {
 		this.data = data
@@ -13,20 +13,14 @@ class Block : Model {
 		w = xs.max - xs.min
 		h = ys.max - ys.min
 		
-//		this.y = ((-2..3).random * 50f) - 25f
+		this.y = -25f - 50f - 50f
 		this.x = 1000f
-
-		this.y = ((-2..0).random * 50f) - 25f
-//		this.y = (2 * 50f) - 25f
-//		this.y = (-1 * 50f) - 25f
 	}
 
 	override This anim() {
 		x -= data.floorSpeed
-		if (x < -900f) {
+		if (x < -1000f)
 			killMe = true
-			data.newBlockPlease = true
-		}
 		return this
 	}
 	
