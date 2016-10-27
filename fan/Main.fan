@@ -13,7 +13,7 @@ class Main {
 		
 		doMain([AppModule#]) |win| {
 			// https://pacoup.com/2011/06/12/list-of-true-169-resolutions/
-			win.size = Size(512, 288)
+//			win.size = Size(512, 288)
 			win.size = Size(768, 288)
 //			it.size = Size(640, 360)
 			win.title = "Fanny the Fantom"

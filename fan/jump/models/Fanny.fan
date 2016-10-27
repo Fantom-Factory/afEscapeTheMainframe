@@ -159,15 +159,15 @@ class Fanny : Model {
 		return points.any { inter.doLinesIntersect(it) }
 	}
 	
-	Rect collisionRect() {
-		xs := (Float[]) points.map { it.x } 
-		ys := (Float[]) points.map { it.y } 
-		w  := xs.max - xs.min
-		h  := ys.max - ys.min
-		x  := xs.min
-		y  := ys.max
-		return Rect((this.x + x).toInt, -(this.y + y).toInt, w.toInt, h.toInt)
-	}
+//	Rect collisionRect() {
+//		xs := (Float[]) points.map { it.x } 
+//		ys := (Float[]) points.map { it.y } 
+//		w  := xs.max - xs.min
+//		h  := ys.max - ys.min
+//		x  := xs.min
+//		y  := ys.max
+//		return Rect((this.x + x).toInt, -(this.y + y).toInt, w.toInt, h.toInt)
+//	}
 
 	Float xMin() {
 		xs := (Float[]) points.map { it.x } 

@@ -51,6 +51,12 @@ class Funcs {
 		this.allowedLevels = allowedLevels
 	}
 	
+	Float funcfloorSpeed(Int level) {
+//		((25f - 8f) * (level / 9f) / 2) + 8f
+//		((25f - 8f) * (level / 9f)) + 8f
+		((25f - 8f) * (1 / 9f)) + 8f
+	}
+
 	Bool funcNewBlock(Int level, Float distance, Float speed) {
 		level--
 
@@ -90,6 +96,7 @@ class Funcs {
 
 		b := Models.block(data, x, y) {
 			it.y += (z * 50f)
+			it.score = (x+1) * (y+1)
 		}
 		
 		return b
