@@ -5,6 +5,7 @@ class Block : Model {
 	Float		w
 	Float		h
 	Bool		killMe
+	Int			score
 	
 	new make(GameData data, |This| in) : super(in) {
 		this.data = data

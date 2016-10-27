@@ -36,6 +36,7 @@ class GameScreen : GameSeg {
 	Void gameLogic() {
 		blcks = blcks.exclude { it.killMe }
 		
+		data.floorSpeed	= funcs.funcfloorSpeed(data.level)
 		data.distSinceLastBlock += data.floorSpeed
 		data.newBlockPlease = funcs.funcNewBlock(data.level, data.distSinceLastBlock, data.floorSpeed)
 		
@@ -49,7 +50,6 @@ class GameScreen : GameSeg {
 		}
 		
 		if (!data.dying) {
-			fect  := fany.collisionRect
 			crash := blcks.any |blck| {
 				col := fany.intersects(blck)
 				
@@ -63,10 +63,21 @@ class GameScreen : GameSeg {
 				blck.drawables[1] = Edge(Models.brand_white)
 				return col
 			}
+
 			if (crash && !data.invincible) {
 				data.dying = true
 				// make transparent
 //				blcks.each { it.drawables[0] = Fill(null) }
+			}
+			
+			fannyXmin	:= fany.xMin
+			blcks.each |blck| {
+				if (blck.score > 0) {
+					if (blck.xMax < fannyXmin) {
+						data.score += blck.score
+						blck.score = 0
+					}
+				}
 			}
 		}
 		
@@ -100,7 +111,6 @@ class GameScreen : GameSeg {
 		if (screen.keys[Key.num0] == true)	level = 10
 		if (level != null) {
 			data.level = level
-			echo("Level $level")
 		}
 	}
 	
@@ -138,7 +148,8 @@ class GameScreen : GameSeg {
 		}
 		
 		cube.draw(g3d)
-	
+		
+		drawHud(g2d)
 
 //		if (screen.keys[Key.up] == true)	dy -= ds
 //		if (screen.keys[Key.down] == true)	dy += ds
@@ -152,6 +163,18 @@ class GameScreen : GameSeg {
 //		delta := 110f + fany.y
 //		camera = Point3d(0f, 0f, -500f).translate(0f, delta / 2f, 0f) //{ echo("Cam: $it") }
 //		target = Point3d(0f, -75f,  0f).translate(0f, delta / 2f, 0f) //{ echo("Tar: $it") }		
+	}
+	
+	Void drawHud(Gfx g2d) {
+		g2d.brush = Color.white
+		
+		scoreStr := "Score " + data.score.toStr.justr(4)
+		x := (g2d.bounds.w / 2) - (scoreStr.size * 16)
+		y := -g2d.bounds.h / 2
+		g2d.drawFont16(scoreStr, x, y)
+		
+		x = -g2d.bounds.w / 2
+		g2d.drawFont16("Level ${data.level}", x, y)
 	}
 	
 	Float dx	:= 0f
