@@ -31,10 +31,6 @@ class GameScreen : GameSeg {
 		gameLogic()
 		anim()
 		draw(g2d)
-		
-//		buf  := `res/Fanny-x80.png`.toFile.readAllBuf
-//		fanImg := makeImageFromBuf(buf)
-//		g2d.drawImage(fanImg, -100, -100)
 	}
 	
 	Void gameLogic() {
@@ -44,12 +40,12 @@ class GameScreen : GameSeg {
 		data.newBlockPlease = funcs.funcNewBlock(data.level, data.distSinceLastBlock, data.floorSpeed)
 		
 		if (data.newBlockPlease) {
+			data.newBlockPlease 	= false
 			data.distSinceLastBlock = 0f
 
 			// FIXME Top block MUST be drawn first! And then fanny in the middle
-//			blcks.add(Models.block(data) { it.y -= 200f })
-			blcks.add(Models.block(data))
-			data.newBlockPlease = false
+			blk := funcs.funcBlock(data, data.level, data.distSinceLastBlock)
+			blcks.add(blk)
 		}
 		
 		if (!data.dying) {
@@ -102,8 +98,10 @@ class GameScreen : GameSeg {
 		if (screen.keys[Key.num8] == true)	level = 8
 		if (screen.keys[Key.num9] == true)	level = 9
 		if (screen.keys[Key.num0] == true)	level = 10
-		if (level != null)
+		if (level != null) {
 			data.level = level
+			echo("Level $level")
+		}
 	}
 	
 	Void anim() {
@@ -153,12 +151,7 @@ class GameScreen : GameSeg {
 		// uncomment to alter camera view
 //		delta := 110f + fany.y
 //		camera = Point3d(0f, 0f, -500f).translate(0f, delta / 2f, 0f) //{ echo("Cam: $it") }
-//		target = Point3d(0f, -75f,  0f).translate(0f, delta / 2f, 0f) //{ echo("Tar: $it") }
-		
-//		if (fany.squished) {
-//			target = Point3d(0f, -75f, 0f).translate(0f, -50f, 0f) { echo("Tar: $it") }
-//		} else
-//			target = Point3d(0f, -75f, 0f)
+//		target = Point3d(0f, -75f,  0f).translate(0f, delta / 2f, 0f) //{ echo("Tar: $it") }		
 	}
 	
 	Float dx	:= 0f

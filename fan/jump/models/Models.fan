@@ -55,9 +55,9 @@ class Models {
 				cube.az -= 1f/500f
 			}
 			
+			// draws coors on the screen
 //			drawFunc = |Model model, Gfx3d g3d| {
 //				pts := g3d.drawModel(model)
-//				
 //				[0, 1, 2].each {
 //					pt := model.points[it].rotate(model.ax, model.ay, model.az)
 //					g3d.drawFont8(pt.toStr, pts[it])					
@@ -134,17 +134,19 @@ class Models {
 		}
 	}
 
-	static Block block(GameData data) {
+	static Block block(GameData data, Int x, Int y) {
 		Block(data) {
+			xMax := 25f + (x * 50f);
+			yMax := 25f + (y * 50f);
 			points = [
-				Point3d(-125f,  25f, -175f),
-				Point3d(  25f,  25f, -175f),
-				Point3d(  25f, -25f, -175f),
-				Point3d(-125f, -25f, -175f),
-				Point3d(-125f,  25f,  175f),
-				Point3d(  25f,  25f,  175f),
-				Point3d(  25f, -25f,  175f),
-				Point3d(-125f, -25f,  175f),
+				Point3d( -25f,  yMax, -175f),
+				Point3d( xMax,  yMax, -175f),
+				Point3d( xMax, -25f , -175f),
+				Point3d( -25f, -25f , -175f),
+				Point3d( -25f,  yMax,  175f),
+				Point3d( xMax,  yMax,  175f),
+				Point3d( xMax, -25f ,  175f),
+				Point3d( -25f, -25f ,  175f),
 			]
 			
 			drawables = [
@@ -158,6 +160,7 @@ class Models {
 				Poly([3, 2, 6, 7]),	// bottom
 			]
 
+			// draws coors on the screen
 //			drawFunc = |Model model, Gfx3d g3d| {
 //				pts:=g3d.drawModel(model)
 //				[3].each {
@@ -203,6 +206,7 @@ class Models {
 				Poly([11, 9, 10, 8]),	// eyes
 			]
 			
+			// draws coors on the screen
 //			drawFunc = |Model model, Gfx3d g3d| {
 //				pts:=g3d.drawModel(model)
 //				[1].each {
