@@ -10,11 +10,16 @@ class Funcs {
 	private const Int	y1	:=	 2.pow(6)
 	private const Int	y2	:=	 2.pow(7)
 	private const Int	y3	:=	 2.pow(8)
+	private const Int	mo	:=	 2.pow(9)
 	
 	private const Int:Int[]	allowedBlocks := [
 		x1 + y1 + z0	: [1, 2, 3, 4, 5, 6, 7, 8       ],
 		x2 + y1 + z0	: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
 		x3 + y1 + z0	: [      3, 4, 5, 6, 7, 8, 9, 10],
+
+		x1 + y1 + z0+mo	: [1, 2, 3, 4, 5, 6, 7, 8       ],
+		x2 + y1 + z0+mo	: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+		x3 + y1 + z0+mo	: [      3, 4, 5, 6, 7, 8, 9, 10],
 
 		x1 + y1 + z1	: [      3, 4, 5, 6, 7, 8       ],
 		x2 + y1 + z1	: [         4, 5, 6, 7, 8, 9, 10],
@@ -27,6 +32,10 @@ class Funcs {
 		x1 + y2 + z0	: [   2, 3, 4, 5, 6, 7, 8, 9, 10],
 		x2 + y2 + z0	: [      3, 4, 5, 6, 7, 8, 9, 10],
 		x3 + y2 + z0	: [         4, 5, 6, 7, 8, 9, 10],
+
+		x1 + y2 + z0+mo	: [   2, 3, 4, 5, 6, 7, 8, 9, 10],
+		x2 + y2 + z0+mo	: [      3, 4, 5, 6, 7, 8, 9, 10],
+		x3 + y2 + z0+mo	: [         4, 5, 6, 7, 8, 9, 10],
 
 		x1 + y2 + z1	: [      3, 4, 5, 6, 7, 8, 9, 10],
 		x2 + y2 + z1	: [         4, 5, 6, 7, 8, 9, 10],
@@ -85,7 +94,8 @@ class Funcs {
 		if (lastKey != null) {
 			// if we've just done a high jump, don't immediately follow it with another
 			if ((lastKey.and(y2) != 0 || lastKey.and(y3) != 0) && lastKey.and(z0) != 0 && distance < 450f)
-				allowedLevels = allowedLevels.dup.exclude { (it.and(y2) != 0 || it.and(y3) != 0) && it.and(z0) != 0 }
+//				allowedLevels = allowedLevels.dup.exclude { (it.and(y2) != 0 || it.and(y3) != 0) && it.and(z0) != 0 }
+				allowedLevels = allowedLevels.dup.exclude { it.and(z0) != 0 }
 
 			if (lastKey.and(z1) != 0 && distance < 400f)
 				allowedLevels = allowedLevels.dup.exclude { (it.and(y2) != 0 || it.and(y3) != 0) && it.and(z0) != 0 }
@@ -127,6 +137,7 @@ class Funcs {
 	
 	Int[] jumpLevels	:= [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
 	Int funcLevel(GameData data) {
-		data.blocksJumpedInLevel > jumpLevels[data.level-1] ? data.level + 1 : data.level
+		if (data.level == 11) return 11
+		return data.blocksJumpedInLevel > jumpLevels[data.level-1] ? data.level + 1 : data.level
 	}
 }
