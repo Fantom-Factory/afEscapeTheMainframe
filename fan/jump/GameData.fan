@@ -13,4 +13,6 @@ class GameData {
 	Bool	invincible			:= true
 
 	Int		score
+	Int		blocksJumpedInLevel
+	Int		blocksJumpedInGame
 }
