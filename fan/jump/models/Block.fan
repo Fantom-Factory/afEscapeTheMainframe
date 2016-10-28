@@ -6,6 +6,7 @@ class Block : Model {
 	Float		h
 	Bool		killMe
 	Int			score
+	Int			blockKey
 	
 	new make(GameData data, |This| in) : super(in) {
 		this.data = data
