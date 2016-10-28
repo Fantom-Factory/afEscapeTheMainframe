@@ -124,4 +124,9 @@ class Funcs {
 		
 		return b
 	}
+	
+	Int[] jumpLevels	:= [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
+	Int funcLevel(GameData data) {
+		data.blocksJumpedInLevel > jumpLevels[data.level-1] ? data.level + 1 : data.level
+	}
 }

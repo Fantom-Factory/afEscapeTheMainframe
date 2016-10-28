@@ -40,6 +40,7 @@ class GameScreen : GameSeg {
 	Void gameLogic() {
 		blcks = blcks.exclude { it.killMe }
 		
+		data.level		= funcs.funcLevel(data)
 		data.floorSpeed	= funcs.funcfloorSpeed(data.level)
 		
 		data.distSinceLastBlock += data.floorSpeed
@@ -79,6 +80,8 @@ class GameScreen : GameSeg {
 			blcks.each |blck| {
 				if (blck.score > 0) {
 					if (blck.xMax < fannyXmin) {
+						data.blocksJumpedInGame++
+						data.blocksJumpedInLevel++
 						data.score += blck.score
 						blck.score = 0
 					}
