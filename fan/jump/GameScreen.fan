@@ -1,6 +1,7 @@
 using fwt::Key
 using gfx::Color
 using gfx::Rect
+using gfx::Image
 using afIoc::Inject
 using afIoc::Autobuild
 
@@ -14,6 +15,9 @@ class GameScreen : GameSeg {
 				private Block[]		blcks	:= Block[,]
 				private Fanny?		fany
 				private	GameData?	data
+				private	Image		bgHex	:= Image(`fan://afDemo/res/bgHex.png`)
+				private	Image		bgBlob	:= Image(`fan://afDemo/res/bgBlob.png`)
+	
 	
 	new make(|This| in) { in(this) }
 
@@ -125,7 +129,8 @@ class GameScreen : GameSeg {
 	}
 	
 	Void draw(Gfx g2d) {
-		g2d.clear
+		drawBackground(g2d)
+		
 		g3d := Gfx3d(g2d.offsetCentre).lookAt(camera, target)
 
 		grid.draw(g3d)
@@ -178,6 +183,28 @@ class GameScreen : GameSeg {
 //		target = Point3d(0f, -75f,  0f).translate(0f, delta / 2f, 0f) //{ echo("Tar: $it") }		
 	}
 	
+	Float bgHexX
+	Float bgBlobX	:= -100f
+	Float bgBlobA
+	Void drawBackground(Gfx g2d) {
+		g2d.clear
+		
+		bgBlobY := Sin.sin(bgBlobA / 360) * 50
+		g2d.drawImage(bgBlob, bgBlobX.toInt, bgBlobY.toInt + 50)
+		
+		bgBlobX += 2
+		if (bgBlobX > g2d.bounds.w.toFloat)
+			bgBlobX = -100f
+		bgBlobA += 2
+		if (bgBlobA > 360f)
+			bgBlobA = 0f
+		
+		g2d.drawImage(bgHex, bgHexX.toInt, 0)
+		bgHexX -= data.level / 3f
+		if (bgHexX < -111f)
+			bgHexX += 111f
+	}
+
 	Void drawHud(Gfx g2d) {
 		g2d.brush = Color.white
 		
