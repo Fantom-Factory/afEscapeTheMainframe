@@ -37,6 +37,7 @@ class GameScreen : GameSeg {
 		blcks = blcks.exclude { it.killMe }
 		
 		data.floorSpeed	= funcs.funcfloorSpeed(data.level)
+		
 		data.distSinceLastBlock += data.floorSpeed
 		data.newBlockPlease = funcs.funcNewBlock(data.level, data.distSinceLastBlock, data.floorSpeed)
 		
@@ -45,7 +46,7 @@ class GameScreen : GameSeg {
 			data.distSinceLastBlock = 0f
 
 			// FIXME Top block MUST be drawn first! And then fanny in the middle
-			blk := funcs.funcBlock(data, data.level, data.distSinceLastBlock)
+			blk := funcs.funcBlock(data, data.level, data.distSinceLastBlock, blcks.last)
 			blcks.add(blk)
 		}
 		
@@ -132,7 +133,11 @@ class GameScreen : GameSeg {
 		// this depends on camera angle
 		fannyDrawn	:= false
 		fannyXmin	:= fany.xMin
-		blcks.each |blck| {	// blks should already X sorted
+		
+//		echo("--")
+//		blcks.dup.sort |b1, b2| { b1.x.abs <=> b2.x.abs }
+		
+		blcks.findAll { it.x < 0f }.each |blck| {
 			if (blck.xMax < fannyXmin)
 				blck.draw(g3d)
 			else {
@@ -143,6 +148,11 @@ class GameScreen : GameSeg {
 				blck.draw(g3d)
 			}
 		}
+		blcks.findAll { it.x >= 0f }.sort |b1, b2| { b1.x <=> b2.x  }.each |blck| {
+			blck.draw(g3d)
+		}
+		
+		
 		if (!fannyDrawn) {
 			fany.draw(g3d)
 		}
@@ -151,9 +161,12 @@ class GameScreen : GameSeg {
 		
 		drawHud(g2d)
 
-//		if (screen.keys[Key.up] == true)	dy -= ds
-//		if (screen.keys[Key.down] == true)	dy += ds
-//		if (screen.keys[Key.left] == true)	dx -= ds
+//		if (screen.keys[Key.left]  == true)	data.floorSpeed -= 0.5f
+//		if (screen.keys[Key.right] == true)	data.floorSpeed += 0.5f		
+		
+//		if (screen.keys[Key.up]    == true)	dy -= ds
+//		if (screen.keys[Key.down]  == true)	dy += ds
+//		if (screen.keys[Key.left]  == true)	dx -= ds
 //		if (screen.keys[Key.right] == true)	dx += ds
 //		ay := dy/500f
 //		ax := dx/500f
@@ -168,20 +181,24 @@ class GameScreen : GameSeg {
 	Void drawHud(Gfx g2d) {
 		g2d.brush = Color.white
 		
-		scoreStr := "Score " + data.score.toStr.justr(4)
+		scoreStr := "Score " + data.score.toStr.padl(5, '0')
 		x := (g2d.bounds.w / 2) - (scoreStr.size * 16)
 		y := -g2d.bounds.h / 2
 		g2d.drawFont16(scoreStr, x, y)
 		
 		x = -g2d.bounds.w / 2
 		g2d.drawFont16("Level ${data.level}", x, y)
+		
+		
+		y = (g2d.bounds.h / 2) - 16
+		g2d.drawFont16("Speed ${data.floorSpeed.toInt}", x, y)
 	}
 	
 	Float dx	:= 0f
 	Float dy	:= 0f
 	Float ds	:= 1f
 	
-	Point3d camera	:= Point3d(0f, 0f, -500f) 
+	Point3d camera	:= Point3d(0f, 42f, -500f) 
 	Point3d target	:= Point3d(0f, -75f, 0f)
 }
 

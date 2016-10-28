@@ -12,15 +12,15 @@ class Funcs {
 	private const Int	y3	:=	 2.pow(8)
 	
 	private const Int:Int[]	allowedBlocks := [
-		x1 + y1 + z0	: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+		x1 + y1 + z0	: [1, 2, 3, 4, 5, 6, 7, 8       ],
 		x2 + y1 + z0	: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
 		x3 + y1 + z0	: [      3, 4, 5, 6, 7, 8, 9, 10],
 
-		x1 + y1 + z1	: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-		x2 + y1 + z1	: [      3, 4, 5, 6, 7, 8, 9, 10],
+		x1 + y1 + z1	: [      3, 4, 5, 6, 7, 8       ],
+		x2 + y1 + z1	: [         4, 5, 6, 7, 8, 9, 10],
 		x3 + y1 + z1	: [            5, 6, 7, 8, 9, 10],
 
-		x1 + y1 + z2	: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+		x1 + y1 + z2	: [1, 2, 3, 4, 5, 6, 7, 8       ],
 		x2 + y1 + z2	: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
 		x3 + y1 + z2	: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
 
@@ -28,15 +28,15 @@ class Funcs {
 		x2 + y2 + z0	: [      3, 4, 5, 6, 7, 8, 9, 10],
 		x3 + y2 + z0	: [         4, 5, 6, 7, 8, 9, 10],
 
-		x1 + y2 + z1	: [   2, 3, 4, 5, 6, 7, 8, 9, 10],
+		x1 + y2 + z1	: [      3, 4, 5, 6, 7, 8, 9, 10],
 		x2 + y2 + z1	: [         4, 5, 6, 7, 8, 9, 10],
-		x3 + y2 + z1	: [               6, 7, 8, 9, 10],
+		x3 + y2 + z1	: [            5, 6, 7, 8, 9, 10],
 
-		x1 + y3 + z0	: [            5, 6, 7, 8, 9, 10],
+		x1 + y3 + z0	: [         4, 5, 6, 7, 8, 9, 10],
 		x2 + y3 + z0	: [            5, 6, 7, 8, 9, 10],
 		x3 + y3 + z0	: [               6, 7, 8, 9, 10],	// note, need to increase shortest dist
 
-		x1 + y3 + z1	: [   2, 3, 4, 5, 6, 7, 8, 9, 10],
+		x1 + y3 + z1	: [      3, 4, 5, 6, 7, 8, 9, 10],
 		x2 + y3 + z1	: [         4, 5, 6, 7, 8, 9, 10],
 		x3 + y3 + z1	: [               6, 7, 8, 9, 10],
 	]
@@ -52,16 +52,19 @@ class Funcs {
 	}
 	
 	Float funcfloorSpeed(Int level) {
-//		((25f - 8f) * (level / 9f) / 2) + 8f
 //		((25f - 8f) * (level / 9f)) + 8f
-		((25f - 8f) * (1 / 9f)) + 8f
+		10f + (level * 0.5f)
 	}
-
+	
 	Bool funcNewBlock(Int level, Float distance, Float speed) {
 		level--
 
-		shortest := 1500f - (level * 75)	// 1500 ->  750 
-		longest	 := 2000f - (level * 75)	// 2000 -> 1250 
+//		shortest := 1500f - (level * 75)	// 1500 ->  750 
+//		shortest :=  500f + (level * 50)	// 500  -> 1000 
+//		longest	 := 2000f - (level * 75)	// 2000 -> 1250 
+
+		shortest :=  500f - (level *  15)	// 500  -> 350  
+		longest	 := 1500f - (level * 100)	// 1500 -> 500 
 
 		if (distance < shortest)
 			return false
@@ -74,8 +77,21 @@ class Funcs {
 	}
 	
 	
-	Block funcBlock(GameData data, Int level, Float distance) {
-		key	:= allowedLevels[level - 1].random
+	Block funcBlock(GameData data, Int level, Float distance, Block? lastBlock) {
+		
+		allowedLevels := allowedLevels[level - 1]
+		
+		lastKey := lastBlock?.blockKey
+		if (lastKey != null) {
+			// if we've just done a high jump, don't immediately follow it with another
+			if ((lastKey.and(y2) != 0 || lastKey.and(y3) != 0) && lastKey.and(z0) != 0 && distance < 450f)
+				allowedLevels = allowedLevels.dup.exclude { (it.and(y2) != 0 || it.and(y3) != 0) && it.and(z0) != 0 }
+
+			if (lastKey.and(z1) != 0 && distance < 400f)
+				allowedLevels = allowedLevels.dup.exclude { (it.and(y2) != 0 || it.and(y3) != 0) && it.and(z0) != 0 }
+		}
+		
+		key	:= allowedLevels.random
 		
 //		key = x3 + y3 + z0
 		
@@ -94,10 +110,17 @@ class Funcs {
 		if (key.and(z1) != 0)	z = 1
 		if (key.and(z2) != 0)	z = 2
 
+		if (z == 2 && y == 1 && level >= 3 && Float.random > 0.5f)
+			y = 2
+		
 		b := Models.block(data, x, y) {
 			it.y += (z * 50f)
 			it.score = (x+1) * (y+1)
+			it.blockKey = key
 		}
+		
+		// ensure fat blocks aren't grouped closer together
+		data.distSinceLastBlock -= (y * 50f)
 		
 		return b
 	}
