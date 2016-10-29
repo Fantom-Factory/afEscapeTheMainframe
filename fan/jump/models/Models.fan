@@ -216,4 +216,53 @@ class Models {
 //			}
 		}
 	}
+
+	static FannyExplo fannyExplo(GameData data, Fanny fanny) {
+		FannyExplo(data) {
+			it.points	  = Point3d#.emptyList
+			it.drawables = Drawable#.emptyList
+
+			offsets := [
+				[-20,  20],
+				[  0,  20],
+				[ 20,  20],
+				
+				[-20,   0],
+				[  0,   0],
+				[ 20,   0],
+				
+				[-40, -20],
+				[-20, -20],
+				[  0, -20],
+				[ 20, -20],
+	
+				[-40, -40],
+				[-20, -40],
+				[  0, -40],
+				[ 20, -40],
+			]
+			
+			it.squares = [25f, 0f, -25f].map |z| {
+				offsets.map |off| {
+					FannyExploSquare {
+						it.points = [
+							Point3d( 0f, 20f, z),
+							Point3d(20f, 20f, z),
+							Point3d(20f,  0f, z),
+							Point3d( 0f,  0f, z),
+						]
+						it.drawables = [
+							Fill(brand_red),
+							Edge(brand_white),
+							Poly([0, 1, 2, 3]),
+						]
+						it.x = fanny.x
+						it.y = fanny.y
+						it.z = fanny.z
+					}.translate(off[0].toFloat, off[1].toFloat, 0f)
+				}
+			}.flatten
+			
+		}
+	}
 }
