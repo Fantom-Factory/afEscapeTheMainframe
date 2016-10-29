@@ -2,20 +2,20 @@ using gfx::Color
 using gfx::Brush
 
 class Model {
-			Point3d[]		points
-			Drawable[]		drawables
-			|Model|?		animFunc
-			|Model, Gfx3d| 	drawFunc := |Model model, Gfx3d g3d| {
-				g3d.drawModel(model)
-			}
-	
-			Float	x
-			Float	y
-			Float	z
-		
-			Float	ax
-			Float	ay
-			Float	az
+	Point3d[]		points
+	Drawable[]		drawables
+	|Model|?		animFunc
+	|Model, Gfx3d| 	drawFunc := |Model model, Gfx3d g3d| {
+		g3d.drawModel(model)
+	}
+
+	Float	x
+	Float	y
+	Float	z
+
+	Float	ax
+	Float	ay
+	Float	az
 	
 	new make(|This| in) { in(this) }
 	
