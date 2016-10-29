@@ -34,6 +34,36 @@ class Model {
 		return this
 	}
 	
+	Float xMin() {
+		xs := (Float[]) points.map { it.x } 
+		return xs.min + this.x
+	}
+	
+	Float xMax() {
+		xs := (Float[]) points.map { it.x } 
+		return xs.max + this.x
+	}
+	
+	Float yMin() {
+		ys := (Float[]) points.map { it.y } 
+		return ys.min + this.y
+	}
+	
+	Float yMax() {
+		ys := (Float[]) points.map { it.y } 
+		return ys.max + this.y
+	}
+	
+	Float zMin() {
+		zs := (Float[]) points.map { it.z } 
+		return zs.min + this.z
+	}
+	
+	Float zMax() {
+		zs := (Float[]) points.map { it.z } 
+		return zs.max + this.z
+	}
+	
 	virtual This draw(Gfx3d g3d) {
 		drawFunc.call(this, g3d)
 		return this

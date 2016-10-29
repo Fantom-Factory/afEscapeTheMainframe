@@ -31,9 +31,4 @@ class Block : Model {
 		y := (Float) points.map { it.y }.max
 		return Rect((this.x + x).toInt, -(this.y + y).toInt, w.toInt, h.toInt)
 	}
-	
-	Float xMax() {
-		xs := (Float[]) points.map { it.x }
-		return xs.max + this.x
-	}
 }

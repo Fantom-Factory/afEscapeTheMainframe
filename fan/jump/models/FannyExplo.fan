@@ -21,5 +21,16 @@ class FannyExplo : Model {
 }
 
 class FannyExploSquare : Model {
-	new make(|This| in) : super(in) { }	
+	Point3d	movementVector
+	Float	force
+
+	new make(|This| in) : super(in) { }
+		
+	override This anim() {
+		thing := movementVector * force
+		x += thing.x
+		y += thing.y
+		z += thing.z
+		return this
+	}
 }

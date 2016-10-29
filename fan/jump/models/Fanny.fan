@@ -173,11 +173,6 @@ class Fanny : Model {
 //		y  := ys.max
 //		return Rect((this.x + x).toInt, -(this.y + y).toInt, w.toInt, h.toInt)
 //	}
-
-	Float xMin() {
-		xs := (Float[]) points.map { it.x } 
-		return xs.min + this.x
-	}
 }
 
 ** https://martin-thoma.com/how-to-check-if-two-line-segments-intersect/
