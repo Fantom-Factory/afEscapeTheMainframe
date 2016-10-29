@@ -10,13 +10,13 @@ class GameScreen : GameSeg {
 	@Inject		private Screen		screen
 	@Inject		private |->App|		app
 	@Autobuild	private	Funcs		funcs
-				private Model?		cube
+				private BonusCube[]	bonusCubes	:= BonusCube[,]
 				private Model?		grid
-				private Block[]		blcks	:= Block[,]
-				private Fanny?		fany
+				private Block[]		blcks		:= Block[,]
+				private Fanny?		fanny
 				private FannyExplo?	fannyExplo
-				private GameBg		gameBg	:= GameBg()
-				private GameHud		gameHud	:= GameHud()
+				private GameBg		gameBg		:= GameBg()
+				private GameHud		gameHud		:= GameHud()
 				private	GameData?	data
 	
 	
@@ -25,9 +25,9 @@ class GameScreen : GameSeg {
 	override This onInit() {
 		data	= GameData()
 		blcks.clear
-		cube	= Models.cube
 		grid	= Models.grid(data)
-		fany	= Models.fanny(data)
+		fanny	= Models.fanny(data)
+		bonusCubes.clear
 		fannyExplo = null
 		return this
 	}
@@ -52,15 +52,19 @@ class GameScreen : GameSeg {
 			data.newBlockPlease 	= false
 
 			// FIXME Top block MUST be drawn first! And then fanny in the middle
-			blk := funcs.funcBlock(data, data.level, data.distSinceLastBlock, blcks.last)
-			blcks.add(blk)
+			blks := funcs.funcBlock(data, data.level, data.distSinceLastBlock, blcks.last)
+			blcks.addAll(blks)
+			
+			bonusCube := funcs.funcBonusCube(data, blks.first)
+			if (bonusCube != null)
+				bonusCubes.add(bonusCube)
 
 			data.distSinceLastBlock = 0f
 		}
 		
 		if (!data.dying) {
 			crash := blcks.any |blck| {
-				col := fany.intersects(blck)
+				col := fanny.intersects(blck)
 				
 				if (!col) {
 					blck.drawables[0] = Fill(Models.brand_darkBlue)
@@ -77,7 +81,7 @@ class GameScreen : GameSeg {
 				gameOver()
 			}
 			
-			fannyXmin	:= fany.xMin
+			fannyXmin	:= fanny.xMin
 			blcks.each |blck| {
 				if (blck.score > 0) {
 					if (blck.xMax < fannyXmin) {
@@ -94,7 +98,7 @@ class GameScreen : GameSeg {
 			data.deathCryIdx++
 		}
 		
-		if (data.deathCryIdx == 220) {
+		if (data.deathCryIdx == 180) {
 			app().gameOver
 		}
 	}
@@ -103,9 +107,9 @@ class GameScreen : GameSeg {
 		jump 	:= screen.keys[Key.space] == true || screen.keys[Key.up] == true
 		squish	:= screen.keys[Key.down]  == true 
 		ghost	:= screen.keys[Key.shift] == true 
-		fany.jump(jump)
-		fany.squish(squish)
-		fany.ghost(ghost)
+		fanny.jump(jump)
+		fanny.squish(squish)
+		fanny.ghost(ghost)
 		
 		level := null as Int
 		if (screen.keys[Key.num1] == true)	level = 1
@@ -128,9 +132,10 @@ class GameScreen : GameSeg {
 		grid.anim
 		blcks.each { it.anim }
 		if (!data.dying)
-			fany.anim
+			fanny.anim
 		fannyExplo?.anim
-		cube.anim
+		bonusCubes.each { it.anim }
+		bonusCubes = bonusCubes.exclude { it.killMe }
 	}
 	
 	Void draw(Gfx g2d) {
@@ -142,14 +147,14 @@ class GameScreen : GameSeg {
 		
 		// this depends on camera angle
 		fannyDrawn	:= false
-		fannyXmin	:= fany.xMin
+		fannyXmin	:= fanny.xMin
 		
 		blcks.findAll { it.x < 0f }.each |blck| {
 			if (blck.xMax < fannyXmin)
 				blck.draw(g3d)
 			else {
 				if (!fannyDrawn) {
-					fany.draw(g3d)
+					fanny.draw(g3d)
 					fannyDrawn = true
 				}
 				blck.draw(g3d)
@@ -161,11 +166,11 @@ class GameScreen : GameSeg {
 		
 		
 		if (!fannyDrawn)
-			fany.draw(g3d)
+			fanny.draw(g3d)
 		
 		fannyExplo?.draw(g3d)
 		
-		cube.draw(g3d)
+		bonusCubes.each { it.draw(g3d) }
 		
 		gameHud.draw(g2d, data)
 
@@ -181,7 +186,7 @@ class GameScreen : GameSeg {
 //		camera = Point3d(0f, 0f, -500f).rotate(ay+0.0f, ax, 0f)
 		
 		// uncomment to alter camera view
-//		delta := 110f + fany.y
+//		delta := 110f + fanny.y
 //		camera = Point3d(0f, 0f, -500f).translate(0f, delta / 2f, 0f) //{ echo("Cam: $it") }
 //		target = Point3d(0f, -75f,  0f).translate(0f, delta / 2f, 0f) //{ echo("Tar: $it") }		
 	}
@@ -191,7 +196,7 @@ class GameScreen : GameSeg {
 		
 		data.dying = true
 
-		fannyExplo = Models.fannyExplo(data, fany)
+		fannyExplo = Models.fannyExplo(data, fanny)
 	}
 	
 	

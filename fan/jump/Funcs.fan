@@ -1,16 +1,18 @@
 
 class Funcs {
 	
-	private const Int	z0	:=	 2.pow(0)
-	private const Int	z1	:=	 2.pow(1)
-	private const Int	z2	:=	 2.pow(2)
-	private const Int	x1	:=	 2.pow(3)
-	private const Int	x2	:=	 2.pow(4)
-	private const Int	x3	:=	 2.pow(5)
-	private const Int	y1	:=	 2.pow(6)
-	private const Int	y2	:=	 2.pow(7)
-	private const Int	y3	:=	 2.pow(8)
-	private const Int	mo	:=	 2.pow(9)
+	static const Int	z0	:=	 2.pow( 0)
+	static const Int	z1	:=	 2.pow( 1)
+	static const Int	z2	:=	 2.pow( 2)
+	static const Int	z3	:=	 2.pow( 3)
+	static const Int	z4	:=	 2.pow( 4)
+	static const Int	x1	:=	 2.pow( 5)
+	static const Int	x2	:=	 2.pow( 6)
+	static const Int	x3	:=	 2.pow( 7)
+	static const Int	y1	:=	 2.pow( 8)
+	static const Int	y2	:=	 2.pow( 9)
+	static const Int	y3	:=	 2.pow(10)
+	static const Int	mo	:=	 2.pow(11)
 	
 	private const Int:Int[]	allowedBlocks := [
 		x1 + y1 + z0	: [1, 2, 3, 4, 5, 6, 7, 8       ],
@@ -25,8 +27,8 @@ class Funcs {
 		x2 + y1 + z1	: [         4, 5, 6, 7, 8, 9, 10],
 		x3 + y1 + z1	: [            5, 6, 7, 8, 9, 10],
 
-		x1 + y1 + z2	: [1, 2, 3, 4, 5, 6, 7, 8       ],
-		x2 + y1 + z2	: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+		x1 + y1 + z2	: [1, 2, 3, 4, 5, 6, 7          ],
+		x2 + y1 + z2	: [1, 2, 3, 4, 5, 6, 7, 8       ],
 		x3 + y1 + z2	: [1, 2, 3, 4, 5, 6, 7, 8, 9    ],
 
 		x1 + y2 + z0	: [   2, 3, 4, 5, 6, 7, 8, 9, 10],
@@ -48,6 +50,21 @@ class Funcs {
 		x1 + y3 + z1	: [      3, 4, 5, 6, 7, 8, 9, 10],
 		x2 + y3 + z1	: [         4, 5, 6, 7, 8, 9, 10],
 		x3 + y3 + z1	: [               6, 7, 8, 9, 10],
+
+		x1 + y1 + z0+z3	: [               6, 7, 8, 9, 10],
+		x2 + y1 + z0+z3	: [                  7, 8, 9, 10],
+	mo+	x1 + y1 + z0+z3	: [                     8, 9, 10],
+	mo+	x2 + y1 + z0+z3	: [                        9, 10],
+
+		x1 + y1 + z0+z4	: [               6, 7, 8, 9, 10],
+		x2 + y1 + z0+z4	: [                  7, 8, 9, 10],
+	mo+	x1 + y1 + z0+z4	: [                     8, 9, 10],
+	mo+	x2 + y1 + z0+z4	: [                        9, 10],
+
+		x1 + y2 + z0+z4	: [                  7, 8, 9, 10],
+		x2 + y2 + z0+z4	: [                     8, 9, 10],
+	mo+	x1 + y2 + z0+z4	: [                        9, 10],
+	mo+	x2 + y2 + z0+z4	: [                           10],
 	]
 	
 	private Int:Int[] allowedLevels
@@ -68,10 +85,6 @@ class Funcs {
 	Bool funcNewBlock(Int level, Float distance, Float speed) {
 		level--
 
-//		shortest := 1500f - (level * 75)	// 1500 ->  750 
-//		shortest :=  500f + (level * 50)	// 500  -> 1000 
-//		longest	 := 2000f - (level * 75)	// 2000 -> 1250 
-
 		shortest :=  500f - (level *  15)	// 500  -> 350  
 		longest	 := 1500f - (level * 100)	// 1500 -> 500 
 
@@ -86,7 +99,7 @@ class Funcs {
 	}
 	
 	
-	Block funcBlock(GameData data, Int level, Float distance, Block? lastBlock) {
+	Block[] funcBlock(GameData data, Int level, Float distance, Block? lastBlock) {
 		
 		allowedLevels := allowedLevels[9.min(level - 1)]
 		
@@ -123,16 +136,35 @@ class Funcs {
 		if (z == 2 && y == 1 && level >= 3 && Float.random > 0.5f)
 			y = 2
 		
-		b := Models.block(data, x, y) {
+		b1 := Models.block(data, x, y) {
 			it.y += (z * 50f)
 			it.score = (x+1) * (y+1)
 			it.blockKey = key
 		}
 		
+		hasZ3 := (key.and(z3) != 0)
+		hasZ4 := (key.and(z4) != 0)
+		newZ  := hasZ3 ? 4 : 5
+		b2 := (!hasZ3 && !hasZ4) ? null : Models.block(data, x, hasZ3 ? y+1 : y) {
+			it.y += (newZ * 50f)
+			it.score = (x+1) * (y+1)
+			it.blockKey = key			
+		}
+		
 		// ensure fat blocks aren't grouped closer together
 		data.distSinceLastBlock -= (y * 50f)
 		
-		return b
+		return b2 == null ? [b1] : [b1, b2]
+	}
+	
+	Int cubeBlocks
+	BonusCube? funcBonusCube(GameData data, Block block) {
+//		if (++cubeBlocks < 10)
+//			return null
+		
+		cubeBlocks = 0
+		
+		return Models.bonusCube(data, block)
 	}
 	
 	Int[] jumpLevels	:= [10, 20, 30, 40, 50, 60, 70, 80, 90, 100].map { it * 2 }

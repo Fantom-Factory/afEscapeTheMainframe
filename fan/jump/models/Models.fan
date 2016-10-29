@@ -9,11 +9,11 @@ class Models {
 	static const Color	brand_red		:= Color(0xFF_FF_22_22)
 	static const Color	fanny_silver	:= Color(0xFF_DD_DD_DD)
 	static const Color	block_collide	:= Color(0xFF_FF_22_22)
-	static const Color	cube_yellow		:= brand_red
-	static const Color	cube_edge		:= brand_white
+	static const Color	cube_fill		:= Color(0xFF_FF_FF_22)
+	static const Color	cube_edge		:= brand_darkBlue
 	
-	static Model cube() {
-		Model {
+	static BonusCube bonusCube(GameData data, Block block) {
+		BonusCube(data) {
 			points = [
 				Point3d(-100f,  100f, -100f),
 				Point3d( 100f,  100f, -100f),
@@ -26,11 +26,24 @@ class Models {
 			]
 //			scale(0.75f)
 			scale(0.25f)
-			x += 200
-			y += 50
+			
+			blockKey := block.blockKey
+			
+			x := 0
+			if (blockKey.and(Funcs.x1) != 0)	x = 0
+			if (blockKey.and(Funcs.x2) != 0)	x = 1
+			if (blockKey.and(Funcs.x3) != 0)	x = 2
+
+			y := 0
+			if (blockKey.and(Funcs.y1) != 0)	y = 0
+			if (blockKey.and(Funcs.y2) != 0)	y = 1
+			if (blockKey.and(Funcs.y3) != 0)	y = 2
+			
+			it.x = block.x + (x * 50f / 2f)
+			it.y = block.y + (y * 50f) + 75f
 
 			drawables = [
-				Fill(cube_yellow),
+				Fill(cube_fill),
 				Edge(cube_edge),
 //				Fill(null),
 				Poly([0, 1, 2, 3]),	// front
@@ -39,21 +52,7 @@ class Models {
 				Poly([1, 5, 6, 2]),	// right
 				Poly([4, 5, 1, 0]),	// top
 				Poly([3, 2, 6, 7]),	// bottom
-				
-//				Edge(brand_white),
-//				Line([0, 1, 2, 3, 0]),
-//				Line([4, 5, 6, 7, 4]),
-//				Line([0, 4]),
-//				Line([1, 5]),
-//				Line([2, 6]),
-//				Line([3, 7]),
 			]
-			
-			animFunc = |Model cube| {
-				cube.ax += 1f/100f
-				cube.ay += 1f/280f
-				cube.az -= 1f/500f
-			}
 			
 			// draws coors on the screen
 //			drawFunc = |Model model, Gfx3d g3d| {
@@ -241,13 +240,12 @@ class Models {
 				[  0f-4f, -40f],
 				[ 20f-4f, -40f],
 			]
-			
+
 			initForce	:=  3f + (Float.random * 2f)
 			initY		:= 10f + (Float.random * 5f)
 			initX		:= 3f + (data.level / 3f)
 			index		:= 0
 
-//			it.squares = [0f].map |z| {
 			it.squares = [25f, 0f, -25f].map |z| {
 				offsets.map |off, i| {
 					FannyExploSquare {
