@@ -38,8 +38,6 @@ class FannyExploSquare : Model {
 	
 	new make(|This| in) : super(in) { }
 
-	Int n
-	
 	override This anim() {		
 		thing := movementVector
 		x += thing.x
