@@ -75,14 +75,30 @@ const class Point3d {
 		Point3d(x * mul / z, y * mul / z, z)
 	}
 
-	** Return the magnitude of the vector.
+	@Operator
+	Point3d mult(Float mul) {
+		Point3d(x * mul, y * mul, z * mul)		
+	}
+
+	@Operator
+	Point3d plus(Float add) {
+		Point3d(x + add, y + add, z + add)		
+	}
+	
+	** Return the magnitude of the vector. Is always positive.
 	Float scalar() {
-		(x.pow(3f) + y.pow(3f) + z.pow(3f)).pow(1f/3f)
+		// TODO whinge at Fantom about pow of negs giving NaNs
+		sum := x.abs.pow(3f) + y.abs.pow(3f) + z.abs.pow(3f)
+		return sum.pow(1f/3f)
 	}
 
 	** Returns the unit vector. A unit vector has the same direction, but a magnitude of 1.
 	Point3d normalise() {
 		s := scalar
+		if (scalar == Float.nan || scalar.toStr == "NaN" || scalar.approx(0f)) {
+			echo("scaler+$s")
+			echo(" + $this")
+		}
 		return Point3d(x / s, y / s, z / s)
 	}
 	
@@ -97,6 +113,7 @@ const class Point3d {
 		cz	:= (p1.x * p2.y) - (p1.y * p2.x)
 		return Point3d(cx, cy, cz)
 	}
+
 	Point3d cross(Point3d p2) {
 		cx	:= (y * p2.z) - (z * p2.y)
 		cy	:= (z * p2.x) - (x * p2.z)
@@ -120,7 +137,8 @@ const class Point3d {
 	}
 
 	override Str toStr() {
+		"(" + x + "," + y + "," + z + ")"
 //		"(" + x.toLocale("0.00") + "," + y.toLocale("0.00") + "," + z.toLocale("0.00") + ")"
-		"(" + x.toLocale("0") + "," + y.toLocale("0") + "," + z.toLocale("0") + ")"
+//		"(" + x.toLocale("0") + "," + y.toLocale("0") + "," + z.toLocale("0") + ")"
 	}
 }

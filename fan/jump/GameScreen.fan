@@ -130,6 +130,7 @@ class GameScreen : GameSeg {
 			blcks.each { it.anim }
 			fany.anim
 		}
+		fannyExplo?.anim
 		cube.anim
 	}
 	
@@ -187,6 +188,8 @@ class GameScreen : GameSeg {
 	}
 	
 	Void gameOver() {
+		if (data.dying) return
+		
 		data.dying = true
 
 		fannyExplo = Models.fannyExplo(data, fany)

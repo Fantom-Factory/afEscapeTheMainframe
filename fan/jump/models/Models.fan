@@ -223,46 +223,51 @@ class Models {
 			it.drawables = Drawable#.emptyList
 
 			offsets := [
-				[-20,  20],
-				[  0,  20],
-				[ 20,  20],
+				[-20f,  20f],
+				[  0f,  20f],
+				[ 20f,  20f],
 				
-				[-20,   0],
-				[  0,   0],
-				[ 20,   0],
+				[-20f,   0f],
+				[  0f,   0f],
+				[ 20f,   0f],
 				
-				[-40, -20],
-				[-20, -20],
-				[  0, -20],
-				[ 20, -20],
+				[-40f, -20f],
+				[-20f, -20f],
+				[  0f, -20f],
+				[ 20f, -20f],
 	
-				[-40, -40],
-				[-20, -40],
-				[  0, -40],
-				[ 20, -40],
+				[-40f, -40f],
+				[-20f, -40f],
+				[  0f, -40f],
+				[ 20f, -40f],
 			]
 			
 			it.squares = [25f, 0f, -25f].map |z| {
-				offsets.map |off| {
+				offsets.map |off, i| {
 					FannyExploSquare {
 						it.points = [
-							Point3d( 0f, 20f, z),
-							Point3d(20f, 20f, z),
-							Point3d(20f,  0f, z),
-							Point3d( 0f,  0f, z),
+							Point3d( 0f+off[0], 20f+off[1], z),
+							Point3d(20f+off[0], 20f+off[1], z),
+							Point3d(20f+off[0],  0f+off[1], z),
+							Point3d( 0f+off[0],  0f+off[1], z),
 						]
+
 						it.drawables = [
 							Fill(brand_red),
 							Edge(brand_white),
 							Poly([0, 1, 2, 3]),
 						]
+						
 						it.x = fanny.x
 						it.y = fanny.y
 						it.z = fanny.z
-					}.translate(off[0].toFloat, off[1].toFloat, 0f)
+						
+						// TODO add jump vector
+						it.movementVector = Point3d(((xMax - xMin) / 2) + off[0], ((yMax - yMin) / 2) + off[1], z).translate(0f, 0f, 0f).normalise
+						it.force = 2f
+					}
 				}
 			}.flatten
-			
 		}
 	}
 }
