@@ -82,6 +82,11 @@ class Fanny : Model {
 		}
 	}
 	
+	override This draw(Gfx3d g3d) {
+		// don't draw fanny if we're dying - we draw the explo instead
+		data.dying ? this : super.draw(g3d)
+	}
+	
 	override This anim() {
 		y += sy
 		if (y <= -110f) {

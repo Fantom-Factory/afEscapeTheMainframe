@@ -14,6 +14,7 @@ class GameScreen : GameSeg {
 				private Model?		grid
 				private Block[]		blcks	:= Block[,]
 				private Fanny?		fany
+				private FannyExplo?	fannyExplo
 				private GameBg		gameBg	:= GameBg()
 				private GameHud		gameHud	:= GameHud()
 				private	GameData?	data
@@ -27,6 +28,7 @@ class GameScreen : GameSeg {
 		cube	= Models.cube
 		grid	= Models.grid(data)
 		fany	= Models.fanny(data)
+		fannyExplo = null
 		return this
 	}
 
@@ -72,9 +74,7 @@ class GameScreen : GameSeg {
 			}
 
 			if (crash && !data.invincible) {
-				data.dying = true
-				// make transparent
-//				blcks.each { it.drawables[0] = Fill(null) }
+				gameOver()
 			}
 			
 			fannyXmin	:= fany.xMin
@@ -121,7 +121,7 @@ class GameScreen : GameSeg {
 		if (level != null)
 			data.level = level
 
-		if (screen.keys[Key.esc] == true)	data.dying = true
+		if (screen.keys[Key.esc] == true)	gameOver()
 	}
 	
 	Void anim() {
@@ -144,9 +144,6 @@ class GameScreen : GameSeg {
 		fannyDrawn	:= false
 		fannyXmin	:= fany.xMin
 		
-//		echo("--")
-//		blcks.dup.sort |b1, b2| { b1.x.abs <=> b2.x.abs }
-		
 		blcks.findAll { it.x < 0f }.each |blck| {
 			if (blck.xMax < fannyXmin)
 				blck.draw(g3d)
@@ -158,14 +155,15 @@ class GameScreen : GameSeg {
 				blck.draw(g3d)
 			}
 		}
-		blcks.findAll { it.x >= 0f }.sort |b1, b2| { b1.x <=> b2.x  }.each |blck| {
+		blcks.findAll { it.x >= 0f }.sortr |b1, b2| { b1.x <=> b2.x  }.each |blck| {
 			blck.draw(g3d)
 		}
 		
 		
-		if (!fannyDrawn) {
+		if (!fannyDrawn)
 			fany.draw(g3d)
-		}
+		
+		fannyExplo?.draw(g3d)
 		
 		cube.draw(g3d)
 		
@@ -188,6 +186,13 @@ class GameScreen : GameSeg {
 //		target = Point3d(0f, -75f,  0f).translate(0f, delta / 2f, 0f) //{ echo("Tar: $it") }		
 	}
 	
+	Void gameOver() {
+		data.dying = true
+
+		fannyExplo = Models.fannyExplo(data, fany)
+	}
+	
+	
 	Float dx	:= 0f
 	Float dy	:= 0f
 	Float ds	:= 1f
@@ -195,4 +200,3 @@ class GameScreen : GameSeg {
 	Point3d camera	:= Point3d(0f, 42f, -500f) 
 	Point3d target	:= Point3d(0f, -75f, 0f)
 }
-

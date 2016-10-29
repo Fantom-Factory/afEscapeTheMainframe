@@ -17,7 +17,7 @@ class Funcs {
 		x2 + y1 + z0	: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
 		x3 + y1 + z0	: [      3, 4, 5, 6, 7, 8, 9, 10],
 
-		x1 + y1 + z0+mo	: [1, 2, 3, 4, 5, 6, 7, 8       ],
+		x1 + y1 + z0+mo	: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
 		x2 + y1 + z0+mo	: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
 		x3 + y1 + z0+mo	: [      3, 4, 5, 6, 7, 8, 9, 10],
 
@@ -27,7 +27,7 @@ class Funcs {
 
 		x1 + y1 + z2	: [1, 2, 3, 4, 5, 6, 7, 8       ],
 		x2 + y1 + z2	: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-		x3 + y1 + z2	: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+		x3 + y1 + z2	: [1, 2, 3, 4, 5, 6, 7, 8, 9    ],
 
 		x1 + y2 + z0	: [   2, 3, 4, 5, 6, 7, 8, 9, 10],
 		x2 + y2 + z0	: [      3, 4, 5, 6, 7, 8, 9, 10],
@@ -88,7 +88,7 @@ class Funcs {
 	
 	Block funcBlock(GameData data, Int level, Float distance, Block? lastBlock) {
 		
-		allowedLevels := allowedLevels[level - 1]
+		allowedLevels := allowedLevels[9.min(level - 1)]
 		
 		lastKey := lastBlock?.blockKey
 		if (lastKey != null) {
@@ -135,7 +135,7 @@ class Funcs {
 		return b
 	}
 	
-	Int[] jumpLevels	:= [10, 20, 30, 40, 50, 60, 70, 80, 90, 100]
+	Int[] jumpLevels	:= [10, 20, 30, 40, 50, 60, 70, 80, 90, 100].map { it * 2 }
 	Int funcLevel(GameData data) {
 		if (data.level == 11) return 11
 		return data.blocksJumpedInLevel > jumpLevels[data.level-1] ? data.level + 1 : data.level
