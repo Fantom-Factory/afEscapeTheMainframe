@@ -14,9 +14,9 @@ class GameScreen : GameSeg {
 				private Model?		grid
 				private Block[]		blcks	:= Block[,]
 				private Fanny?		fany
+				private GameBg		gameBg	:= GameBg()
+				private GameHud		gameHud	:= GameHud()
 				private	GameData?	data
-				private	Image		bgHex	:= Image(`fan://afDemo/res/bgHex.png`)
-				private	Image		bgBlob	:= Image(`fan://afDemo/res/bgBlob.png`)
 	
 	
 	new make(|This| in) { in(this) }
@@ -48,11 +48,12 @@ class GameScreen : GameSeg {
 		
 		if (data.newBlockPlease) {
 			data.newBlockPlease 	= false
-			data.distSinceLastBlock = 0f
 
 			// FIXME Top block MUST be drawn first! And then fanny in the middle
 			blk := funcs.funcBlock(data, data.level, data.distSinceLastBlock, blcks.last)
 			blcks.add(blk)
+
+			data.distSinceLastBlock = 0f
 		}
 		
 		if (!data.dying) {
@@ -117,9 +118,10 @@ class GameScreen : GameSeg {
 		if (screen.keys[Key.num8] == true)	level = 8
 		if (screen.keys[Key.num9] == true)	level = 9
 		if (screen.keys[Key.num0] == true)	level = 10
-		if (level != null) {
+		if (level != null)
 			data.level = level
-		}
+
+		if (screen.keys[Key.esc] == true)	data.dying = true
 	}
 	
 	Void anim() {
@@ -132,7 +134,7 @@ class GameScreen : GameSeg {
 	}
 	
 	Void draw(Gfx g2d) {
-		drawBackground(g2d)
+		gameBg.draw(g2d, data)
 		
 		g3d := Gfx3d(g2d.offsetCentre).lookAt(camera, target)
 
@@ -167,7 +169,7 @@ class GameScreen : GameSeg {
 		
 		cube.draw(g3d)
 		
-		drawHud(g2d)
+		gameHud.draw(g2d, data)
 
 //		if (screen.keys[Key.left]  == true)	data.floorSpeed -= 0.5f
 //		if (screen.keys[Key.right] == true)	data.floorSpeed += 0.5f		
@@ -184,44 +186,6 @@ class GameScreen : GameSeg {
 //		delta := 110f + fany.y
 //		camera = Point3d(0f, 0f, -500f).translate(0f, delta / 2f, 0f) //{ echo("Cam: $it") }
 //		target = Point3d(0f, -75f,  0f).translate(0f, delta / 2f, 0f) //{ echo("Tar: $it") }		
-	}
-	
-	Float bgHexX
-	Float bgBlobX	:= -100f
-	Float bgBlobA
-	Void drawBackground(Gfx g2d) {
-		g2d.clear
-		
-		bgBlobY := Sin.sin(bgBlobA / 360) * 50
-		g2d.drawImage(bgBlob, bgBlobX.toInt, bgBlobY.toInt + 50)
-		
-		bgBlobX += 2
-		if (bgBlobX > g2d.bounds.w.toFloat)
-			bgBlobX = -100f
-		bgBlobA += 2
-		if (bgBlobA > 360f)
-			bgBlobA = 0f
-		
-		g2d.drawImage(bgHex, bgHexX.toInt, 0)
-		bgHexX -= data.level / 3f
-		if (bgHexX < -111f)
-			bgHexX += 111f
-	}
-
-	Void drawHud(Gfx g2d) {
-		g2d.brush = Color.white
-		
-		scoreStr := "Score " + data.score.toStr.padl(5, '0')
-		x := (g2d.bounds.w / 2) - (scoreStr.size * 16)
-		y := -g2d.bounds.h / 2
-		g2d.drawFont16(scoreStr, x, y)
-		
-		x = -g2d.bounds.w / 2
-		g2d.drawFont16("Level ${data.level}", x, y)
-		
-		
-		y = (g2d.bounds.h / 2) - 16
-		g2d.drawFont16("Speed ${data.floorSpeed.toInt}", x, y)
 	}
 	
 	Float dx	:= 0f

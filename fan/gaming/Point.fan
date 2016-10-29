@@ -46,6 +46,10 @@ const class Point3d {
 	new makeItBlock(|This| in) { in(this) }
 
 	Point3d rotate(Float ax, Float ay, Float az) {
+		// speedcut!
+		if (ax == 0f && ay == 0f && az == 0f)
+			return this
+
 		// https://en.wikipedia.org/wiki/Rotation_matrix#In_three_dimensions
 		y2 :=  ( y * Sin.cos(-ax)) -( z * Sin.sin(-ax))
 		z2 :=  ( y * Sin.sin(-ax)) +( z * Sin.cos(-ax))
