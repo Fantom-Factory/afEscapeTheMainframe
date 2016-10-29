@@ -125,11 +125,10 @@ class GameScreen : GameSeg {
 	}
 	
 	Void anim() {
-		if (!data.dying) {
-			grid.anim
-			blcks.each { it.anim }
+		grid.anim
+		blcks.each { it.anim }
+		if (!data.dying)
 			fany.anim
-		}
 		fannyExplo?.anim
 		cube.anim
 	}

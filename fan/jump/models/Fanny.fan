@@ -91,7 +91,8 @@ class Fanny : Model {
 		y += sy
 		if (y <= -110f) {
 			y = -110f
-			jumpEnabled = true 
+			sy = 0f
+			jumpEnabled = true
 		}
 
 		normPoints := normPoints.dup
