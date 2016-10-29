@@ -223,48 +223,57 @@ class Models {
 			it.drawables = Drawable#.emptyList
 
 			offsets := [
-				[-20f,  20f],
-				[  0f,  20f],
-				[ 20f,  20f],
+				[-20f+2f,  20f],
+				[  0f+2f,  20f],
+				[ 20f+2f,  20f],
 				
-				[-20f,   0f],
-				[  0f,   0f],
-				[ 20f,   0f],
+				[-20f-0f,   0f],
+				[  0f-0f,   0f],
+				[ 20f-0f,   0f],
 				
-				[-40f, -20f],
-				[-20f, -20f],
-				[  0f, -20f],
-				[ 20f, -20f],
+				[-40f-2f, -20f],
+				[-20f-2f, -20f],
+				[  0f-2f, -20f],
+				[ 20f-2f, -20f],
 	
-				[-40f, -40f],
-				[-20f, -40f],
-				[  0f, -40f],
-				[ 20f, -40f],
+				[-40f-4f, -40f],
+				[-20f-4f, -40f],
+				[  0f-4f, -40f],
+				[ 20f-4f, -40f],
 			]
 			
+			initForce	:=  3f + (Float.random * 2f)
+			initY		:= 10f + (Float.random * 5f)
+			initX		:= 3f + (data.level / 3f)
+			index		:= 0
+
+//			it.squares = [0f].map |z| {
 			it.squares = [25f, 0f, -25f].map |z| {
 				offsets.map |off, i| {
 					FannyExploSquare {
 						it.points = [
-							Point3d( 0f+off[0], 20f+off[1], z),
-							Point3d(20f+off[0], 20f+off[1], z),
-							Point3d(20f+off[0],  0f+off[1], z),
-							Point3d( 0f+off[0],  0f+off[1], z),
+							Point3d(-10f,  10f, 0f),
+							Point3d( 10f,  10f, 0f),
+							Point3d( 10f, -10f, 0f),
+							Point3d(-10f, -10f, 0f),
 						]
 
 						it.drawables = [
-							Fill(brand_red),
+							Fill(brand_white),
 							Edge(brand_white),
 							Poly([0, 1, 2, 3]),
 						]
 						
-						it.x = fanny.x
-						it.y = fanny.y
-						it.z = fanny.z
-						
-						// TODO add jump vector
-						it.movementVector = Point3d(((xMax - xMin) / 2) + off[0], ((yMax - yMin) / 2) + off[1], z).translate(0f, 0f, 0f).normalise
-						it.force = 2f
+						it.x = fanny.x + off[0]
+						it.y = fanny.y + off[1]
+						it.z = fanny.z + z
+						it.index = index++
+
+						it.movementVector = Point3d(((xMax - xMin) / 2) + off[0], ((yMax - yMin) / 2) + off[1], z)
+							.translate(0f, 40f, 0f)
+							.normalise
+							.scale(initForce/2, initForce, initForce/2)
+							.translate(initX, initY, 0f)
 					}
 				}
 			}.flatten
