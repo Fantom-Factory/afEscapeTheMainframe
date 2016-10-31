@@ -96,6 +96,20 @@ class GameScreen : GameSeg {
 			}
 		}
 		
+		if (!data.dying) {
+			fannyRect := fanny.collisionRect
+			bonusCubes.each |cube| {
+				col := cube.collisionRect.intersects(fannyRect)
+				if (col) {
+					data.score += 15
+					cube.killMe = true
+					
+					explo := Models.bonusExplo(data, cube.x, cube.y)
+					bonusExplo.add(explo)
+				}
+			}
+		}
+		
 		if (data.dying) {
 			data.deathCryIdx++
 		
@@ -196,21 +210,6 @@ class GameScreen : GameSeg {
 //		delta := 110f + fanny.y
 //		camera = Point3d(0f, 0f, -500f).translate(0f, delta / 2f, 0f) //{ echo("Cam: $it") }
 //		target = Point3d(0f, -75f,  0f).translate(0f, delta / 2f, 0f) //{ echo("Tar: $it") }
-		
-		
-		if (!data.dying) {
-			fannyRect := fanny.collisionRect
-//			bonusCubes.each |cube| {
-//				col := cube.collisionRect.intersects(fannyRect)
-//				if (col) {
-//					data.score += 15
-//					cube.killMe = true
-//					
-//					explo := Models.bonusExplo(data, cube.x, cube.y)
-//					bonusExplo.add(explo)
-//				}
-//			}
-		}
 	}
 	
 	Void gameOver() {

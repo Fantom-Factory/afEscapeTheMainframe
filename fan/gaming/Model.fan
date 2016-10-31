@@ -66,20 +66,15 @@ class Model {
 		return zs.max + this.z
 	}
 	
-	Point3d[] collisionRect() {
-		xMin := (Float) points.map { it.x }.min
-		xMax := (Float) points.map { it.x }.max
-		yMin := (Float) points.map { it.y }.min
-		yMax := (Float) points.map { it.y }.max
+	Rect collisionRect() {
+		xMin := (Float) points.map { it.x }.min - 5f
+		xMax := (Float) points.map { it.x }.max + 5f
+		yMin := (Float) points.map { it.y }.min - 5f
+		yMax := (Float) points.map { it.y }.max + 5f
 		w	 := xMax - xMin
 		h	 := yMax - yMin
 		
-		return Point3d[
-			Point3d(xMin    , yMin    , 0f).translate(x, y, z),
-			Point3d(xMin + w, yMin    , 0f).translate(x, y, z),
-			Point3d(xMin + w, yMin + h, 0f).translate(x, y, z),
-			Point3d(xMin    , yMin + h, 0f).translate(x, y, z),
-		]
+		return Rect((xMin + x).toInt, (yMin + y).toInt, w.toInt, h.toInt)
 	}
 
 	virtual Void draw(Gfx3d g3d) {

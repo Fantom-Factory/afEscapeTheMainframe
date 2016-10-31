@@ -1,6 +1,7 @@
 using gfx::Color
 using gfx::Point
 using gfx::Brush
+using gfx::Rect
 using util
 
 class Gfx3d {
@@ -58,7 +59,13 @@ class Gfx3d {
 		return pts3d
 	}
 	
-	This drawRect(Point3d[] pts3d) {
+	This drawRect(Rect r, Float z) {
+		pts3d := Point3d[
+			Point3d((r.x      ).toFloat, (r.y      ).toFloat, z),
+			Point3d((r.x + r.w).toFloat, (r.y      ).toFloat, z),
+			Point3d((r.x + r.w).toFloat, (r.y + r.h).toFloat, z),
+			Point3d((r.x      ).toFloat, (r.y + r.h).toFloat, z),
+		]
 		pts := pts3d.map {
 			it	.translate(-cameraPos.x, -cameraPos.y, -cameraPos.z)
 				.rotate(this.ax, this.ay, this.az)
