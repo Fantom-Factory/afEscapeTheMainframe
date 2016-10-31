@@ -48,9 +48,9 @@ class Models {
 			it.points	 = Point3d#.emptyList
 			it.drawables = Drawable#.emptyList
 
-			a := -30
-			it.squares = (0..<6).toList.map |i| {
-				BonusExploSquare {
+			a := -45 / 2f
+			it.squares = (0..<8).toList.map |i| {
+				BonusExploSquare(data) {
 					points = [
 						Point3d(-100f,  100f, 0f),
 						Point3d( 100f,  100f, 0f),
@@ -70,8 +70,7 @@ class Models {
 					it.z = -70f
 		
 					it.movementVector = Point3d(Sin.sin(a / 360f), Sin.cos(a / 360f), 0f)
-					it.az = 10f
-					a += 60
+					a += 45f
 				}
 			}
 		}

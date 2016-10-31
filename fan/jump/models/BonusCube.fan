@@ -8,12 +8,12 @@ class BonusCube : Model {
 		this.data  = data
 	}
 
-	override Void draw(Gfx3d g3d) {
-		super.draw(g3d)
-		r:=collisionRect
-		g3d.edge = gfx::Color.red
-		g3d.drawRect(r)
-	}
+//	override Void draw(Gfx3d g3d) {
+//		super.draw(g3d)
+//
+//		g3d.edge = gfx::Color.red
+//		g3d.drawRect(collisionRect, z)
+//	}
 
 	override Void anim() {
 		ax += 1f/100f

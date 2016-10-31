@@ -17,16 +17,19 @@ class BonusExplo : Model {
 	
 	override Void anim() {
 		squares.each { it.anim }
-		if (killMeCountdown++ > 100)
+		if (killMeCountdown++ > 50)
 			killMe = true
 	}
 }
 
 class BonusExploSquare : Model {
-	Float	force	:= 10f
-	Point3d	movementVector
+	GameData 	data
+	Float		force	:= 12f
+	Point3d		movementVector
 
-	new make(|This| in) : super(in) { }
+	new make(GameData data, |This| in) : super(in) {
+		this.data = data
+	}
 
 	override Void anim() {		
 		thing := movementVector.scale(force)
@@ -34,6 +37,10 @@ class BonusExploSquare : Model {
 		y += thing.y
 		z += thing.z
 		
-		force -= 0.1f
+		x -= (data.floorSpeed / 2)
+		
+		force = 0f.max(force - 0.25f)
+		
+		az += 0.02f
 	}
 }

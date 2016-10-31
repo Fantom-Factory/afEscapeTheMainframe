@@ -86,9 +86,8 @@ class Fanny : Model {
 		// don't draw fanny if we're dying - we draw the explo instead
 		if (!data.dying) super.draw(g3d)
 		
-		r:=collisionRect
-		g3d.edge = gfx::Color.red
-		g3d.drawRect(r)
+//		g3d.edge = gfx::Color.red
+//		g3d.drawRect(collisionRect, z)
 	}
 	
 	override Void anim() {
