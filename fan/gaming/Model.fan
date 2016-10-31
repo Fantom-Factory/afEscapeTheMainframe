@@ -1,5 +1,7 @@
 using gfx::Color
 using gfx::Brush
+using gfx::Rect
+using gfx::Point
 
 class Model {
 	Point3d[]		points
@@ -64,12 +66,28 @@ class Model {
 		return zs.max + this.z
 	}
 	
-	virtual This draw(Gfx3d g3d) {
+	Point3d[] collisionRect() {
+		xMin := (Float) points.map { it.x }.min
+		xMax := (Float) points.map { it.x }.max
+		yMin := (Float) points.map { it.y }.min
+		yMax := (Float) points.map { it.y }.max
+		w	 := xMax - xMin
+		h	 := yMax - yMin
+		
+		return Point3d[
+			Point3d(xMin    , yMin    , 0f).translate(x, y, z),
+			Point3d(xMin + w, yMin    , 0f).translate(x, y, z),
+			Point3d(xMin + w, yMin + h, 0f).translate(x, y, z),
+			Point3d(xMin    , yMin + h, 0f).translate(x, y, z),
+		]
+	}
+
+	virtual Void draw(Gfx3d g3d) {
 		drawFunc.call(this, g3d)
 		return this
 	}
 
-	virtual This anim() {
+	virtual Void anim() {
 		animFunc?.call(this)
 		return this
 	}	
@@ -87,8 +105,12 @@ const class Line : Drawable {
 	}
 	
 	override Void draw(Gfx3d g3d, Point3d[] pts3d) {
-		pts := points.map { pts3d[it] }
-		g3d.drawPolyline(pts)
+		g2d	  := g3d.g2d
+		pts	  := (Point3d[]) points.map { pts3d[it] }
+		pts2d := pts.map |pt| { Point(g2d.ox + pt.x.toInt, g2d.oy - pt.y.toInt) }
+		
+		g2d.g.brush = g3d.edge
+		g2d.g.drawPolyline(pts2d)
 	}
 }
 
@@ -101,8 +123,19 @@ const class Poly : Drawable {
 	
 	override Void draw(Gfx3d g3d, Point3d[] pts3d) {
 		if (!isHidden(pts3d)) {
-			pts := points.map { pts3d[it] }
-			g3d.drawPolygon(pts)
+			g2d   := g3d.g2d
+			pts   := (Point3d[]) points.map { pts3d[it] }
+			pts2d := pts.map |pt| { Point(g2d.ox + pt.x.toInt, g2d.oy - pt.y.toInt) }
+			
+			if (g3d.fill != null) {
+				g2d.g.brush = g3d.fill
+				g2d.g.fillPolygon(pts2d)
+			}
+	
+			if (g3d.edge != null) {
+				g2d.g.brush = g3d.edge
+				g2d.g.drawPolygon(pts2d)
+			}
 		}
 	}
 	

@@ -12,7 +12,7 @@ class Models {
 	static const Color	cube_fill		:= Color(0xFF_FF_FF_22)
 	static const Color	cube_edge		:= brand_darkBlue
 	
-	static BonusCube bonusCube(GameData data, Block block) {
+	static BonusCube bonusCube(GameData data, Float x, Float y) {
 		BonusCube(data) {
 			points = [
 				Point3d(-100f,  100f, -100f),
@@ -24,44 +24,56 @@ class Models {
 				Point3d( 100f, -100f,  100f),
 				Point3d(-100f, -100f,  100f),
 			]
-//			scale(0.75f)
 			scale(0.25f)
 			
-			blockKey := block.blockKey
-			
-			x := 0
-			if (blockKey.and(Funcs.x1) != 0)	x = 0
-			if (blockKey.and(Funcs.x2) != 0)	x = 1
-			if (blockKey.and(Funcs.x3) != 0)	x = 2
-
-			y := 0
-			if (blockKey.and(Funcs.y1) != 0)	y = 0
-			if (blockKey.and(Funcs.y2) != 0)	y = 1
-			if (blockKey.and(Funcs.y3) != 0)	y = 2
-			
-			it.x = block.x + (x * 50f / 2f)
-			it.y = block.y + (y * 50f) + 75f
+			it.x = x
+			it.y = y
+			it.z = -70f
 
 			drawables = [
 				Fill(cube_fill),
 				Edge(cube_edge),
-//				Fill(null),
 				Poly([0, 1, 2, 3]),	// front
 				Poly([7, 6, 5, 4]),	// back
 				Poly([4, 0, 3, 7]),	// left
 				Poly([1, 5, 6, 2]),	// right
 				Poly([4, 5, 1, 0]),	// top
 				Poly([3, 2, 6, 7]),	// bottom
-			]
-			
-			// draws coors on the screen
-//			drawFunc = |Model model, Gfx3d g3d| {
-//				pts := g3d.drawModel(model)
-//				[0, 1, 2].each {
-//					pt := model.points[it].rotate(model.ax, model.ay, model.az)
-//					g3d.drawFont8(pt.toStr, pts[it])					
-//				}
-//			}						
+			]					
+		}
+	}
+
+	static BonusExplo bonusExplo(GameData data, Float x, Float y) {
+		BonusExplo(data) {			
+			it.points	 = Point3d#.emptyList
+			it.drawables = Drawable#.emptyList
+
+			a := -30
+			it.squares = (0..<6).toList.map |i| {
+				BonusExploSquare {
+					points = [
+						Point3d(-100f,  100f, 0f),
+						Point3d( 100f,  100f, 0f),
+						Point3d( 100f, -100f, 0f),
+						Point3d(-100f, -100f, 0f),
+					]
+					scale(0.20f)
+
+					drawables = [
+						Fill(cube_fill),
+						Edge(cube_edge),
+						Poly([0, 1, 2, 3]),
+					]
+
+					it.x = x
+					it.y = y
+					it.z = -70f
+		
+					it.movementVector = Point3d(Sin.sin(a / 360f), Sin.cos(a / 360f), 0f)
+					it.az = 10f
+					a += 60
+				}
+			}
 		}
 	}
 

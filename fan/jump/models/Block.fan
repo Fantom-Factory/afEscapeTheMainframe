@@ -19,16 +19,9 @@ class Block : Model {
 		this.x = 1000f
 	}
 
-	override This anim() {
+	override Void anim() {
 		x -= data.floorSpeed
 		if (x < -1000f)
 			killMe = true
-		return this
-	}
-	
-	Rect collisionRect() {
-		x := (Float) points.map { it.x }.min
-		y := (Float) points.map { it.y }.max
-		return Rect((this.x + x).toInt, -(this.y + y).toInt, w.toInt, h.toInt)
 	}
 }

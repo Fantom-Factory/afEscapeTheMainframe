@@ -12,9 +12,5 @@ class GameHud {
 		
 		x = -g2d.bounds.w / 2
 		g2d.drawFont16("Level ${data.level}", x, y)
-		
-		
-		y = (g2d.bounds.h / 2) - 16
-		g2d.drawFont16("Speed ${data.floorSpeed.toInt}", x, y)
 	}
 }
