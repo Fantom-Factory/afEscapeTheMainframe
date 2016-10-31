@@ -82,12 +82,16 @@ class Fanny : Model {
 		}
 	}
 	
-	override This draw(Gfx3d g3d) {
+	override Void draw(Gfx3d g3d) {
 		// don't draw fanny if we're dying - we draw the explo instead
-		data.dying ? this : super.draw(g3d)
+		if (!data.dying) super.draw(g3d)
+		
+		r:=collisionRect
+		g3d.edge = gfx::Color.red
+		g3d.drawRect(r)
 	}
 	
-	override This anim() {
+	override Void anim() {
 		y += sy
 		if (y <= -110f) {
 			y = -110f
@@ -124,8 +128,6 @@ class Fanny : Model {
 		if (y > -110f) {
 			sy -= 1.5f
 		}
-
-		return this
 	}
 	
 	Bool intersects(Block block) {
@@ -164,16 +166,6 @@ class Fanny : Model {
 	
 		return points.any { inter.doLinesIntersect(it) }
 	}
-	
-//	Rect collisionRect() {
-//		xs := (Float[]) points.map { it.x } 
-//		ys := (Float[]) points.map { it.y } 
-//		w  := xs.max - xs.min
-//		h  := ys.max - ys.min
-//		x  := xs.min
-//		y  := ys.max
-//		return Rect((this.x + x).toInt, -(this.y + y).toInt, w.toInt, h.toInt)
-//	}
 }
 
 ** https://martin-thoma.com/how-to-check-if-two-line-segments-intersect/

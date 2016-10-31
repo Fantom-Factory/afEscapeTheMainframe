@@ -8,7 +8,14 @@ class BonusCube : Model {
 		this.data  = data
 	}
 
-	override This anim() {
+	override Void draw(Gfx3d g3d) {
+		super.draw(g3d)
+		r:=collisionRect
+		g3d.edge = gfx::Color.red
+		g3d.drawRect(r)
+	}
+
+	override Void anim() {
 		ax += 1f/100f
 		ay += 1f/280f
 		az -= 1f/500f
@@ -16,6 +23,5 @@ class BonusCube : Model {
 		x -= data.floorSpeed
 		if (x < -1000f)
 			killMe = true
-		return this
 	}
 }

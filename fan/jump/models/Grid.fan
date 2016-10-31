@@ -6,11 +6,10 @@ class Grid : Model {
 		this.data  = data
 	}
 	
-	override This anim() {
+	override Void anim() {
 		x -= data.floorSpeed
 		if (x < -240f) {
 			x += 240f
 		}
-		return this
 	}
 }

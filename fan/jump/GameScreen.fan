@@ -7,17 +7,18 @@ using afIoc::Autobuild
 
 class GameScreen : GameSeg {
 
-	@Inject		private Screen		screen
-	@Inject		private |->App|		app
-	@Autobuild	private	Funcs		funcs
-				private BonusCube[]	bonusCubes	:= BonusCube[,]
-				private Model?		grid
-				private Block[]		blcks		:= Block[,]
-				private Fanny?		fanny
-				private FannyExplo?	fannyExplo
-				private GameBg		gameBg		:= GameBg()
-				private GameHud		gameHud		:= GameHud()
-				private	GameData?	data
+	@Inject		private Screen			screen
+	@Inject		private |->App|			app
+	@Autobuild	private	Funcs			funcs
+				private BonusCube[]		bonusCubes	:= BonusCube[,]
+				private BonusExplo[]	bonusExplo	:= BonusExplo[,]
+				private Model?			grid
+				private Block[]			blcks		:= Block[,]
+				private Fanny?			fanny
+				private FannyExplo?		fannyExplo
+				private GameBg			gameBg		:= GameBg()
+				private GameHud			gameHud		:= GameHud()
+				private	GameData?		data
 	
 	
 	new make(|This| in) { in(this) }
@@ -28,6 +29,7 @@ class GameScreen : GameSeg {
 		grid	= Models.grid(data)
 		fanny	= Models.fanny(data)
 		bonusCubes.clear
+		bonusExplo.clear
 		fannyExplo = null
 		return this
 	}
@@ -96,10 +98,10 @@ class GameScreen : GameSeg {
 		
 		if (data.dying) {
 			data.deathCryIdx++
-		}
 		
-		if (data.deathCryIdx == 180) {
-			app().gameOver
+			if (data.deathCryIdx == 180) {
+				app().gameOver
+			}
 		}
 	}
 	
@@ -134,8 +136,12 @@ class GameScreen : GameSeg {
 		if (!data.dying)
 			fanny.anim
 		fannyExplo?.anim
+		
 		bonusCubes.each { it.anim }
 		bonusCubes = bonusCubes.exclude { it.killMe }
+		
+		bonusExplo.each { it.anim }
+		bonusExplo = bonusExplo.exclude { it.killMe }
 	}
 	
 	Void draw(Gfx g2d) {
@@ -171,6 +177,7 @@ class GameScreen : GameSeg {
 		fannyExplo?.draw(g3d)
 		
 		bonusCubes.each { it.draw(g3d) }
+		bonusExplo.each { it.draw(g3d) }
 		
 		gameHud.draw(g2d, data)
 
@@ -188,7 +195,22 @@ class GameScreen : GameSeg {
 		// uncomment to alter camera view
 //		delta := 110f + fanny.y
 //		camera = Point3d(0f, 0f, -500f).translate(0f, delta / 2f, 0f) //{ echo("Cam: $it") }
-//		target = Point3d(0f, -75f,  0f).translate(0f, delta / 2f, 0f) //{ echo("Tar: $it") }		
+//		target = Point3d(0f, -75f,  0f).translate(0f, delta / 2f, 0f) //{ echo("Tar: $it") }
+		
+		
+		if (!data.dying) {
+			fannyRect := fanny.collisionRect
+//			bonusCubes.each |cube| {
+//				col := cube.collisionRect.intersects(fannyRect)
+//				if (col) {
+//					data.score += 15
+//					cube.killMe = true
+//					
+//					explo := Models.bonusExplo(data, cube.x, cube.y)
+//					bonusExplo.add(explo)
+//				}
+//			}
+		}
 	}
 	
 	Void gameOver() {

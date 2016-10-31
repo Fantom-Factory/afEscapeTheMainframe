@@ -45,11 +45,13 @@ const class Sin {
 //		Sin.cosTable = cosTable.toImmutable
 //	}
 
+	** From 0 - 1
 	static Float sin(Float angle) {
 		idx := ((angle - angle.floor) * max).toInt % max
 		return sinTable[idx]
 	}
 
+	** From 0 - 1
 	static Float cos(Float angle) {
 		idx := ((angle - angle.floor) * max).toInt % max
 		return cosTable[idx]

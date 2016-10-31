@@ -10,12 +10,11 @@ class FannyExplo : Model {
 		this.data = data
 	}
 	
-	override This draw(Gfx3d g3d) {
+	override Void draw(Gfx3d g3d) {
 		squares.each { it.draw(g3d) }
-		return this
 	}
 	
-	override This anim() {
+	override Void anim() {
 		rgb		:= 0xFF0000.or(col.shiftl(8)).or(col)
 		blood	:= Fill(Color(rgb))
 		col		= 0x22.max(col - 5)
@@ -24,8 +23,6 @@ class FannyExplo : Model {
 			it.anim
 			it.drawables[0] = blood
 		}
-		
-		return this
 	}
 }
 
@@ -38,7 +35,7 @@ class FannyExploSquare : Model {
 	
 	new make(|This| in) : super(in) { }
 
-	override This anim() {		
+	override Void anim() {		
 		thing := movementVector
 		x += thing.x
 		y += thing.y
@@ -50,7 +47,5 @@ class FannyExploSquare : Model {
 		}
 		
 		movementVector = movementVector.translate(-0.2f, gravity, 0f)
-		
-		return this
 	}
 }
