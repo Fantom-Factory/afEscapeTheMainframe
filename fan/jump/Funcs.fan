@@ -192,7 +192,9 @@ const class Funcs {
 		cy := -150f + (h * 50f)
 		if (h != 0) cy += 80f
 		
-		return Models.bonusCube(data, cx, cy)
+		bonus := Models.bonusCube(data, cx, cy)
+		block.bonusCube = bonus
+		return bonus
 	}
 	
 	const Int[] jumpLevels	:= [
