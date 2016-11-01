@@ -7,6 +7,7 @@ class Block : Model {
 	Bool		killMe
 	Int			score
 	Int			blockKey
+	BonusCube?	bonusCube
 	
 	new make(GameData data, |This| in) : super(in) {
 		this.data = data

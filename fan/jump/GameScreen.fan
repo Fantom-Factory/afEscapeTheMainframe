@@ -170,19 +170,33 @@ class GameScreen : GameSeg {
 		fannyDrawn	:= false
 		fannyXmin	:= fanny.xMin
 		
+		bonusCubes.each { it.drawn = false }
+		
 		blcks.findAll { it.x < 0f }.each |blck| {
-			if (blck.xMax < fannyXmin)
+			if (blck.xMax < fannyXmin) {
+				
+				if (blck.bonusCube != null && blck.bonusCube.y < blck.y)
+					blck.bonusCube.draw(g3d)
 				blck.draw(g3d)
-			else {
+				
+			} else {
 				if (!fannyDrawn) {
 					fanny.draw(g3d)
 					fannyDrawn = true
 				}
+
+				if (blck.bonusCube != null && blck.bonusCube.y < blck.y)
+					blck.bonusCube.draw(g3d)
 				blck.draw(g3d)
 			}
+			
+			blck.bonusCube?.draw(g3d)
 		}
 		blcks.findAll { it.x >= 0f }.sortr |b1, b2| { b1.x <=> b2.x  }.each |blck| {
+			if (blck.bonusCube != null && blck.bonusCube.y < blck.y)
+				blck.bonusCube.draw(g3d)
 			blck.draw(g3d)
+			blck.bonusCube?.draw(g3d)
 		}
 		
 		

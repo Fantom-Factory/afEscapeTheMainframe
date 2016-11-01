@@ -24,7 +24,8 @@ class BonusExplo : Model {
 
 class BonusExploSquare : Model {
 	GameData 	data
-	Float		force	:= 12f
+	Float		force	:= 10f
+	Float		size	:= 0.25f
 	Point3d		movementVector
 
 	new make(GameData data, |This| in) : super(in) {
@@ -39,8 +40,21 @@ class BonusExploSquare : Model {
 		
 		x -= (data.floorSpeed / 2)
 		
-		force = 0f.max(force - 0.25f)
+		force = 0f.max(force - 0.18f)
 		
-		az += 0.02f
+		az += 0.04f
+				
+		points = [
+			Point3d(-100f,  100f, -100f),
+			Point3d( 100f,  100f, -100f),
+			Point3d( 100f, -100f, -100f),
+			Point3d(-100f, -100f, -100f),
+			Point3d(-100f,  100f,  100f),
+			Point3d( 100f,  100f,  100f),
+			Point3d( 100f, -100f,  100f),
+			Point3d(-100f, -100f,  100f),
+		]
+		scale(size)
+		size -= 0.005f
 	}
 }
