@@ -5,12 +5,14 @@ using afIoc::Scope
 
 class TitleScreen : GameSeg {
 
-	@Inject	private Screen	screen
-	@Inject	private |->App|	app
+	@Inject	private Screen		screen
+	@Inject	private |->App|		app
+			private TitleBg?	titleBg
 	
 	new make(|This| in) { in(this) }
 
 	override This onInit() {
+		titleBg = TitleBg()
 		return this
 	}
 	
@@ -21,7 +23,6 @@ class TitleScreen : GameSeg {
 			app().startGame
 		}
 
-		g2d.clear
-		g2d.drawFont8Centred("Fanny the Fantom", 50)
+		titleBg.draw(g2d)
 	}
 }
