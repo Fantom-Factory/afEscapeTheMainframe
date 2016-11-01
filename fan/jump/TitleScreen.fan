@@ -2,6 +2,7 @@ using fwt::Key
 using gfx::Color
 using afIoc::Inject
 using afIoc::Scope
+using concurrent::Actor
 
 class TitleScreen : GameSeg {
 
@@ -13,9 +14,16 @@ class TitleScreen : GameSeg {
 
 	override This onInit() {
 		titleBg = TitleBg()
+		titleBg.bgIndex = Actor.locals["afFanny.bgIndex"] ?: 0.5f
+		titleBg.bgHexX  = Actor.locals["afFanny.bgHexX" ] ?: 0f
 		return this
 	}
 	
+	override Void onKill() {
+		Actor.locals["afFanny.bgIndex"] = titleBg.bgIndex
+		Actor.locals["afFanny.bgHexX" ] = titleBg.bgHexX
+	}
+
 	override Void onDraw(Gfx g2d) {
 		anyKey	:= screen.keys.size > 0
 

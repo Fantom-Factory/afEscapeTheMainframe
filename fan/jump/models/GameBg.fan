@@ -9,7 +9,7 @@ const class GameBg {
 	private const Int	bgColB	:= 0x99
 
 	Void draw(Gfx g2d, GameData data) {
-		data.bgIndex += 0.003f + (data.level * 0.001f)
+		data.bgIndex += 0.000f + (data.level * 0.001f)
 		if (data.bgIndex > 1f)
 			data.bgIndex -= 1f
 		

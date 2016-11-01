@@ -4,6 +4,7 @@ using gfx::Rect
 using gfx::Image
 using afIoc::Inject
 using afIoc::Autobuild
+using concurrent::Actor
 
 class GameScreen : GameSeg {
 
@@ -31,7 +32,15 @@ class GameScreen : GameSeg {
 		bonusCubes.clear
 		bonusExplo.clear
 		fannyExplo = null
+		
+		data.bgIndex = Actor.locals["afFanny.bgIndex"]
+		data.bgHexX  = Actor.locals["afFanny.bgHexX" ]
 		return this
+	}
+	
+	override Void onKill() {
+		Actor.locals["afFanny.bgIndex"] = data.bgIndex
+		Actor.locals["afFanny.bgHexX" ] = data.bgHexX
 	}
 
 	override Void onDraw(Gfx g2d) {

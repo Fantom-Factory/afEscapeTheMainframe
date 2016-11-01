@@ -18,8 +18,8 @@ class TitleBg {
 	private Twean?	tweanTheFanny
 	
 	private Float 	fannyY
-	private Float 	bgHexX
-	private Float	bgIndex		:= 0.5f
+	internal Float 	bgHexX
+	internal Float	bgIndex		:= 0.5f
 	private Int		time
 
 	new make() {
@@ -38,7 +38,7 @@ class TitleBg {
 		
 		g2d.clear(Color.makeArgb(0xFF, cR, cG, cB))
 		
-		g2d.drawImage(bgHex, 0, 0)
+		g2d.drawImage(bgHex, bgHexX.toInt, 0)
 		
 		tweanFanny	.draw(g2d, time)
 		tweanThe	.draw(g2d, time)

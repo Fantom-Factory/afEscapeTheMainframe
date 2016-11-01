@@ -22,16 +22,19 @@ class App : DemoEvents {
 	
 	Void startGame() {
 		screen.keys.clear
+		activeScreen.onKill
 		activeScreen = gameScreen.onInit
 	}
 	
 	Void gameOver() {
 		screen.keys.clear
+		activeScreen.onKill
 		activeScreen = titleScreen.onInit
 	}
 }
 
 mixin GameSeg {
 	abstract This onInit()
+	abstract Void onKill()
 	abstract Void onDraw(Gfx g2d)
 }
