@@ -61,7 +61,8 @@ class GameScreen : GameSeg {
 			if (bonusCube != null)
 				bonusCubes.add(bonusCube)
 
-			data.distSinceLastBlock = 0f
+			// set by funcBlock
+//			data.distSinceLastBlock = 0f
 		}
 		
 		if (!data.dying) {

@@ -1,5 +1,5 @@
 
-class Funcs {
+const class Funcs {
 	
 	static const Int	z0	:=	 2.pow( 0)
 	static const Int	z1	:=	 2.pow( 1)
@@ -67,7 +67,7 @@ class Funcs {
 	mo+	x2 + y2 + z0+z4	: [                           10],
 	]
 	
-	private Int:Int[] allowedLevels
+	private const Int:Int[] allowedLevels
 	
 	new make() {
 		allowedLevels := Int:Int[][:] { it.ordered = true }
@@ -85,9 +85,9 @@ class Funcs {
 	Bool funcNewBlock(Int level, Float distance, Float speed) {
 		level--
 
-		shortest :=  500f - (level *  15)	// 500  -> 350  
+		shortest :=  550f - (level *  15)	// 550  -> 400  
 		longest	 := 1500f - (level * 100)	// 1500 -> 500 
-
+		
 		if (distance < shortest)
 			return false
 		if (distance > longest)
@@ -106,12 +106,15 @@ class Funcs {
 		lastKey := lastBlock?.blockKey
 		if (lastKey != null) {
 			// if we've just done a high jump, don't immediately follow it with another
-			if ((lastKey.and(y2) != 0 || lastKey.and(y3) != 0) && lastKey.and(z0) != 0 && distance < 450f)
-//				allowedLevels = allowedLevels.dup.exclude { (it.and(y2) != 0 || it.and(y3) != 0) && it.and(z0) != 0 }
-				allowedLevels = allowedLevels.dup.exclude { it.and(z0) != 0 }
+			if (distance < 475f && (lastKey.and(y2) != 0 || lastKey.and(y3) != 0) && lastKey.and(z0) != 0)
+				allowedLevels = allowedLevels.exclude { (it.and(y2) != 0 || it.and(y3) != 0) && it.and(z0) != 0 }
+//				allowedLevels = allowedLevels.exclude { it.and(z0) != 0 }
 
-			if (lastKey.and(z1) != 0 && distance < 400f)
-				allowedLevels = allowedLevels.dup.exclude { (it.and(y2) != 0 || it.and(y3) != 0) && it.and(z0) != 0 }
+			if (distance < 425f && lastKey.and(z0) != 0)
+				allowedLevels = allowedLevels.exclude { it.and(z0) != 0 }
+
+			if (distance < 425f && lastKey.and(z1) != 0)
+				allowedLevels = allowedLevels.exclude { (it.and(y2) != 0 || it.and(y3) != 0) && it.and(z0) != 0 }
 		}
 		
 		key	:= allowedLevels.random
@@ -152,17 +155,16 @@ class Funcs {
 		}
 		
 		// ensure fat blocks aren't grouped closer together
-		data.distSinceLastBlock -= (y * 50f)
+		data.distSinceLastBlock = -(x * 50f)
 		
 		return b2 == null ? [b1] : [b1, b2]
 	}
 	
-	Int cubeBlocks
 	BonusCube? funcBonusCube(GameData data, Block block) {
-		if (++cubeBlocks < 10)
+		if (++data.cubeBlocks < 6)
 			return null
 		
-		cubeBlocks = 0
+		data.cubeBlocks = 0
 					
 		blockKey := block.blockKey
 		
@@ -188,12 +190,12 @@ class Funcs {
 		
 		cx := block.x + (x * 50f / 2f)
 		cy := -150f + (h * 50f)
-		if (h != 0) cy += 50f
+		if (h != 0) cy += 70f
 		
 		return Models.bonusCube(data, cx, cy)
 	}
 	
-	Int[] jumpLevels	:= [
+	const Int[] jumpLevels	:= [
 		10  +  0, 
 		20  + 10,  
 		30  + 20, 
