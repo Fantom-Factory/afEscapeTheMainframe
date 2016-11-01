@@ -15,4 +15,6 @@ class GameData {
 	Int		score
 	Int		blocksJumpedInLevel
 	Int		blocksJumpedInGame
+	
+	Int cubeBlocks
 }
