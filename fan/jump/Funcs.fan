@@ -190,7 +190,7 @@ const class Funcs {
 		
 		cx := block.x + (x * 50f / 2f)
 		cy := -150f + (h * 50f)
-		if (h != 0) cy += 70f
+		if (h != 0) cy += 80f
 		
 		return Models.bonusCube(data, cx, cy)
 	}
