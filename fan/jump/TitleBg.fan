@@ -10,11 +10,14 @@ class TitleBg {
 	private	const Image	imgFanny	:= Image(`fan://afDemo/res/logo-fanny.png`)
 	private	const Image	imgThe		:= Image(`fan://afDemo/res/logo-the.png`)
 	private	const Image	imgFantom	:= Image(`fan://afDemo/res/logo-fantom.png`)
+	private	const Image	theFanny	:= Image(`fan://afDemo/res/fanny-x180.png`)
 
 	private Twean?	tweanFanny
 	private Twean?	tweanThe
 	private Twean?	tweanFantom
+	private Twean?	tweanTheFanny
 	
+	private Float 	fannyY
 	private Float 	bgHexX
 	private Float	bgIndex		:= 0.5f
 	private Int		time
@@ -40,9 +43,20 @@ class TitleBg {
 		tweanFanny	.draw(g2d, time)
 		tweanThe	.draw(g2d, time)
 		tweanFantom	.draw(g2d, time)
+		tweanTheFanny.draw(g2d, time)
 
-		if (time > 90)
+		if (time > 110)
 			g2d.drawFont8("v${typeof.pod.version}", 690, 190)
+		
+		if (time > 160)
+			g2d.drawFont16Centred("Press any key", 240)
+		
+		y := (Sin.sin(fannyY) * 15f).toInt + (288 - 180) / 2
+		tweanTheFanny.startY = y.toInt
+		tweanTheFanny.finalY = y.toInt
+		fannyY += 0.007f
+		if (fannyY > 1f)
+			fannyY -= 1f
 		
 		time++
 	}
@@ -83,6 +97,18 @@ class TitleBg {
 			it.finalX		=  360
 			it.finalY		=   60
 		}
+	
+		tweanTheFanny	= Twean {
+			it.img			= theFanny
+			it.imgWidth		=  180
+			it.imgHeight	=  180
+			it.startFrame	=   80
+			it.endFrame		=   95
+			it.startX		= -180
+			it.startY		=    0
+			it.finalX		=   30
+			it.finalY		=    0
+		}
 	}
 }
 
@@ -107,9 +133,12 @@ class Twean {
 		if (time > startFrame && time < endFrame) {
 			frame := time - startFrame
 			
-			x := ((finalX - startX) * frame / (endFrame - startFrame)) + startX
-			y := ((finalY - startY) * frame / (endFrame - startFrame)) + startY
-			g2d.drawImage(img, x, y)
+			ratio := frame.toFloat / (endFrame - startFrame)
+			sinio := Sin.sin(ratio * 0.25f)
+			
+			x := ((finalX - startX) * sinio) + startX
+			y := ((finalY - startY) * sinio) + startY
+			g2d.drawImage(img, x.toInt, y.toInt)
 			return
 		}
 		
