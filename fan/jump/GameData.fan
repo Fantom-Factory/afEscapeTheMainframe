@@ -16,5 +16,9 @@ class GameData {
 	Int		blocksJumpedInLevel
 	Int		blocksJumpedInGame
 	
-	Int cubeBlocks
+	Int		cubeBlocks
+	
+	Float 	bgHexX
+	Float	bgIndex		:= 0.5f
+
 }
