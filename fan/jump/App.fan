@@ -4,8 +4,9 @@ class App : DemoEvents {
 
 	@Inject		private Screen			screen
 //	@Autobuild	private SineDots		sineDots
-	@Autobuild	private GameScreen		gameScreen
 	@Autobuild	private TitleScreen		titleScreen
+	@Autobuild	private GameScreen		gameScreen
+	@Autobuild	private AboutScreen		aboutScreen
 	@Autobuild	private HiScoreScreen	hiScoreScreen
 				private GameSeg?		activeScreen
 						Bool			offline
@@ -34,6 +35,12 @@ class App : DemoEvents {
 		screen.keys.clear
 		activeScreen.onKill
 		activeScreen = titleScreen.onInit		
+	}
+	
+	Void showAbout() {
+		screen.keys.clear
+		activeScreen.onKill
+		activeScreen = aboutScreen.onInit		
 	}
 	
 	Void showHiScores() {

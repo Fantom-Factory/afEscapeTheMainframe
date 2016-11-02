@@ -26,6 +26,8 @@ class TitleScreen : GameSeg {
 					tit.anyKey = true
 				if (high == 1)
 					app().showHiScores
+				if (high == 2)
+					app().showAbout
 			}
 		}
 		return this
