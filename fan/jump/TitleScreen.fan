@@ -50,7 +50,8 @@ class TitleScreen : GameSeg {
 		
 		if (titleBg.time > 100) {
 			titleMenu.draw(g2d)
-			str := "(c) 2016-${Date.today.year} Alien-Factory"
+//			str := "(c) 2016-${Date.today.year} Alien-Factory"
+			str := "www.alienfactory.co.uk"
 			x := 224 + ((20 - str.size) * 8 / 2)
 			g2d.drawFont8(str, x, 278)
 		}

@@ -71,6 +71,7 @@ class PagesScreen {
 			Bool	anyKey
 			Int		pageX
 			Int		page
+			Int		speed	:= 2
 
 	new make(|This| f) { f(this) }
 	
@@ -91,7 +92,7 @@ class PagesScreen {
 		if (screen.keys[Key.left] == true && keyLeft == false) {
 			keyLeft = true
 			if (scoreTarget > 0) {
-				speedX = -1
+				speedX = -speed
 				scoreTarget -= 30
 			}
 		}
@@ -99,7 +100,7 @@ class PagesScreen {
 		if (screen.keys[Key.right] == true && keyRight == false) {
 			keyRight = true
 			if (scoreTarget < (30 * noOfPages)) {
-				speedX = 1
+				speedX = speed
 				scoreTarget += 30
 			}
 		}

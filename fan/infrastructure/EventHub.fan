@@ -1,4 +1,3 @@
-using afBeanUtils
 using afIoc
 using fwt
 
@@ -56,7 +55,8 @@ internal class EventHubImpl : EventHub {
 	// TODO: save into map of sinks, for optomidation
 	override Void register(Obj eventSink, Bool checked := true) {
 		if (!eventTypes.eventTypes.any { eventSink.typeof.fits(it) })
-			if (checked) throw ArgNotFoundErr("EventSink ${eventSink.typeof} does not implement a contributed EventType", eventTypes.eventTypes); else return
+//			if (checked) throw ArgNotFoundErr("EventSink ${eventSink.typeof} does not implement a contributed EventType", eventTypes.eventTypes); else return
+			if (checked) throw ArgErr("EventSink ${eventSink.typeof} does not implement a contributed EventType"); else return
 
 		eventSinks.add(eventSink)
 	}
@@ -69,7 +69,8 @@ internal class EventHubImpl : EventHub {
 		// TODO: queue up events to prevent infinite recursion
 		check
 			:= eventTypes.eventTypes.find { it.fits(method.parent) }
-			?: throw ArgNotFoundErr("Method '${method.qname}' does not belong to an event type ", eventTypes.eventTypes)
+//			?: throw ArgNotFoundErr("Method '${method.qname}' does not belong to an event type", eventTypes.eventTypes)
+			?: throw ArgErr("Method '${method.qname}' does not belong to an event type")
 		
 		sinks := eventSinks.findAll { it.typeof.fits(method.parent) }
 		

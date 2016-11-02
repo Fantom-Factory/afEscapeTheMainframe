@@ -19,12 +19,8 @@ class Build : BuildPod {
 			"sys          1.0.68 - 1.0", 
 			"gfx          1.0.68 - 1.0",
 			"fwt          1.0.68 - 1.0",
-			"concurrent   1.0.68 - 1.0",
-			"util   1.0.68 - 1.0",
 			
-			"afBeanUtils  1.0.8  - 1.0",
 			"afIoc        3.0.0  - 3.0",
-			"afReflux        0+",
 		]
 
 		srcDirs = [`fan/`, `fan/gaming/`, `fan/infrastructure/`, `fan/jump/`, `fan/jump/models/`, `fan/sinedots/`]
