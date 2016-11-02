@@ -4,10 +4,8 @@ using afIoc
 
 class BgGlow {
 
-//	private	const Image	bgHex1	:= Image(`fan://afDemo/res/bgHex-x200.png`)
-//	private	const Image	bgHex2	:= Image(`fan://afDemo/res/bgHex-x288.png`)
-	private	const Image	bgHex1	:= Image(`fan://afDemo/res/bgHex-3.png`)
-	private	const Image	bgHex2	:= Image(`fan://afDemo/res/bgHex-3.png`)
+	private	const Image	bgHex1	:= Image(`fan://afDemo/res/bgHex-x200.png`)
+	private	const Image	bgHex2	:= Image(`fan://afDemo/res/bgHex-x288.png`)
 	private const Int	bgColR	:= 0x33
 	private const Int	bgColG	:= 0x66
 	private const Int	bgColB	:= 0x99
@@ -21,16 +19,16 @@ class BgGlow {
 	new make(|This| f) { f(this) }
 	
 	Void draw(Gfx g2d, Int? level := null) {
-		bgIndex += 0.001f
+		bgIndex += 0.002f
 		if (level != null)
-			bgIndex += (level - 1) * 0.001f
+			bgIndex += (level - 1) * 0.002f
 		if (bgIndex > 1f)
 			bgIndex -= 1f
 		
 		mul := (Sin.cos(bgIndex) + 1f) / 2f
-		cR	:= (bgColR * mul).toInt
-		cG	:= (bgColG * mul).toInt
-		cB	:= (bgColB * mul).toInt
+		cR	:= ((bgColR - 0x00) * mul).toInt + 0x00
+		cG	:= ((bgColG - 0x08) * mul).toInt + 0x08
+		cB	:= ((bgColB - 0x1A) * mul).toInt + 0x1A
 		
 		g2d.clear(Color.makeArgb(0xFF, cR, cG, cB))
 		
