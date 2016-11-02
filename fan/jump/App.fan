@@ -8,7 +8,7 @@ class App : DemoEvents {
 	@Autobuild	private TitleScreen		titleScreen
 	@Autobuild	private HiScoreScreen	hiScoreScreen
 				private GameSeg?		activeScreen
-						Bool			offline	:= true
+						Bool			offline
 
 	new make(EventHub eventHub, |This| in) {
 		in(this)
