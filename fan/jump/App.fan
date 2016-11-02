@@ -2,22 +2,25 @@ using afIoc
 
 class App : DemoEvents {
 
-	@Inject		private Screen		screen
-//	@Autobuild	private SineDots	sineDots
-	@Autobuild	private GameScreen	gameScreen
-	@Autobuild	private TitleScreen	titleScreen
-				private GameSeg		activeScreen
+	@Inject		private Screen			screen
+//	@Autobuild	private SineDots		sineDots
+	@Autobuild	private GameScreen		gameScreen
+	@Autobuild	private TitleScreen		titleScreen
+	@Autobuild	private HiScoreScreen	hiScoreScreen
+				private GameSeg?		activeScreen
 
 	new make(EventHub eventHub, |This| in) {
 		in(this)
 		eventHub.register(this)
-		
-		activeScreen = titleScreen.onInit
 	}
 
+	override Void onStartup() {
+		activeScreen = hiScoreScreen.onInit		
+	}
+	
 	override Void onDraw(Gfx g) {
 //		sineDots.draw(g)
-		activeScreen.onDraw(g)
+		activeScreen?.onDraw(g)
 	}
 	
 	Void startGame() {

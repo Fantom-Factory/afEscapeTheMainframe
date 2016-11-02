@@ -32,12 +32,16 @@ class Screen : Canvas {
 	}
 
 	override Void onPaint(Graphics graphics) {
-		g := Gfx(graphics) {
-			it.font8x8		= this.font8x8
-			it.font16x16	= this.font16x16
-		}
+		g := gfx(graphics) 
 //		g.clear
 		if (pulsar.isRunning)
 			eventHub.fireEvent(DemoEvents#onDraw, [g])
-	}	
+	}
+	
+	Gfx gfx(Graphics graphics) {
+		Gfx(graphics) {
+			it.font8x8		= this.font8x8
+			it.font16x16	= this.font16x16
+		}
+	}
 }
