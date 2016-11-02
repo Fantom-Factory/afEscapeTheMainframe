@@ -24,16 +24,16 @@ class Main {
 	
 	static Void doMain(Type[] modules, |Window, Scope|? onOpen := null) {
 		frame := Frame(modules)
-		logNow("Made Frame")
+//		logNow("Made Frame")
 		Window {
 			win := it
 			it.add(frame.widget)
 			it.onOpen.add  |->| { 
-				logNow("On open")
+//				logNow("On open")
 				Desktop.callLater(50ms) |->| {
-					logNow("frame start")
+//					logNow("frame start")
 					frame.startup
-					logNow("on open")
+//					logNow("on open")
 				}
 			}
 			it.onClose.add |->| { echo("Bye!") }

@@ -123,7 +123,7 @@ class Gfx {
 		text.each |char| {   
 			if (char == '\n') {
 				x  = initX
-				y += fontSize				
+				y += fontSize
 			} else {
 				
 				// work out how many chars along from [SPACE] our char is
@@ -132,7 +132,9 @@ class Gfx {
 				srcX := (chrPos % 8) * fontSize
 				srcY := (chrPos / 8) * fontSize
 	
-				g.copyImage(font, Rect(srcX, srcY, fontSize, fontSize), Rect(x, y, fontSize, fontSize))
+				// don't draw spaces
+				if (srcX != 0 || srcY != 0)
+					g.copyImage(font, Rect(srcX, srcY, fontSize, fontSize), Rect(x, y, fontSize, fontSize))
 	
 				x += fontSize
 			}
