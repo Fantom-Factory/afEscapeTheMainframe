@@ -16,7 +16,7 @@ class Main {
 			// https://pacoup.com/2011/06/12/list-of-true-169-resolutions/
 //			win.size = Size(512, 288)
 			win.size = Size(768+8, 288+29)
-			win.title = "Fanny the Fantom"
+			win.title = "Fanny the Fantom - Use cursor keys to play"
 			win.icon = Image(`fan://afDemo/res/fanny-x32.png`)
 		}
 

@@ -2,7 +2,6 @@ using gfx::Color
 using gfx::Point
 using gfx::Brush
 using gfx::Rect
-using util
 
 class Gfx3d {
 

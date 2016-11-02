@@ -12,6 +12,9 @@ const class AppModule {
 		bob.onScopeCreate("uiThread") |Configuration config| {
 			config["eagerLoad"] = |->| {
 				config.scope.serviceByType(App#)
+				
+				hiScores := (HiScores) config.scope.serviceByType(HiScores#)
+				hiScores.loadScores
 			}
 		}
 	}

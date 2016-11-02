@@ -1,12 +1,13 @@
 
 class HiScores {
 	
-	HiScore[]	hiScores
+	private HiScore[]	hiScores
+	
 	
 	new make() {
 		hiScores = (0..<100).toList.map |i->HiScore| {
 			HiScore {
-				name	= "SlimerDude"
+				name	= "Slimer"
 				score	= 10_000 - (i * 100)
 			}
 		}
@@ -15,6 +16,10 @@ class HiScores {
 	@Operator
 	HiScore get(Int i) {
 		hiScores[i]
+	}
+	
+	Void loadScores() {
+		
 	}
 }
 
