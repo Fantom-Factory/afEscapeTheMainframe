@@ -15,7 +15,7 @@ class App : DemoEvents {
 	}
 
 	override Void onStartup() {
-		activeScreen = hiScoreScreen.onInit		
+		activeScreen = titleScreen.onInit.delay
 	}
 	
 	override Void onDraw(Gfx g) {
@@ -27,6 +27,18 @@ class App : DemoEvents {
 		screen.keys.clear
 		activeScreen.onKill
 		activeScreen = gameScreen.onInit
+	}
+	
+	Void showTitles() {
+		screen.keys.clear
+		activeScreen.onKill
+		activeScreen = titleScreen.onInit		
+	}
+	
+	Void showHiScores() {
+		screen.keys.clear
+		activeScreen.onKill
+		activeScreen = hiScoreScreen.onInit		
 	}
 	
 	Void gameOver() {

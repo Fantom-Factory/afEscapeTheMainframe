@@ -25,7 +25,7 @@ class Pulsar {
 	Void start() {
 		timeOfNextPulse = Duration.now + frequency
 		state = PulsarState.running
-		log.info("Pulsar firing up in ${frequency.toMillis}ms...")
+		log.debug("Pulsar firing up in ${frequency.toMillis}ms...")
 		pulseIn(frequency)
 	}
 	

@@ -18,7 +18,7 @@ class TitleBg {
 	private Twean?	tweanTheFanny
 	
 	private Float 	fannyY
-	private Int		time
+			Int		time	:= 50
 
 	new make() {
 		initTweans
@@ -32,9 +32,6 @@ class TitleBg {
 
 		if (time > 110)
 			g2d.drawFont8("v${typeof.pod.version}", 690, 190)
-		
-		if (time > 160)
-			g2d.drawFont16Centred("Press any key", 240)
 		
 		y := (Sin.sin(fannyY) * 15f).toInt + (288 - 180) / 2
 		tweanTheFanny.startY = y.toInt

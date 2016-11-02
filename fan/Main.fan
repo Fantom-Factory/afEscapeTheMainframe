@@ -34,10 +34,10 @@ class Main {
 					logNow("frame start")
 					frame.startup
 					logNow("on open")
-					onOpen?.call(win, frame.scope)
 				}
 			}
 			it.onClose.add |->| { echo("Bye!") }
+			onOpen?.call(win, frame.scope)
 		}.open
 		frame.shutdown
 	}
