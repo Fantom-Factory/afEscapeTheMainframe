@@ -10,16 +10,16 @@ class HiScoreScreen : GameSeg {
 	@Inject	private BgGlow		bgGlow
 			private Image?		imgScores
 
-			private Int			startScore
-
-			private Int		scoreX
-			private Int		speedX
-			private Int		scoreTarget
-			private Bool	keyLeft
-			private Bool	keyRight
+			private	PagesScreen	pages
 	
 	
-	new make(|This| in) { in(this) }
+	new make(|This| in) {
+		in(this)
+		pages = PagesScreen {
+			it.noOfPages = 8
+			it.pageWidth = 768 / 2
+		}
+	}
 
 	override This onInit() {
 		imgScores = Image.makePainted(Size(768*10, 160+16)) |g| {
@@ -41,17 +41,47 @@ class HiScoreScreen : GameSeg {
 	}
 
 	override Void onDraw(Gfx g2d) {
-		anyKey	:= screen.keys.dup {
+		bgGlow.draw(g2d)
+
+		pages.onJiffy(screen)
+		
+		if (pages.anyKey) {
+			app().showTitles
+		}
+		
+		g2d.drawFont16Centred("Fanny Hi-Scorers", 1 * 16)
+		g2d.drawFont16Centred("----------------", 2 * 16)
+		
+		g2d.drawImage(imgScores, pages.pageX, (4 * 16)-8) 
+		str := (pages.page > 0 ? "<<" : "  ") + " ${pages.page+1} / ${pages.noOfPages+1} " + (pages.page < pages.noOfPages ? ">>" : "  ")
+		g2d.drawFont16Centred(str, 16 * 16) 
+	}
+}
+
+class PagesScreen {
+	private Int		scoreX
+	private Int		speedX
+	private Int		scoreTarget
+	private Bool	keyLeft
+	private Bool	keyRight
+		
+			Int		noOfPages
+			Int		pageWidth
+
+			Bool	anyKey
+			Int		pageX
+			Int		page
+
+	new make(|This| f) { f(this) }
+	
+	Void onJiffy(Screen screen) {
+		anyKey = screen.keys.dup {
 			remove(Key.up)
 			remove(Key.down)
 			remove(Key.left)
 			remove(Key.right)
 		}.size > 0
 		
-		if (anyKey) {
-			app().startGame
-		}
-
 		if (screen.keys[Key.left] != true)
 			keyLeft = false
 		
@@ -61,15 +91,15 @@ class HiScoreScreen : GameSeg {
 		if (screen.keys[Key.left] == true && keyLeft == false) {
 			keyLeft = true
 			if (scoreTarget > 0) {
-				speedX = -2
+				speedX = -1
 				scoreTarget -= 30
 			}
 		}
 
 		if (screen.keys[Key.right] == true && keyRight == false) {
 			keyRight = true
-			if (scoreTarget < (30 * 8)) {
-				speedX = 2
+			if (scoreTarget < (30 * noOfPages)) {
+				speedX = 1
 				scoreTarget += 30
 			}
 		}
@@ -78,20 +108,17 @@ class HiScoreScreen : GameSeg {
 		if (scoreX == scoreTarget)
 			speedX = 0
 
-		x := (scoreX / 30) * 768 / 2f
+		x := (scoreX / 30) * pageWidth.toFloat
 		r := scoreX % 30
 		if (speedX > 0) {
-			x += Sin.sin(r / 30f * 0.25f) * 768 / 2
+			x += Sin.sin(r / 30f * 0.25f) * pageWidth
 		}
 		if (speedX < 0) {
-			x -= Sin.sin((r / 30f * 0.25f) + 0.5f) * 768 / 2
+			x += (1-Sin.sin(0.50f - ((30f-r) / 30f * 0.25f))) * pageWidth
 		}
 		
-		bgGlow.draw(g2d)
-		g2d.drawFont16Centred("Fanny Hi-Scorers", 1 * 16)
-		g2d.drawFont16Centred("----------------", 2 * 16)
-		
-		g2d.drawImage(imgScores, -x.toInt, (4 * 16)-8) 
-		g2d.drawFont16Centred("<<< use cursor keys >>>", 16 * 16) 
+		pageX = -x.toInt
+		page  = scoreTarget / 30
 	}
+	
 }
