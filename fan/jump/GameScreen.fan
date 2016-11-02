@@ -4,12 +4,12 @@ using gfx::Rect
 using gfx::Image
 using afIoc::Inject
 using afIoc::Autobuild
-using concurrent::Actor
 
 class GameScreen : GameSeg {
 
 	@Inject		private Screen			screen
 	@Inject		private |->App|			app
+	@Inject		private BgGlow			bgGlow
 	@Autobuild	private	Funcs			funcs
 				private BonusCube[]		bonusCubes	:= BonusCube[,]
 				private BonusExplo[]	bonusExplo	:= BonusExplo[,]
@@ -17,7 +17,6 @@ class GameScreen : GameSeg {
 				private Block[]			blcks		:= Block[,]
 				private Fanny?			fanny
 				private FannyExplo?		fannyExplo
-				private GameBg			gameBg		:= GameBg()
 				private GameHud			gameHud		:= GameHud()
 				private	GameData?		data
 	
@@ -32,16 +31,10 @@ class GameScreen : GameSeg {
 		bonusCubes.clear
 		bonusExplo.clear
 		fannyExplo = null
-		
-		data.bgIndex = Actor.locals["afFanny.bgIndex"]
-		data.bgHexX  = Actor.locals["afFanny.bgHexX" ]
 		return this
 	}
 	
-	override Void onKill() {
-		Actor.locals["afFanny.bgIndex"] = data.bgIndex
-		Actor.locals["afFanny.bgHexX" ] = data.bgHexX
-	}
+	override Void onKill() { }
 
 	override Void onDraw(Gfx g2d) {
 		keyLogic()
@@ -169,7 +162,7 @@ class GameScreen : GameSeg {
 	}
 	
 	Void draw(Gfx g2d) {
-		gameBg.draw(g2d, data)
+		bgGlow.draw(g2d, data.level)
 		
 		g3d := Gfx3d(g2d.offsetCentre).lookAt(camera, target)
 

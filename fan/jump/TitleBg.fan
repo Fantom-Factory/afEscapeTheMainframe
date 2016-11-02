@@ -2,10 +2,10 @@ using gfx
 
 class TitleBg {
 
-	private	const Image	bgHex	:= Image(`fan://afDemo/res/bgHex-x288.png`)
-	private const Int	bgColR	:= 0x22
-	private const Int	bgColG	:= 0x44
-	private const Int	bgColB	:= 0x66
+	private	const Image	bgHex		:= Image(`fan://afDemo/res/bgHex-x288.png`)
+	private const Int	bgColR		:= 0x22
+	private const Int	bgColG		:= 0x44
+	private const Int	bgColB		:= 0x66
 	
 	private	const Image	imgFanny	:= Image(`fan://afDemo/res/logo-fanny.png`)
 	private	const Image	imgThe		:= Image(`fan://afDemo/res/logo-the.png`)
@@ -18,28 +18,13 @@ class TitleBg {
 	private Twean?	tweanTheFanny
 	
 	private Float 	fannyY
-	internal Float 	bgHexX
-	internal Float	bgIndex		:= 0.5f
 	private Int		time
 
 	new make() {
 		initTweans
 	}
-	
+
 	Void draw(Gfx g2d) {
-		bgIndex += 0.001f
-		if (bgIndex > 1f)
-			bgIndex -= 1f
-		
-		mul := (Sin.cos(bgIndex) + 1f) / 2f
-		cR	:= (bgColR * mul).toInt
-		cG	:= (bgColG * mul).toInt
-		cB	:= (bgColB * mul).toInt
-		
-		g2d.clear(Color.makeArgb(0xFF, cR, cG, cB))
-		
-		g2d.drawImage(bgHex, bgHexX.toInt, 0)
-		
 		tweanFanny	.draw(g2d, time)
 		tweanThe	.draw(g2d, time)
 		tweanFantom	.draw(g2d, time)
