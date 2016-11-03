@@ -16,6 +16,8 @@ const class AppModule {
 		bob.onScopeCreate("uiThread") |Configuration config| {
 			config["eagerLoad"] = |->| {
 				config.scope.serviceByType(App#)
+
+//				config.build(SineApp#)
 			}
 		}
 	}

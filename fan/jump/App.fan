@@ -4,7 +4,6 @@ class App : DemoEvents {
 
 	@Inject		private Screen				screen
 	@Inject		private HiScores			hiScores
-//	@Autobuild	private SineDots			sineDots
 	@Autobuild	private TitleScreen			titleScreen
 	@Autobuild	private GameScreen			gameScreen
 	@Autobuild	private AboutScreen			aboutScreen
@@ -25,7 +24,6 @@ class App : DemoEvents {
 	}
 	
 	override Void onDraw(Gfx g) {
-//		sineDots.draw(g)
 		activeScreen?.onDraw(g)
 	}
 	

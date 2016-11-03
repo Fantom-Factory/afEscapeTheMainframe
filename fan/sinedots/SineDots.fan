@@ -16,7 +16,7 @@ class SineDots {
 	new make(|This| in) {
 		in(this)		
 		
-		imgUrl	:= `res/Fanny.png`
+		imgUrl	:= `res/fanny-x180.png`
 		imgBuffer := loadImg(imgUrl.toFile, 50, 50)
 		imgW := imgBuffer.getWidth
 		imgH := imgBuffer.getHeight
@@ -28,25 +28,26 @@ class SineDots {
 				xx := x - imgW / 2
 				yy := y - imgH / 2
 				dot := (scope.build(Dot#) as Dot) {
-					it.x  = (xx*3) - yy	// forced perspective
-					it.y  = (yy*3) - xx
-					it.v  = 30
-					it.ax = ((xx*9) - (yy * 2f)).toInt
-					it.ay = ((xx*3) - (yy * 2f)).toInt
-					it.av = 90
-					it.sx = 7
-					it.sy = 7
-					it.sv = 0
-					
-//					it.x  = (xx*3) - yy
+
+//					it.x  = (xx*3) - yy	// forced perspective
 //					it.y  = (yy*3) - xx
 //					it.v  = 30
-//					it.ax = ((xx*7) - (yy * 0f)).toInt + 90
-//					it.ay = ((xx*0) - (yy * 7f)).toInt + 90
-//					it.av = 0
-//					it.sx = 0
-//					it.sy = 0
-//					it.sv = 7
+//					it.ax = ((xx*9) - (yy * 2f)).toInt
+//					it.ay = ((xx*3) - (yy * 2f)).toInt
+//					it.av = 90
+//					it.sx = 7
+//					it.sy = 7
+//					it.sv = 0
+					
+					it.x  = (xx*3) - yy
+					it.y  = (yy*3) - xx
+					it.v  = 30
+					it.ax = ((xx*7) - (yy * 0f)).toInt + 90
+					it.ay = ((xx*0) - (yy * 7f)).toInt + 90
+					it.av = 0
+					it.sx = 0
+					it.sy = 0
+					it.sv = 7
 					
 					it.col = pix
 				}
@@ -78,8 +79,6 @@ class SineDots {
 }
 
 class Dot {
-	@Inject private SinOld sin
-	
 	Int x
 	Int y
 	Int v
@@ -107,6 +106,7 @@ class Dot {
 	}
 	
 	This draw(Gfx g) {
+		sin := SinOld.instance
 		vv := sin.sin(v, av)
 		xx := x + sin.sin(vv, ax)
 		yy := y + sin.sin(vv, ay)
