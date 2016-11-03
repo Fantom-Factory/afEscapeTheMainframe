@@ -40,10 +40,10 @@ class HiScoreEnterScreen : GameSeg {
 			screenPos = newPosition
 			maxPos = 10
 		}
-		if (newPosition >= 95) {
-			minPos = 89
-			screenPos = newPosition - 89
-			maxPos = 99
+		if (newPosition >= hiScores.size - 5) {
+			minPos = hiScores.size - 11
+			screenPos = newPosition - (hiScores.size - 11)
+			maxPos = hiScores.size - 1
 		}
 		
 		scores = hiScores[minPos..maxPos]
@@ -66,8 +66,10 @@ class HiScoreEnterScreen : GameSeg {
 		if (screen.keys[Key.enter] == true && keyEnter == false) {
 			keyEnter = true
 			if (screen.editMode == true) {
-				screen.editMode = false
-				// TODO save hi score
+				if (screen.editText.size > 0) {
+					screen.editMode = false
+					// TODO save hi score
+				}
 				
 			} else
 				app().showTitles
@@ -83,7 +85,7 @@ class HiScoreEnterScreen : GameSeg {
 			y := ((screenPos + 4) * 16) - 1
 			w := (22 * 16) + 4
 			h := 16 + 2
-			if (maxPos == 99) {
+			if (newPosition == 99) {
 				x -= 16
 				w += 16
 			}

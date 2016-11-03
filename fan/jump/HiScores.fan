@@ -4,7 +4,8 @@ using afIoc
 using afIocConfig
 
 class HiScores {
-	
+	private static const Int	maxNoOfPositions	:= 100
+
 	private HiScore[]	hiScores
 	
 	@Inject	private	|->App|	app
@@ -19,7 +20,7 @@ class HiScores {
 	new make(|This| f) {
 		f(this)
 		
-		hiScores = (0..<100).toList.map |i->HiScore| {
+		hiScores = (0..<35).toList.map |i->HiScore| {
 			HiScore {
 				name	= "Slimer"
 				score	= 1_000 - (i * 10)
@@ -28,8 +29,8 @@ class HiScores {
 	}
 	
 	@Operator
-	HiScore get(Int i) {
-		hiScores[i]
+	HiScore? getSafe(Int i) {
+		hiScores.getSafe(i)
 	}
 	
 	@Operator
@@ -37,8 +38,12 @@ class HiScores {
 		hiScores[r]
 	}
 	
+	Int size() {
+		hiScores.size
+	}
+	
 	Bool isHiScore(Int score) {
-		score >= hiScores.last.score
+		size < maxNoOfPositions || score >= hiScores.last.score
 	}
 	
 	Int newPosition(Int score) {
@@ -51,7 +56,8 @@ class HiScores {
 			it.score = score
 		})
 		
-		hiScores.removeAt(-1)
+		if (size > maxNoOfPositions)
+			hiScores.removeAt(-1)
 		
 		return pos
 	}

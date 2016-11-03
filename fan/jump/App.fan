@@ -28,7 +28,7 @@ class App : DemoEvents {
 	}
 	
 	Void startGame() {
-//		gameOver(10_052 - 9_900)
+//		gameOver(1095)
 		activeScreen = deactivate.gameScreen.onInit
 	}
 	

@@ -15,8 +15,13 @@ class HiScoreScreen : GameSeg {
 	
 	new make(|This| in) {
 		in(this)
+		
+		noOfPages := hiScores.size / 10
+		if (hiScores.size % 10 > 0)
+			noOfPages++
+		
 		pages = PagesScreen {
-			it.noOfPages = 8
+			it.noOfPages = noOfPages
 			it.pageWidth = 768 / 2
 		}
 	}
@@ -25,11 +30,11 @@ class HiScoreScreen : GameSeg {
 		imgScores = Image.makePainted(Size(768*10, 160+16)) |g| {
 			g2d := screen.gfx(g)
 			g2d.clear
-
+			
 			10.times |i| {
 				line := ""
-				10.times |j| {
-					line += hiScores[(j * 10) + i].toScreenStr((j * 10) + i + 1)
+				pages.noOfPages.times |j| {
+					line += hiScores[(j * 10) + i]?.toScreenStr((j * 10) + i + 1) ?: ""
 				}
 				g2d.drawFont16(line, 0, (i * 16)+8)
 			}
@@ -55,7 +60,7 @@ class HiScoreScreen : GameSeg {
 		g2d.drawImage(imgScores, pages.pageX, (4 * 16)-8) 
 		
 //		str := (pages.page > 0 ? "<" : " ") + " ${pages.page+1} / ${pages.noOfPages+1} " + (pages.page < pages.noOfPages ? ">" : " ")
-		str := (pages.page > 0 ? "<" : " ") + " ${pages.page+1} " + (pages.page < pages.noOfPages ? ">" : " ")
+		str := (pages.page > 0 ? "<" : " ") + " ${pages.page+1} " + (pages.page < (pages.noOfPages-2) ? ">" : " ")
 
 		g2d.brush = Color.gray
 		x := ((48 - str.size) * 16 / 2) - 2
@@ -109,7 +114,7 @@ class PagesScreen {
 
 		if (screen.keys[Key.right] == true && keyRight == false) {
 			keyRight = true
-			if (scoreTarget < (30 * noOfPages)) {
+			if (scoreTarget < (30 * (noOfPages-2))) {
 				speedX = speed
 				scoreTarget += 30
 			}
