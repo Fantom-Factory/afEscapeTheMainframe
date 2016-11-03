@@ -1,6 +1,7 @@
 
 class GameData {
 	
+	Bool	training			:= false
 	Int		level				:= 1
 	Float	distSinceLastBlock	:= 0f
 	Bool	newBlockPlease		:= true

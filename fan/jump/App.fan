@@ -29,9 +29,9 @@ class App : DemoEvents {
 		activeScreen?.onDraw(g)
 	}
 	
-	Void startGame() {
+	Void startGame(Int? level) {
 //		gameOver(1095)
-		activeScreen = deactivate.gameScreen.onInit
+		activeScreen = deactivate.gameScreen.onInit.trainingLevel(level)
 		hiScores.loadScores
 	}
 	
@@ -47,10 +47,10 @@ class App : DemoEvents {
 		activeScreen = deactivate.hiScoreScreen.onInit		
 	}
 	
-	Void gameOver(Int score) {
+	Void gameOver(Int score, Bool training) {
 		deactivate
 	
-		if (hiScores.isHiScore(score))
+		if (!training && hiScores.isHiScore(score))
 			activeScreen = hiScoreEnterScreen.onInit.setScore(score)
 		else
 			activeScreen = titleScreen.onInit

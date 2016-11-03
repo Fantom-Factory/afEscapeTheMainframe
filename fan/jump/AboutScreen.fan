@@ -50,12 +50,12 @@ class AboutScreen : GameSeg {
 		}
 		
 		text := "|---------------------||---------------------|
-		            Fanny the Fantom
-		            ----------------
+		            Fanny the Fantom        Keys
+		            ----------------        ----
 		         
-		         Fanny has been caputred
-		         by Bad Programming.
-		         
+		         Fanny has been caputred  Cursor Keys
+		         by Bad Programming.      Start Game with Num
+		                                  0-10 for Training
 		         Help Fanny escape by 
 		         avoiding obstacles and
 		         collecting bonus cubes.
