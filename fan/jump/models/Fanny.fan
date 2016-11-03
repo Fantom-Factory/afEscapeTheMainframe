@@ -63,8 +63,11 @@ class Fanny : Model {
 				jumpEnabled = false
 				jumpHeld = true
 				
+				if (squished && y > -50f)
+					jumpHeld = false		
+				
 				if (y > 25f)
-					jumpHeld = false			
+					jumpHeld = false		
 			}
 	}
 

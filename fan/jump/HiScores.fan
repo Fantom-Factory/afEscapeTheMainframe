@@ -84,7 +84,8 @@ class HiScores {
 			that := (HiScores) safeThis.val
 			try {
 				pod			:= HiScores#.pod
-				hiScoreUrl	:= that.hiScroreApiUrl + encodeUri("${pod.name}-${pod.version}")
+				gameParam	:= encodeUri("${pod.name}-${pod.version}")
+				hiScoreUrl	:= that.hiScroreApiUrl + gameParam
 				serverScores := Butter.churnOut.get(hiScoreUrl).body.jsonList
 				
 				newScores := serverScores.map |Str:Obj? json -> HiScore| {
@@ -94,8 +95,10 @@ class HiScores {
 						it.score	= json["score"]
 					}
 				}
-				
-				that.log.info("Downloaded ${newScores.size} Hi-Scores from ${hiScoreUrl}")
+				app := (App) safeApp.val
+				app.offline = false
+
+				that.log.info("Downloaded ${newScores.size} Hi-Scores from ${gameParam}")
 				
 				if (that.editing) {
 					that.log.warn("Ignoring server scores - User is entering a new Hi-Score")
@@ -127,7 +130,8 @@ class HiScores {
 			hiScore := (HiScore) safeHis.val
 			try {
 				pod			:= HiScores#.pod
-				hiScoreUrl	:= that.hiScroreApiUrl + encodeUri("${pod.name}-${pod.version}").plusSlash + encodeUri(hiScore.name).plusSlash + encodeUri(hiScore.score.toStr)
+				gameParam	:= encodeUri("${pod.name}-${pod.version}")
+				hiScoreUrl	:= that.hiScroreApiUrl + gameParam.plusSlash + encodeUri(hiScore.name).plusSlash + encodeUri(hiScore.score.toStr)
 				
 				serverScores := Butter.churnOut.putStr(hiScoreUrl, "").body.jsonList
 				
@@ -138,8 +142,12 @@ class HiScores {
 						it.score	= json["score"]
 					}
 				}
+				app := (App) safeApp.val
+				app.offline = false
 				
-				that.log.info("Downloaded ${newScores.size} Hi-Scores from ${hiScoreUrl}")
+				that.log.info("Uploaded '${hiScore}' to ${gameParam}")
+
+				that.log.info("Downloaded ${newScores.size} Hi-Scores from ${gameParam}")
 
 				if (that.editing) {
 					that.log.warn("Ignoring server scores - User is entering a new Hi-Score")
