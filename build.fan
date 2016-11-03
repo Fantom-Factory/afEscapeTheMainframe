@@ -4,7 +4,7 @@ using fanr
 class Build : BuildPod {
 
 	new make() {
-		podName = "afDemo"
+		podName = "afFannyTheFantom"
 		summary = "Be cool..."
 		version = Version("0.0.1")
 
@@ -12,7 +12,7 @@ class Build : BuildPod {
 			"proj.name"		: "Demo",
 			"repo.private"	: "true",
 
-			"afIoc.module"	: "afDemo::DemoModule"
+			"afIoc.module"	: "afFannyTheFantom::DemoModule"
 		]
 
 		depends = [	

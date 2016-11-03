@@ -16,9 +16,6 @@ const class AppModule {
 		bob.onScopeCreate("uiThread") |Configuration config| {
 			config["eagerLoad"] = |->| {
 				config.scope.serviceByType(App#)
-				
-				hiScores := (HiScores) config.scope.serviceByType(HiScores#)
-				hiScores.loadScores
 			}
 		}
 	}
@@ -31,6 +28,5 @@ const class AppModule {
 	@Contribute { serviceType=FactoryDefaults# }
 	Void contributeFactoryDefaults(Configuration config) {
 		config["hiScores.apiUrl"] = `http://hiscores.fantomfactory.org/`
-//		config["hiScores.apiUrl"] = `http://localhost:8080/`
 	}
 }

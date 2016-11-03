@@ -6,21 +6,25 @@ using afIocConfig
 class HiScores {
 	private static const Int	maxNoOfPositions	:= 100
 
-	private HiScore[]	hiScores
 	
-	@Inject	private	|->App|	app
-	@Inject	private	Log		log
+	@Inject	private	|->App|			app
+	@Inject	private	Log				log
 	
 	@Inject { id="hiScores" }	
-	private Synchronized	hiScoreThread
+			private Synchronized	hiScoreThread
 	
 	@Config { id="hiScores.apiUrl" }
-	private	Uri				hiScroreApi
+			private	Uri				hiScroreApiUrl
+	
+			private HiScore[]		hiScores	:= HiScore[,]
+			private Duration?		lastSync
+					Bool			editing
 	
 	new make(|This| f) {
 		f(this)
 		
-		hiScores = (0..<35).toList.map |i->HiScore| {
+		// set some default scores - in case we go offline
+		hiScores = (0..<maxNoOfPositions).toList.map |i->HiScore| {
 			HiScore {
 				name	= "Slimer"
 				score	= 1_000 - (i * 10)
@@ -63,14 +67,43 @@ class HiScores {
 	}
 
 	Void loadScores() {
+		if (app().offlineMode) {
+			log.info("Not downloading Hi-Scores - offline mode Activated")
+			return
+		}
+		
+		if (lastSync != null && (Duration.now - lastSync) < 2min) {
+			lastSyncDur := Duration.now - lastSync
+			log.info("Not downloading Hi-Scores - last sync only ${lastSyncDur.toLocale} ago")
+			return
+		}
+		
 		safeThis := Unsafe(this)
 		safeApp  := Unsafe(app())
 		hiScoreThread.async |->| {
 			that := (HiScores) safeThis.val
 			try {
-			
-				serverScores := Butter.churnOut.get(that.hiScroreApi).body.jsonList
-				echo(serverScores)
+				pod			:= HiScores#.pod
+				hiScoreUrl	:= that.hiScroreApiUrl + encodeUri("${pod.name}-${pod.version}")
+				serverScores := Butter.churnOut.get(hiScoreUrl).body.jsonList
+				
+				newScores := serverScores.map |Str:Obj? json -> HiScore| {
+					HiScore {
+						it.when		= DateTime.fromIso(json["when"])
+						it.name		= json["name"]
+						it.score	= json["score"]
+					}
+				}
+				
+				that.log.info("Downloaded ${newScores.size} Hi-Scores from ${hiScoreUrl}")
+				
+				if (that.editing) {
+					that.log.warn("Ignoring server scores - User is entering a new Hi-Score")
+					return
+				}
+				
+				that.hiScores = newScores
+				that.lastSync = Duration.now
 				
 			} catch (Err err) {
 				that.log.err("Hi-Score Server Error - ${err.typeof} - ${err.msg}")
@@ -78,6 +111,64 @@ class HiScores {
 				app.offline = true
 			}
 		}
+	}
+	
+	Void saveScore(HiScore his) {
+		if (app().offlineMode) {
+			log.info("Offline Mode Activated - not uploading Hi-Score: ${his}")
+			return
+		}
+		
+		safeThis := Unsafe(this)
+		safeApp  := Unsafe(app())
+		safeHis	 := Unsafe(his)
+		hiScoreThread.async |->| {
+			that := (HiScores) safeThis.val
+			hiScore := (HiScore) safeHis.val
+			try {
+				pod			:= HiScores#.pod
+				hiScoreUrl	:= that.hiScroreApiUrl + encodeUri("${pod.name}-${pod.version}").plusSlash + encodeUri(hiScore.name).plusSlash + encodeUri(hiScore.score.toStr)
+				
+				serverScores := Butter.churnOut.putStr(hiScoreUrl, "").body.jsonList
+				
+				newScores := serverScores.map |Str:Obj? json -> HiScore| {
+					HiScore {
+						it.when		= DateTime.fromIso(json["when"])
+						it.name		= json["name"]
+						it.score	= json["score"]
+					}
+				}
+				
+				that.log.info("Downloaded ${newScores.size} Hi-Scores from ${hiScoreUrl}")
+
+				if (that.editing) {
+					that.log.warn("Ignoring server scores - User is entering a new Hi-Score")
+					return
+				}
+				
+				that.hiScores = newScores
+				that.lastSync = Duration.now
+				
+			} catch (Err err) {
+				that.log.err("Hi-Score Server Error - ${err.typeof} - ${err.msg}")
+				app := (App) safeApp.val
+				app.offline = true
+			}
+		}
+	}
+	
+	static const Int[] delims := ":/?#[]@\\".chars
+
+	// Encode the Str *to* URI standard form
+	// see http://fantom.org/sidewalk/topic/2357
+	static Uri encodeUri(Str str) {
+		buf := StrBuf(str.size + 8) // allow for 8 escapes
+		str.chars.each |char| {
+			if (delims.contains(char))
+				buf.addChar('\\')
+			buf.addChar(char)
+		}
+	    return buf.toStr.toUri
 	}
 }
 
@@ -91,5 +182,9 @@ class HiScore {
 	
 	Str toScreenStr(Int i) {
 		(i == 100 ? "" : " ") + i.toStr.justr(2) + ") " + score.toStr.justr(5) + name.padl(13, '.') + " "
+	}
+	
+	override Str toStr() {
+		"${name} - ${score}"
 	}
 }

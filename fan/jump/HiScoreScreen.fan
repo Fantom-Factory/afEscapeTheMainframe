@@ -10,12 +10,12 @@ class HiScoreScreen : GameSeg {
 	@Inject	private BgGlow		bgGlow
 			private Image?		imgScores
 
-			private	PagesScreen	pages
+			private	PagesScreen?	pages
 	
 	
-	new make(|This| in) {
-		in(this)
-		
+	new make(|This| f) { f(this) }
+
+	override This onInit() {
 		noOfPages := hiScores.size / 10
 		if (hiScores.size % 10 > 0)
 			noOfPages++
@@ -24,9 +24,7 @@ class HiScoreScreen : GameSeg {
 			it.noOfPages = noOfPages
 			it.pageWidth = 768 / 2
 		}
-	}
 
-	override This onInit() {
 		imgScores = Image.makePainted(Size(768*10, 160+16)) |g| {
 			g2d := screen.gfx(g)
 			g2d.clear
@@ -42,8 +40,7 @@ class HiScoreScreen : GameSeg {
 		return this
 	}
 	
-	override Void onKill() {
-	}
+	override Void onKill() { }
 
 	override Void onDraw(Gfx g2d) {
 		bgGlow.draw(g2d)

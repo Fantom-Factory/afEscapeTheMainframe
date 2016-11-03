@@ -19,7 +19,7 @@ class Main {
 //			win.size = Size(512, 288)
 			win.size = Size(768+8, 288+29)
 			win.title = "Fanny the Fantom - Use cursor keys to play"
-			win.icon = Image(`fan://afDemo/res/fanny-x32.png`)
+			win.icon = Image(`fan://afFannyTheFantom/res/fanny-x32.png`)
 		}
 
 	}	
