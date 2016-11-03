@@ -1,5 +1,8 @@
 
 const class SinOld {
+	
+	static const SinOld instance := SinOld()
+	
 	private const Float[] sinTable 
 	private const Float[] cosTable
 
