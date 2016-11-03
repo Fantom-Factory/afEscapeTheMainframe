@@ -12,6 +12,7 @@ class App : DemoEvents {
 	@Autobuild	private HiScoreEnterScreen	hiScoreEnterScreen
 				private GameSeg?			activeScreen
 						Bool				offline
+						Bool				offlineMode
 
 	new make(EventHub eventHub, |This| in) {
 		in(this)
@@ -20,6 +21,7 @@ class App : DemoEvents {
 
 	override Void onStartup() {
 		activeScreen = titleScreen.onInit.delay
+		hiScores.loadScores
 	}
 	
 	override Void onDraw(Gfx g) {
@@ -30,6 +32,7 @@ class App : DemoEvents {
 	Void startGame() {
 //		gameOver(1095)
 		activeScreen = deactivate.gameScreen.onInit
+		hiScores.loadScores
 	}
 	
 	Void showTitles() {

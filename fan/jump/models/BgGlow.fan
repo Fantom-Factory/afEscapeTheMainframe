@@ -4,8 +4,8 @@ using afIoc
 
 class BgGlow {
 
-	private	const Image	bgHex1	:= Image(`fan://afDemo/res/bgHex-x200.png`)
-	private	const Image	bgHex2	:= Image(`fan://afDemo/res/bgHex-x288.png`)
+	private	const Image	bgHex1	:= Image(`fan://afFannyTheFantom/res/bgHex-x200.png`)
+	private	const Image	bgHex2	:= Image(`fan://afFannyTheFantom/res/bgHex-x288.png`)
 	private const Int	bgColR	:= 0x33
 	private const Int	bgColG	:= 0x66
 	private const Int	bgColB	:= 0x99

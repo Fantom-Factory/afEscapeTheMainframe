@@ -2,15 +2,10 @@ using gfx
 
 class TitleBg {
 
-	private	const Image	bgHex		:= Image(`fan://afDemo/res/bgHex-x288.png`)
-	private const Int	bgColR		:= 0x22
-	private const Int	bgColG		:= 0x44
-	private const Int	bgColB		:= 0x66
-	
-	private	const Image	imgFanny	:= Image(`fan://afDemo/res/logo-fanny.png`)
-	private	const Image	imgThe		:= Image(`fan://afDemo/res/logo-the.png`)
-	private	const Image	imgFantom	:= Image(`fan://afDemo/res/logo-fantom.png`)
-	private	const Image	theFanny	:= Image(`fan://afDemo/res/fanny-x180.png`)
+	private	const Image	imgFanny	:= Image(`fan://afFannyTheFantom/res/logo-fanny.png`)
+	private	const Image	imgThe		:= Image(`fan://afFannyTheFantom/res/logo-the.png`)
+	private	const Image	imgFantom	:= Image(`fan://afFannyTheFantom/res/logo-fantom.png`)
+	private	const Image	theFanny	:= Image(`fan://afFannyTheFantom/res/fanny-x180.png`)
 
 	private Twean?	tweanFanny
 	private Twean?	tweanThe

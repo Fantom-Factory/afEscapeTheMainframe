@@ -10,8 +10,8 @@ class Screen : Canvas {
 					Bool		editMode	:= false
 					Str			editText	:= ""
 
-			private Image		font8x8		:= Image(`fan://afDemo/res/XenonFont8x8.png`)
-			private Image		font16x16	:= Image(`fan://afDemo/res/XenonFont16x16.png`)
+			private Image		font8x8		:= Image(`fan://afFannyTheFantom/res/XenonFont8x8.png`)
+			private Image		font16x16	:= Image(`fan://afFannyTheFantom/res/XenonFont16x16.png`)
 
 	new make(|This| in) {
 		in(this)

@@ -30,6 +30,7 @@ class HiScoreEnterScreen : GameSeg {
 		
 		screen.editText = ""
 		screen.editMode = true
+		hiScores.editing = true
 		
 		screenPos = 5
 		minPos = newPosition - 5
@@ -38,15 +39,15 @@ class HiScoreEnterScreen : GameSeg {
 		if (newPosition < 5) {
 			minPos = 0
 			screenPos = newPosition
-			maxPos = 10
-		}
+			maxPos = 11.min(hiScores.size)
+		} else
 		if (newPosition >= hiScores.size - 5) {
 			minPos = hiScores.size - 11
 			screenPos = newPosition - (hiScores.size - 11)
-			maxPos = hiScores.size - 1
+			maxPos = hiScores.size
 		}
 		
-		scores = hiScores[minPos..maxPos]
+		scores = hiScores[minPos..<maxPos]
 		return this
 	}
 	
@@ -68,7 +69,8 @@ class HiScoreEnterScreen : GameSeg {
 			if (screen.editMode == true) {
 				if (screen.editText.size > 0) {
 					screen.editMode = false
-					// TODO save hi score
+					hiScores.editing = false
+					hiScores.saveScore(hiScores[newPosition])
 				}
 				
 			} else
