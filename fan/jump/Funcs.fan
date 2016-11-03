@@ -209,7 +209,10 @@ const class Funcs {
 		90  + 80 + 70 + 60 + 50 + 40 + 30 + 20 + 10, 
 		100 + 90 + 80 + 70 + 60 + 50 + 40 + 30 + 20 + 10,
 	]
+
 	Int funcLevel(GameData data) {
+		if (data.training)	return data.level
+
 		if (data.level == 11) return 11
 		return data.blocksJumpedInLevel > jumpLevels[data.level-1] ? data.level + 1 : data.level
 	}

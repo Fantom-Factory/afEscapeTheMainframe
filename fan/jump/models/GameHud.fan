@@ -11,6 +11,7 @@ class GameHud {
 		g2d.drawFont16(scoreStr, x, y)
 		
 		x = -g2d.bounds.w / 2
-		g2d.drawFont16("Level ${data.level}", x, y)
+		training := data.training ? "Training " : ""
+		g2d.drawFont16("${training}Level ${data.level}", x, y)
 	}
 }

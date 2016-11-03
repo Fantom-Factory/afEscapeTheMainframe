@@ -34,6 +34,14 @@ class GameScreen : GameSeg {
 		return this
 	}
 	
+	This trainingLevel(Int? level) {
+		if (level != null) {
+			data.level = level
+			data.training = true
+		}
+		return this
+	}
+	
 	override Void onKill() { }
 
 	override Void onDraw(Gfx g2d) {
@@ -117,7 +125,7 @@ class GameScreen : GameSeg {
 			data.deathCryIdx++
 		
 			if (data.deathCryIdx == 180) {
-				app().gameOver(data.score)
+				app().gameOver(data.score, data.training)
 			}
 		}
 	}
@@ -125,24 +133,8 @@ class GameScreen : GameSeg {
 	Void keyLogic() {
 		jump 	:= screen.keys[Key.space] == true || screen.keys[Key.up] == true
 		squish	:= screen.keys[Key.down]  == true 
-		ghost	:= screen.keys[Key.shift] == true 
 		fanny.jump(jump)
 		fanny.squish(squish)
-		fanny.ghost(ghost)
-		
-		level := null as Int
-		if (screen.keys[Key.num1] == true)	level = 1
-		if (screen.keys[Key.num2] == true)	level = 2
-		if (screen.keys[Key.num3] == true)	level = 3
-		if (screen.keys[Key.num4] == true)	level = 4
-		if (screen.keys[Key.num5] == true)	level = 5
-		if (screen.keys[Key.num6] == true)	level = 6
-		if (screen.keys[Key.num7] == true)	level = 7
-		if (screen.keys[Key.num8] == true)	level = 8
-		if (screen.keys[Key.num9] == true)	level = 9
-		if (screen.keys[Key.num0] == true)	level = 10
-		if (level != null)
-			data.level = level
 
 		if (screen.keys[Key.esc] == true)	gameOver()
 	}
