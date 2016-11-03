@@ -115,7 +115,7 @@ class TitleMenu {
 		}
 
 		if (screen.keys[Key.enter] == true && keyEnter == false) {
-			keyDown = false
+			keyEnter = true
 			go?.call(highlighted)
 		}
 	}

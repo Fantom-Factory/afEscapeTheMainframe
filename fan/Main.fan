@@ -11,6 +11,8 @@ class Main {
 	
 	static Void main(Str[] args) {
 		
+		// TODO specify offline mode
+		
 		doMain([AppModule#]) |win| {
 //			it.size = Size(640, 360)
 			// https://pacoup.com/2011/06/12/list-of-true-169-resolutions/
@@ -36,7 +38,7 @@ class Main {
 //					logNow("on open")
 				}
 			}
-			it.onClose.add |->| { echo("Bye!") }
+			it.onClose.add |->| { Main#.pod.log.info("Bye!") }
 			onOpen?.call(win, frame.scope)
 		}.open
 		frame.shutdown

@@ -53,7 +53,17 @@ class HiScoreScreen : GameSeg {
 		g2d.drawFont16Centred("----------------", 2 * 16)
 		
 		g2d.drawImage(imgScores, pages.pageX, (4 * 16)-8) 
-		str := (pages.page > 0 ? "<<" : "  ") + " ${pages.page+1} / ${pages.noOfPages+1} " + (pages.page < pages.noOfPages ? ">>" : "  ")
+		
+//		str := (pages.page > 0 ? "<" : " ") + " ${pages.page+1} / ${pages.noOfPages+1} " + (pages.page < pages.noOfPages ? ">" : " ")
+		str := (pages.page > 0 ? "<" : " ") + " ${pages.page+1} " + (pages.page < pages.noOfPages ? ">" : " ")
+
+		g2d.brush = Color.gray
+		x := ((48 - str.size) * 16 / 2) - 2
+		y := (16 * 16) - 1
+		w := (str.size * 16) + 4
+		h := 16 + 2
+		g2d.fillRoundRect(x, y, w, h, 5, 5)
+
 		g2d.drawFont16Centred(str, 16 * 16) 
 	}
 }

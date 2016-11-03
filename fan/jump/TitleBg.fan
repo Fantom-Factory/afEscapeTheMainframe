@@ -94,7 +94,6 @@ class TitleBg {
 	}
 }
 
-
 class Twean {
 	Image	img
 	Int		startFrame

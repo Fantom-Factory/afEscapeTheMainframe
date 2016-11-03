@@ -2,14 +2,16 @@ using afIoc
 
 class App : DemoEvents {
 
-	@Inject		private Screen			screen
-//	@Autobuild	private SineDots		sineDots
-	@Autobuild	private TitleScreen		titleScreen
-	@Autobuild	private GameScreen		gameScreen
-	@Autobuild	private AboutScreen		aboutScreen
-	@Autobuild	private HiScoreScreen	hiScoreScreen
-				private GameSeg?		activeScreen
-						Bool			offline
+	@Inject		private Screen				screen
+	@Inject		private HiScores			hiScores
+//	@Autobuild	private SineDots			sineDots
+	@Autobuild	private TitleScreen			titleScreen
+	@Autobuild	private GameScreen			gameScreen
+	@Autobuild	private AboutScreen			aboutScreen
+	@Autobuild	private HiScoreScreen		hiScoreScreen
+	@Autobuild	private HiScoreEnterScreen	hiScoreEnterScreen
+				private GameSeg?			activeScreen
+						Bool				offline
 
 	new make(EventHub eventHub, |This| in) {
 		in(this)
@@ -26,33 +28,35 @@ class App : DemoEvents {
 	}
 	
 	Void startGame() {
-		screen.keys.clear
-		activeScreen.onKill
-		activeScreen = gameScreen.onInit
+//		gameOver(10_052 - 9_900)
+		activeScreen = deactivate.gameScreen.onInit
 	}
 	
 	Void showTitles() {
-		screen.keys.clear
-		activeScreen.onKill
-		activeScreen = titleScreen.onInit		
+		activeScreen = deactivate.titleScreen.onInit		
 	}
 	
 	Void showAbout() {
-		screen.keys.clear
-		activeScreen.onKill
-		activeScreen = aboutScreen.onInit		
+		activeScreen = deactivate.aboutScreen.onInit		
 	}
 	
 	Void showHiScores() {
-		screen.keys.clear
-		activeScreen.onKill
-		activeScreen = hiScoreScreen.onInit		
+		activeScreen = deactivate.hiScoreScreen.onInit		
 	}
 	
-	Void gameOver() {
+	Void gameOver(Int score) {
+		deactivate
+	
+		if (hiScores.isHiScore(score))
+			activeScreen = hiScoreEnterScreen.onInit.setScore(score)
+		else
+			activeScreen = titleScreen.onInit
+	}
+
+	private This deactivate() {
 		screen.keys.clear
 		activeScreen.onKill
-		activeScreen = titleScreen.onInit
+		return this
 	}
 }
 
