@@ -19,9 +19,9 @@ class BgGlow {
 	new make(|This| f) { f(this) }
 	
 	Void draw(Gfx g2d, Int? level := null) {
-		bgIndex += 0.002f
+		bgIndex += 0.0015f
 		if (level != null)
-			bgIndex += (level - 1) * 0.002f
+			bgIndex += (level - 1) * 0.0015f
 		if (bgIndex > 1f)
 			bgIndex -= 1f
 		

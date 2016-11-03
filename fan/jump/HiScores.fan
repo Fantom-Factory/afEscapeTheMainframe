@@ -22,7 +22,7 @@ class HiScores {
 		hiScores = (0..<100).toList.map |i->HiScore| {
 			HiScore {
 				name	= "Slimer"
-				score	= 10_000 - (i * 100)
+				score	= 1_000 - (i * 10)
 			}
 		}
 	}
@@ -32,6 +32,30 @@ class HiScores {
 		hiScores[i]
 	}
 	
+	@Operator
+	HiScore[] getRange(Range r) {
+		hiScores[r]
+	}
+	
+	Bool isHiScore(Int score) {
+		score >= hiScores.last.score
+	}
+	
+	Int newPosition(Int score) {
+		pos := hiScores.eachrWhile |his, i| {
+			score >= his.score ? null : i + 1
+		} ?: 0
+		
+		hiScores.insert(pos, HiScore {
+			it.name	= ""
+			it.score = score
+		})
+		
+		hiScores.removeAt(-1)
+		
+		return pos
+	}
+
 	Void loadScores() {
 		safeThis := Unsafe(this)
 		safeApp  := Unsafe(app())

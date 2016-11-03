@@ -117,7 +117,7 @@ class GameScreen : GameSeg {
 			data.deathCryIdx++
 		
 			if (data.deathCryIdx == 180) {
-				app().gameOver
+				app().gameOver(data.score)
 			}
 		}
 	}

@@ -7,6 +7,8 @@ class Screen : Canvas {
 	@Inject private EventHub	eventHub
 	@Inject private Pulsar		pulsar
 					Key:Bool	keys		:= Key:Bool[:]
+					Bool		editMode	:= false
+					Str			editText	:= ""
 
 			private Image		font8x8		:= Image(`fan://afDemo/res/XenonFont8x8.png`)
 			private Image		font16x16	:= Image(`fan://afDemo/res/XenonFont16x16.png`)
@@ -25,6 +27,17 @@ class Screen : Canvas {
 			keys[Key.shift] = true
 		else
 			keys.remove(Key.shift)
+		
+		if (editMode) {
+			if (e.key.primary == Key.backspace || e.key.primary == Key.delete)
+				editText = editText[0..<-1]
+			else {
+				// limit chars to those basic ASCII chars in the font
+				if (e.keyChar != null && e.keyChar >= ' ' && e.keyChar < ' ' + (8 * 12)) {
+					editText += e.keyChar.toChar
+				}
+			}
+		}
 	}
 
 	private Void keyUp(Event e) {
@@ -33,7 +46,6 @@ class Screen : Canvas {
 
 	override Void onPaint(Graphics graphics) {
 		g := gfx(graphics) 
-//		g.clear
 		if (pulsar.isRunning)
 			eventHub.fireEvent(DemoEvents#onDraw, [g])
 	}
