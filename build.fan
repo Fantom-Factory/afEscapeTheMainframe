@@ -19,6 +19,7 @@ class Build : BuildPod {
 			"sys          1.0.69 - 1.0", 
 			"gfx          1.0.69 - 1.0",
 			"fwt          1.0.69 - 1.0",
+			"util         1.0.69 - 1.0",
 			"afIoc        3.0.4  - 3.0",
 			
 			// ---- Hi-Scores ----
