@@ -4,6 +4,7 @@ using afIoc
 using afIocConfig
 using concurrent
 using dom
+using util
 
 @Js
 abstract class HiScoreOnline {
@@ -43,7 +44,7 @@ abstract class HiScoreOnline {
 		doSaveScore(hiScoreUrl, hiScore)
 	}
 
-	Void setScores(Obj?[]? serverScores) {
+	Void setScores(App app, HiScores hiScores, Obj?[]? serverScores) {
 		newScores := serverScores.map |Str:Obj? json -> HiScore| {
 			HiScore {
 				it.when		= DateTime.fromIso(json["when"])
@@ -51,23 +52,23 @@ abstract class HiScoreOnline {
 				it.score	= json["score"]
 			}
 		}
-		app().offline = false
+		app.offline = false
 
 		log.info("Downloaded ${newScores.size} Hi-Scores from ${gameName}")
 		
-		if (hiScores().editing) {
+		if (hiScores.editing) {
 			log.warn("Ignoring server scores - User is entering a new Hi-Score")
 			return
 		}
 		
-		hiScores().hiScores = newScores
+		hiScores.hiScores = newScores
 		lastSync = Duration.now	
 	}
 	
 	abstract Void doLoadScores(Uri hiScoreUrl)
 	abstract Void doSaveScore(Uri hiScoreUrl, HiScore his)
 	
-	private Uri gameName() {
+	Uri gameName() {
 		encodeUri("${typeof.pod.name}-${typeof.pod.version}")
 	}
 	
@@ -96,39 +97,79 @@ class HiScoreOnlineJava : HiScoreOnline {
 
 	override Void doLoadScores(Uri hiScoreUrl) {
 		doStuff |->Obj?| {
-			Butter.churnOut.get(hiScoreUrl).body.jsonList
+			Butter.churnOut.sendRequest(ButterRequest(hiScoreUrl) {
+				it.headers["X-afFannyTheFantom.platform"] = "Desktop" 
+			}).body.jsonList
 		}
 	}
 
 	override Void doSaveScore(Uri hiScoreUrl, HiScore his) {
+		logFunc := Unsafe(|->| { log.info("Uploaded ${his} to ${gameName}") })
 		doStuff |->Obj?| {
-			Butter.churnOut.putStr(hiScoreUrl, "").body.jsonList
+			json := Butter.churnOut.sendRequest(ButterRequest(hiScoreUrl) {
+				it.method = "PUT"
+				it.headers["X-afFannyTheFantom.platform"] = "Desktop" 
+			}).body.jsonList
+			logFunc.val->call
+			return json
 		}
 	}
 	
 	private Void doStuff(|->Obj?| func) {
 		safeThis := Unsafe(this)
 		safeApp  := Unsafe(app())
+		safeHis  := Unsafe(hiScores())
 		hiScoreThread.async |->| {
 			that := (HiScoreOnline) safeThis.val
+			app	 := (App) safeApp.val
+			his	 := (HiScores) safeHis.val
 			try {
 				serverScores := func()
-				that.setScores(serverScores)
+				that.setScores(app, his, serverScores)
 				
 			} catch (Err err) {
 				that.log.err("Hi-Score Server Error - ${err.typeof} - ${err.msg}")
-				app := (App) safeApp.val
 				app.offline = true
 			}
 		}
 	}
 }
 
-//@Js
-//class HiScoreOnlineJs : HiScoreOnline {
-//	
-//	new make(|This| f) : super.make(f) { }
-//
-//	override Void loadScores() { }
-//	override Void saveScore(HiScore his) { }
-//}
+@Js
+class HiScoreOnlineJs : HiScoreOnline {
+	
+	new make(|This| f) : super.make(f) { }
+
+	override Void doLoadScores(Uri hiScoreUrl) {
+		app().offline = false	// preempt a failing request - 'cos we don't get notified otherwise
+		HttpReq {
+			it.uri = hiScoreUrl
+			it.headers["X-afFannyTheFantom.platform"] = "Web"
+		}.get |res| {
+			if (res.status != 200) {
+				return log.err("Hi-Score Server Error - Status ${res.status}")
+				app().offline = true
+			}
+			
+			serverScores := JsonInStream(res.content.in).readJson
+			setScores(app(), hiScores(), serverScores)
+		}
+	}
+
+	override Void doSaveScore(Uri hiScoreUrl, HiScore his) {
+		app().offline = false	// preempt a failing request - 'cos we don't get notified otherwise
+		HttpReq {
+			it.uri = hiScoreUrl
+			it.headers["X-afFannyTheFantom.platform"] = "Web"
+		}.send("PUT", null) |res| {
+			if (res.status != 200 && res.status != 201) {
+				return log.err("Hi-Score Server Error - Status ${res.status}")
+				app().offline = true
+			}
+			
+			log.info("Uploaded ${his} to ${gameName}")
+			serverScores := JsonInStream(res.content.in).readJson
+			setScores(app(), hiScores(), serverScores)
+		}
+	}
+}

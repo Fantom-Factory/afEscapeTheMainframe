@@ -24,8 +24,15 @@ const class AppModule {
 		}
 	}
 	
+	@Build
+	HiScoreOnline buildHiScoreOnline(Scope scope) {
+		// use reflection to avoid Js warnings
+		Runtime.isJs ? scope.build(HiScoreOnlineJs#) : scope.build(typeof.pod.type("HiScoreOnlineJava"))
+	}
+	
 	@Contribute { serviceType=FactoryDefaults# }
 	Void contributeFactoryDefaults(Configuration config) {
-		config["hiScores.apiUrl"] = `http://hiscores.fantomfactory.org/`
+//		config["hiScores.apiUrl"] = `http://hiscores.fantomfactory.org/`
+		config["hiScores.apiUrl"] = `http://localhost:8080/`
 	}
 }
