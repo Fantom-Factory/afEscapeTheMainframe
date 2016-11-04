@@ -11,8 +11,8 @@ class HiScores {
 	@Inject	private	|->App|			app
 	@Inject	private	Log				log
 	
-	@Inject { id="hiScores" }	
-			private Synchronized	hiScoreThread
+//	@Inject { id="hiScores" }	
+//			private Synchronized	hiScoreThread
 	
 	@Config { id="hiScores.apiUrl" }
 			private	Uri				hiScroreApiUrl
@@ -71,105 +71,105 @@ class HiScores {
 		if (Env.cur.runtime == "js")
 			return
 		
-		if (app().offlineMode) {
-			log.info("Not downloading Hi-Scores - offline mode Activated")
-			return
-		}
-		
-		if (lastSync != null && (Duration.now - lastSync) < 2min) {
-			lastSyncDur := Duration.now - lastSync
-			log.info("Not downloading Hi-Scores - last sync only ${lastSyncDur.toLocale} ago")
-			return
-		}
-		
-		safeThis := Unsafe(this)
-		safeApp  := Unsafe(app())
-		hiScoreThread.async |->| {
-			that := (HiScores) safeThis.val
-			try {
-				pod			:= HiScores#.pod
-				gameParam	:= encodeUri("${pod.name}-${pod.version}")
-				hiScoreUrl	:= that.hiScroreApiUrl + gameParam
-				serverScores := Butter.churnOut.get(hiScoreUrl).body.jsonList
-				
-				newScores := serverScores.map |Str:Obj? json -> HiScore| {
-					HiScore {
-						it.when		= DateTime.fromIso(json["when"])
-						it.name		= json["name"]
-						it.score	= json["score"]
-					}
-				}
-				app := (App) safeApp.val
-				app.offline = false
-
-				that.log.info("Downloaded ${newScores.size} Hi-Scores from ${gameParam}")
-				
-				if (that.editing) {
-					that.log.warn("Ignoring server scores - User is entering a new Hi-Score")
-					return
-				}
-				
-				that.hiScores = newScores
-				that.lastSync = Duration.now
-				
-			} catch (Err err) {
-				that.log.err("Hi-Score Server Error - ${err.typeof} - ${err.msg}")
-				app := (App) safeApp.val
-				app.offline = true
-			}
-		}
+//		if (app().offlineMode) {
+//			log.info("Not downloading Hi-Scores - offline mode Activated")
+//			return
+//		}
+//		
+//		if (lastSync != null && (Duration.now - lastSync) < 2min) {
+//			lastSyncDur := Duration.now - lastSync
+//			log.info("Not downloading Hi-Scores - last sync only ${lastSyncDur.toLocale} ago")
+//			return
+//		}
+//		
+//		safeThis := Unsafe(this)
+//		safeApp  := Unsafe(app())
+//		hiScoreThread.async |->| {
+//			that := (HiScores) safeThis.val
+//			try {
+//				pod			:= HiScores#.pod
+//				gameParam	:= encodeUri("${pod.name}-${pod.version}")
+//				hiScoreUrl	:= that.hiScroreApiUrl + gameParam
+//				serverScores := Butter.churnOut.get(hiScoreUrl).body.jsonList
+//				
+//				newScores := serverScores.map |Str:Obj? json -> HiScore| {
+//					HiScore {
+//						it.when		= DateTime.fromIso(json["when"])
+//						it.name		= json["name"]
+//						it.score	= json["score"]
+//					}
+//				}
+//				app := (App) safeApp.val
+//				app.offline = false
+//
+//				that.log.info("Downloaded ${newScores.size} Hi-Scores from ${gameParam}")
+//				
+//				if (that.editing) {
+//					that.log.warn("Ignoring server scores - User is entering a new Hi-Score")
+//					return
+//				}
+//				
+//				that.hiScores = newScores
+//				that.lastSync = Duration.now
+//				
+//			} catch (Err err) {
+//				that.log.err("Hi-Score Server Error - ${err.typeof} - ${err.msg}")
+//				app := (App) safeApp.val
+//				app.offline = true
+//			}
+//		}
 	}
 	
 	Void saveScore(HiScore his) {
 		if (Env.cur.runtime == "js")
 			return
 
-		if (app().offlineMode) {
-			log.info("Offline Mode Activated - not uploading Hi-Score: ${his}")
-			return
-		}
-		
-		safeThis := Unsafe(this)
-		safeApp  := Unsafe(app())
-		safeHis	 := Unsafe(his)
-		hiScoreThread.async |->| {
-			that := (HiScores) safeThis.val
-			hiScore := (HiScore) safeHis.val
-			try {
-				pod			:= HiScores#.pod
-				gameParam	:= encodeUri("${pod.name}-${pod.version}")
-				hiScoreUrl	:= that.hiScroreApiUrl + gameParam.plusSlash + encodeUri(hiScore.name).plusSlash + encodeUri(hiScore.score.toStr)
-				
-				serverScores := Butter.churnOut.putStr(hiScoreUrl, "").body.jsonList
-				
-				newScores := serverScores.map |Str:Obj? json -> HiScore| {
-					HiScore {
-						it.when		= DateTime.fromIso(json["when"])
-						it.name		= json["name"]
-						it.score	= json["score"]
-					}
-				}
-				app := (App) safeApp.val
-				app.offline = false
-				
-				that.log.info("Uploaded '${hiScore}' to ${gameParam}")
-
-				that.log.info("Downloaded ${newScores.size} Hi-Scores from ${gameParam}")
-
-				if (that.editing) {
-					that.log.warn("Ignoring server scores - User is entering a new Hi-Score")
-					return
-				}
-				
-				that.hiScores = newScores
-				that.lastSync = Duration.now
-				
-			} catch (Err err) {
-				that.log.err("Hi-Score Server Error - ${err.typeof} - ${err.msg}")
-				app := (App) safeApp.val
-				app.offline = true
-			}
-		}
+//		if (app().offlineMode) {
+//			log.info("Offline Mode Activated - not uploading Hi-Score: ${his}")
+//			return
+//		}
+//		
+//		safeThis := Unsafe(this)
+//		safeApp  := Unsafe(app())
+//		safeHis	 := Unsafe(his)
+//		hiScoreThread.async |->| {
+//			that := (HiScores) safeThis.val
+//			hiScore := (HiScore) safeHis.val
+//			try {
+//				pod			:= HiScores#.pod
+//				gameParam	:= encodeUri("${pod.name}-${pod.version}")
+//				hiScoreUrl	:= that.hiScroreApiUrl + gameParam.plusSlash + encodeUri(hiScore.name).plusSlash + encodeUri(hiScore.score.toStr)
+//				
+//				serverScores := Butter.churnOut.putStr(hiScoreUrl, "").body.jsonList
+//				
+//				newScores := serverScores.map |Str:Obj? json -> HiScore| {
+//					HiScore {
+//						it.when		= DateTime.fromIso(json["when"])
+//						it.name		= json["name"]
+//						it.score	= json["score"]
+//					}
+//				}
+//				app := (App) safeApp.val
+//				app.offline = false
+//				
+//				that.log.info("Uploaded '${hiScore}' to ${gameParam}")
+//
+//				that.log.info("Downloaded ${newScores.size} Hi-Scores from ${gameParam}")
+//
+//				if (that.editing) {
+//					that.log.warn("Ignoring server scores - User is entering a new Hi-Score")
+//					return
+//				}
+//				
+//				that.hiScores = newScores
+//				that.lastSync = Duration.now
+//				
+//			} catch (Err err) {
+//				that.log.err("Hi-Score Server Error - ${err.typeof} - ${err.msg}")
+//				app := (App) safeApp.val
+//				app.offline = true
+//			}
+//		}
 	}
 	
 	static const Int[] delims := ":/?#[]@\\".chars
