@@ -3,11 +3,7 @@ using gfx
 @Js
 class TitleBg {
 
-	private	const Image	imgFanny	:= Image(`fan://afFannyTheFantom/res/logo-fanny.png`)
-	private	const Image	imgThe		:= Image(`fan://afFannyTheFantom/res/logo-the.png`)
-	private	const Image	imgFantom	:= Image(`fan://afFannyTheFantom/res/logo-fantom.png`)
-	private	const Image	theFanny	:= Image(`fan://afFannyTheFantom/res/fanny-x180.png`)
-
+	private FannyImages	images
 	private Twean?	tweanFanny
 	private Twean?	tweanThe
 	private Twean?	tweanFantom
@@ -16,7 +12,8 @@ class TitleBg {
 	private Float 	fannyY
 			Int		time	:= 50
 
-	new make() {
+	new make(FannyImages images) {
+		this.images = images
 		initTweans
 	}
 
@@ -41,7 +38,7 @@ class TitleBg {
 	
 	Void initTweans() {
 		tweanFanny = Twean {
-			it.img			= imgFanny
+			it.img			= images.logoFanny
 			it.imgWidth		=  409
 			it.imgHeight	=  198
 			it.startFrame	=   50
@@ -53,7 +50,7 @@ class TitleBg {
 		}
 	
 		tweanThe = Twean {
-			it.img			= imgThe
+			it.img			= images.logoThe
 			it.imgWidth		=  195
 			it.imgHeight	=  169
 			it.startFrame	=   60
@@ -65,7 +62,7 @@ class TitleBg {
 		}
 	
 		tweanFantom	= Twean {
-			it.img			= imgFantom
+			it.img			= images.logoFantom
 			it.imgWidth		=  452
 			it.imgHeight	=  197
 			it.startFrame	=   65
@@ -77,7 +74,7 @@ class TitleBg {
 		}
 	
 		tweanTheFanny	= Twean {
-			it.img			= theFanny
+			it.img			= images.fanny_x180
 			it.imgWidth		=  180
 			it.imgHeight	=  180
 			it.startFrame	=   80

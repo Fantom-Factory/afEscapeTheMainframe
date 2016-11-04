@@ -9,13 +9,14 @@ class TitleScreen : GameSeg {
 	@Inject	private Screen		screen
 	@Inject	private |->App|		app
 	@Inject	private BgGlow		bgGlow
+	@Inject	private FannyImages	images
 			private TitleBg?	titleBg
 			private TitleMenu?	titleMenu
 	
 	new make(|This| in) { in(this) }
 
 	override This onInit() {
-		titleBg		= TitleBg()
+		titleBg		= TitleBg(images)
 		titleMenu	= TitleMenu {
 			menu.add("Start Game")
 			menu.add("Hi-Scores")
@@ -35,7 +36,7 @@ class TitleScreen : GameSeg {
 	}
 	
 	This delay() {
-		titleBg.time = 0
+		titleBg.time = 40	// no need to wait for long
 		return this
 	}
 	

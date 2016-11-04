@@ -5,9 +5,9 @@ using afIocConfig
 
 @Js
 class HiScores {
-	private static const Int	maxNoOfPositions	:= 100
+	static const Int	maxNoOfPositions	:= 100
+	static const Int	maxNameSize			:= 12
 
-	
 	@Inject	private	|->App|			app
 	@Inject	private	Log				log
 	
@@ -25,7 +25,7 @@ class HiScores {
 		f(this)
 		
 		// set some default scores - in case we go offline
-		hiScores = (0..<maxNoOfPositions).toList.map |i->HiScore| {
+		hiScores = (0..<maxNoOfPositions-10).toList.map |i->HiScore| {
 			HiScore {
 				name	= "Slimer"
 				score	= 1_000 - (i * 10)

@@ -3,7 +3,7 @@ using gfx
 using fwt
 
 @Js
-class HiScoreEnterScreen : GameSeg {
+class HiScoreEntryScreen : GameSeg {
 	
 	@Inject	private Screen		screen
 	@Inject	private |->App|		app

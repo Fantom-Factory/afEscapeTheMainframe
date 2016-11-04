@@ -5,17 +5,19 @@ using afIoc
 @Js
 class BgGlow {
 
-	private	const Image	bgHex1	:= Image(`fan://afFannyTheFantom/res/bgHex-x200.png`)
-	private	const Image	bgHex2	:= Image(`fan://afFannyTheFantom/res/bgHex-x288.png`)
-	private const Int	bgColR	:= 0x33
-	private const Int	bgColG	:= 0x66
-	private const Int	bgColB	:= 0x99
+	static const Int	bgR				:= 0x00
+	static const Int	bgG				:= 0x08
+	static const Int	bgB				:= 0x1A
+	static const Int	bgHighlightR	:= 0x33
+	static const Int	bgHighlightG	:= 0x66
+	static const Int	bgHighlightB	:= 0x99
 	
-	private 	Float	bgIndex	:= 0.5f
-	private 	Float	bgHexX	:=   0f
-	private 	Int		blink	:=   0
+	private 	Float	bgIndex			:= 0.5f
+	private 	Float	bgHexX			:=   0f
+	private 	Int		blink			:=   0
 
-	@Inject	private |->App|	app
+	@Inject	private |->App|		app
+	@Inject	private FannyImages	images
 	
 	new make(|This| f) { f(this) }
 	
@@ -27,13 +29,13 @@ class BgGlow {
 			bgIndex -= 1f
 		
 		mul := (Sin.cos(bgIndex) + 1f) / 2f
-		cR	:= ((bgColR - 0x00) * mul).toInt + 0x00
-		cG	:= ((bgColG - 0x08) * mul).toInt + 0x08
-		cB	:= ((bgColB - 0x1A) * mul).toInt + 0x1A
+		cR	:= ((bgHighlightR - bgR) * mul).toInt + bgR
+		cG	:= ((bgHighlightG - bgG) * mul).toInt + bgG
+		cB	:= ((bgHighlightB - bgB) * mul).toInt + bgB
 		
 		g2d.clear(Color.makeArgb(0xFF, cR, cG, cB))
 		
-		img := level == null ? bgHex2 : bgHex1
+		img := level == null ? images.bgHex_x288 : images.bgHex_x200
 		g2d.drawImage(img, bgHexX.toInt, 0)
 
 		

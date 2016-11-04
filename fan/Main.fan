@@ -37,6 +37,8 @@ class Main {
 //					logNow("frame start")
 					frame.startup
 //					logNow("on open")
+					// required, else in JS we have to click in the screen each time it changes!
+					win.children.each |w| { w.repaint; w.focus }
 				}
 			}
 			it.onClose.add |->| { Main#.pod.log.info("Bye!") }
