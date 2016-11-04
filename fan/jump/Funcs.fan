@@ -1,4 +1,5 @@
 
+@Js
 const class Funcs {
 	
 	static const Int	z0	:=	 2.pow( 0)

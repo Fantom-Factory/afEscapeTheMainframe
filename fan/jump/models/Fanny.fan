@@ -1,5 +1,6 @@
 using gfx::Rect
 
+@Js
 class Fanny : Model {
 	GameData data
 	Float	sy
@@ -87,7 +88,8 @@ class Fanny : Model {
 	
 	override Void draw(Gfx3d g3d) {
 		// don't draw fanny if we're dying - we draw the explo instead
-		if (!data.dying) super.draw(g3d)
+		if (!data.dying)
+			g3d.drawModel(this)
 		
 //		g3d.edge = gfx::Color.red
 //		g3d.drawRect(collisionRect, z)
@@ -171,6 +173,7 @@ class Fanny : Model {
 }
 
 ** https://martin-thoma.com/how-to-check-if-two-line-segments-intersect/
+@Js
 class Intersect {
 	static const Float EPSILON := 0.000001f
 
@@ -215,6 +218,7 @@ class Intersect {
     }
 }
 
+@Js
 class LineSegment {
     Point2d first
     Point2d second

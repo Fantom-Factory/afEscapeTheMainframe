@@ -2,6 +2,7 @@ using gfx
 using fwt
 using afIoc
 
+@Js
 class BgGlow {
 
 	private	const Image	bgHex1	:= Image(`fan://afFannyTheFantom/res/bgHex-x200.png`)

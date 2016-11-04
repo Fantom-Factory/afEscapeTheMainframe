@@ -3,6 +3,7 @@ using gfx::Point
 using gfx::Brush
 using gfx::Rect
 
+@Js
 class Gfx3d {
 
 	private Point3d	cameraPos	:= Point3d(0f, 0f, -1f)

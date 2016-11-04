@@ -1,4 +1,5 @@
 
+@Js
 mixin DemoEvents {
 	
 	virtual Void onStartup() { }

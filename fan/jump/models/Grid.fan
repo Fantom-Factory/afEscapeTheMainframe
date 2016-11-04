@@ -1,4 +1,5 @@
 
+@Js
 class Grid : Model {
 	private GameData data
 

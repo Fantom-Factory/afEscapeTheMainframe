@@ -3,6 +3,7 @@ using afButter
 using afIoc
 using afIocConfig
 
+@Js
 class HiScores {
 	private static const Int	maxNoOfPositions	:= 100
 
@@ -67,6 +68,9 @@ class HiScores {
 	}
 
 	Void loadScores() {
+		if (Env.cur.runtime == "js")
+			return
+		
 		if (app().offlineMode) {
 			log.info("Not downloading Hi-Scores - offline mode Activated")
 			return
@@ -117,6 +121,9 @@ class HiScores {
 	}
 	
 	Void saveScore(HiScore his) {
+		if (Env.cur.runtime == "js")
+			return
+
 		if (app().offlineMode) {
 			log.info("Offline Mode Activated - not uploading Hi-Score: ${his}")
 			return
@@ -181,6 +188,7 @@ class HiScores {
 }
 
 
+@Js
 class HiScore {
 	DateTime	when	:= DateTime.now(1sec)
 	Str			name

@@ -3,6 +3,7 @@ using fwt
 using gfx
 
 ** Wrapper around 'fwt::Graphics'.
+@Js
 class Gfx {
 	
 	Image?		font8x8

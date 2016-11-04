@@ -1,5 +1,6 @@
 using gfx::Rect
 
+@Js
 class Block : Model {
 	GameData	data
 	Float		w

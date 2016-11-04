@@ -1,6 +1,7 @@
 using fwt
 
 ** Calls listeners every XXXms. Use for animation and game loops.
+@Js
 class Pulsar {
 	private const static Log	log 			:= Log.get(Pulsar#.name)
 	
@@ -114,6 +115,7 @@ class Pulsar {
 	}
 }
 
+@Js
 enum class PulsarState {
 	stopped,
 	running,
@@ -122,6 +124,7 @@ enum class PulsarState {
 
 ** A runnable with error handling. The default impl simply logs the error and returns 'null'. 
 ** Useful for FWT callbacks which have a habit of silently failing.
+@Js
 internal class Safe {
 	private static const Log log := Log.get("Safe")
 	

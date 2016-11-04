@@ -2,6 +2,7 @@ using afIoc
 using gfx
 using fwt
 
+@Js
 class HiScoreEnterScreen : GameSeg {
 	
 	@Inject	private Screen		screen
@@ -106,6 +107,5 @@ class HiScoreEnterScreen : GameSeg {
 		scores.each |hiScore, i| {
 			g2d.drawFont16Centred(hiScore.toScreenStr(minPos + i + 1), (i+4) * 16)
 		}
-
 	}
 }

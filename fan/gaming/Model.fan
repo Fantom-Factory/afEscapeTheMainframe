@@ -3,6 +3,7 @@ using gfx::Brush
 using gfx::Rect
 using gfx::Point
 
+@Js
 class Model {
 	Point3d[]		points
 	Drawable[]		drawables
@@ -88,10 +89,12 @@ class Model {
 	}	
 }
 
+@Js
 const mixin Drawable {
 	abstract Void draw(Gfx3d g3d, Point3d[] pts3d)
 }
 
+@Js
 const class Line : Drawable {
 	const	Int[]	points
 	
@@ -109,6 +112,7 @@ const class Line : Drawable {
 	}
 }
 
+@Js
 const class Poly : Drawable {
 	const	Int[]	points
 	
@@ -140,6 +144,7 @@ const class Poly : Drawable {
 	}
 }
 
+@Js
 const class Edge : Drawable {
 	const	Color?	colour
 	
@@ -152,6 +157,7 @@ const class Edge : Drawable {
 	}
 }
 
+@Js
 const class Fill : Drawable {
 	const	Color?	colour
 	

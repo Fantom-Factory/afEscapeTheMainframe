@@ -5,6 +5,7 @@ using gfx::Image
 using afIoc::Inject
 using afIoc::Autobuild
 
+@Js
 class GameScreen : GameSeg {
 
 	@Inject		private Screen			screen

@@ -18,6 +18,7 @@ using fwt
 ** 
 ** Note that instances of 'Panels', 'Views' and 'GlobalCommands' are already automatically added 
 ** to 'EventHub' by default. 
+@Js
 mixin EventHub {
 
 	** Registers an object to receive events. 
@@ -35,7 +36,8 @@ mixin EventHub {
 
 }
 
-const class EventTypes {	
+@Js
+const class EventTypes {
 	const Type[]	eventTypes 
 	
 	private new make(Type[] eventTypes) {
@@ -43,6 +45,7 @@ const class EventTypes {
 	}
 }
 
+@Js
 internal class EventHubImpl : EventHub {
 	@Inject private Log			log
 	@Inject private EventTypes	eventTypes

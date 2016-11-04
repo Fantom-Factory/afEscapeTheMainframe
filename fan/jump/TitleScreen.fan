@@ -3,6 +3,7 @@ using gfx::Color
 using afIoc::Inject
 using afIoc::Scope
 
+@Js
 class TitleScreen : GameSeg {
 
 	@Inject	private Screen		screen
@@ -72,6 +73,7 @@ class TitleScreen : GameSeg {
 	}
 }
 
+@Js
 class TitleMenu {
 	private Int		highlighted	:= 0
 	private Bool	keyUp

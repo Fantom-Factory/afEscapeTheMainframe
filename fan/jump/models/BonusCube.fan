@@ -1,4 +1,5 @@
 
+@Js
 class BonusCube : Model {
 	
 	private GameData	data

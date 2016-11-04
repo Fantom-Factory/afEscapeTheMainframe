@@ -1,5 +1,6 @@
 using afIoc
 
+@Js
 const class DemoModule {
 
 	Void defineServices(RegistryBuilder bob) {

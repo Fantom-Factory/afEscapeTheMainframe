@@ -3,6 +3,7 @@ using afIocConfig
 using afConcurrent
 using concurrent
 
+@Js
 @SubModule { modules=[IocConfigModule#, ConcurrentModule#] }
 const class AppModule {
 
