@@ -1,5 +1,5 @@
-using afButter
 using afIoc
+using web
 using concurrent
 using dom
 using util
@@ -100,19 +100,28 @@ class HiScoreOnlineJava : HiScoreOnline {
 
 	override Void doLoadScores(Uri hiScoreUrl) {
 		doStuff |->Obj?| {
-			Butter.churnOut.sendRequest(ButterRequest(hiScoreUrl) {
-				it.headers["X-afFannyTheFantom.platform"] = "Desktop" 
-			}).body.jsonList
+			wc := WebClient(hiScoreUrl) {
+				it.reqMethod = "GET"
+				it.reqHeaders["X-afFannyTheFantom.platform"] = "Desktop"
+			}.writeReq.readRes
+			if (wc.resCode != 200)
+				throw IOErr("Hi-Score Server Error - Status ${wc.resCode}")
+			
+			return JsonInStream(wc.resStr.in).readJson
 		}
 	}
 
 	override Void doSaveScore(Uri hiScoreUrl, HiScore his) {
 		logFunc := Unsafe(|->| { log.info("Uploaded ${his} to ${gameName}") })
 		doStuff |->Obj?| {
-			json := Butter.churnOut.sendRequest(ButterRequest(hiScoreUrl) {
-				it.method = "PUT"
-				it.headers["X-afFannyTheFantom.platform"] = "Desktop" 
-			}).body.jsonList
+			wc := WebClient(hiScoreUrl) {
+				it.reqMethod = "PUT"
+				it.reqHeaders["X-afFannyTheFantom.platform"] = "Desktop"
+			}.writeReq.readRes
+			if (wc.resCode != 200 && wc.resCode != 201)
+				throw IOErr("Hi-Score Server Error - Status ${wc.resCode}")
+
+			json := JsonInStream(wc.resStr.in).readJson
 			logFunc.val->call
 			return json
 		}

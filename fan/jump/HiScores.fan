@@ -1,4 +1,3 @@
-using afButter
 using afIoc
 
 @Js

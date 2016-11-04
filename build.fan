@@ -20,15 +20,17 @@ class Build : BuildPod {
 			"gfx          1.0.69 - 1.0",
 			"fwt          1.0.69 - 1.0",
 			"util         1.0.69 - 1.0",
+
+			// ---- Core ----
 			"afIoc        3.0.4  - 3.0",
 			
-			// ---- Hi-Scores ----
+			// ---- Online Hi-Scores ----
 			"concurrent   1.0.69 - 1.0",
-			"afButter     1.2.2  - 1.2",	// FIXME kill me
-			
-			// ---- web ----
-			"web          1.0.69 - 1.0",
 			"dom          1.0.69 - 1.0",
+			
+			// ---- Web Server ----
+			"wisp         1.0.69 - 1.0",
+			"web          1.0.69 - 1.0",
 			"afBedSheet   1.5.4  - 1.5",	// FIXME kill me
 			"afDuvet      1.1.2  - 1.1",	// FIXME kill me
 		]
