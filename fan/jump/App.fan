@@ -5,11 +5,12 @@ class App : DemoEvents {
 
 	@Inject		private Screen				screen
 	@Inject		private HiScores			hiScores
+	@Autobuild	private LoadingScreen		loadingScreen
 	@Autobuild	private TitleScreen			titleScreen
 	@Autobuild	private GameScreen			gameScreen
 	@Autobuild	private AboutScreen			aboutScreen
 	@Autobuild	private HiScoreScreen		hiScoreScreen
-	@Autobuild	private HiScoreEnterScreen	hiScoreEnterScreen
+	@Autobuild	private HiScoreEntryScreen	hiScoreEntryScreen
 				private GameSeg?			activeScreen
 						Bool				offline
 						Bool				offlineMode
@@ -20,7 +21,7 @@ class App : DemoEvents {
 	}
 
 	override Void onStartup() {
-		activeScreen = titleScreen.onInit.delay
+		activeScreen = loadingScreen.onInit
 		hiScores.loadScores
 	}
 	
@@ -35,7 +36,7 @@ class App : DemoEvents {
 	}
 	
 	Void showTitles() {
-		activeScreen = deactivate.titleScreen.onInit		
+		activeScreen = deactivate.titleScreen.onInit.delay		
 	}
 	
 	Void showAbout() {
@@ -50,7 +51,7 @@ class App : DemoEvents {
 		deactivate
 	
 		if (!training && hiScores.isHiScore(score))
-			activeScreen = hiScoreEnterScreen.onInit.setScore(score)
+			activeScreen = hiScoreEntryScreen.onInit.setScore(score)
 		else
 			activeScreen = titleScreen.onInit
 	}
