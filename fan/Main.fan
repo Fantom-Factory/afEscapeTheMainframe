@@ -4,22 +4,14 @@ using afIoc
 
 @Js
 class Main {
-	static const Duration startTime := Duration.now
 
-	static Void logNow(Str msg) {
-		echo("$msg - " + (Duration.now - startTime).toLocale)
-	}
-	
 	static Void main(Str[] args) {
-		
 		// TODO specify offline mode
 		
 		doMain([AppModule#]) |win| {
-//			it.size = Size(640, 360)
-			// https://pacoup.com/2011/06/12/list-of-true-169-resolutions/
-//			win.size = Size(512, 288)
-			win.size = Size(768+8, 288+29)
-			win.title = "Fanny the Fantom - Use cursor keys to play"
+			// see https://pacoup.com/2011/06/12/list-of-true-169-resolutions/
+			win.size = Runtime.isJs ? Size(768, 288) : Size(768+8, 288+29)
+			win.title = "Fanny the Fantom"
 			win.icon = Image(`fan://afFannyTheFantom/res/fanny-x32.png`)
 		}
 
@@ -27,16 +19,12 @@ class Main {
 	
 	static Void doMain(Type[] modules, |Window, Scope|? onOpen := null) {
 		frame := Frame(modules)
-//		logNow("Made Frame")
 		Window {
 			win := it
 			it.add(frame.widget)
 			it.onOpen.add  |->| { 
-//				logNow("On open")
 				Desktop.callLater(50ms) |->| {
-//					logNow("frame start")
 					frame.startup
-//					logNow("on open")
 					// required, else in JS we have to click in the screen each time it changes!
 					win.children.each |w| { w.repaint; w.focus }
 				}
