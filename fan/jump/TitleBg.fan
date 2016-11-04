@@ -26,7 +26,6 @@ class TitleBg {
 		if (time > 120) {
 			noOfChars := ((time - 115) / 5).min("Escape the Mainframe".size)
 			g2d.drawFont16("Escape the Mainframe"[0..<noOfChars], 424, 224)
-			
 		}
 
 		if (time > 120 + ("Escape the Mainframe".size * 5) + 10)

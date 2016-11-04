@@ -33,8 +33,6 @@ class Build : BuildPod {
 			"wisp         1.0.69 - 1.0",
 			"web          1.0.69 - 1.0",
 			"webmod       1.0.69 - 1.0",
-			"afBedSheet   1.5.4  - 1.5",	// FIXME kill me
-			"afDuvet      1.1.2  - 1.1",	// FIXME kill me
 		]
 
 		srcDirs = [`fan/`, `fan/gaming/`, `fan/infrastructure/`, `fan/jump/`, `fan/jump/models/`, `fan/jump/screens/`, `fan/sinedots/`, `fan/web/`]

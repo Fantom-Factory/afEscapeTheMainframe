@@ -14,67 +14,77 @@ html, body {
 
 .bgScreen {
   position: relative;
-  max-width: 1280px;
-  max-height: 960px;
+  max-width: 1536px;
+  max-height: 576px;
   height: 100%; }
 
-/*
 .background {
   position: absolute;
-  width: 1280px;
-  height: 960px;
-  background-image: url(/pod/afGundam/res/images/TitleBackground.jpg);
+  width: 1536px;
+  height: 576px;
+  background-color: #183048;
+  background-color: #336699;
+  background-image: url(/pod/afFannyTheFantom/res/bgHex-x768.png);
   background-repeat: no-repeat;
   background-size: 100% 100%;
   left: 50%;
   top: 50%;
-  margin-left: -640px;
-  margin-top: -480px; }
-*/
-/*
-.gundamTitle {
+  margin-left: -768px;
+  margin-top: -288px; }
+
+.bigFanny {
   position: absolute;
-  top: 0;
+  top: 50px;
   left: 0;
-  width: 836px;
-  height: 258px;
-  background-image: url(/pod/afGundam/res/images/GundamTitle.png);
+  width: 360px;
+  height: 360px;
+  background-image: url(/pod/afFannyTheFantom/res/fanny-x180.png);
   background-repeat: no-repeat;
   background-size: 100% 100%; }
 
-.gundamBig {
+.logoFanny {
   position: absolute;
-  top: 0;
-  right: 0;
-  width: 552px;
-  height: 696px;
-  background-image: url(/pod/afGundam/res/images/GundamBig.png);
+  top: -70px;
+  right: 208px;
+  width: 818px;
+  height: 396px;
+  background-image: url(/pod/afFannyTheFantom/res/logo-fanny.png);
   background-repeat: no-repeat;
   background-size: 100% 100%; }
 
-.gundamTech {
+.logoThe {
   position: absolute;
-  bottom: 12px;
-  left: 12px;
-  width: 188px;
+  top: 50px;
+  right: 326px;
+  width: 390px;
   height: 338px;
-  background-image: url(/pod/afGundam/res/images/GundamTech.png);
+  background-image: url(/pod/afFannyTheFantom/res/logo-the.png);
   background-repeat: no-repeat;
   background-size: 100% 100%; }
-*/
+
+.logoFantom {
+  position: absolute;
+  top: 120px;
+  right: -88px;
+  width: 904px;
+  height: 394px;
+  background-image: url(/pod/afFannyTheFantom/res/logo-fantom.png);
+  background-repeat: no-repeat;
+  background-size: 100% 100%; }
+
 .mask {
   position: absolute;
   top: 0;
   left: 0;
-  width: 1280px;
-  height: 960px;
+  width: 1536px;
+  height: 576px;
   background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAACAQMAAABIeJ9nAAAABlBMVEUAAAAYGBgmJUsIAAAAAXRSTlMAQObYZgAAAAxJREFUCNdjcGA4AAABhAEB21yPDwAAAABJRU5ErkJggg==);
   background-repeat: repeat; }
 
 .gameScreen {
   position: relative;
-  max-width: 1280px;
-  max-height: 960px;
+  max-width: 1536px;
+  max-height: 576px;
   height: 100%; }
 
 .game {

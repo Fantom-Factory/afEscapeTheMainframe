@@ -148,18 +148,18 @@ class HiScoreOnlineJava : HiScoreOnline {
 
 @Js
 class HiScoreOnlineJs : HiScoreOnline {
-	
+
 	new make(|This| f) : super.make(f) { }
 
 	override Void doLoadScores(Uri hiScoreUrl) {
-		app().offline = false	// preempt a failing request - 'cos we don't get notified otherwise
+		app().offline = true	// preempt a failing request - 'cos we don't get notified otherwise
 		HttpReq {
 			it.uri = hiScoreUrl
 			it.headers["X-afFannyTheFantom.platform"] = "Web"
 		}.get |res| {
 			if (res.status != 200) {
-				return log.err("Hi-Score Server Error - Status ${res.status}")
 				app().offline = true
+				return log.err("Hi-Score Server Error - Status ${res.status}")
 			}
 			
 			serverScores := JsonInStream(res.content.in).readJson
@@ -168,14 +168,14 @@ class HiScoreOnlineJs : HiScoreOnline {
 	}
 
 	override Void doSaveScore(Uri hiScoreUrl, HiScore his) {
-		app().offline = false	// preempt a failing request - 'cos we don't get notified otherwise
+		app().offline = true	// preempt a failing request - 'cos we don't get notified otherwise
 		HttpReq {
 			it.uri = hiScoreUrl
 			it.headers["X-afFannyTheFantom.platform"] = "Web"
 		}.send("PUT", null) |res| {
 			if (res.status != 200 && res.status != 201) {
-				return log.err("Hi-Score Server Error - Status ${res.status}")
 				app().offline = true
+				return log.err("Hi-Score Server Error - Status ${res.status}")
 			}
 			
 			log.info("Uploaded ${his} to ${gameName}")
