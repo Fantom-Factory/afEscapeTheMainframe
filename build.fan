@@ -26,6 +26,10 @@ class Build : BuildPod {
 			"afConcurrent 1.0.16 - 1.0",
 			"afButter     1.2.2  - 1.2",
 			"afIocConfig  1.1.0  - 1.1",
+			
+			// ---- web ----
+			"afBedSheet   1.5.4  - 1.5",
+			"afDuvet      1.1.2  - 1.1",
 		]
 
 		srcDirs = [`fan/`, `fan/gaming/`, `fan/infrastructure/`, `fan/jump/`, `fan/jump/models/`, `fan/sinedots/`, `fan/web/`]

@@ -42,6 +42,8 @@ class Main {
 			it.onClose.add |->| { Main#.pod.log.info("Bye!") }
 			onOpen?.call(win, frame.scope)
 		}.open
-		frame.shutdown
+		
+		if (Env.cur.runtime != "js")
+			frame.shutdown
 	}
 }
