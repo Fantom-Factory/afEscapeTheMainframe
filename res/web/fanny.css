@@ -1,0 +1,101 @@
+html, body, .gameScreen {
+  height: 100%; }
+
+html, body {
+  background-color: #00081A;
+  overflow: hidden;
+  margin: 0;
+  padding: 0;
+  display: block; }
+
+.bgScreen,
+.gameScreen {
+  margin: auto; }
+
+.bgScreen {
+  position: relative;
+  max-width: 1280px;
+  max-height: 960px;
+  height: 100%; }
+
+/*
+.background {
+  position: absolute;
+  width: 1280px;
+  height: 960px;
+  background-image: url(/pod/afGundam/res/images/TitleBackground.jpg);
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+  left: 50%;
+  top: 50%;
+  margin-left: -640px;
+  margin-top: -480px; }
+*/
+/*
+.gundamTitle {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 836px;
+  height: 258px;
+  background-image: url(/pod/afGundam/res/images/GundamTitle.png);
+  background-repeat: no-repeat;
+  background-size: 100% 100%; }
+
+.gundamBig {
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 552px;
+  height: 696px;
+  background-image: url(/pod/afGundam/res/images/GundamBig.png);
+  background-repeat: no-repeat;
+  background-size: 100% 100%; }
+
+.gundamTech {
+  position: absolute;
+  bottom: 12px;
+  left: 12px;
+  width: 188px;
+  height: 338px;
+  background-image: url(/pod/afGundam/res/images/GundamTech.png);
+  background-repeat: no-repeat;
+  background-size: 100% 100%; }
+*/
+.mask {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1280px;
+  height: 960px;
+  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAACAQMAAABIeJ9nAAAABlBMVEUAAAAYGBgmJUsIAAAAAXRSTlMAQObYZgAAAAxJREFUCNdjcGA4AAABhAEB21yPDwAAAABJRU5ErkJggg==);
+  background-repeat: repeat; }
+
+.gameScreen {
+  position: relative;
+  max-width: 1280px;
+  max-height: 960px;
+  height: 100%; }
+
+.game {
+  box-sizing: content-box;
+  position: absolute;
+  top: -50%;
+  left: 50%;
+  margin-top: -144px;
+  margin-left: -384px;
+  width: 768px;
+  height: 288px;
+  border: 8px solid #000; }
+
+.fantomLink {
+  text-decoration: none;
+  position: absolute;
+  bottom: 10px;
+  left: 10px; }
+
+.alienLink {
+  text-decoration: none;
+  position: absolute;
+  bottom: 10px;
+  right: 10px; }
