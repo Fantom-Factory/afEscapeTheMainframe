@@ -27,12 +27,12 @@ class BgGlow {
 			bgIndex += (level - 1) * 0.0015f
 		if (bgIndex > 1f)
 			bgIndex -= 1f
-		
+
 		mul := (Sin.cos(bgIndex) + 1f) / 2f
 		cR	:= ((bgHighlightR - bgR) * mul).toInt + bgR
 		cG	:= ((bgHighlightG - bgG) * mul).toInt + bgG
 		cB	:= ((bgHighlightB - bgB) * mul).toInt + bgB
-		
+
 		g2d.clear(Color.makeArgb(0xFF, cR, cG, cB))
 		
 		img := level == null ? images.bgHex_x288 : images.bgHex_x200
