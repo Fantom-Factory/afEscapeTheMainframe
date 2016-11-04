@@ -1,5 +1,4 @@
 using afIoc
-using web
 using concurrent
 using dom
 using util
@@ -100,7 +99,7 @@ class HiScoreOnlineJava : HiScoreOnline {
 
 	override Void doLoadScores(Uri hiScoreUrl) {
 		doStuff |->Obj?| {
-			wc := WebClient(hiScoreUrl) {
+			wc := web::WebClient(hiScoreUrl) {
 				it.reqMethod = "GET"
 				it.reqHeaders["X-afFannyTheFantom.platform"] = "Desktop"
 			}.writeReq.readRes
@@ -114,7 +113,7 @@ class HiScoreOnlineJava : HiScoreOnline {
 	override Void doSaveScore(Uri hiScoreUrl, HiScore his) {
 		logFunc := Unsafe(|->| { log.info("Uploaded ${his} to ${gameName}") })
 		doStuff |->Obj?| {
-			wc := WebClient(hiScoreUrl) {
+			wc := web::WebClient(hiScoreUrl) {
 				it.reqMethod = "PUT"
 				it.reqHeaders["X-afFannyTheFantom.platform"] = "Desktop"
 			}.writeReq.readRes
