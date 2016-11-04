@@ -23,16 +23,18 @@ class Build : BuildPod {
 			
 			// ---- Hi-Scores ----
 			"concurrent   1.0.69 - 1.0",
-			"afConcurrent 1.0.16 - 1.0",
-			"afButter     1.2.2  - 1.2",
-			"afIocConfig  1.1.0  - 1.1",
+			"afConcurrent 1.0.16 - 1.0",	// FIXME kill me - copy Sync
+			"afButter     1.2.2  - 1.2",	// FIXME kill me
+			"afIocConfig  1.1.0  - 1.1",	// FIXME kill me
 			
 			// ---- web ----
-			"afBedSheet   1.5.4  - 1.5",
-			"afDuvet      1.1.2  - 1.1",
+			"web          1.0.69 - 1.0",
+			"dom          1.0.69 - 1.0",
+			"afBedSheet   1.5.4  - 1.5",	// FIXME kill me
+			"afDuvet      1.1.2  - 1.1",	// FIXME kill me
 		]
 
-		srcDirs = [`fan/`, `fan/gaming/`, `fan/infrastructure/`, `fan/jump/`, `fan/jump/models/`, `fan/sinedots/`, `fan/web/`]
+		srcDirs = [`fan/`, `fan/gaming/`, `fan/infrastructure/`, `fan/jump/`, `fan/jump/models/`, `fan/jump/screens/`, `fan/sinedots/`, `fan/web/`]
 		resDirs = [`res/`]
 	}
 }
