@@ -1,5 +1,6 @@
 using gfx
 
+@Js
 class GameHud {
 
 	Void draw(Gfx g2d, GameData data) {

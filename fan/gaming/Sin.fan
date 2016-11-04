@@ -1,4 +1,5 @@
 
+@Js
 const class Sin {
 	private static const Int		min		:=     0
 	private static const Int		max		:= 5_000

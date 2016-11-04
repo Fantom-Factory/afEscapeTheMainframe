@@ -1,5 +1,6 @@
 using gfx
 
+@Js
 class TitleBg {
 
 	private	const Image	imgFanny	:= Image(`fan://afFannyTheFantom/res/logo-fanny.png`)
@@ -89,6 +90,7 @@ class TitleBg {
 	}
 }
 
+@Js
 class Twean {
 	Image	img
 	Int		startFrame

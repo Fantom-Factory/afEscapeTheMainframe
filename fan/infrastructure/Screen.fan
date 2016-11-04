@@ -2,6 +2,7 @@ using fwt
 using gfx
 using afIoc
 
+@Js
 class Screen : Canvas {
 
 	@Inject private EventHub	eventHub

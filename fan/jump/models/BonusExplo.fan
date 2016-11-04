@@ -1,6 +1,7 @@
 using gfx::Color
 using gfx::Rect
 
+@Js
 class BonusExplo : Model {
 	GameData 			data
 	Bool				killMe
@@ -22,6 +23,7 @@ class BonusExplo : Model {
 	}
 }
 
+@Js
 class BonusExploSquare : Model {
 	GameData 	data
 	Float		force	:= 10f

@@ -1,6 +1,7 @@
 using gfx::Color
 using gfx::Rect
 
+@Js
 class FannyExplo : Model {
 	GameData 			data
 	Int					col		:=  0xFF
@@ -26,6 +27,7 @@ class FannyExplo : Model {
 	}
 }
 
+@Js
 class FannyExploSquare : Model {
 	Point3d	movementVector
 

@@ -1,4 +1,5 @@
 
+@Js
 const class Point2d {
 	
 	const Float	x
@@ -29,6 +30,7 @@ const class Point2d {
 	}
 }
 
+@Js
 const class Point3d {
 	
 	const Float	x

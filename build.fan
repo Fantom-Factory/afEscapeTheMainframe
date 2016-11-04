@@ -28,7 +28,7 @@ class Build : BuildPod {
 			"afIocConfig  1.1.0  - 1.1",
 		]
 
-		srcDirs = [`fan/`, `fan/gaming/`, `fan/infrastructure/`, `fan/jump/`, `fan/jump/models/`, `fan/sinedots/`]
+		srcDirs = [`fan/`, `fan/gaming/`, `fan/infrastructure/`, `fan/jump/`, `fan/jump/models/`, `fan/sinedots/`, `fan/web/`]
 		resDirs = [`res/`]
 	}
 }

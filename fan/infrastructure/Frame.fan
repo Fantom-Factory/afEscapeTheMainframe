@@ -2,6 +2,7 @@ using afIoc
 using fwt
 using gfx
 
+@Js
 class Frame {
 
 	@Inject	private		Screen		screen

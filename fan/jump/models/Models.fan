@@ -1,6 +1,7 @@
 using gfx::Color
 using gfx::Rect
 
+@Js
 class Models {
 	
 	static const Color	brand_darkBlue	:= Color(0xFF_00_00_33)

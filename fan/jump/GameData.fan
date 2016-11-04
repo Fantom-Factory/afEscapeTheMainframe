@@ -1,4 +1,5 @@
 
+@Js
 class GameData {
 	
 	Bool	training			:= false

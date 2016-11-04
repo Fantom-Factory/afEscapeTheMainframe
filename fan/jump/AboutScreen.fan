@@ -2,6 +2,7 @@ using afIoc
 using gfx
 using fwt
 
+@Js
 class AboutScreen : GameSeg {
 	
 	@Inject	private Screen		screen

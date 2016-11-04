@@ -2,6 +2,7 @@ using fwt
 using gfx
 using afIoc
 
+@Js
 class Main {
 	static const Duration startTime := Duration.now
 

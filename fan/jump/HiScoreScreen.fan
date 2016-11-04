@@ -2,6 +2,7 @@ using afIoc
 using gfx
 using fwt
 
+@Js
 class HiScoreScreen : GameSeg {
 	
 	@Inject	private Screen		screen
@@ -70,6 +71,7 @@ class HiScoreScreen : GameSeg {
 	}
 }
 
+@Js
 class PagesScreen {
 	private Int		scoreX
 	private Int		speedX
@@ -133,5 +135,4 @@ class PagesScreen {
 		pageX = -x.toInt
 		page  = scoreTarget / 30
 	}
-	
 }

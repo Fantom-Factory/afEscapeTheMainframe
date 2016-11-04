@@ -1,5 +1,6 @@
 using afIoc
 
+@Js
 class App : DemoEvents {
 
 	@Inject		private Screen				screen
@@ -61,6 +62,7 @@ class App : DemoEvents {
 	}
 }
 
+@Js
 mixin GameSeg {
 	abstract This onInit()
 	abstract Void onKill()
