@@ -1,6 +1,5 @@
 using afIoc
 using afIocConfig
-using afConcurrent
 using concurrent
 
 @Js
