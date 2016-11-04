@@ -1,6 +1,5 @@
 using afButter
 using afIoc
-using afIocConfig
 
 @Js
 class HiScores {
