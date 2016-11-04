@@ -25,7 +25,6 @@ class Build : BuildPod {
 			// ---- Hi-Scores ----
 			"concurrent   1.0.69 - 1.0",
 			"afButter     1.2.2  - 1.2",	// FIXME kill me
-			"afIocConfig  1.1.0  - 1.1",	// FIXME kill me
 			
 			// ---- web ----
 			"web          1.0.69 - 1.0",

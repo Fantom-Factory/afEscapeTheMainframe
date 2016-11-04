@@ -1,6 +1,5 @@
 using afButter
 using afIoc
-using afIocConfig
 using concurrent
 using dom
 using util
@@ -8,14 +7,19 @@ using util
 @Js
 abstract class HiScoreOnline {
 	
-	@Config { id="hiScores.apiUrl" }
-			Uri				hiScroreApiUrl
+			Uri				hiScroreApiUrl	
 	@Inject	|->App|			app
 	@Inject	|->HiScores|	hiScores
 	@Inject	Log				log
 	private Duration?		lastSync
 
-	new make(|This| f) { f(this) }
+	new make(|This| f) {
+		f(this)
+		
+		hiScroreApiUrl = typeof.pod.version.build.isOdd 
+			? `http://localhost:8080/` 
+			: `http://hiscores.fantomfactory.org/`
+	}
 
 	Void loadScores() {
 		if (app().offlineMode) {
