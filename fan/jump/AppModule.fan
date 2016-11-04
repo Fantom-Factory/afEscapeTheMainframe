@@ -4,7 +4,6 @@ using afConcurrent
 using concurrent
 
 @Js
-//@SubModule { modules=[IocConfigModule#, ConcurrentModule#] }
 @SubModule { modules=[IocConfigModule#] }
 const class AppModule {
 
@@ -24,11 +23,6 @@ const class AppModule {
 			}
 		}
 	}
-	
-//	@Contribute { serviceType=ActorPools# }
-//	Void contributeActorPools(Configuration config) {
-//		config["hiScores"] = ActorPool() { it.name = "Hi-Scores" }
-//	}
 	
 	@Contribute { serviceType=FactoryDefaults# }
 	Void contributeFactoryDefaults(Configuration config) {
