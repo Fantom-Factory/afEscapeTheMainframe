@@ -1,4 +1,3 @@
-using afConcurrent
 using afButter
 using afIoc
 using afIocConfig
