@@ -152,7 +152,6 @@ class HiScoreOnlineJs : HiScoreOnline {
 	new make(|This| f) : super.make(f) { }
 
 	override Void doLoadScores(Uri hiScoreUrl) {
-		app().offline = true	// preempt a failing request - 'cos we don't get notified otherwise
 		HttpReq {
 			it.uri = hiScoreUrl
 			it.headers["X-afFannyTheFantom.platform"] = "Web"
@@ -168,7 +167,6 @@ class HiScoreOnlineJs : HiScoreOnline {
 	}
 
 	override Void doSaveScore(Uri hiScoreUrl, HiScore his) {
-		app().offline = true	// preempt a failing request - 'cos we don't get notified otherwise
 		HttpReq {
 			it.uri = hiScoreUrl
 			it.headers["X-afFannyTheFantom.platform"] = "Web"
