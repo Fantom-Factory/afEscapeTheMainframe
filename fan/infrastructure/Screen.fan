@@ -51,8 +51,6 @@ class Screen : Canvas {
 		str := key.primary.toStr
 		if (str.size == 1) {
 			chr := str.chars.first
-			if (chr == ' ')
-				return chr
 			if (chr.isAlpha)
 				return key.isShift ? chr.upper : chr.lower
 			if (chr.isDigit) {
@@ -68,6 +66,8 @@ class Screen : Canvas {
 		}
 		
 		switch (key.primary) {
+			case Key.space:
+				return ' '
 			case Key.comma:
 				return key.isShift ? '<' : ','
 			case Key.period:
