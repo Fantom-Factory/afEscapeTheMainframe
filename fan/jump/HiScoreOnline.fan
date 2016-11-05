@@ -15,7 +15,7 @@ abstract class HiScoreOnline {
 	new make(|This| f) {
 		f(this)
 		
-		hiScroreApiUrl = typeof.pod.version.build.isOdd 
+		hiScroreApiUrl = Env.cur.vars["env"]?.lower == "development" 
 			? `http://localhost:8080/` 
 			: `http://hiscores.fantomfactory.org/`
 	}
