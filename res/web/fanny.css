@@ -8,33 +8,20 @@ html, body {
   padding: 0;
   display: block; }
 
+
 .bgScreen,
 .gameScreen {
   margin: auto; }
 
 .bgScreen {
-  position: relative;
-  max-width: 1536px;
-  max-height: 576px;
-  height: 100%; }
-
-.background {
-  position: absolute;
-  width: 1536px;
-  height: 576px;
-  background-color: #183048;
   background-color: #336699;
-  background-image: url(/pod/afFannyTheFantom/res/bgHex-x768.png);
-  background-repeat: no-repeat;
-  background-size: 100% 100%;
-  left: 50%;
-  top: 50%;
-  margin-left: -768px;
-  margin-top: -288px; }
+  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAHIAAAB+CAMAAADPwbU0AAAArlBMVEUACBoACBoACBoACBoACBoACBoACBoACBoACBoACBoACBoACBoACBoACBoACBoACBoACBoACBoACBoACBoACBoACBoACBoACBoACBoACBoACBoACBoACBoACBoACBoACBoACBoACBoACBoACBoACBoACBoACBoACBoACBoACBoACBoACBoACBoACBoACBoACBoACBoACBoACBoACBoACBoACBoACBoACBoACBoACBrkl8wYAAAAOXRSTlP56Vf1BselmKyOikHLcFQ48kpFZtx7TxrYwLqA7tCxC+RcIKGctpFhLA3ghWs9NgIm1HY0lDAUEcT6NnGjAAAFoUlEQVRo3q2a2Y7aQBAA2ydgY/CNLy4bjLlvSP//jwUpiawATmamXdKy+7QlHhqKbkB9Z6oe5RjpQLxbq9+Azju69RylM7rS7+3DRecLgB9k3tHsAtWoTLzDGb8B+ElSra2IqhxvrwEyK5VAvS+AZsyK0JTYlTi+qvMfNOWPy72LHEq4TXNDohg3HWeu8ChxMziGS4IRkt31B3IpsTt6BIRB8Y2hhZxK2zvudRAekO78EPEqMa6m3lhU2U+vHeRWKum0uiliRqkYhDa/EiNT+KU2vlwnKKDExXO0lYQG5ObOQUgpyUd3IvbiWmkopMRJ/rz4/MqzMdyioNK2jsNC4TXa+tyURJXYv6pen3tAgusChZVgqKfS5hyQhetk4kr03eOAc1AS675EghKLB2eT+KVrIUmZrY5uFzjrg6bE5MTVJOftNUWiUrkcOZok0wemRFXi+dUkGld9kJVQsjfJ7FUfQFei/2qShLU+qhiJyrpJGPPcApqybpKhDqz1QVfWTQL/QwuqG7akVKxj7hXd/7DYHSq/LSWUo+O6Gh6GLw6/f97+flHl02u3LeV4m7sD+cXgxa+H1+Of3/Lvh7mcr61zO0pbH1g2MKCPrgu7FeUPy4zYemDH9kIFDB9oOqwxWeWGTVfCcrdi7R8lVZ0lXRn1GP5LXRGPwKcqla6846ifxWOvA1HZD1yexpvJ011EU0rFoIc8LEenG1CUEFuDGZdSsVQ5pig3N6dAPrRDvp0R0nm5mmfIiTF1JuLKaOsmyMvGXFsbUWWmyxfkp3jcCxBUaoETCSglb73qiymlRdhDEZJTVWZCymQXSkJKCNRBLKL0e66OYowPz3TGr7Qnqx0IKqF87rv8yvPW6YsvDcOnFfEqbV0OAIXp/qtJoKk+3DOKY3vqSmNW1vVBIT6NjIxHCclujiSUdBoueZRRz50gjchsbBL4Xh+ejUQW670OzMp+uu8TZHWTnBmUdX3QmYxOHYVNCfHlVR907KYmAeUdv3QNbAOtylNf+QT0NwrLzOtIo2DP1ful0D8A843DfqR641aepbVe53vXfAe0D8qcbz/Z/BZv9bUvwLcr23SQkI2QWK7EPJfjYQs3U780dWRWwk01J+SL6dxT2JW4CVUrol5M3THXm1d3dF8oFKOkyylyKbNXi2qkAbmEEW8VnE69jPAkO07J2z6QHp2EMCCenHEX3th8BhtRZdRzlwLp3HkI30zt7soSqXVJXu/OggOSOn0RJS5HVUdoULLCSVFImVmqrAkFpRX6YkqMr3w303rBoOO/AMLH/sYNnC2s9F2Bm2lkuEvCEqZ4HHTgHZDQAoJSmqvemfdi6pxJC7Ulb5NIi8ENSUq48DUJxFY441HSm2RTmgV5BdybcnwIg8lqpZCVvqNaPnt9OH0kK1Fnb5JMlwPkU1KbRLs4Z4KyJmZtEqkTltiKEgI1TBjrQ2rr5rVfs9xM/XrBQFZiML1utf5/iA1nGLWlzG6jY+7K/8E5PKqF0pLyR1BdjN5/MfbTldaOUuq4PWThxynvSW0oIfEcifXKFiZtKCODOdvPr9yekZR1BrPSWe91grLOYI1BVuf2mKqUXhkMyMwkrzo2URlb4YZzo6XRlK8M7iIPP+6v3KYolaW3ytq+siEIZnBzRTwuvrjS7soW8lI8hwWwKel3tjq3x6LK2SIskZ/lKS9tMSUk1kASUCrBepCIKTelqwte2V65LaKEyXxloxDl1OyKKMdbN0Yx/H+vAKE5g1Nsgpbb0DggoS+sVLx/NQk0LuF6pCtb3pzb0FQfTQNCbxKgfcunObebmwQa64NG57nXgUM5Tl2thSvbmF2ZFW4A9CtbU5OAwBKO+BU5+HaIDnVshN4k8K0+5hnSAWP9vUlAekdL9zdsg2j4sPrSJ2D8TW87v48Muw2l5Km5vDU++AmKcHdoU1UL4QAAAABJRU5ErkJggg==);
+  background-repeat: repeat;
+  height: 100%;	}
 
 .bigFanny {
   position: absolute;
-  top: 50px;
+  top: 15%;
   left: 0;
   width: 360px;
   height: 360px;
@@ -76,15 +63,13 @@ html, body {
   position: absolute;
   top: 0;
   left: 0;
-  width: 1536px;
-  height: 576px;
+  width: 100%;
+  height: 100%;
   background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAACAQMAAABIeJ9nAAAABlBMVEUAAAAYGBgmJUsIAAAAAXRSTlMAQObYZgAAAAxJREFUCNdjcGA4AAABhAEB21yPDwAAAABJRU5ErkJggg==);
   background-repeat: repeat; }
 
 .gameScreen {
   position: relative;
-  max-width: 1536px;
-  max-height: 576px;
   height: 100%; }
 
 .game {

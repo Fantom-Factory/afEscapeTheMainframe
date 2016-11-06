@@ -23,6 +23,10 @@ const class FannyMod : WebMod {
 			onPodFile
 		else if (name == "favicon.ico")
 			onFile(name)
+		else if (name == "fanny.css") {
+			File file := File(`res/web/${name}`)
+			FileWeblet(file).onService
+		}
 		else
 			res.sendErr(404)
 	}
@@ -33,7 +37,7 @@ const class FannyMod : WebMod {
 	}
 
 	Void onIndexPage(WebOutStream out, Uri reqAbsUri) {
-	    env  := ["fwt.window.root" : "fwtRoot"]
+	    env  := ["fwt.window.root" : "fwtRoot", "env" : Env.cur.vars["env"]]
 
 		out.docType5
 		out.tag("html", "lang='en' prefix='og: http://ogp.me/ns#'").nl
@@ -47,7 +51,8 @@ const class FannyMod : WebMod {
 			out.tag("meta", "property='og:url'         content='${reqAbsUri}'").nl
 			out.tag("meta", "property='og:image'       content='${reqAbsUri.scheme}://${reqAbsUri.host}/pod/afFannyTheFantom/doc/ogimage.png'").nl
 			out.tag("meta", "property='og:description' content=\"${windowDesc}\"").nl
-			out.tag("link", "href='/pod/afFannyTheFantom/res/web/fanny.css' type='text/css' rel='stylesheet'").nl
+//			out.tag("link", "href='/pod/afFannyTheFantom/res/web/fanny.css' type='text/css' rel='stylesheet'").nl
+			out.tag("link", "href='/fanny.css' type='text/css' rel='stylesheet'").nl
 		
 			pods.each |pod| { 
 				out.includeJs(`/pod/${pod.name}/${pod.name}.js`)				
