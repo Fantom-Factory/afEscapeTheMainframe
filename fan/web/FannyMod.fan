@@ -23,10 +23,6 @@ const class FannyMod : WebMod {
 			onPodFile
 		else if (name == "favicon.ico")
 			onFile(name)
-		else if (name == "fanny.css") {
-			File file := File(`res/web/${name}`)
-			FileWeblet(file).onService
-		}
 		else
 			res.sendErr(404)
 	}
@@ -51,8 +47,7 @@ const class FannyMod : WebMod {
 			out.tag("meta", "property='og:url'         content='${reqAbsUri}'").nl
 			out.tag("meta", "property='og:image'       content='${reqAbsUri.scheme}://${reqAbsUri.host}/pod/afFannyTheFantom/doc/ogimage.png'").nl
 			out.tag("meta", "property='og:description' content=\"${windowDesc}\"").nl
-//			out.tag("link", "href='/pod/afFannyTheFantom/res/web/fanny.css' type='text/css' rel='stylesheet'").nl
-			out.tag("link", "href='/fanny.css' type='text/css' rel='stylesheet'").nl
+			out.tag("link", "href='/pod/afFannyTheFantom/res/web/fanny.css' type='text/css' rel='stylesheet'").nl
 		
 			pods.each |pod| { 
 				out.includeJs(`/pod/${pod.name}/${pod.name}.js`)				
@@ -80,13 +75,12 @@ const class FannyMod : WebMod {
 				out.divEnd
 			out.divEnd
 
-			// FIXME new goolge code
-//			out.script.w("(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-//			              (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-//			              m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-//			              })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-//			              ga('create', 'UA-33997125-8', 'auto');
-//			              ga('send', 'pageview');")
+			out.script.w("(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			              (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			              m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+			              })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+			              ga('create', 'UA-33997125-11', 'auto');
+			              ga('send', 'pageview');")
 			out.scriptEnd
 
 		out.bodyEnd
