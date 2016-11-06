@@ -7,6 +7,7 @@ class App : DemoEvents {
 	@Inject		private HiScores			hiScores
 	@Autobuild	private LoadingScreen		loadingScreen
 	@Autobuild	private TitleScreen			titleScreen
+	@Autobuild	private IntroScreen			intoScreen
 	@Autobuild	private GameScreen			gameScreen
 	@Autobuild	private AboutScreen			aboutScreen
 	@Autobuild	private HiScoreScreen		hiScoreScreen
@@ -29,14 +30,17 @@ class App : DemoEvents {
 		activeScreen?.onDraw(g)
 	}
 	
-	Void startGame(Int? level) {
-//		gameOver(1095)
-		activeScreen = deactivate.gameScreen.onInit.trainingLevel(level)
-		hiScores.loadScores
-	}
-	
 	Void showTitles() {
 		activeScreen = deactivate.titleScreen.onInit.delay		
+	}
+	
+	Void showIntro(Float fannyY) {
+		activeScreen = deactivate.intoScreen.onInit.setFannyY(fannyY)
+	}
+	
+	Void startGame(Int? level) {
+		activeScreen = deactivate.gameScreen.onInit.trainingLevel(level)
+		hiScores.loadScores
 	}
 	
 	Void showAbout() {

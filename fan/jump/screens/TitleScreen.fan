@@ -58,7 +58,10 @@ class TitleScreen : GameSeg {
 			if (screen.keys[Key.num9] == true)	level = 9
 			if (screen.keys[Key.num0] == true)	level = 10
 
-			app().startGame(level)
+			if (level != null)
+				app().startGame(level)
+			else
+				app().showIntro(titleBg.fannyY)
 		}
 
 		bgGlow.draw(g2d)

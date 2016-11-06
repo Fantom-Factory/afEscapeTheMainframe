@@ -9,7 +9,7 @@ class TitleBg {
 	private Twean?	tweanFantom
 	private Twean?	tweanTheFanny
 	
-	private Float 	fannyY
+			Float 	fannyY
 			Int		time	:= 50
 
 	new make(FannyImages images) {
@@ -103,10 +103,12 @@ class Twean {
 	Int		startY
 	Int		finalX
 	Int		finalY
+	Bool	tweanIn	:= true
+	Bool	endOffScreen
 	
 	new make(|This| f) { f(this) }
 
-	Void draw(Gfx g2d, Int time) {
+	virtual Void draw(Gfx g2d, Int time) {
 		if (time <= startFrame)
 			return
 		
@@ -114,7 +116,12 @@ class Twean {
 			frame := time - startFrame
 			
 			ratio := frame.toFloat / (endFrame - startFrame)
-			sinio := Sin.sin(ratio * 0.25f)
+			angle := ratio * 0.25f
+			if (!tweanIn)
+				angle += 0.25f
+			sinio := Sin.sin(angle)
+			if (!tweanIn)
+				sinio = 1f - sinio
 			
 			x := ((finalX - startX) * sinio) + startX
 			y := ((finalY - startY) * sinio) + startY
@@ -122,6 +129,7 @@ class Twean {
 			return
 		}
 		
-		g2d.drawImage(img, finalX, finalY)
+		if (!endOffScreen)
+			g2d.drawImage(img, finalX, finalY)
 	}
 }

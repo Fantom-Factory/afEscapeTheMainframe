@@ -14,4 +14,7 @@ class FannyImages : Images {
 	Image	logoFantom()	{ load("logo-fantom.png")		}
 	Image	fanny_x180()	{ load("fanny-x180.png")		}
 
+	Image	compMonitor()	{ load("computerMonitor.png")	}
+	Image	compKeyboard()	{ load("computerKeyboard.png")	}
+
 }
