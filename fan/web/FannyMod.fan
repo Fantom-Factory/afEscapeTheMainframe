@@ -33,7 +33,7 @@ const class FannyMod : WebMod {
 	}
 
 	Void onIndexPage(WebOutStream out, Uri reqAbsUri) {
-	    env  := ["fwt.window.root" : "fwtRoot", "env" : Env.cur.vars["env"]]
+	    env  := ["fwt.window.root" : "fwtRoot", "env" : Env.cur.vars["env"] ?: "prod"]
 
 		out.docType5
 		out.tag("html", "lang='en' prefix='og: http://ogp.me/ns#'").nl
@@ -44,8 +44,8 @@ const class FannyMod : WebMod {
 			out.tag("meta", "name='description'        content=\"${windowDesc}\"").nl
 			out.tag("meta", "property='og:type'        content='website'").nl
 			out.tag("meta", "property='og:title'       content='${windowTitle}'").nl
-			out.tag("meta", "property='og:url'         content='${reqAbsUri}'").nl
-			out.tag("meta", "property='og:image'       content='${reqAbsUri.scheme}://${reqAbsUri.host}/pod/afFannyTheFantom/doc/ogimage.png'").nl
+			out.tag("meta", "property='og:url'         content='http://fanny.fantomfactory.org/'").nl
+			out.tag("meta", "property='og:image'       content='http://fanny.fantomfactory.org/pod/afFannyTheFantom/doc/ogimage.png'").nl
 			out.tag("meta", "property='og:description' content=\"${windowDesc}\"").nl
 			out.tag("link", "href='/pod/afFannyTheFantom/res/web/fanny.css' type='text/css' rel='stylesheet'").nl
 		
