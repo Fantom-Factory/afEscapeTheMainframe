@@ -65,6 +65,12 @@ class HiScoreEntryScreen : GameSeg {
 			hiScores[newPosition].name = screen.editText
 		}
 		
+		if (screen.keys[Key.esc] == true) {
+			screen.editMode = false
+			hiScores.editing = false
+			app().showTitles			
+		}
+
 		if (screen.keys[Key.enter] == true && keyEnter == false) {
 			keyEnter = true
 			if (screen.editMode == true) {
