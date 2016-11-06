@@ -24,11 +24,11 @@ class TitleBg {
 		tweanTheFanny.draw(g2d, time)
 
 		if (time > 120) {
-			noOfChars := ((time - 115) / 5).min("Escape the Mainframe".size)
+			noOfChars := ((time - 120) / 4).min("Escape the Mainframe".size)
 			g2d.drawFont16("Escape the Mainframe"[0..<noOfChars], 424, 224)
 		}
 
-		if (time > 120 + ("Escape the Mainframe".size * 5) + 10)
+		if (time > 120 + ("Escape the Mainframe".size * 4) + 10)
 			g2d.drawFont8("v${typeof.pod.version}", 690, 190)
 		
 		y := (Sin.sin(fannyY) * 15f).toInt + (288 - 180) / 2

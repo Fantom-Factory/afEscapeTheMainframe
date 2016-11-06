@@ -86,7 +86,7 @@ class TitleMenu {
 	
 	Void draw(Gfx g2d) {
 		menu.each |str, i| {
-			x := 224 + ((10 - str.size) * 16 / 2)
+			x := 216 + ((10 - str.size) * 16 / 2)
 			y := (12 * 16) + (i * 20)
 			
 			if (i == highlighted) {
