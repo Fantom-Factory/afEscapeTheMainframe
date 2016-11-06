@@ -3,4 +3,5 @@ syntax: glob
 build
 lib
 .git
+dev/dev-sounds
 

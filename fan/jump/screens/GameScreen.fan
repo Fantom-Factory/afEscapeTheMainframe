@@ -4,6 +4,7 @@ using gfx::Rect
 using gfx::Image
 using afIoc::Inject
 using afIoc::Autobuild
+using concurrent::Actor
 
 @Js
 class GameScreen : GameSeg {
@@ -14,21 +15,24 @@ class GameScreen : GameSeg {
 	@Autobuild	private	Funcs			funcs
 				private BonusCube[]		bonusCubes	:= BonusCube[,]
 				private BonusExplo[]	bonusExplo	:= BonusExplo[,]
-				private Model?			grid
+				private Grid?			grid
 				private Block[]			blcks		:= Block[,]
 				private Fanny?			fanny
 				private FannyExplo?		fannyExplo
 				private GameHud			gameHud		:= GameHud()
 				private	GameData?		data
 	
-	
 	new make(|This| in) { in(this) }
 
 	override This onInit() {
 		data	= GameData()
 		blcks.clear
-		grid	= Models.grid(data)
-		fanny	= Models.fanny(data)
+		grid	= Models.grid(data) {
+			it.x = Actor.locals["afFanny.floorX"] ?: 0f
+		}
+		fanny	= Models.fanny(data) {
+			it.y = 200f
+		}
 		bonusCubes.clear
 		bonusExplo.clear
 		fannyExplo = null

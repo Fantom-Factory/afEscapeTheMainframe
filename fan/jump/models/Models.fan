@@ -77,7 +77,7 @@ class Models {
 		}
 	}
 
-	static Model grid(GameData data) {
+	static Grid grid(GameData data) {
 		Grid(data) {
 			// (-480 -> 720, -150, -175 -> 175)
 			points = [

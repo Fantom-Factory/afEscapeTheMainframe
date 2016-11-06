@@ -9,8 +9,7 @@ class Grid : Model {
 	
 	override Void anim() {
 		x -= data.floorSpeed
-		if (x < -240f) {
+		if (x < -240f)
 			x += 240f
-		}
 	}
 }

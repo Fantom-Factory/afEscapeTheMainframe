@@ -20,8 +20,8 @@ class Gfx {
 	}
 	
 	Void offset(Int x, Int y) {
-		ox += x
-		oy += y
+		ox = x
+		oy = y
 	}
 
 	This offsetCentre() {

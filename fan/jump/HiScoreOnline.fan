@@ -18,6 +18,8 @@ abstract class HiScoreOnline {
 		hiScroreApiUrl = Env.cur.vars["env"]?.lower == "development" 
 			? `http://localhost:8080/` 
 			: `http://hiscores.fantomfactory.org/`
+
+//		hiScroreApiUrl = `http://hiscores.fantomfactory.org/` 
 	}
 
 	Void loadScores() {
