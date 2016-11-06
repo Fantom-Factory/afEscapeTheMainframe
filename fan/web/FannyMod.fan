@@ -75,6 +75,21 @@ const class FannyMod : WebMod {
 				out.divEnd
 			out.divEnd
 
+			// http://stackoverflow.com/questions/1495219/how-can-i-prevent-the-backspace-key-from-navigating-back
+			// http://stackoverflow.com/a/26543616/1532548
+			out.script.w("window.addEventListener('keydown', function (e) {
+			              	var key;
+			              	if (typeof e.keyIdentifier !== 'undefined')
+			              		key = e.keyIdentifier;
+			              
+			              	if (typeof e.keyCode !== 'undefined')
+			              		key = e.keyCode;
+			              	
+			              	if (key === 'U+0008' || key === 'Backspace' || key === 8)
+			              		e.preventDefault();
+			              }, true);")
+			out.scriptEnd
+
 			out.script.w("(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
 			              (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
 			              m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
