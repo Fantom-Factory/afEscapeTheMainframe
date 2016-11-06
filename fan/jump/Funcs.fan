@@ -13,7 +13,8 @@ const class Funcs {
 	static const Int	y1	:=	 2.pow( 8)
 	static const Int	y2	:=	 2.pow( 9)
 	static const Int	y3	:=	 2.pow(10)
-	static const Int	mo	:=	 2.pow(11)
+	static const Int	y4	:=	 2.pow(11)
+	static const Int	mo	:=	 2.pow(12)
 	
 	private const Int:Int[]	allowedBlocks := [
 		x1 + y1 + z0	: [1, 2, 3, 4, 5, 6, 7, 8       ],
@@ -52,6 +53,8 @@ const class Funcs {
 		x2 + y3 + z1	: [         4, 5, 6, 7, 8, 9, 10],
 		x3 + y3 + z1	: [               6, 7, 8, 9, 10],
 
+		x1 + y4 + z0	: [                  7, 8, 9, 10],
+
 		x1 + y1 + z0+z3	: [               6, 7, 8, 9, 10],
 		x2 + y1 + z0+z3	: [                  7, 8, 9, 10],
 	mo+	x1 + y1 + z0+z3	: [                     8, 9, 10],
@@ -86,8 +89,8 @@ const class Funcs {
 	Bool funcNewBlock(Int level, Float distance, Float speed) {
 		level--
 
-		shortest :=  550f - (level *  15)	// 550  -> 400  
-		longest	 := 1500f - (level * 100)	// 1500 -> 500 
+		shortest :=   550f - (level *  15)				// 550  -> 400  
+		longest	 := (1500f - (level * 175)).max(500f)	// 1500 -> 500 
 		
 		if (distance < shortest)
 			return false
@@ -107,15 +110,15 @@ const class Funcs {
 		lastKey := lastBlock?.blockKey
 		if (lastKey != null) {
 			// if we've just done a high jump, don't immediately follow it with another
-			if (distance < 475f && (lastKey.and(y2) != 0 || lastKey.and(y3) != 0) && lastKey.and(z0) != 0)
-				allowedLevels = allowedLevels.exclude { (it.and(y2) != 0 || it.and(y3) != 0) && it.and(z0) != 0 }
+			if (distance < 475f && (lastKey.and(y2) != 0 || lastKey.and(y3) != 0 || lastKey.and(y4) != 0) && lastKey.and(z0) != 0)
+				allowedLevels = allowedLevels.exclude { (it.and(y2) != 0 || it.and(y3) != 0 || it.and(y4) != 0) && it.and(z0) != 0 }
 //				allowedLevels = allowedLevels.exclude { it.and(z0) != 0 }
 
 			if (distance < 425f && lastKey.and(z0) != 0)
 				allowedLevels = allowedLevels.exclude { it.and(z0) != 0 }
 
 			if (distance < 425f && lastKey.and(z1) != 0)
-				allowedLevels = allowedLevels.exclude { (it.and(y2) != 0 || it.and(y3) != 0) && it.and(z0) != 0 }
+				allowedLevels = allowedLevels.exclude { (it.and(y2) != 0 || it.and(y3) != 0 || it.and(y4) != 0) && it.and(z0) != 0 }
 		}
 		
 		key	:= allowedLevels.random
@@ -131,6 +134,7 @@ const class Funcs {
 		if (key.and(y1) != 0)	y = 0
 		if (key.and(y2) != 0)	y = 1
 		if (key.and(y3) != 0)	y = 2
+		if (key.and(y4) != 0)	y = 3
 
 		z := 0
 		if (key.and(z0) != 0)	z = 0
@@ -178,14 +182,17 @@ const class Funcs {
 		if (blockKey.and(Funcs.y1) != 0)	h += 1
 		if (blockKey.and(Funcs.y2) != 0)	h += 2
 		if (blockKey.and(Funcs.y3) != 0)	h += 3
+		if (blockKey.and(Funcs.y4) != 0)	h += 4
 
 		if (blockKey.and(Funcs.z1) != 0) {
 			h += 1
-			if (h >= 4) h = 0
+			if (h > 4) h = 0
+			if (h > 3 && x > 0) h = 0
 		}
 		if (blockKey.and(Funcs.z2) != 0) {
 			h += 2
-			if (h >= 4) h = 0
+			if (h > 4) h = 0
+			if (h > 3 && x > 0) h = 0
 		}
 
 		
@@ -200,15 +207,15 @@ const class Funcs {
 	
 	const Int[] jumpLevels	:= [
 		10, 
-		20  + 10,  
-		30  + 20 + 10, 
-		40  + 30 + 20 + 10, 
-		50  + 40 + 30 + 20 + 10, 
-		60  + 50 + 40 + 30 + 20 + 10, 
-		70  + 60 + 50 + 40 + 30 + 20 + 10, 
-		80  + 70 + 60 + 50 + 40 + 30 + 20 + 10, 
-		90  + 80 + 70 + 60 + 50 + 40 + 30 + 20 + 10, 
-		100 + 90 + 80 + 70 + 60 + 50 + 40 + 30 + 20 + 10,
+		20  + (10) / 2,  
+		30  + (20 + 10) / 2, 
+		40  + (30 + 20 + 10) / 2, 
+		50  + (40 + 30 + 20 + 10) / 2, 
+		60  + (50 + 40 + 30 + 20 + 10) / 2, 
+		70  + (60 + 50 + 40 + 30 + 20 + 10) / 2, 
+		80  + (70 + 60 + 50 + 40 + 30 + 20 + 10) / 2, 
+		90  + (80 + 70 + 60 + 50 + 40 + 30 + 20 + 10) / 2, 
+		100 + (90 + 80 + 70 + 60 + 50 + 40 + 30 + 20 + 10) / 2,
 	]
 
 	Int funcLevel(GameData data) {
