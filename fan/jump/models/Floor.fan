@@ -1,6 +1,6 @@
 
 @Js
-class Grid : Model {
+class Floor : Model {
 	private GameData data
 
 	new make(GameData data, |This| in) : super(in) {

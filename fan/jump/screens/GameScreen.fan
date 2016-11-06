@@ -15,7 +15,7 @@ class GameScreen : GameSeg {
 	@Autobuild	private	Funcs			funcs
 				private BonusCube[]		bonusCubes	:= BonusCube[,]
 				private BonusExplo[]	bonusExplo	:= BonusExplo[,]
-				private Grid?			grid
+				private Floor?			floor
 				private Block[]			blcks		:= Block[,]
 				private Fanny?			fanny
 				private FannyExplo?		fannyExplo
@@ -27,12 +27,8 @@ class GameScreen : GameSeg {
 	override This onInit() {
 		data	= GameData()
 		blcks.clear
-		grid	= Models.grid(data) {
-			it.x = Actor.locals["afFanny.floorX"] ?: 0f
-		}
-		fanny	= Models.fanny(data) {
-			it.y = 200f
-		}
+		floor	= Models.floor(data) { it.x = Actor.locals["afFanny.floorX"] ?: 0f }
+		fanny	= Models.fanny(data) { it.y = 200f }
 		bonusCubes.clear
 		bonusExplo.clear
 		fannyExplo = null
@@ -145,7 +141,7 @@ class GameScreen : GameSeg {
 	}
 	
 	Void anim() {
-		grid.anim
+		floor.anim
 		blcks.each { it.anim }
 		if (!data.dying)
 			fanny.anim
@@ -163,7 +159,7 @@ class GameScreen : GameSeg {
 		
 		g3d := Gfx3d(g2d.offsetCentre).lookAt(camera, target)
 
-		grid.draw(g3d)
+		floor.draw(g3d)
 		
 		// this depends on camera angle
 		fannyDrawn	:= false

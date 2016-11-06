@@ -77,8 +77,8 @@ class Models {
 		}
 	}
 
-	static Grid grid(GameData data) {
-		Grid(data) {
+	static Floor floor(GameData data) {
+		Floor(data) {
 			// (-480 -> 720, -150, -175 -> 175)
 			points = [
 				Point3d(-160f,  50f, 0f),
