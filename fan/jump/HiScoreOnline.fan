@@ -15,7 +15,6 @@ abstract class HiScoreOnline {
 	new make(|This| f) {
 		f(this)
 		
-		echo(Env.cur.vars["env"])
 		hiScroreApiUrl = Env.cur.vars["env"]?.lower == "development" 
 			? `http://localhost:8080/` 
 			: `http://hiscores.fantomfactory.org/`
