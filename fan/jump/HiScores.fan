@@ -15,7 +15,7 @@ class HiScores {
 		f(this)
 		
 		// set some default scores - in case we go offline
-		hiScores = (0..<maxNoOfPositions-10).toList.map |i->HiScore| {
+		hiScores = (0..<maxNoOfPositions).toList.map |i->HiScore| {
 			HiScore {
 				name	= "Slimer"
 				score	= 1_000 - (i * 10)
@@ -76,7 +76,7 @@ class HiScore {
 	new make(|This| f) { f(this) }
 	
 	Str toScreenStr(Int i) {
-		(i == 100 ? "" : " ") + i.toStr.justr(2) + ") " + score.toStr.justr(5) + name.padl(13, '.') + " "
+		(i == 100 ? "" : " ") + i.toStr.justr(2) + ") " + score.toStr.justr(4) + name.padl(14, '.') + " "
 	}
 	
 	override Str toStr() {
