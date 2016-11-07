@@ -6,7 +6,7 @@ class Build : BuildPod {
 	new make() {
 		podName = "afFannyTheFantom"
 		summary = "Escape the Mainframe!"
-		version = Version("0.0.2")
+		version = Version("0.0.4")
 
 		meta = [
 			"proj.name"		: "Demo",
