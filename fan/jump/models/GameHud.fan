@@ -16,8 +16,11 @@ class GameHud {
 		alertIndex = 120
 	}
 	
-	Void alertLevelUp() {
-		alertText = "Level Up!"
+	Void alertLevelUp(Int level) {
+		if (level == 11)
+			alertText = "Escape!"
+		else
+			alertText = "Level Up!"
 		alertIndex = 120
 	}
 	

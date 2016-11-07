@@ -93,8 +93,8 @@ class OutroAnim {
 			
 			tweanExplo = TweanExplo {
 				it.startFrame	=  180
-				it.startX		= -10f
-				it.startY		=  30f
+				it.startX		= -40f
+				it.startY		=   0f
 			}
 		}
 		
