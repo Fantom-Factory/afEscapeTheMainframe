@@ -125,11 +125,15 @@ class Twean {
 			
 			x := ((finalX - startX) * sinio) + startX
 			y := ((finalY - startY) * sinio) + startY
-			g2d.drawImage(img, x.toInt, y.toInt)
+			doDrawImage(g2d, x.toInt, y.toInt)
 			return
 		}
 		
 		if (!endOffScreen)
-			g2d.drawImage(img, finalX, finalY)
+			doDrawImage(g2d, finalX, finalY)
+	}
+	
+	virtual Void doDrawImage(Gfx g2d, Int x, Int y) {
+		g2d.drawImage(img, x, y)		
 	}
 }

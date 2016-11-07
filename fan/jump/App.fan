@@ -7,8 +7,9 @@ class App : DemoEvents {
 	@Inject		private HiScores			hiScores
 	@Autobuild	private LoadingScreen		loadingScreen
 	@Autobuild	private TitleScreen			titleScreen
-	@Autobuild	private IntroScreen			intoScreen
+	@Autobuild	private IntroScreen			introScreen
 	@Autobuild	private GameScreen			gameScreen
+	@Autobuild	private OutroScreen			outroScreen
 	@Autobuild	private AboutScreen			aboutScreen
 	@Autobuild	private HiScoreScreen		hiScoreScreen
 	@Autobuild	private HiScoreEntryScreen	hiScoreEntryScreen
@@ -35,7 +36,7 @@ class App : DemoEvents {
 	}
 	
 	Void showIntro(Float fannyY) {
-		activeScreen = deactivate.intoScreen.onInit.setFannyY(fannyY)
+		activeScreen = deactivate.introScreen.onInit.setFannyY(fannyY)
 	}
 	
 	Void startGame(Int? level) {
@@ -51,9 +52,14 @@ class App : DemoEvents {
 		activeScreen = deactivate.hiScoreScreen.onInit		
 	}
 	
-	Void gameOver(Int score, Int level, Bool training) {
+	Void gameOver(Int score, Int level, Bool training, Bool showOutro) {
 		deactivate
 	
+		if (level == 11 && showOutro) {
+			activeScreen = outroScreen.onInit.setMeta(score, level, training)
+			return
+		}
+		
 		if (!training && hiScores.isHiScore(score))
 			activeScreen = hiScoreEntryScreen.onInit.setScore(score, level)
 		else
