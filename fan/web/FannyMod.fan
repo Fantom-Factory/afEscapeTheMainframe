@@ -78,9 +78,8 @@ const class FannyMod : WebMod {
 
 			// http://stackoverflow.com/questions/1495219/how-can-i-prevent-the-backspace-key-from-navigating-back
 			// http://stackoverflow.com/a/26543616/1532548
-			out.script.w("window.addEventListener('keydown',     function (e) { e.preventDefault(); });").scriptEnd
-			out.script.w("window.addEventListener('mousedown',   function (e) { e.preventDefault(); });").scriptEnd
-			out.script.w("window.addEventListener('contextmenu', function (e) { e.preventDefault(); });").scriptEnd
+			//out.script.w("window.addEventListener('keydown',     function (e) { e.preventDefault(); });").scriptEnd
+			//out.script.w("window.addEventListener('contextmenu', function (e) { e.preventDefault(); });").scriptEnd
 
 			out.script.w("(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
 			              (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
