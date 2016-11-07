@@ -95,7 +95,7 @@ class PagesScreen {
 			remove(Key.down)
 			remove(Key.left)
 			remove(Key.right)
-		}.size > 0
+		}.size > 0 || screen.mouseButtons.size > 0
 		
 		if (screen.keys[Key.left] != true)
 			keyLeft = false

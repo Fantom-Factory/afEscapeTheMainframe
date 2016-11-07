@@ -11,6 +11,10 @@ class Screen : Canvas {
 					Key:Bool	keys		:= Key:Bool[:]
 					Bool		editMode	:= false
 					Str			editText	:= ""
+					Point?		mousePos {
+						get { pos := &mousePos; &mousePos = null; return pos }
+					}
+					Int:Bool	mouseButtons:= Int:Bool[:]
 
 	new make(|This| in) {
 		in(this)
@@ -18,6 +22,9 @@ class Screen : Canvas {
 		
 		onKeyDown.add { this.keyDown(it) }
 		onKeyUp	 .add { this.keyUp	(it) }
+		onMouseMove.add { this.mouseMove(it) }
+		onMouseDown.add { this.mouseDown(it) }
+		onMouseUp.add { this.mouseUp(it) }
 	}
 	
 	private Void keyDown(Event e) {
@@ -45,7 +52,41 @@ class Screen : Canvas {
 				editText = editText[1..-1]
 		}
 	}
+	
+	private Void keyUp(Event e) {
+		keys.remove(e.key.primary)
+	}
 
+	private Void mouseMove(Event e) {
+		if (e.pos != null)
+			mousePos = e.pos
+	}
+
+	private Void mouseDown(Event e) {
+		if (e.pos != null)
+			mousePos = e.pos
+		mouseButtons[e.button] = true
+	}
+
+	private Void mouseUp(Event e) {
+		if (e.pos != null)
+			mousePos = e.pos
+		mouseButtons.remove(e.button)
+	}
+
+	override Void onPaint(Graphics graphics) {
+		g := gfx(graphics) 
+		if (pulsar.isRunning)
+			eventHub.fireEvent(DemoEvents#onDraw, [g])
+	}
+	
+	Gfx gfx(Graphics graphics) {
+		Gfx(graphics) {
+			it.font8x8		= images.font8x8
+			it.font16x16	= images.font16x16
+		}
+	}
+	
 	** Default to a British keyboard!
 	private Int? keyToChar(Key key) {
 		str := key.primary.toStr
@@ -89,22 +130,5 @@ class Screen : Canvas {
 		}
 		
 		return null
-	}
-	
-	private Void keyUp(Event e) {
-		keys.remove(e.key.primary)
-	}
-
-	override Void onPaint(Graphics graphics) {
-		g := gfx(graphics) 
-		if (pulsar.isRunning)
-			eventHub.fireEvent(DemoEvents#onDraw, [g])
-	}
-	
-	Gfx gfx(Graphics graphics) {
-		Gfx(graphics) {
-			it.font8x8		= images.font8x8
-			it.font16x16	= images.font16x16
-		}
 	}
 }

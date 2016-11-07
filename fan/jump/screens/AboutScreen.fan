@@ -45,7 +45,7 @@ class AboutScreen : GameSeg {
 
 //		pages.onJiffy(screen)
 		
-		anyKey := screen.keys.size > 0
+		anyKey := screen.keys.size > 0 || screen.mouseButtons.size > 0
 		if (anyKey) {
 			app().showTitles
 		}

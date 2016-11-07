@@ -31,7 +31,7 @@ class IntroScreen : GameSeg {
 
 	override Void onDraw(Gfx g2d) {
 		
-		anyKey := screen.keys.size > 0
+		anyKey := screen.keys.size > 0 || screen.mouseButtons.size > 0
 		if (anyKey || intoAnim.finished) {
 			app().startGame(null)
 		}
