@@ -149,8 +149,8 @@ class GameScreen : GameSeg {
 	}
 	
 	Void keyLogic() {
-		jump 	:= screen.keys[Key.space] == true || screen.keys[Key.up] == true || screen.keys[Key.w] == true
-		squish	:= screen.keys[Key.down]  == true || screen.keys[Key.s] == true
+		jump 	:= screen.keys[Key.space] == true || screen.keys[Key.up] == true || screen.keys[Key.w] == true || screen.mouseButtons[1] == true
+		squish	:= screen.keys[Key.down]  == true || screen.keys[Key.s] == true || screen.mouseButtons[3] == true
 		fanny.jump(jump)
 		fanny.squish(squish)
 
