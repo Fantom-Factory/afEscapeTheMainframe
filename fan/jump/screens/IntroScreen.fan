@@ -1,4 +1,3 @@
-using fwt::Key
 using gfx::Color
 using gfx::Point
 using gfx::Pen

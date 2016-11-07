@@ -33,6 +33,7 @@ class GameScreen : GameSeg {
 		bonusCubes.clear
 		bonusExplo.clear
 		fannyExplo = null
+		exitBlock = null
 		
 		gameHud	= GameHud()
 		gameHud.alertGameStart
@@ -142,8 +143,8 @@ class GameScreen : GameSeg {
 		if (data.dying) {
 			data.deathCryIdx++
 		
-			if (data.deathCryIdx == 180) {
-				app().gameOver(data.score, data.training)
+			if (data.deathCryIdx == 160) {
+				app().gameOver(data.score, data.level, data.training, true)
 			}
 		}
 	}
@@ -258,7 +259,8 @@ class GameScreen : GameSeg {
 
 		fannyExplo = Models.fannyExplo(data, fanny)
 		
-		gameHud.alertGameOver
+		if (data.level != 11)
+			gameHud.alertGameOver
 	}
 	
 	
