@@ -12,7 +12,8 @@ class GameData {
 	Bool	dying
 	Int		deathCryIdx
 	
-	Bool	invincible			//:= true
+	Int		invincible			//:= true
+	Bool	isInvincible() { invincible > 0 }
 
 	Int		score
 	Int		blocksJumpedInLevel

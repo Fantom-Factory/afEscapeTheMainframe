@@ -66,7 +66,10 @@ class GameScreen : GameSeg {
 		data.floorSpeed	= funcs.funcfloorSpeed(data.level)
 		
 		if (oldLevel != data.level)
-			gameHud.alertLevelUp
+			gameHud.alertLevelUp(data.level)
+
+		if (data.level == 11)
+			data.invincible = 2000	// so fanny doesn't get killed by the blocks already on the screen
 		
 		data.distSinceLastBlock += data.floorSpeed
 		data.newBlockPlease = funcs.funcNewBlock(data.level, data.distSinceLastBlock, data.floorSpeed)
@@ -77,8 +80,9 @@ class GameScreen : GameSeg {
 			if (data.level == 11) {
 				data.distSinceLastBlock = 0f
 				
-				if (exitBlock == null)
+				if (exitBlock == null) {
 					exitBlock = Models.exitBlock(data)
+				}
 				
 			} else {			
 				// FIXME Top block MUST be drawn first! And then fanny in the middle
@@ -109,7 +113,7 @@ class GameScreen : GameSeg {
 				return col
 			}
 
-			if (crash && !data.invincible) {
+			if (crash && !data.isInvincible) {
 				gameOver()
 			}
 			
@@ -136,6 +140,8 @@ class GameScreen : GameSeg {
 					
 					explo := Models.bonusExplo(data, cube.x, cube.y)
 					bonusExplo.add(explo)
+					
+					data.invincible = 40
 				}
 			}
 		}
@@ -157,6 +163,7 @@ class GameScreen : GameSeg {
 
 		if (screen.keys[Key.g] == true && exitBlock == null) {
 			data.level = 11
+			gameHud.alertLevelUp(data.level)
 		}
 		
 		if (screen.keys[Key.esc] == true)	gameOver()
@@ -168,6 +175,10 @@ class GameScreen : GameSeg {
 		if (!data.dying)
 			fanny.anim
 		fannyExplo?.anim
+		
+		fanny.ghost(data.isInvincible)
+		if (data.isInvincible)
+			data.invincible--
 		
 		bonusCubes.each { it.anim }
 		bonusCubes = bonusCubes.exclude { it.killMe }
