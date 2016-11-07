@@ -269,12 +269,14 @@ class TweanLazer {
 		}
 
 		if (time > 160 && time <= 195) {
-			frame := time - 173
+			frame := time - 160
 
 			ratio := frame.toFloat / (195 - 160)
 			angle := ratio * 0.25f
+			angle += 0.25f
 			sinio := Sin.sin(angle)
-
+			sinio = 1f - sinio
+			
 			endX := monitorX + 130
 			endY := monitorY + 100
 			pt1x = ((endX - -2) * sinio) + -2
@@ -399,7 +401,7 @@ class TweanFanny2 : Twean {
 class TweanFloor {
 	Int		startFrame
 	Int		endFrame
-	Floor	floor	:= Models.floor(GameData() { it.floorSpeed = Funcs().funcfloorSpeed(1) }) { it.x = 1550f }
+	Floor	floor	:= Models.floor(GameData() { it.floorSpeed = Funcs().funcfloorSpeed(30) }) { it.x = 1550f }
 	Bool	finished
 	
 	new make(|This| f) { f(this) }

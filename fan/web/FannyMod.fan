@@ -41,6 +41,7 @@ const class FannyMod : WebMod {
 			out.title.w(windowTitle).titleEnd
 			out.tag("meta", "charset='utf-8'").nl
 			out.tag("meta", "http-equiv='X-UA-Compatible' content='IE=edge'").nl
+			//out.tag("meta", "content='width=device-width, initial-scale=1, shrink-to-fit=no' name='viewport'")
 			out.tag("meta", "name='description'        content=\"${windowDesc}\"").nl
 			out.tag("meta", "property='og:type'        content='website'").nl
 			out.tag("meta", "property='og:title'       content='${windowTitle}'").nl
@@ -78,9 +79,42 @@ const class FannyMod : WebMod {
 
 			// http://stackoverflow.com/questions/1495219/how-can-i-prevent-the-backspace-key-from-navigating-back
 			// http://stackoverflow.com/a/26543616/1532548
-			//out.script.w("window.addEventListener('keydown',     function (e) { e.preventDefault(); });").scriptEnd
-			//out.script.w("window.addEventListener('contextmenu', function (e) { e.preventDefault(); });").scriptEnd
-
+			out.script.w("document.getElementById('fwtRoot').addEventListener('keydown', function (e) { e.preventDefault(); });").scriptEnd
+			out.script.w("document.getElementById('fwtRoot').addEventListener('contextmenu', function (e) { e.preventDefault(); });").scriptEnd
+			out.script.w("function touchHandler(event) {
+			              	var touches = event.changedTouches, first = touches[0], type = '';
+			              	switch(event.type) {
+			              		case 'touchstart':  type = 'mousedown'; break;
+			              		case 'touchmove':   type = 'mousemove'; event.preventDefault(); break;		
+			              		case 'touchend':    type = 'mouseup';   break;
+			              		case 'touchcancel': type = 'mouseup';   break;
+			              	}
+			              
+			              	var mouseEvent = new MouseEvent(type, {
+			              		screenX	: first.screenX,
+			              		screenY	: first.screenY,
+			              		clientX	: first.clientX,
+			              		clientY	: first.clientY,
+			              		button	: 0,
+			              		buttons	: 0,
+			              		bubbles: true,
+			              		cancelable: true,
+			              		view: window
+			              	});
+			              
+			              	first.target.dispatchEvent(mouseEvent);
+			              }
+			              
+			              function initHandlers(element) {
+			              	element.addEventListener('touchstart',  touchHandler, true);
+			              	element.addEventListener('touchmove',   touchHandler, true);
+			              	element.addEventListener('touchend',    touchHandler, true);
+			              	element.addEventListener('touchcancel', touchHandler, true);	
+			              }
+			              
+			              initHandlers(document.getElementById('fwtRoot'));")
+			out.scriptEnd		
+		
 			out.script.w("(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
 			              (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
 			              m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)

@@ -24,7 +24,7 @@ class Screen : Canvas {
 		onKeyUp	 .add { this.keyUp	(it) }
 		onMouseMove.add { this.mouseMove(it) }
 		onMouseDown.add { this.mouseDown(it) }
-		onMouseUp.add { this.mouseUp(it) }
+		onMouseUp.add   { this.mouseUp(it) }
 	}
 	
 	private Void keyDown(Event e) {
