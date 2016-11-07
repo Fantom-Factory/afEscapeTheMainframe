@@ -19,6 +19,7 @@ class GameScreen : GameSeg {
 				private Block[]			blcks		:= Block[,]
 				private Fanny?			fanny
 				private FannyExplo?		fannyExplo
+				private ExitBlock?		exitBlock
 				private GameHud			gameHud		:= GameHud()
 				private	GameData?		data
 	
@@ -62,18 +63,27 @@ class GameScreen : GameSeg {
 		data.newBlockPlease = funcs.funcNewBlock(data.level, data.distSinceLastBlock, data.floorSpeed)
 		
 		if (data.newBlockPlease) {
-			data.newBlockPlease 	= false
+			echo("new block + $data.distSinceLastBlock")
+			data.newBlockPlease = false
 
-			// FIXME Top block MUST be drawn first! And then fanny in the middle
-			blks := funcs.funcBlock(data, data.level, data.distSinceLastBlock, blcks.last)
-			blcks.addAll(blks)
-			
-			bonusCube := funcs.funcBonusCube(data, blks.first)
-			if (bonusCube != null)
-				bonusCubes.add(bonusCube)
+			if (data.level == 11) {
+				data.distSinceLastBlock = 0f
+				
+				if (exitBlock == null)
+					exitBlock = Models.exitBlock(data)
+				
+			} else {			
+				// FIXME Top block MUST be drawn first! And then fanny in the middle
+				blks := funcs.funcBlock(data, data.level, data.distSinceLastBlock, blcks.last)
+				blcks.addAll(blks)
+				
+				bonusCube := funcs.funcBonusCube(data, blks.first)
+				if (bonusCube != null)
+					bonusCubes.add(bonusCube)
 
-			// set by funcBlock
-//			data.distSinceLastBlock = 0f
+				// set by funcBlock
+//				data.distSinceLastBlock = 0f
+			}
 		}
 		
 		if (!data.dying) {
@@ -132,11 +142,15 @@ class GameScreen : GameSeg {
 	}
 	
 	Void keyLogic() {
-		jump 	:= screen.keys[Key.space] == true || screen.keys[Key.up] == true
-		squish	:= screen.keys[Key.down]  == true 
+		jump 	:= screen.keys[Key.space] == true || screen.keys[Key.up] == true || screen.keys[Key.w] == true
+		squish	:= screen.keys[Key.down]  == true || screen.keys[Key.s] == true
 		fanny.jump(jump)
 		fanny.squish(squish)
 
+		if (screen.keys[Key.g] == true && exitBlock == null) {
+			data.level = 11
+		}
+		
 		if (screen.keys[Key.esc] == true)	gameOver()
 	}
 	
@@ -152,6 +166,10 @@ class GameScreen : GameSeg {
 		
 		bonusExplo.each { it.anim }
 		bonusExplo = bonusExplo.exclude { it.killMe }
+		
+		exitBlock?.anim
+		if (exitBlock != null && exitBlock.x <= fanny.x)
+			gameOver()
 	}
 	
 	Void draw(Gfx g2d) {
@@ -205,6 +223,10 @@ class GameScreen : GameSeg {
 		
 		gameHud.draw(g2d, data)
 
+		if (exitBlock?.killMe != true)
+			exitBlock?.draw(g3d)
+			
+		
 //		if (screen.keys[Key.left]  == true)	data.floorSpeed -= 0.5f
 //		if (screen.keys[Key.right] == true)	data.floorSpeed += 0.5f		
 		

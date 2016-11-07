@@ -91,6 +91,11 @@ const class Funcs {
 
 		shortest :=   550f - (level *  15)				// 550  -> 400  
 		longest	 := (1500f - (level * 175)).max(500f)	// 1500 -> 500 
+
+		if (level == 11 - 1) {
+			shortest = 2000f
+			longest  = 2000f
+		}
 		
 		if (distance < shortest)
 			return false

@@ -16,8 +16,11 @@ class FannyExplo : Model {
 	}
 	
 	override Void anim() {
-		rgb		:= 0xFF0000.or(col.shiftl(8)).or(col)
-		blood	:= Fill(Color(rgb))
+		rgb	:= (data.level == 11)
+			? 0x00FF00
+			: 0xFF0000.or(col.shiftl( 8)).or(col)
+		
+		blood	:= Fill(Color((Int) rgb))
 		col		= 0x22.max(col - 5)
 
 		squares.each {
