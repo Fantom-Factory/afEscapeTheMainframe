@@ -61,8 +61,8 @@ class HiScores {
 		hiScoresOnline.loadScores
 	}
 	
-	Void saveScore(HiScore hiScore) {
-		hiScoresOnline.saveScore(hiScore)
+	Void saveScore(HiScore hiScore, Int level) {
+		hiScoresOnline.saveScore(hiScore, level)
 	}
 }
 

@@ -38,13 +38,13 @@ abstract class HiScoreOnline {
 		doLoadScores(hiScoreUrl)
 	}
 
-	Void saveScore(HiScore hiScore) {
+	Void saveScore(HiScore hiScore, Int level) {
 		if (app().offlineMode) {
 			log.info("Not uploading Hi-Score - offline mode Activated (${hiScore})")
 			return
 		}
 		
-		hiScoreUrl	:= hiScroreApiUrl + gameName.plusSlash + encodeUri(hiScore.name).plusSlash + encodeUri(hiScore.score.toStr)
+		hiScoreUrl	:= (hiScroreApiUrl + gameName.plusSlash + encodeUri(hiScore.name).plusSlash + encodeUri(hiScore.score.toStr)).plusQuery(["level":level.toStr])
 		doSaveScore(hiScoreUrl, hiScore)
 	}
 
