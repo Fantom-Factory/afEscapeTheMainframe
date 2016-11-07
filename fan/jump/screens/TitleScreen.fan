@@ -119,10 +119,11 @@ class TitleMenu {
 				
 				if (Rect(x - 2, y-1, (str.size * 16) + 4, 16+2).contains(mousePos.x, mousePos.y)) {
 					highlighted = i
-					if (screen.mouseButtons[1] == true)
-						go?.call(highlighted)
 				}
 			}
+
+		if (screen.mouseButtons[1] == true)
+			go?.call(highlighted)
 		
 		if (screen.keys[Key.up] != true)
 			keyUp = false

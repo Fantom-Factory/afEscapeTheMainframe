@@ -92,10 +92,10 @@ class IntroAnim {
 		tweanGrid		.draw(g3d, time)
 		tweanFloor		.draw(g3d, time)
 		
-		if (time == 205) {
+		if (time == 215) {
 			tweanMonitor.with {
-				it.startFrame	=  205
-				it.endFrame		=  220
+				it.startFrame	=  215
+				it.endFrame		=  230
 				it.startX		=  768 - it.imgWidth - 40
 				it.startY		=  288 - it.imgHeight - 40
 				it.finalX		=  768 + it.imgWidth
@@ -104,8 +104,8 @@ class IntroAnim {
 			}
 		
 			tweanKeyboard.with {
-				it.startFrame	=  205
-				it.endFrame		=  220
+				it.startFrame	=  215
+				it.endFrame		=  230
 				it.startX		=  768 + -180 - 40
 				it.startY		=  288 - it.imgHeight - 40
 				it.finalX		=  768 + -180 - 40
@@ -217,11 +217,11 @@ class IntroAnim {
 		
 		tweanFanny		= TweanFanny {
 			it.startFrame	=  130
-			it.endFrame		=  190
+			it.endFrame		=  195
 		}
 		
 		tweanFloor		= TweanFloor {
-			it.startFrame	=  220
+			it.startFrame	=  230
 			it.endFrame		=  300
 		}
 	}
@@ -268,10 +268,10 @@ class TweanLazer {
 			pt2y = ((288 - startY) * sinio) + startY
 		}
 
-		if (time > 160 && time <= 190) {
-			frame := time - 169
+		if (time > 160 && time <= 195) {
+			frame := time - 173
 
-			ratio := frame.toFloat / (190 - 160)
+			ratio := frame.toFloat / (195 - 160)
 			angle := ratio * 0.25f
 			sinio := Sin.sin(angle)
 
@@ -343,10 +343,10 @@ class TweanFanny {
 			if (time < 150 && time.isOdd)
 				return 
 			
-			if (time > 160 && time <= 190) {
-				frame := time - 160
+			if (time > 165 && time <= 195) {
+				frame := time - 165
 				
-				ratio := frame.toFloat / (190 - 160)
+				ratio := frame.toFloat / (195 - 165)
 				angle := ratio * 0.25f
 				angle += 0.25f
 				sinio := Sin.sin(angle)
@@ -387,7 +387,7 @@ class TweanFanny2 : Twean {
 		if (time < 100)
 			return draw(g2d, time)
 		
-		if (time > 160)
+		if (time > 165)
 			return
 
 		if (time.isOdd)
