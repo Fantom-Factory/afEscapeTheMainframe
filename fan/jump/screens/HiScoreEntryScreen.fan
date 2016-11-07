@@ -17,6 +17,7 @@ class HiScoreEntryScreen : GameSeg {
 			private Int			maxPos
 			private HiScore[]	scores	:= HiScore#.emptyList
 			private Bool		keyEnter
+			private Int			level
 
 	new make(|This| f) { f(this) }
 
@@ -24,7 +25,8 @@ class HiScoreEntryScreen : GameSeg {
 		return this
 	}
 	
-	This setScore(Int score) {
+	This setScore(Int score, Int level) {
+		this.level	= level
 		newPosition = hiScores.newPosition(score)
 		newScore	= score
 		newName		= ""
@@ -77,7 +79,7 @@ class HiScoreEntryScreen : GameSeg {
 				if (screen.editText.size > 0) {
 					screen.editMode = false
 					hiScores.editing = false
-					hiScores.saveScore(hiScores[newPosition])
+					hiScores.saveScore(hiScores[newPosition], level)
 				}
 				
 			} else

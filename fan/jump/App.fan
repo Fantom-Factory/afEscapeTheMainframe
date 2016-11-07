@@ -51,11 +51,11 @@ class App : DemoEvents {
 		activeScreen = deactivate.hiScoreScreen.onInit		
 	}
 	
-	Void gameOver(Int score, Bool training) {
+	Void gameOver(Int score, Int level, Bool training) {
 		deactivate
 	
 		if (!training && hiScores.isHiScore(score))
-			activeScreen = hiScoreEntryScreen.onInit.setScore(score)
+			activeScreen = hiScoreEntryScreen.onInit.setScore(score, level)
 		else
 			activeScreen = titleScreen.onInit
 	}
