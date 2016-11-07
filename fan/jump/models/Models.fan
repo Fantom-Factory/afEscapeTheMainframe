@@ -12,6 +12,59 @@ class Models {
 	static const Color	block_collide	:= Color(0xFF_FF_22_22)
 	static const Color	cube_fill		:= Color(0xFF_FF_FF_22)
 	static const Color	cube_edge		:= brand_darkBlue
+
+	static const Color	exitDark	:= Color(0xFF_00_33_00)
+	static const Color	exitLight	:= Color(0xFF_33_FF_66)
+	
+
+	static ExitBlock exitBlock(GameData data) {
+		ExitBlock(data) {
+			points = [
+				Point3d( -10f,  275f, -175f),
+				Point3d(  10f,  275f, -175f),
+				Point3d(  10f, -25f , -175f),
+				Point3d( -10f, -25f , -175f),
+				Point3d( -10f,  275f,  175f),
+				Point3d(  10f,  275f,  175f),
+				Point3d(  10f, -25f ,  175f),
+				Point3d( -10f, -25f ,  175f),
+				
+				Point3d(   0f,  50f , -175f),
+				Point3d(   0f,  50f ,  175f),
+				Point3d(   0f, 125f , -175f),
+				Point3d(   0f, 125f ,  175f),
+				Point3d(   0f, 200f , -175f),
+				Point3d(   0f, 200f ,  175f),
+				
+				Point3d(   0f, -25f ,  -87f),
+				Point3d(   0f, 275f ,  -87f),
+				Point3d(   0f, -25f ,    0f),
+				Point3d(   0f, 275f ,    0f),
+				Point3d(   0f, -25f ,   87f),
+				Point3d(   0f, 275f ,   87f),
+			]
+			
+			drawables = [
+				Fill(exitDark),
+				Edge(exitLight),
+				Poly([0, 1, 2, 3]),	// front
+				Poly([7, 6, 5, 4]),	// back
+				Poly([4, 0, 3, 7]),	// left
+				Poly([1, 5, 6, 2]),	// right
+				Poly([4, 5, 1, 0]),	// top
+				Poly([3, 2, 6, 7]),	// bottom
+				Line([ 8,  9]),
+				Line([10, 11]),
+				Line([12, 13]),
+				Line([14, 15]),
+				Line([16, 17]),
+				Line([18, 19]),
+			]
+			
+			it.y = -25f - 50f - 50f
+			it.x = 1000f
+		}
+	}
 	
 	static BonusCube bonusCube(GameData data, Float x, Float y) {
 		BonusCube(data) {
