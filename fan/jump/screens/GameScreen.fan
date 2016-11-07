@@ -33,6 +33,9 @@ class GameScreen : GameSeg {
 		bonusCubes.clear
 		bonusExplo.clear
 		fannyExplo = null
+		
+		gameHud	= GameHud()
+		gameHud.alertGameStart
 		return this
 	}
 	
@@ -40,6 +43,7 @@ class GameScreen : GameSeg {
 		if (level != null) {
 			data.level = level
 			data.training = true
+			gameHud.alertTraining(level)
 		}
 		return this
 	}
@@ -56,14 +60,17 @@ class GameScreen : GameSeg {
 	Void gameLogic() {
 		blcks = blcks.exclude { it.killMe }
 		
+		oldLevel := data.level
 		data.level		= funcs.funcLevel(data)
 		data.floorSpeed	= funcs.funcfloorSpeed(data.level)
+		
+		if (oldLevel != data.level)
+			gameHud.alertLevelUp
 		
 		data.distSinceLastBlock += data.floorSpeed
 		data.newBlockPlease = funcs.funcNewBlock(data.level, data.distSinceLastBlock, data.floorSpeed)
 		
 		if (data.newBlockPlease) {
-			echo("new block + $data.distSinceLastBlock")
 			data.newBlockPlease = false
 
 			if (data.level == 11) {
@@ -250,6 +257,8 @@ class GameScreen : GameSeg {
 		data.dying = true
 
 		fannyExplo = Models.fannyExplo(data, fanny)
+		
+		gameHud.alertGameOver
 	}
 	
 	
