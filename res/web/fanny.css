@@ -83,6 +83,15 @@ html, body {
   height: 288px;
   border: 8px solid #000; }
 
+.noTouch {
+  margin: auto;
+  margin-top: 20px;
+  width: 576px;
+  height: 16px;
+  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAkAAAAAQAgMAAACD5Sh7AAAACVBMVEUAAAAAAAD///+D3c/SAAAAAXRSTlMAQObYZgAAAdNJREFUSMfNVcFtwzAMtB72BtZD0/iTvBVAzqMjZBoHcDfQy1NWPPEs1g1aIGiABCBMH8XjgaSV7u1+/TzHh4Fx+udKpP2thEud37b1YWb4Q1AfnxJE2sclXO7CtuWnBA3LiwTN85sJmlxyZY/GYtwn8eU08BLnrsGI9ZFYyzNxixsf9XgmKO4aT4ZKV/YoFOM+iS8B4JNDByWmtgAblm8Y87zmCEY+b7mnPvMMz7vGI4LG5IoT1JQYSgWnIMaDEWQxe0aLLY3PcE/enoGxvtYNWVoVrp+Z+xS0dYJbrNqVghqm4yBHiQOzuc3/WPlO65tfBXlRd77/6JBX1Zz9oUMN4zgKh8Q4DuYqlpQ72k7qeBEvhpHlQEGHHRLc76TA7Q5ZLB8FeSsUmHgUhBwrHnHx2U4IYuvxDKljOymofhXXFa31q8FmCrJjsHwUxJFFxE9tVJXrgovRdghpSA68NG9NEOKDLl/escF0iHyCkY8d0KVW/FZqtmWuXPfMTxKC/EGQr4JWYl4FSY7EiQ1mh/iJC0Y+eW+CetQR3nBunzu4iiBeWmk8XVJ5Tvuf3pgkVhZxjsRqvE+SI3FivPSUI9LIJz44weO0TsFO+7lUuS6pe7ffFxPRql4tbgNwAAAAAElFTkSuQmCC);
+  background-repeat: no-repeat;
+  background-size: 100% 100%; }
+
 .fantomLink {
   text-decoration: none;
   position: absolute;

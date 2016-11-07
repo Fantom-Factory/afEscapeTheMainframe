@@ -30,7 +30,6 @@ class LoadingScreen : GameSeg {
 		drawFont8Centred(g2d, "loading images - ${percent.toStr.justr(3)}%", (16 * 12))		
 	}
 	
-	
 	private Int preloadImages() {
 		images := images.preloadImages
 		noOfImages := images.size
