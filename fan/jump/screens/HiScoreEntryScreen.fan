@@ -39,7 +39,7 @@ class HiScoreEntryScreen : GameSeg {
 		minPos = newPosition - 5
 		maxPos = newPosition + 5
 
-		if (newPosition < 5) {
+		if (newPosition < 5 || hiScores.size < 11) {
 			minPos = 0
 			screenPos = newPosition
 			maxPos = 11.min(hiScores.size)
