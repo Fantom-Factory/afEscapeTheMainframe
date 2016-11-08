@@ -127,15 +127,16 @@ class Gfx {
 				y += fontSize
 			} else {
 				
-				// work out how many chars along from [SPACE] our char is
-				chrPos := char - ' '
-	
-				srcX := (chrPos % 8) * fontSize
-				srcY := (chrPos / 8) * fontSize
-	
 				// don't draw spaces
-				if (srcX != 0 || srcY != 0)
+				if (char != ' ') {
+					// work out how many chars along from [SPACE] our char is
+					chrPos := char - ' '
+		
+					srcX := (chrPos % 8) * fontSize
+					srcY := (chrPos / 8) * fontSize
+		
 					g.copyImage(font, Rect(srcX, srcY, fontSize, fontSize), Rect(x, y, fontSize, fontSize))
+				}
 	
 				x += fontSize
 			}
