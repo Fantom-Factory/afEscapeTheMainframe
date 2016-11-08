@@ -21,7 +21,7 @@ class TitleScreen : GameSeg {
 		titleMenu	= TitleMenu {
 			menu.add("Start Game")
 			menu.add("Hi-Scores")
-			menu.add("About")
+			menu.add("About")	//menu.add("Instructions")
 //			menu.add("Exit")	// don't know how to quit!!!
 			tit := it
 			go = |high| {
@@ -70,8 +70,9 @@ class TitleScreen : GameSeg {
 		
 		if (titleBg.time > 105) {
 			titleMenu.draw(g2d)
-			str := "http://fantom-lang.org/"
-			x := 224 + ((20 - str.size) * 8 / 2)
+//			str := "http://fantom-lang.org/"
+			str := "www.alienfactory.co.uk"
+			x := 224 + ((18 - str.size) * 8 / 2)
 			g2d.drawFont8(str, x, 278)
 		}
 	}

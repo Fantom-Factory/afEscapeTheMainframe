@@ -23,8 +23,9 @@ class FannyTheFantom {
 	
 	Void doMain(Type[] modules, |Window, Scope|? onOpen := null) {
 		frame := Frame(modules)
-		Window {
+		Window(null) {
 			win := it
+			it.resizable = false
 			it.add(frame.widget)
 			it.onOpen.add  |->| { 
 				Desktop.callLater(50ms) |->| {

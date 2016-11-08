@@ -87,12 +87,11 @@ const class Funcs {
 	}
 	
 	Bool funcNewBlock(Int level, Float distance, Float speed) {
-		level--
 
-		shortest :=   550f - (level *  15)				// 550  -> 400  
+		shortest :=   585f - (level *  15)				//  570 -> 435  
 		longest	 := (1500f - (level * 175)).max(500f)	// 1500 -> 500 
 
-		if (level == 11 - 1) {
+		if (level == 11) {
 			shortest = 2000f
 			longest  = 2000f
 		}
@@ -101,6 +100,11 @@ const class Funcs {
 			return false
 		if (distance > longest)
 			return true
+	
+//		if (distance > shortest) {
+//			echo(shortest)
+//			return true
+//		}
 
 		maxNoOfSteps := (longest - shortest) / speed
 		probability	 := 1 / maxNoOfSteps
@@ -115,15 +119,15 @@ const class Funcs {
 		lastKey := lastBlock?.blockKey
 		if (lastKey != null) {
 			// if we've just done a high jump, don't immediately follow it with another
-			if (distance < 475f && (lastKey.and(y2) != 0 || lastKey.and(y3) != 0 || lastKey.and(y4) != 0) && lastKey.and(z0) != 0)
-				allowedLevels = allowedLevels.exclude { (it.and(y2) != 0 || it.and(y3) != 0 || it.and(y4) != 0) && it.and(z0) != 0 }
+			if (distance < 475f && (lastKey.and(y3) != 0 || lastKey.and(y4) != 0) && lastKey.and(z0) != 0)
+				allowedLevels = allowedLevels.exclude { (it.and(y3) != 0 || it.and(y4) != 0) && it.and(z0) != 0 }
 //				allowedLevels = allowedLevels.exclude { it.and(z0) != 0 }
 
-			if (distance < 425f && lastKey.and(z0) != 0)
-				allowedLevels = allowedLevels.exclude { it.and(z0) != 0 }
-
-			if (distance < 425f && lastKey.and(z1) != 0)
-				allowedLevels = allowedLevels.exclude { (it.and(y2) != 0 || it.and(y3) != 0 || it.and(y4) != 0) && it.and(z0) != 0 }
+//			if (distance < 475f && lastKey.and(z0) != 0)
+//				allowedLevels = allowedLevels.exclude { it.and(z0) != 0 }
+//
+//			if (distance < 475f && lastKey.and(z1) != 0)
+//				allowedLevels = allowedLevels.exclude { (it.and(y2) != 0 || it.and(y3) != 0 || it.and(y4) != 0) && it.and(z0) != 0 }
 		}
 		
 		key	:= allowedLevels.random
