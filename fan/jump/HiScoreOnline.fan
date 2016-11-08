@@ -6,7 +6,7 @@ using util
 @Js
 abstract class HiScoreOnline {
 	
-			Uri				hiScroreApiUrl	
+			Uri				hiScroreApiUrl	:= `http://hiscores.fantomfactory.org/`	
 	@Inject	|->App|			app
 	@Inject	|->HiScores|	hiScores
 	@Inject	Log				log
@@ -15,11 +15,8 @@ abstract class HiScoreOnline {
 	new make(|This| f) {
 		f(this)
 		
-		hiScroreApiUrl = Env.cur.vars["env"]?.lower == "development" 
-			? `http://localhost:8080/` 
-			: `http://hiscores.fantomfactory.org/`
-
-//		hiScroreApiUrl = `http://hiscores.fantomfactory.org/` 
+		if (Env.cur.vars["env"]?.lower == "development") 
+			hiScroreApiUrl = `http://localhost:8080/` 
 	}
 
 	Void loadScores() {
