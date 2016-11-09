@@ -38,7 +38,8 @@ class HiScores {
 	}
 	
 	Bool isHiScore(Int score) {
-		size < maxNoOfPositions || score >= hiScores.last.score
+		// come on... you need *some* score to make it to the hi-score table!
+		score >= 10 && (size < maxNoOfPositions || score >= hiScores.last.score)
 	}
 	
 	Int newPosition(Int score) {
