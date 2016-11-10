@@ -81,11 +81,11 @@ class Fanny : Model {
 	
 	Void ghost(Bool ghost) {
 		if (ghost) {
-			drawables[0] = Fill(null) 
-			drawables[1] = Edge(Models.fanny_silver)
+			drawablesDup[0] = Fill(null) 
+			drawablesDup[1] = Edge(Models.fanny_silver)
 		} else {
-			drawables[0] = Fill(Models.fanny_silver) 
-			drawables[1] = Edge(Models.brand_white)
+			drawablesDup[0] = Fill(Models.fanny_silver) 
+			drawablesDup[1] = Edge(Models.brand_white)
 		}
 	}
 	
