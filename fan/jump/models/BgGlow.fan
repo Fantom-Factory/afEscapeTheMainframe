@@ -16,12 +16,35 @@ class BgGlow {
 	private 	Float	bgHexX			:=   0f
 	private 	Int		blink			:=   0
 
+	private 	Image?	gameBg
+
 	@Inject	private |->App|		app
 	@Inject	private FannyImages	images
 	
-	new make(|This| f) { f(this) }
+	new make(|This| f) {
+		f(this)
+		
+	}
 	
 	Void draw(Gfx g2d, Int? level := null) {
+		if (gameBg == null) {
+			gameBg = Image.makePainted(Size(768, 88)) |Graphics g| {
+				gfx := Gfx(g)
+				
+				gfx.clear(Models.brand_darkBlue)
+				
+				gfx.brush = Models.brand_lightBlue
+				midY := 144
+				gfx.drawLine(0, midY +  56 - 200, gfx.bounds.w, midY +  56 - 200)
+				gfx.drawLine(0, midY +  65 - 200, gfx.bounds.w, midY +  65 - 200)
+				gfx.drawLine(0, midY +  77 - 200, gfx.bounds.w, midY +  77 - 200)
+				gfx.drawLine(0, midY +  92 - 200, gfx.bounds.w, midY +  92 - 200)
+				gfx.drawLine(0, midY + 112 - 200, gfx.bounds.w, midY + 112 - 200)
+				gfx.drawLine(0, midY + 142 - 200, gfx.bounds.w, midY + 142 - 200)
+			}
+		}
+		
+		
 		bgIndex += 0.0015f
 		if (level != null)
 			bgIndex += (level - 1) * 0.0005f
@@ -33,12 +56,31 @@ class BgGlow {
 		cG	:= ((bgHighlightG - bgG) * mul).toInt + bgG
 		cB	:= ((bgHighlightB - bgB) * mul).toInt + bgB
 
-		g2d.clear(Color.makeArgb(0xFF, cR, cG, cB))
-		
-		img := level == null ? images.bgHex_x288 : images.bgHex_x200
-		g2d.drawImage(img, bgHexX.toInt, 0)
+		if (level == null) {
+			g2d.brush = Color.makeArgb(0xFF, cR, cG, cB)
+			g2d.fillRect(0, 0, g2d.bounds.w, g2d.bounds.h)
+			g2d.drawImage(images.bgHex_x288 , bgHexX.toInt, 0)			
+			
+		} else {
+			g2d.brush = Color.makeArgb(0xFF, cR, cG, cB)
+			g2d.fillRect(0, 0, g2d.bounds.w, 200)
+			g2d.drawImage(images.bgHex_x200, bgHexX.toInt, 0)
 
-		
+			g2d.drawImage(gameBg, 0, 200)
+			
+//				g2d.brush = Models.brand_darkBlue
+//				g2d.fillRect(0, 200, g2d.bounds.w, 288)
+//				
+//				g2d.brush = Models.brand_lightBlue
+//				midY := g2d.bounds.h / 2
+//				g2d.drawLine(0, midY +  55, g2d.bounds.w, midY +  55)
+//				g2d.drawLine(0, midY +  65, g2d.bounds.w, midY +  65)
+//				g2d.drawLine(0, midY +  77, g2d.bounds.w, midY +  77)
+//				g2d.drawLine(0, midY +  92, g2d.bounds.w, midY +  92)
+//				g2d.drawLine(0, midY + 112, g2d.bounds.w, midY + 112)
+//				g2d.drawLine(0, midY + 142, g2d.bounds.w, midY + 142)
+		}
+
 		blink++
 		if (blink > 80)
 			blink = 0

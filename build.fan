@@ -6,13 +6,14 @@ class Build : BuildPod {
 	new make() {
 		podName = "afFannyTheFantom"
 		summary = "Escape the Mainframe!"
-		version = Version("0.0.4")
+		version = Version("0.0.6")
 
 		meta = [
-			"proj.name"		: "Demo",
-			"repo.private"	: "true",
+			"pod.dis"			: "Fanny the Fantom",
+			"pod.displayName"	: "Fanny the Fantom",
+			"repo.public"		: "true",
 
-			"afIoc.module"	: "afFannyTheFantom::DemoModule"
+			"afIoc.module"		: "afFannyTheFantom::DemoModule"
 		]
 
 		depends = [	

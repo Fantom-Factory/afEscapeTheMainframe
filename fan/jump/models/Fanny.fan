@@ -2,11 +2,12 @@ using gfx::Rect
 
 @Js
 class Fanny : Model {
-	GameData data
-	Float	sy
-	Bool	jumpHeld
-	Bool	jumpEnabled	:= true
-	Bool	squished
+	GameData	data
+	Float		sy
+	Bool		jumpHeld
+	Bool		jumpEnabled	:= true
+	Bool		squished
+	Drawable[]	drawablesDup
 
 	Point3d[] normPoints := Point3d[
 		// body
@@ -50,6 +51,8 @@ class Fanny : Model {
 		x = -420f
 		y = -110f
 		z = -70f
+		
+		this.drawablesDup = drawables.dup
 	}
 
 	Void jump(Bool jump) {
@@ -88,8 +91,12 @@ class Fanny : Model {
 	
 	override Void draw(Gfx3d g3d) {
 		// don't draw fanny if we're dying - we draw the explo instead
-		if (!data.dying)
+		if (!data.dying) {
+			drawables = drawablesDup.dup
+			drawables.removeAt(x < 0f ? 3 : 4)
+			drawables.removeAt(y > 0f ? 4 : 5)
 			g3d.drawModel(this)
+		}
 		
 //		g3d.edge = gfx::Color.red
 //		g3d.drawRect(collisionRect, z)

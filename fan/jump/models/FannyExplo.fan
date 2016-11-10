@@ -12,7 +12,9 @@ class FannyExplo : Model {
 	}
 	
 	override Void draw(Gfx3d g3d) {
-		squares.each { it.draw(g3d) }
+		g3d.drawAll |->| {
+			squares.each { it.draw(g3d) }
+		}
 	}
 	
 	override Void anim() {
