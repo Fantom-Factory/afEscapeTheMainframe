@@ -73,7 +73,7 @@ class OutroAnim {
 		if (fannyY > 1f)
 			fannyY -= 1f
 		
-		g3d := Gfx3d(g2d).lookAt(camera, target)
+		g3d := Gfx3d(g2d).lookAtDef
 	
 		tweanFanny		.draw2(g2d, time)
 		tweanMonitor	.draw(g2d, time)

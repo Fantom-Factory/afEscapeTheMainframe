@@ -77,7 +77,7 @@ class IntroAnim {
 		if (fannyY > 1f)
 			fannyY -= 1f
 		
-		g3d := Gfx3d(g2d).lookAt(camera, target)
+		g3d := Gfx3d(g2d).lookAtDef
 		
 		tweanLogoFanny	.draw(g2d, time)
 		tweanLogoThe	.draw(g2d, time)
@@ -400,7 +400,7 @@ class TweanFanny2 : Twean {
 class TweanFloor {
 	Int		startFrame
 	Int		endFrame
-	Floor	floor	:= Models.floor(GameData() { it.floorSpeed = Funcs().funcfloorSpeed(30) }) { it.x = 1550f }
+	Floor	floor	:= Models.floor(GameData() { it.floorSpeed = Funcs(null).funcfloorSpeed(30) }) { it.x = 1550f }
 	Bool	finished
 	
 	new make(|This| f) { f(this) }

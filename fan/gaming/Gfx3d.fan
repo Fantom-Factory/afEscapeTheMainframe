@@ -20,6 +20,12 @@ class Gfx3d {
 		this.g2d = g2d
 	}
 
+	This lookAtDef() {
+		camera	:= Point3d(0f, 42f, -500f) 
+		target	:= Point3d(0f, -75f, 0f)
+		return lookAt(camera, target)
+	}
+
 	This lookAt(Point3d cameraPos, Point3d targetPos := Point3d.defVal, Point3d cameraAngles := Point3d.defVal) {
 		this.cameraPos	= cameraPos
 		this.targetPos	= targetPos
@@ -46,12 +52,12 @@ class Gfx3d {
 	}
 
 	Point3d[] drawModel(Model model) {		
-		pts3d := to2d(model) 
+		pts3d := modelTo2d(model) 
 		model.drawables.each { it.draw(this, pts3d) }
 		return pts3d
 	}
 	
-	Point3d[] to2d(Model model) {
+	Point3d[] modelTo2d(Model model) {
 		model.points.map {
 			it	.rotate(model.ax, model.ay, model.az)
 				.translate(model.x, model.y, model.z)
@@ -60,6 +66,14 @@ class Gfx3d {
 				.rotate(this.ax, this.ay, this.az)
 				.project(300f)			
 		}
+	}
+
+	Point3d to2d(Point3d point) {
+		point
+			// minus the camera angle, so as the camera position gets more negative, (10,10) moves further away
+			.translate(-cameraPos.x, -cameraPos.y, -cameraPos.z)
+			.rotate(this.ax, this.ay, this.az)
+			.project(300f)			
 	}
 	
 	This drawRect(Rect r, Float z) {

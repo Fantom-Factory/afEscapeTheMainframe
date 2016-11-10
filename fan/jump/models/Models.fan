@@ -226,10 +226,10 @@ class Models {
 		}
 	}
 
-	static Block block(GameData data, Int x, Int y) {
-		Block(data) {
-			xMax := 25f + (x * 50f);
-			yMax := 25f + (y * 50f);
+	static Block block(GameData data, BlockCache blockCache, Int x, Int y) {
+		Block(data, blockCache) {
+			xMax := 25f + (x * 50f)
+			yMax := 25f + (y * 50f)
 			points = [
 				Point3d( -25f,  yMax, -175f),
 				Point3d( xMax,  yMax, -175f),

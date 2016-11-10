@@ -44,13 +44,11 @@ class FloorCache {
 	Void init() {
 		if (inited) return
 		
-		camera	:= Point3d(0f, 42f, -500f) 
-		target	:= Point3d(0f, -75f, 0f)
+		g3d		:= Gfx3d(null).lookAtDef
 		floor	:= Models.fakeFloor(GameData(), this)
-		g3d		:= Gfx3d(null).lookAt(camera, target)
 		
 		240.times |->| {
-			data.add(g3d.to2d(floor))
+			data.add(g3d.modelTo2d(floor))
 			floor.x -= 1f
 		}
 		
