@@ -198,6 +198,50 @@ class Models {
 		}
 	}
 
+	static FloorFake fakeFloor(GameData data) {
+		FloorFake(data) {
+			// (-480 -> 720, -150, -175 -> 175)
+			points = [
+				Point3d(-160f,  50f, 0f),
+				Point3d(-120f,  50f, 0f),
+				Point3d(- 80f,  50f, 0f),
+				Point3d(- 40f,  50f, 0f),
+				Point3d(   0f,  50f, 0f),
+				Point3d(  40f,  50f, 0f),
+				Point3d(  80f,  50f, 0f),
+				Point3d( 120f,  50f, 0f),
+				Point3d( 160f,  50f, 0f),
+
+				Point3d(-160f, -50f, 0f),
+				Point3d(-120f, -50f, 0f),
+				Point3d(- 80f, -50f, 0f),
+				Point3d(- 40f, -50f, 0f),
+				Point3d(   0f, -50f, 0f),
+				Point3d(  40f, -50f, 0f),
+				Point3d(  80f, -50f, 0f),
+				Point3d( 120f, -50f, 0f),
+				Point3d( 160f, -50f, 0f),
+			]
+			rotate	(-0.25f,  0f, 0f)
+			translate(20f,  -150f, 0f)
+			scale	( 6.0f,   1f, 3.5f)
+
+			drawables = [
+				Fill(null),
+				Edge(brand_lightBlue),
+				Line([ 0,  9]),
+				Line([ 1, 10]),
+				Line([ 2, 11]),
+				Line([ 3, 12]),
+				Line([ 4, 13]),
+				Line([ 5, 14]),
+				Line([ 6, 15]),
+				Line([ 7, 16]),
+				Line([ 8, 17]),
+			]
+		}
+	}
+
 	static Block block(GameData data, Int x, Int y) {
 		Block(data) {
 			xMax := 25f + (x * 50f);
@@ -217,11 +261,11 @@ class Models {
 				Fill(brand_darkBlue),
 				Edge(brand_lightBlue),
 				Poly([0, 1, 2, 3]),	// front
-				Poly([7, 6, 5, 4]),	// back
 				Poly([4, 0, 3, 7]),	// left
 				Poly([1, 5, 6, 2]),	// right
 				Poly([4, 5, 1, 0]),	// top
 				Poly([3, 2, 6, 7]),	// bottom
+//				Poly([7, 6, 5, 4]),	// back
 			]
 
 			// draws coors on the screen
@@ -259,11 +303,11 @@ class Models {
 				Fill(fanny_silver),
 				Edge(brand_white),
 				Poly([0, 1, 2, 3]),	// front
-				Poly([7, 6, 5, 4]),	// back
 				Poly([4, 0, 3, 7]),	// left
 				Poly([1, 5, 6, 2]),	// right
 				Poly([4, 5, 1, 0]),	// top
 				Poly([3, 2, 6, 7]),	// bottom
+//				Poly([7, 6, 5, 4]),	// back
 				
 				Fill(brand_lightBlue),
 				Edge(null),

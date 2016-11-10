@@ -89,7 +89,7 @@ const class Funcs {
 	Bool funcNewBlock(Int level, Float distance, Float speed) {
 
 		shortest :=   585f - (level *  15)				//  570 -> 435  
-		longest	 := (1500f - (level * 175)).max(500f)	// 1500 -> 500 
+		longest	 := (1500f - (level * 175)).max(550f)	// 1500 -> 550 
 
 		if (level == 11) {
 			shortest = 2000f

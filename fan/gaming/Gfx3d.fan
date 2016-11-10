@@ -11,11 +11,12 @@ class Gfx3d {
 	private	Float	ax
 	private	Float	ay
 	private	Float	az
+	internal Bool	drawAllPolygons	:= false
 
 			Gfx 	g2d
 			Color?	fill
 			Color?	edge
-
+	
 	new make(Gfx g2d) {
 		this.g2d = g2d
 	}
@@ -54,7 +55,11 @@ class Gfx3d {
 				.rotate(this.ax, this.ay, this.az)
 				.project(300f)			
 		}
-
+		
+//		if (model is Floor) {
+//			echo(pts3d)
+//		}
+//
 		model.drawables.each { it.draw(this, pts3d) }
 		return pts3d
 	}
@@ -77,6 +82,12 @@ class Gfx3d {
 		g2d.brush = edge
 		g2d.g.drawPolygon(pts)
 		return this
+	}
+	
+	Void drawAll(|->| f) {
+		drawAllPolygons = true
+		f()
+		drawAllPolygons = false		
 	}
 	
 	static Float atan2(Float opo, Float adj) {

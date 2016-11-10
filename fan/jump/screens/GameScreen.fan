@@ -15,7 +15,7 @@ class GameScreen : GameSeg {
 	@Autobuild	private	Funcs			funcs
 				private BonusCube[]		bonusCubes	:= BonusCube[,]
 				private BonusExplo[]	bonusExplo	:= BonusExplo[,]
-				private Floor?			floor
+				private FloorFake?		floor
 				private Block[]			blcks		:= Block[,]
 				private Fanny?			fanny
 				private FannyExplo?		fannyExplo
@@ -28,7 +28,7 @@ class GameScreen : GameSeg {
 	override This onInit() {
 		data	= GameData()
 		blcks.clear
-		floor	= Models.floor(data) { it.x = Actor.locals["afFanny.floorX"] ?: 0f }
+		floor	= Models.fakeFloor(data) { it.x = Actor.locals["afFanny.floorX"] ?: 0f }
 		fanny	= Models.fanny(data) { it.y = 200f }
 		bonusCubes.clear
 		bonusExplo.clear
@@ -103,13 +103,13 @@ class GameScreen : GameSeg {
 				col := fanny.intersects(blck)
 				
 				if (!col) {
-					blck.drawables[0] = Fill(Models.brand_darkBlue)
-					blck.drawables[1] = Edge(Models.brand_lightBlue)
+//					blck.drawables[0] = Fill(Models.brand_darkBlue)
+//					blck.drawables[1] = Edge(Models.brand_lightBlue)
 					return false
 				}
 				
-				blck.drawables[0] = Fill(Models.block_collide)
-				blck.drawables[1] = Edge(Models.brand_white)
+				blck.drawablesDup[0] = Fill(Models.block_collide)
+				blck.drawablesDup[1] = Edge(Models.brand_white)
 				return col
 			}
 
