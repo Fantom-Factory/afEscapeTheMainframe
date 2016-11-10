@@ -1,6 +1,7 @@
 
 @Js
-const class Funcs {
+class Funcs {
+	private BlockCache?	blockCache
 	
 	static const Int	z0	:=	 2.pow( 0)
 	static const Int	z1	:=	 2.pow( 1)
@@ -73,7 +74,8 @@ const class Funcs {
 	
 	private const Int:Int[] allowedLevels
 	
-	new make() {
+	new make(BlockCache? blockCache) {
+		this.blockCache = blockCache
 		allowedLevels := Int:Int[][:] { it.ordered = true }
 		10.times |l| {
 			allowedLevels[l] = allowedBlocks.keys.findAll { allowedBlocks[it].contains(l+1) }
@@ -88,8 +90,8 @@ const class Funcs {
 	
 	Bool funcNewBlock(Int level, Float distance, Float speed) {
 
-		shortest :=   585f - (level *  15)				//  570 -> 435  
-		longest	 := (1500f - (level * 175)).max(550f)	// 1500 -> 550 
+		shortest :=   600f - (level *  15)				//  575 -> 450  
+		longest	 := (1500f - (level * 175)).max(575f)	// 1500 -> 575
 
 		if (level == 11) {
 			shortest = 2000f
@@ -153,7 +155,7 @@ const class Funcs {
 		if (z == 2 && y == 1 && level >= 3 && Float.random > 0.5f)
 			y = 2
 		
-		b1 := Models.block(data, x, y) {
+		b1 := Models.block(data, blockCache, x, y) {
 			it.y += (z * 50f)
 			it.score = (x+1) * (y+1)
 			it.blockKey = key
@@ -162,7 +164,7 @@ const class Funcs {
 		hasZ3 := (key.and(z3) != 0)
 		hasZ4 := (key.and(z4) != 0)
 		newZ  := hasZ3 ? 4 : 5
-		b2 := (!hasZ3 && !hasZ4) ? null : Models.block(data, x, hasZ3 ? y+1 : y) {
+		b2 := (!hasZ3 && !hasZ4) ? null : Models.block(data, blockCache, x, hasZ3 ? y+1 : y) {
 			it.y += (newZ * 50f)
 			it.score = (x+1) * (y+1)
 			it.blockKey = key			
