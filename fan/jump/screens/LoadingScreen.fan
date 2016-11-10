@@ -6,6 +6,7 @@ class LoadingScreen : GameSeg {
 	
 	@Inject	private |->App|		app
 	@Inject	private FannyImages	images
+	@Inject	private FloorCache	floorCache
 
 	new make(|This| f) { f(this) }
 	
@@ -18,8 +19,10 @@ class LoadingScreen : GameSeg {
 
 	override Void onDraw(Gfx g2d) {
 		percent := preloadImages
-		if (percent >= 100)
+		if (percent >= 100) {
+			floorCache.init
 			return app().showTitles
+		}
 
 		g2d.clear(Color.makeRgb(BgGlow.bgR, BgGlow.bgG, BgGlow.bgB))
 		
@@ -27,7 +30,8 @@ class LoadingScreen : GameSeg {
 		drawFont8Centred (g2d, "presents",		(16 *  3)+10)
 		drawFont16Centred(g2d, "  \"F A N N Y   the   F A N T O M\"",	(16 *  7))
 		
-		drawFont8Centred(g2d, "loading images - ${percent.toStr.justr(3)}%", (16 * 12))		
+		drawFont8Centred(g2d, "loading images - ${percent.toStr.justr(3)}%", (16 * 12))
+		floorCache.init
 	}
 	
 	private Int preloadImages() {

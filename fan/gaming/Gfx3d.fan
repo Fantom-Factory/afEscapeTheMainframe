@@ -12,11 +12,11 @@ class Gfx3d {
 	private	Float	ay
 	private	Float	az
 
-			Gfx 	g2d
+			Gfx? 	g2d
 			Color?	fill
 			Color?	edge
 	
-	new make(Gfx g2d) {
+	new make(Gfx? g2d) {
 		this.g2d = g2d
 	}
 
@@ -46,7 +46,13 @@ class Gfx3d {
 	}
 
 	Point3d[] drawModel(Model model) {		
-		pts3d := (Point3d[]) model.points.map {
+		pts3d := to2d(model) 
+		model.drawables.each { it.draw(this, pts3d) }
+		return pts3d
+	}
+	
+	Point3d[] to2d(Model model) {
+		model.points.map {
 			it	.rotate(model.ax, model.ay, model.az)
 				.translate(model.x, model.y, model.z)
 				// minus the camera angle, so as the camera position gets more negative, (10,10) moves further away
@@ -54,16 +60,6 @@ class Gfx3d {
 				.rotate(this.ax, this.ay, this.az)
 				.project(300f)			
 		}
-		
-		if (model is FloorFake) {
-			if (pts3d.first.x > 0f)
-				echo("$pts3d.first.x ==========")
-			else
-				echo("$pts3d.first.x")
-		}
-
-		model.drawables.each { it.draw(this, pts3d) }
-		return pts3d
 	}
 	
 	This drawRect(Rect r, Float z) {

@@ -22,8 +22,8 @@ class Models {
 			points = [
 				Point3d(   0f,  275f, -175f),
 				Point3d(   0f, -25f , -175f),
-				Point3d(   0f,  275f,  175f),
 				Point3d(   0f, -25f ,  175f),
+				Point3d(   0f,  275f,  175f),
 				
 				Point3d(   0f,  50f , -175f),
 				Point3d(   0f,  50f ,  175f),
@@ -189,8 +189,8 @@ class Models {
 		}
 	}
 
-	static FloorFake fakeFloor(GameData data) {
-		FloorFake(data) {
+	static FloorFake fakeFloor(GameData data, FloorCache floorCache) {
+		FloorFake(data, floorCache) {
 			points = [
 				Point3d(-120f,  50f, 0f),
 				Point3d(- 80f,  50f, 0f),

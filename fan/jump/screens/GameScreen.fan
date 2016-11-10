@@ -12,6 +12,7 @@ class GameScreen : GameSeg {
 	@Inject		private Screen			screen
 	@Inject		private |->App|			app
 	@Inject		private BgGlow			bgGlow
+	@Inject		private FloorCache		floorCache
 	@Autobuild	private	Funcs			funcs
 				private BonusCube[]		bonusCubes	:= BonusCube[,]
 				private BonusExplo[]	bonusExplo	:= BonusExplo[,]
@@ -28,7 +29,7 @@ class GameScreen : GameSeg {
 	override This onInit() {
 		data	= GameData()
 		blcks.clear
-		floor	= Models.fakeFloor(data) { it.x = Actor.locals["afFanny.floorX"] ?: 0f }
+		floor	= Models.fakeFloor(data, floorCache) { it.x = Actor.locals["afFanny.floorX"] ?: 0f }
 		fanny	= Models.fanny(data) { it.y = 200f }
 		bonusCubes.clear
 		bonusExplo.clear
