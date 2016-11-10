@@ -55,10 +55,13 @@ class Gfx3d {
 				.project(300f)			
 		}
 		
-//		if (model is Floor) {
-//			echo(pts3d)
-//		}
-//
+		if (model is FloorFake) {
+			if (pts3d.first.x > 0f)
+				echo("$pts3d.first.x ==========")
+			else
+				echo("$pts3d.first.x")
+		}
+
 		model.drawables.each { it.draw(this, pts3d) }
 		return pts3d
 	}
