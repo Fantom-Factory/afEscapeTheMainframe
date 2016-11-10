@@ -9,6 +9,7 @@ const class AppModule {
 		bob.addService(BgGlow#)
 		bob.addService(HiScores#)
 		bob.addService(FannyImages#)
+		bob.addService(FloorCache#)
 
 		// TODO maybe put the qname of this class in pod meta -> for a generic gaming infrastructure
 		bob.onScopeCreate("uiThread") |Configuration config| {
