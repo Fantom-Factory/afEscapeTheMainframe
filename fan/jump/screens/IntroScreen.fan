@@ -456,7 +456,7 @@ class LazerGrid : Model {
 			Edge(Color(0x00FF00, false)),
 			Fill(Color(0x66_00FF00, true)),
 			Fill(null),
-			Poly([0, 1, 2, 3]),	// outside
+			Poly([0, 1, 2, 3], true),
 			Fill(null),
 			Line([4, 7]),
 			Line([5, 8]),

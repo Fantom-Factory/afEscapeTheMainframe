@@ -20,14 +20,10 @@ class Models {
 	static ExitBlock exitBlock(GameData data) {
 		ExitBlock(data) {
 			points = [
-				Point3d( -10f,  275f, -175f),
-				Point3d(  10f,  275f, -175f),
-				Point3d(  10f, -25f , -175f),
-				Point3d( -10f, -25f , -175f),
-				Point3d( -10f,  275f,  175f),
-				Point3d(  10f,  275f,  175f),
-				Point3d(  10f, -25f ,  175f),
-				Point3d( -10f, -25f ,  175f),
+				Point3d(   0f,  275f, -175f),
+				Point3d(   0f, -25f , -175f),
+				Point3d(   0f,  275f,  175f),
+				Point3d(   0f, -25f ,  175f),
 				
 				Point3d(   0f,  50f , -175f),
 				Point3d(   0f,  50f ,  175f),
@@ -47,18 +43,13 @@ class Models {
 			drawables = [
 				Fill(exitDark),
 				Edge(exitLight),
-				Poly([0, 1, 2, 3]),	// front
-				Poly([7, 6, 5, 4]),	// back
-				Poly([4, 0, 3, 7]),	// left
-				Poly([1, 5, 6, 2]),	// right
-				Poly([4, 5, 1, 0]),	// top
-				Poly([3, 2, 6, 7]),	// bottom
+				Poly([0, 1, 2, 3], true),
+				Line([ 4,  5]),
+				Line([ 6,  7]),
 				Line([ 8,  9]),
 				Line([10, 11]),
 				Line([12, 13]),
 				Line([14, 15]),
-				Line([16, 17]),
-				Line([18, 19]),
 			]
 			
 			it.y = -25f - 50f - 50f
@@ -87,12 +78,12 @@ class Models {
 			drawables = [
 				Fill(cube_fill),
 				Edge(cube_edge),
-				Poly([0, 1, 2, 3]),	// front
-				Poly([7, 6, 5, 4]),	// back
-				Poly([4, 0, 3, 7]),	// left
-				Poly([1, 5, 6, 2]),	// right
-				Poly([4, 5, 1, 0]),	// top
-				Poly([3, 2, 6, 7]),	// bottom
+				Poly([0, 1, 2, 3], false),	// front
+				Poly([7, 6, 5, 4], false),	// back
+				Poly([4, 0, 3, 7], false),	// left
+				Poly([1, 5, 6, 2], false),	// right
+				Poly([4, 5, 1, 0], false),	// top
+				Poly([3, 2, 6, 7], false),	// bottom
 			]					
 		}
 	}
@@ -116,7 +107,7 @@ class Models {
 					drawables = [
 						Fill(cube_fill),
 						Edge(cube_edge),
-						Poly([0, 1, 2, 3]),
+						Poly([0, 1, 2, 3], true),
 					]
 
 					it.x = x
@@ -173,7 +164,7 @@ class Models {
 			drawables = [
 				Fill(brand_darkBlue),
 				Edge(null),
-				Poly([17, 9, 0, 8]),
+				Poly([17, 9, 0, 8], true),
 				
 				Edge(brand_lightBlue),
 				Line([ 0,  9]),
@@ -260,11 +251,11 @@ class Models {
 			drawables = [
 				Fill(brand_darkBlue),
 				Edge(brand_lightBlue),
-				Poly([0, 1, 2, 3]),	// front
-				Poly([4, 0, 3, 7]),	// left
-				Poly([1, 5, 6, 2]),	// right
-				Poly([4, 5, 1, 0]),	// top
-				Poly([3, 2, 6, 7]),	// bottom
+				Poly([0, 1, 2, 3], true),	// front
+				Poly([4, 0, 3, 7], false),	// left
+				Poly([1, 5, 6, 2], false),	// right
+				Poly([4, 5, 1, 0], false),	// top
+				Poly([3, 2, 6, 7], false),	// bottom
 //				Poly([7, 6, 5, 4]),	// back
 			]
 
@@ -302,16 +293,16 @@ class Models {
 			drawables = [
 				Fill(fanny_silver),
 				Edge(brand_white),
-				Poly([0, 1, 2, 3]),	// front
-				Poly([4, 0, 3, 7]),	// left
-				Poly([1, 5, 6, 2]),	// right
-				Poly([4, 5, 1, 0]),	// top
-				Poly([3, 2, 6, 7]),	// bottom
+				Poly([0, 1, 2, 3], true),	// front
+				Poly([4, 0, 3, 7], false),	// left
+				Poly([1, 5, 6, 2], false),	// right
+				Poly([4, 5, 1, 0], false),	// top
+				Poly([3, 2, 6, 7], false),	// bottom
 //				Poly([7, 6, 5, 4]),	// back
 				
 				Fill(brand_lightBlue),
 				Edge(null),
-				Poly([11, 9, 10, 8]),	// eyes
+				Poly([11, 9, 10, 8], false),// eyes
 			]
 			
 			// draws coors on the screen
@@ -368,7 +359,7 @@ class Models {
 						it.drawables = [
 							Fill(brand_white),
 							Edge(brand_white),
-							Poly([0, 1, 2, 3]),
+							Poly([0, 1, 2, 3], true),
 						]
 						
 						it.x = fanny.x + off[0]
