@@ -11,7 +11,6 @@ class Gfx3d {
 	private	Float	ax
 	private	Float	ay
 	private	Float	az
-	internal Bool	drawAllPolygons	:= false
 
 			Gfx 	g2d
 			Color?	fill
@@ -82,12 +81,6 @@ class Gfx3d {
 		g2d.brush = edge
 		g2d.g.drawPolygon(pts)
 		return this
-	}
-	
-	Void drawAll(|->| f) {
-		drawAllPolygons = true
-		f()
-		drawAllPolygons = false		
 	}
 	
 	static Float atan2(Float opo, Float adj) {

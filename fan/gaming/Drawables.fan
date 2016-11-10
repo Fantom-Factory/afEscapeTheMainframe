@@ -27,13 +27,15 @@ const class Line : Drawable {
 @Js
 const class Poly : Drawable {
 	const	Int[]	points
+	const	Bool	drawRegardless
 	
-	new makeWithPoints(Int[] points) {
+	new makeWithPoints(Int[] points, Bool drawRegardless) {
 		this.points = points
+		this.drawRegardless = drawRegardless
 	}
 	
 	override Void draw(Gfx3d g3d, Point3d[] pts3d) {
-		if (g3d.drawAllPolygons || !isHidden(pts3d)) {
+		if (drawRegardless || isVisible(pts3d)) {
 			g2d   := g3d.g2d
 			pts   := (Point3d[]) points.map { pts3d[it] }
 			pts2d := pts.map |pt| { Point(g2d.ox + pt.x.toInt, g2d.oy - pt.y.toInt) }
@@ -50,9 +52,8 @@ const class Poly : Drawable {
 		}
 	}
 	
-	Bool isHidden(Point3d[] pts3d) {
-		norm := Point3d.normal(pts3d[points[0]], pts3d[points[1]], pts3d[points[2]])
-		return norm.z > 0f
+	Bool isVisible(Point3d[] pts3d) {
+		Point3d.isVisible(pts3d[points[0]], pts3d[points[1]], pts3d[points[2]])
 	}
 }
 
