@@ -35,7 +35,7 @@ class Block : Model {
 		drawables = drawablesDup.dup
 		drawables.removeAt(x < 0f ? 3 : 4)
 		drawables.removeAt(y > 0f ? 4 : 5)
-
+		
 		pts2d := points.map {
 			blockCache.get(it.x + this.x, it.y + this.y, it.z)
 		}
