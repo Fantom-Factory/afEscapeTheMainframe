@@ -60,16 +60,12 @@ class Models {
 	static BonusCube bonusCube(GameData data, Float x, Float y) {
 		BonusCube(data) {
 			points = [
-				Point3d(-100f,  100f, -100f),
-				Point3d( 100f,  100f, -100f),
-				Point3d( 100f, -100f, -100f),
-				Point3d(-100f, -100f, -100f),
-				Point3d(-100f,  100f,  100f),
-				Point3d( 100f,  100f,  100f),
-				Point3d( 100f, -100f,  100f),
-				Point3d(-100f, -100f,  100f),
+				Point3d(  0f, 100f,   0f),
+				Point3d(-87f, -50f,   0f),
+				Point3d( 43f, -50f, -75f),
+				Point3d( 43f, -50f,  75f),
 			]
-			scale(0.25f)
+			scale(0.55f)
 			
 			it.x = x
 			it.y = y
@@ -78,12 +74,10 @@ class Models {
 			drawables = [
 				Fill(cube_fill),
 				Edge(cube_edge),
-				Poly([0, 1, 2, 3], false),	// front
-				Poly([7, 6, 5, 4], false),	// back
-				Poly([4, 0, 3, 7], false),	// left
-				Poly([1, 5, 6, 2], false),	// right
-				Poly([4, 5, 1, 0], false),	// top
-				Poly([3, 2, 6, 7], false),	// bottom
+				Poly([0, 2, 1], false),
+				Poly([0, 3, 2], false),
+				Poly([0, 1, 3], false),
+				Poly([2, 3, 1], false),
 			]					
 		}
 	}
@@ -97,17 +91,16 @@ class Models {
 			it.squares = (0..<8).toList.map |i| {
 				BonusExploSquare(data) {
 					points = [
-						Point3d(-100f,  100f, 0f),
-						Point3d( 100f,  100f, 0f),
-						Point3d( 100f, -100f, 0f),
-						Point3d(-100f, -100f, 0f),
+						Point3d(  0f, 100f, 0f),
+						Point3d(-87f, -50f, 0f),
+						Point3d( 87f, -50f, 0f),
 					]
-					scale(0.20f)
+					scale(0.40f)
 
 					drawables = [
 						Fill(cube_fill),
 						Edge(cube_edge),
-						Poly([0, 1, 2, 3], true),
+						Poly([0, 1, 2], true),
 					]
 
 					it.x = x
