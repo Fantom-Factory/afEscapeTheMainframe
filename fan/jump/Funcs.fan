@@ -18,12 +18,12 @@ class Funcs {
 	static const Int	mo	:=	 2.pow(12)
 	
 	private const Int:Int[]	allowedBlocks := [
-		x1 + y1 + z0	: [1, 2, 3, 4, 5, 6, 7, 8       ],
-		x2 + y1 + z0	: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+		x1 + y1 + z0	: [1, 2, 3, 4, 5, 6             ],
+		x2 + y1 + z0	: [1, 2, 3, 4, 5, 6, 7, 8       ],
 		x3 + y1 + z0	: [      3, 4, 5, 6, 7, 8, 9, 10],
 
-		x1 + y1 + z0+mo	: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-		x2 + y1 + z0+mo	: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+		x1 + y1 + z0+mo	: [1, 2, 3, 4, 5, 6             ],
+		x2 + y1 + z0+mo	: [1, 2, 3, 4, 5, 6, 7, 8,      ],
 		x3 + y1 + z0+mo	: [      3, 4, 5, 6, 7, 8, 9, 10],
 
 		x1 + y1 + z1	: [      3, 4, 5, 6, 7, 8       ],
@@ -55,6 +55,7 @@ class Funcs {
 		x3 + y3 + z1	: [               6, 7, 8, 9, 10],
 
 		x1 + y4 + z0	: [                  7, 8, 9, 10],
+	mo+	x1 + y4 + z0	: [                        9, 10],
 
 		x1 + y1 + z0+z3	: [               6, 7, 8, 9, 10],
 		x2 + y1 + z0+z3	: [                  7, 8, 9, 10],
@@ -63,13 +64,13 @@ class Funcs {
 
 		x1 + y1 + z0+z4	: [               6, 7, 8, 9, 10],
 		x2 + y1 + z0+z4	: [                  7, 8, 9, 10],
-	mo+	x1 + y1 + z0+z4	: [                     8, 9, 10],
-	mo+	x2 + y1 + z0+z4	: [                        9, 10],
+//	mo+	x1 + y1 + z0+z4	: [                     8, 9, 10],
+//	mo+	x2 + y1 + z0+z4	: [                        9, 10],
 
 		x1 + y2 + z0+z4	: [                  7, 8, 9, 10],
 		x2 + y2 + z0+z4	: [                     8, 9, 10],
-	mo+	x1 + y2 + z0+z4	: [                        9, 10],
-	mo+	x2 + y2 + z0+z4	: [                           10],
+//	mo+	x1 + y2 + z0+z4	: [                        9, 10],
+//	mo+	x2 + y2 + z0+z4	: [                           10],
 	]
 	
 	private const Int:Int[] allowedLevels
@@ -110,7 +111,7 @@ class Funcs {
 
 		maxNoOfSteps := (longest - shortest) / speed
 		probability	 := 1 / maxNoOfSteps
-		return Float.random < probability
+		return (Float.random < probability) //{ if (it) echo(distance) }
 	}
 	
 	
@@ -121,15 +122,21 @@ class Funcs {
 		lastKey := lastBlock?.blockKey
 		if (lastKey != null) {
 			// if we've just done a high jump, don't immediately follow it with another
-			if (distance < 475f && (lastKey.and(y3) != 0 || lastKey.and(y4) != 0) && lastKey.and(z0) != 0)
+			if (distance < 475f && lastKey.and(y3) != 0 && lastKey.and(z0) != 0)
 				allowedLevels = allowedLevels.exclude { (it.and(y3) != 0 || it.and(y4) != 0) && it.and(z0) != 0 }
-//				allowedLevels = allowedLevels.exclude { it.and(z0) != 0 }
+
+			if (distance < 490f && lastKey.and(y4) != 0 && lastKey.and(z0) != 0)
+				allowedLevels = allowedLevels.exclude { (it.and(y3) != 0 || it.and(y4) != 0) && it.and(z0) != 0 }
 
 //			if (distance < 475f && lastKey.and(z0) != 0)
 //				allowedLevels = allowedLevels.exclude { it.and(z0) != 0 }
 //
 //			if (distance < 475f && lastKey.and(z1) != 0)
 //				allowedLevels = allowedLevels.exclude { (it.and(y2) != 0 || it.and(y3) != 0 || it.and(y4) != 0) && it.and(z0) != 0 }
+
+			// give clearance for the next high jump
+			if (distance < 490f)
+				allowedLevels = allowedLevels.exclude { it.and(y4) != 0 && it.and(z0) != 0 }
 		}
 		
 		key	:= allowedLevels.random
