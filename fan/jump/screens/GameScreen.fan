@@ -2,6 +2,7 @@ using fwt::Key
 using gfx::Color
 using gfx::Rect
 using gfx::Image
+using gfx::Point
 using afIoc::Inject
 using afIoc::Autobuild
 using concurrent::Actor
@@ -156,9 +157,26 @@ class GameScreen : GameSeg {
 		}
 	}
 	
+	Point?	oldMousePos
 	Void keyLogic() {
-		jump 	:= screen.keys[Key.space] == true || screen.keys[Key.up] == true || screen.keys[Key.w] == true || screen.mouseButtons[1] == true
-		squish	:= screen.keys[Key.down]  == true || screen.keys[Key.s] == true || screen.mouseButtons[3] == true
+		jump 	:= screen.keys[Key.up  ] == true || screen.keys[Key.w] == true || screen.keys[Key.space] == true
+		squish	:= screen.keys[Key.down] == true || screen.keys[Key.s] == true
+
+		// touch screen logic
+		mousePos := screen.mousePos
+		if (screen.mouseButtons[1] == true) {
+			squish = true
+
+			if (mousePos != null && oldMousePos != null) {
+				sensitivity := 3
+				diff := (mousePos.y - oldMousePos.y) / sensitivity
+				if (diff < 0) {
+					jump = true
+				}
+			}
+			oldMousePos = mousePos
+		}
+
 		fanny.jump(jump)
 		fanny.squish(squish)
 
@@ -167,7 +185,7 @@ class GameScreen : GameSeg {
 			gameHud.alertLevelUp(data.level)
 		}
 		
-		if (screen.keys[Key.esc] == true)	gameOver()
+		if (screen.keys[Key.esc] == true)	gameOver()		
 	}
 	
 	Void anim() {
