@@ -41,7 +41,7 @@ const class FannyMod : WebMod {
 			out.title.w(windowTitle).titleEnd
 			out.tag("meta", "charset='utf-8'").nl
 			out.tag("meta", "http-equiv='X-UA-Compatible' content='IE=edge'").nl
-			//out.tag("meta", "content='width=device-width, initial-scale=1, shrink-to-fit=no' name='viewport'")
+			out.tag("meta", "name='viewport'           content='width=768, initial-scale=1'")
 			out.tag("meta", "name='description'        content=\"${windowDesc}\"").nl
 			out.tag("meta", "property='og:type'        content='website'").nl
 			out.tag("meta", "property='og:title'       content='${windowTitle}'").nl
