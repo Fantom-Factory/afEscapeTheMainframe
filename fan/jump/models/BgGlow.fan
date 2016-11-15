@@ -81,12 +81,15 @@ class BgGlow {
 //				g2d.drawLine(0, midY + 142, g2d.bounds.w, midY + 142)
 		}
 
-		blink++
-		if (blink > 80)
-			blink = 0
-		if (app().offline && blink > 40) {
-			g2d.drawFont8("Hi-Scores", g2d.bounds.w - ("hi-scores".size * 8) - 2, 270)
-			g2d.drawFont8(" Offline ", g2d.bounds.w - (" offline ".size * 8) - 2, 278)
+		// don't flash during games - it's off-putting!
+		if (level == null && app().offline) {
+			blink++
+			if (blink > 80)
+				blink = 0
+			if (blink > 40) {
+				g2d.drawFont8("Hi-Scores", g2d.bounds.w - ("hi-scores".size * 8) - 2, 270)
+				g2d.drawFont8(" Offline ", g2d.bounds.w - (" offline ".size * 8) - 2, 278)
+			}
 		}
 		
 		if (level != null) {
