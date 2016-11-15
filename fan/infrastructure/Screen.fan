@@ -22,11 +22,11 @@ class Screen : Canvas {
 		in(this)
 		this.doubleBuffered = true
 		
-		onKeyDown.add { this.keyDown(it) }
-		onKeyUp	 .add { this.keyUp	(it) }
-		onMouseMove.add { this.mouseMove(it) }
-		onMouseDown.add { this.mouseDown(it) }
-		onMouseUp.add   { this.mouseUp(it) }
+		onKeyDown	.add { this.keyDown  (it) }
+		onKeyUp		.add { this.keyUp	 (it) }
+		onMouseMove	.add { this.mouseMove(it) }
+		onMouseDown	.add { this.mouseDown(it) }
+		onMouseUp	.add { this.mouseUp  (it) }
 	}
 	
 	private Void keyDown(Event e) {
@@ -87,9 +87,17 @@ class Screen : Canvas {
 	}
 
 	override Void onPaint(Graphics graphics) {
-		g := gfx(graphics) 
+		g2d := gfx(graphics) 
+
+		if (!Runtime.isJs) {
+			if (g2d.bounds.size != FannyTheFantom.windowSize) {				
+				windowSize := Size(window.size.w - g2d.bounds.w + FannyTheFantom.windowSize.w, window.size.h - g2d.bounds.h + FannyTheFantom.windowSize.h)
+				window.size = windowSize
+			}
+		}
+		
 		if (pulsar.isRunning)
-			eventHub.fireEvent(DemoEvents#onDraw, [g])
+			eventHub.fireEvent(DemoEvents#onDraw, [g2d])
 	}
 	
 	Gfx gfx(Graphics graphics) {
