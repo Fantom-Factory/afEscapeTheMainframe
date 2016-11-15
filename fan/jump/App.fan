@@ -68,6 +68,7 @@ class App : DemoEvents {
 
 	private This deactivate() {
 		screen.keys.clear
+		screen.touch.clear
 		screen.mouseButtons.clear
 		activeScreen.onKill
 		return this

@@ -152,40 +152,57 @@ class GameScreen : GameSeg {
 			data.deathCryIdx++
 		
 			if (data.deathCryIdx == 160) {
-				app().gameOver(data.score, data.level, data.training, true)
+				gameReallyOver()
 			}
 		}
 	}
 	
-	Point?	oldMousePos
+	Bool?	touchUp
 	Void keyLogic() {
-		jump 	:= screen.keys[Key.up  ] == true || screen.keys[Key.w] == true || screen.keys[Key.space] == true
-		squish	:= screen.keys[Key.down] == true || screen.keys[Key.s] == true
+		jump 	:= screen.keys.down(Key.up  ) || screen.keys.down(Key.w) || screen.keys.down(Key.space)
+		squish	:= screen.keys.down(Key.down) || screen.keys.down(Key.s)  
 
-		// touch screen logic
-		mousePos := screen.mousePos
+		
 		if (screen.mouseButtons[1] == true) {
-			squish = true
+			tSquish := true
+			tJump	:= false
 
-			if (mousePos != null && oldMousePos != null) {
-				sensitivity := 3
-				diff := (mousePos.y - oldMousePos.y) / sensitivity
-				if (diff < 0) {
-					jump = true
-				}
+			if (screen.touch.moving(Key.up)) {
+				touchUp = true
+				tSquish = false
+				tJump	= true
 			}
-			oldMousePos = mousePos
-		}
+
+			if (touchUp == true) {
+				tSquish = false
+				tJump	= true
+			}
+
+			if (screen.touch.moving(Key.down)) {
+				touchUp = false
+				tSquish = true
+				tJump	= false
+			}
+			
+			if (tSquish)	squish = true
+			if (tJump)		jump = true
+
+		} else
+			touchUp = null
 
 		fanny.jump(jump)
 		fanny.squish(squish)
 
-		if (screen.keys[Key.g] == true && exitBlock == null) {
+		if (screen.keys.pressed(Key.g) && exitBlock == null) {
 			data.level = 11
 			gameHud.alertLevelUp(data.level)
 		}
 		
-		if (screen.keys[Key.esc] == true)	gameOver()		
+		if (screen.keys.pressed(Key.esc))
+			if (data.dying)
+				gameReallyOver()
+			else
+				gameOver()
 	}
 	
 	Void anim() {
@@ -291,8 +308,15 @@ class GameScreen : GameSeg {
 		
 		if (data.level != 11)
 			gameHud.alertGameOver
+		
+		screen.keys.clear
+		screen.touch.clear
+		screen.mouseButtons.clear
 	}
 	
+	Void gameReallyOver() {
+		app().gameOver(data.score, data.level, data.training, true)
+	}
 	
 	Float dx	:= 0f
 	Float dy	:= 0f

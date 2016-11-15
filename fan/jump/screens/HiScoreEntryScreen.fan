@@ -16,7 +16,6 @@ class HiScoreEntryScreen : GameSeg {
 			private Int			minPos
 			private Int			maxPos
 			private HiScore[]	scores	:= HiScore#.emptyList
-			private Bool		keyEnter
 			private Int			level
 
 	new make(|This| f) { f(this) }
@@ -59,22 +58,18 @@ class HiScoreEntryScreen : GameSeg {
 	override Void onDraw(Gfx g2d) {
 		bgGlow.draw(g2d)
 	
-		if (screen.keys[Key.enter] != true)
-			keyEnter = false
-
 		if (newName != screen.editText) {
 			newName = screen.editText
 			hiScores[newPosition].name = screen.editText
 		}
 		
-		if (screen.keys[Key.esc] == true) {
+		if (screen.keys.pressed(Key.esc)) {
 			screen.editMode = false
 			hiScores.editing = false
 			app().showTitles			
 		}
 
-		if (screen.keys[Key.enter] == true && keyEnter == false) {
-			keyEnter = true
+		if (screen.keys.pressed(Key.enter)) {
 			if (screen.editMode == true) {
 				if (screen.editText.size > 0) {
 					screen.editMode = false
