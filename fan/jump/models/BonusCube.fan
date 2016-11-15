@@ -5,6 +5,7 @@ class BonusCube : Model {
 	private GameData	data
 			Bool		killMe
 			Bool		drawn
+	const	Bool		drawCollisionRect
 
 	new make(GameData data, |This| in) : super(in) {
 		this.data  = data
@@ -13,12 +14,13 @@ class BonusCube : Model {
 	override Void draw(Gfx3d g3d) {
 		if (drawn) return
 		
-//		drawModel(g3d)
-		g3d.drawModel(this)
+		drawModel(g3d)
 		drawn = true
 
-//		g3d.edge = gfx::Color.red
-//		g3d.drawRect(collisionRect, z)
+		if (drawCollisionRect) {
+			g3d.edge = gfx::Color.red
+			g3d.drawRect(collisionRect, z)
+		}
 	}
 
 	override Void anim() {
@@ -31,13 +33,13 @@ class BonusCube : Model {
 			killMe = true
 	}
 	
-	
-//	Void drawModel(Gfx3d g3d) {		
-//		pts3d := points.map {
-//			it	.rotate(this.ax, this.ay, this.az)
-//				.translate(this.x, this.y, this.z)
-//				.project(300f)			
-//		}
-//		drawables.each { it.draw(g3d, pts3d) }
-//	}
+	// speed optimisation - knock out the camera rotation
+	Void drawModel(Gfx3d g3d) {		
+		pts2d := points.map {
+			it	.rotate(this.ax, this.ay, this.az)
+				.translate(this.x, this.y, this.z + 500f)
+				.project(300f)
+		}
+		drawables.each { it.draw(g3d, pts2d) }
+	}
 }

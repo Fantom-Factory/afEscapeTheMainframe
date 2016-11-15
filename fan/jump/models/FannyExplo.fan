@@ -53,4 +53,25 @@ class FannyExploSquare : Model {
 		
 		movementVector = movementVector.translate(-0.2f, gravity, 0f)
 	}
+	
+	override Void draw(Gfx3d g3d) {
+		drawModel(g3d)
+	}
+
+	// speed optimisation - knock out the camera rotation
+	Void drawModel(Gfx3d g3d) {
+		if (x < -800f)	return
+
+		pts2d := (Point3d[]) points.map {
+			it	.rotate(this.ax, this.ay, this.az)
+				.translate(this.x, this.y, this.z + 500f)
+				.project(300f)
+		}
+		
+		g2d := g3d.g2d
+		if ((g2d.ox + pts2d.first.x) < -20f)	return
+		if ((g2d.oy + pts2d.first.y) < -20f)	return
+
+		drawables.each { it.draw(g3d, pts2d) }
+	}
 }
