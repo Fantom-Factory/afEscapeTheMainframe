@@ -9,6 +9,7 @@ class LoadingScreen : GameSeg {
 	@Inject	private FloorCache	floorCache
 	@Inject	private BlockCache	blockCache
 			private Int			draws
+			private Bool		showPreCalc
 
 	new make(|This| f) { f(this) }
 	
@@ -22,7 +23,7 @@ class LoadingScreen : GameSeg {
 	override Void onDraw(Gfx g2d) {
 		percent := preloadImages
 
-		if (percent >= 100 && (!Runtime.isJs || draws > 0)) {
+		if (percent >= 100 && (!Runtime.isJs || showPreCalc)) {
 			floorCache.init
 			blockCache.init
 			return app().showTitles
@@ -34,8 +35,12 @@ class LoadingScreen : GameSeg {
 		drawFont8Centred (g2d, "presents",		(16 *  3)+10)
 		drawFont16Centred(g2d, "  \"F A N N Y   the   F A N T O M\"",	(16 *  7))
 		
-		if (percent >= 100)
-		drawFont8Centred(g2d, "loading images - ${percent.toStr.justr(3)}%", (16 * 12))
+		if (percent < 100)
+			drawFont8Centred(g2d, "loading images - ${percent.toStr.justr(3)}%", (16 * 12))
+		else {
+			drawFont8Centred(g2d, "pre-calculating vectors...", (16 * 12))
+			showPreCalc = true			
+		}
 
 		draws++
 	}
