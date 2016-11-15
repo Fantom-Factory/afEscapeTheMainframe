@@ -41,7 +41,7 @@ const class FannyMod : WebMod {
 			out.title.w(windowTitle).titleEnd
 			out.tag("meta", "charset='utf-8'").nl
 			out.tag("meta", "http-equiv='X-UA-Compatible' content='IE=edge'").nl
-			out.tag("meta", "name='viewport'           content='width=768, initial-scale=1'")
+			out.tag("meta", "name='viewport'           content='width=768'")
 			out.tag("meta", "name='description'        content=\"${windowDesc}\"").nl
 			out.tag("meta", "property='og:type'        content='website'").nl
 			out.tag("meta", "property='og:title'       content='${windowTitle}'").nl
@@ -86,12 +86,11 @@ const class FannyMod : WebMod {
 			out.script.w("document.getElementById('fwtRoot').addEventListener('keydown', function (e) { e.preventDefault(); });").scriptEnd
 			out.script.w("document.getElementById('fwtRoot').addEventListener('contextmenu', function (e) { e.preventDefault(); });").scriptEnd
 			out.script.w("function touchHandler(event) {
-			              	event.preventDefault(); 
 			              	
 			              	var touches = event.changedTouches, first = touches[0], type = '';
 			              	switch(event.type) {
 			              	  case 'touchstart':  type = 'mousedown'; break;
-			              	  case 'touchmove':   type = 'mousemove'; break;		
+			              	  case 'touchmove':   type = 'mousemove'; event.preventDefault(); break;		
 			              	  case 'touchend':    type = 'mouseup';   break;
 			              	  case 'touchcancel': type = 'mouseup';   break;
 			              	}
@@ -100,7 +99,7 @@ const class FannyMod : WebMod {
 			              	  screenX	: first.screenX,
 			              	  screenY	: first.screenY,
 			              	  clientX	: first.clientX,
-			              	  clientY	: first.clientY,
+			              	  clientY	: first.clientY - 8,
 			              	  button	: 0,
 			              	  buttons	: 0,
 			              	  bubbles: true,
