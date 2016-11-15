@@ -22,8 +22,8 @@ const class Point2d {
 		Point2d(x + dx, y + dy)
 	}
 
-	Point2d scale(Float s) {
-		Point2d(x * s, y * s)
+	Point2d scale(Float sx, Float sy := sx) {
+		Point2d(x * sx, y * sy)
 	}
 	override Str toStr() {
 		"(" + x.toLocale("0.00") + "," + y.toLocale("0.00") + ")"

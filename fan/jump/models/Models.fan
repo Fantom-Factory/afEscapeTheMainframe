@@ -60,12 +60,16 @@ class Models {
 	static BonusCube bonusCube(GameData data, Float x, Float y) {
 		BonusCube(data) {
 			points = [
-				Point3d(  0f, 100f,   0f),
-				Point3d(-87f, -50f,   0f),
-				Point3d( 43f, -50f, -75f),
-				Point3d( 43f, -50f,  75f),
+				Point3d(-100f,  100f, -100f),
+				Point3d( 100f,  100f, -100f),
+				Point3d( 100f, -100f, -100f),
+				Point3d(-100f, -100f, -100f),
+				Point3d(-100f,  100f,  100f),
+				Point3d( 100f,  100f,  100f),
+				Point3d( 100f, -100f,  100f),
+				Point3d(-100f, -100f,  100f),
 			]
-			scale(0.55f)
+			scale(0.25f)
 			
 			it.x = x
 			it.y = y
@@ -74,40 +78,35 @@ class Models {
 			drawables = [
 				Fill(cube_fill),
 				Edge(cube_edge),
-				Poly([0, 2, 1], false),
-				Poly([0, 3, 2], false),
-				Poly([0, 1, 3], false),
-				Poly([2, 3, 1], false),
+				Poly([0, 1, 2, 3], false),	// front
+				Poly([7, 6, 5, 4], false),	// back
+				Poly([4, 0, 3, 7], false),	// left
+				Poly([1, 5, 6, 2], false),	// right
+				Poly([4, 5, 1, 0], false),	// top
+				Poly([3, 2, 6, 7], false),	// bottom
 			]					
 		}
 	}
 
-	static BonusExplo bonusExplo(GameData data, Float x, Float y) {
-		BonusExplo(data) {			
+	static BonusExplo bonusExplo(GameData data, Float cx, Float cy) {
+		BonusExplo {			
 			it.points	 = Point3d#.emptyList
 			it.drawables = Drawable#.emptyList
 
+			g3d := Gfx3d(null).lookAtDef
+			p2d	:= g3d.to2d(Point3d(cx, cy, -70f))
+			x	:= p2d.x
+			y	:= p2d.y
+			
+			dx	:= g3d.to2d(Point3d(data.floorSpeed / 2f, 0f, 0f)).x
+			
 			a := -45 / 2f
 			it.squares = (0..<8).toList.map |i| {
-				BonusExploSquare(data) {
-					points = [
-						Point3d(  0f, 100f, 0f),
-						Point3d(-87f, -50f, 0f),
-						Point3d( 87f, -50f, 0f),
-					]
-					scale(0.40f)
-
-					drawables = [
-						Fill(cube_fill),
-						Edge(cube_edge),
-						Poly([0, 1, 2], true),
-					]
-
-					it.x = x
-					it.y = y
-					it.z = -70f
-		
-					it.movementVector = Point3d(Sin.sin(a / 360f), Sin.cos(a / 360f), 0f)
+				BonusExploSquare {
+					it.x  = x
+					it.y  = y
+					it.dx = dx
+					it.movementVector = Point2d(Sin.sin(a / 360f), Sin.cos(a / 360f))
 					a += 45f
 				}
 			}
