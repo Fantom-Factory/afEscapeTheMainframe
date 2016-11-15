@@ -25,7 +25,7 @@ class Frame {
 		pulsar.addListener |->| { screen.repaint }
 	}
 	
-	Widget widget() {
+	Screen widget() {
 		screen
 	}
 
