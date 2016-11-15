@@ -186,6 +186,7 @@ class KeyMap {
 @Js
 class TouchMap {
 	private Key:Bool	keys	:= Key:Bool[:]
+	private Bool		hasSwiped
 	
 	Bool swiped(Key key) {
 		val := keys[key]
@@ -206,19 +207,24 @@ class TouchMap {
 	Void set(Key key, Bool val) {
 		if (keys[key] == null) {
 			keys[key] = val
-			// nice idea to keep swiping left / right / left / right but doesn't seem to work
+			hasSwiped = true
+			// enable the user to keep swiping left / right / left / right / etc...
 			if (key == Key.up)		keys.remove(Key.down)
 			if (key == Key.down)	keys.remove(Key.up)
 			if (key == Key.left)	keys.remove(Key.right)
-			if (key == Key.right)	keys.remove(Key.up)
+			if (key == Key.right)	keys.remove(Key.left)
 		}
 	}
 	
 	Void reset() {
 		keys.clear
+		if (!hasSwiped)
+			keys[Key.enter] = true
+		hasSwiped = false
 	}
 	
 	Void clear() {
 		keys.clear
+		hasSwiped = true
 	}
 }

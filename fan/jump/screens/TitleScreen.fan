@@ -115,27 +115,23 @@ class TitleMenu {
 				x := 216 + ((10 - str.size) * 16 / 2)
 				y := (12 * 16) + (i * 20)
 				
-				if (Rect(x - 2, y-1, (str.size * 16) + 4, 16+2).contains(mousePos.x, mousePos.y)) {
+				if (Rect(x - 2, y-1, (str.size * 16) + 4, 16+2).contains(mousePos.x, mousePos.y))
 					highlighted = i
-				}
 			}
 
-		if (screen.mouseButtons[1] == true)
-			go?.call(highlighted)
-		
-		if (screen.keys.pressed(Key.up)) {
+		if (screen.keys.pressed(Key.up) || screen.touch.swiped(Key.up)) {
 			if (highlighted > 0) {
 				highlighted -= 1
 			}
 		}
 
-		if (screen.keys.pressed(Key.down)) {
+		if (screen.keys.pressed(Key.down) || screen.touch.swiped(Key.down)) {
 			if (highlighted < menu.size-1) {
 				highlighted += 1
 			}
 		}
 
-		if (screen.keys.pressed(Key.enter)) {
+		if (screen.keys.pressed(Key.enter) || screen.touch.swiped(Key.enter)) {
 			go?.call(highlighted)
 		}
 	}

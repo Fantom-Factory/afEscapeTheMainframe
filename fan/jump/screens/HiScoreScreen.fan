@@ -48,7 +48,7 @@ class HiScoreScreen : GameSeg {
 
 		pages.onJiffy(screen)
 		
-		if (pages.anyKey) {
+		if (pages.anyKey || screen.touch.swiped(Key.enter)) {
 			app().showTitles
 		}
 		

@@ -1,6 +1,7 @@
 using gfx::Color
 using gfx::Point
 using gfx::Pen
+using fwt::Key
 using afIoc::Inject
 using afIoc::Scope
 using concurrent::Actor
@@ -30,7 +31,7 @@ class IntroScreen : GameSeg {
 
 	override Void onDraw(Gfx g2d) {
 		
-		anyKey := screen.keys.size > 0 || screen.mouseButtons.size > 0
+		anyKey := screen.keys.size > 0 || screen.touch.swiped(Key.enter)
 		if (anyKey || intoAnim.finished) {
 			app().startGame(null)
 		}

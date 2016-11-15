@@ -203,7 +203,7 @@ class GameScreen : GameSeg {
 				gameOver()			
 
 		if (data.dying)
-			if (screen.keys.pressed(Key.esc) || screen.mouseButtons[1] == true)
+			if (screen.keys.pressed(Key.esc) || screen.touch.swiped(Key.enter))
 				gameReallyOver()
 	}
 	
