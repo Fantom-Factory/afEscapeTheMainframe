@@ -86,10 +86,12 @@ const class FannyMod : WebMod {
 			out.script.w("document.getElementById('fwtRoot').addEventListener('keydown', function (e) { e.preventDefault(); });").scriptEnd
 			out.script.w("document.getElementById('fwtRoot').addEventListener('contextmenu', function (e) { e.preventDefault(); });").scriptEnd
 			out.script.w("function touchHandler(event) {
+			              	event.preventDefault(); 
+			              	
 			              	var touches = event.changedTouches, first = touches[0], type = '';
 			              	switch(event.type) {
 			              	  case 'touchstart':  type = 'mousedown'; break;
-			              	  case 'touchmove':   type = 'mousemove'; event.preventDefault(); break;		
+			              	  case 'touchmove':   type = 'mousemove'; break;		
 			              	  case 'touchend':    type = 'mouseup';   break;
 			              	  case 'touchcancel': type = 'mouseup';   break;
 			              	}
