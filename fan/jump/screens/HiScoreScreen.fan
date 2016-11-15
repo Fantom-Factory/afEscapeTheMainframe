@@ -76,8 +76,6 @@ class PagesScreen {
 	private Int		scoreX
 	private Int		speedX
 	private Int		scoreTarget
-	private Bool	keyLeft
-	private Bool	keyRight
 		
 			Int		noOfPages
 			Int		pageWidth
@@ -95,24 +93,16 @@ class PagesScreen {
 			remove(Key.down)
 			remove(Key.left)
 			remove(Key.right)
-		}.size > 0 || screen.mouseButtons.size > 0
+		}.size > 0
 		
-		if (screen.keys[Key.left] != true)
-			keyLeft = false
-		
-		if (screen.keys[Key.right] != true)
-			keyRight = false
-		
-		if (screen.keys[Key.left] == true && keyLeft == false) {
-			keyLeft = true
+		if (screen.keys.pressed(Key.left) || screen.touch.swiped(Key.right)) {
 			if (scoreTarget > 0) {
 				speedX = -speed
 				scoreTarget -= 30
 			}
 		}
 
-		if (screen.keys[Key.right] == true && keyRight == false) {
-			keyRight = true
+		if (screen.keys.pressed(Key.right) || screen.touch.swiped(Key.left)) {
 			if (scoreTarget < (30 * (noOfPages-2))) {
 				speedX = speed
 				scoreTarget += 30

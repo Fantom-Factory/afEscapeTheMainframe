@@ -35,8 +35,9 @@ class OutroScreen : GameSeg {
 
 	override Void onDraw(Gfx g2d) {
 		
-		anyKey := screen.keys.size > 0 || screen.mouseButtons.size > 0
-		if (anyKey || outroAnim.finished) {
+//		anyKey := screen.keys.size > 0 || screen.mouseButtons.size > 0
+//		if (anyKey || outroAnim.finished) {
+		if (outroAnim.finished) {
 			app().gameOver(score, level, training, false)
 		}
 

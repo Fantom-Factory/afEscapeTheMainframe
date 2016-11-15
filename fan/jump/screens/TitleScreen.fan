@@ -48,16 +48,16 @@ class TitleScreen : GameSeg {
 
 		if (titleMenu.anyKey) {			
 			level := null as Int
-			if (screen.keys[Key.num1] == true)	level = 1
-			if (screen.keys[Key.num2] == true)	level = 2
-			if (screen.keys[Key.num3] == true)	level = 3
-			if (screen.keys[Key.num4] == true)	level = 4
-			if (screen.keys[Key.num5] == true)	level = 5
-			if (screen.keys[Key.num6] == true)	level = 6
-			if (screen.keys[Key.num7] == true)	level = 7
-			if (screen.keys[Key.num8] == true)	level = 8
-			if (screen.keys[Key.num9] == true)	level = 9
-			if (screen.keys[Key.num0] == true)	level = 10
+			if (screen.keys.pressed(Key.num1))	level = 1
+			if (screen.keys.pressed(Key.num2))	level = 2
+			if (screen.keys.pressed(Key.num3))	level = 3
+			if (screen.keys.pressed(Key.num4))	level = 4
+			if (screen.keys.pressed(Key.num5))	level = 5
+			if (screen.keys.pressed(Key.num6))	level = 6
+			if (screen.keys.pressed(Key.num7))	level = 7
+			if (screen.keys.pressed(Key.num8))	level = 8
+			if (screen.keys.pressed(Key.num9))	level = 9
+			if (screen.keys.pressed(Key.num0))	level = 10
 
 			if (level != null)
 				app().startGame(level)
@@ -81,9 +81,6 @@ class TitleScreen : GameSeg {
 @Js
 class TitleMenu {
 	private Int		highlighted	:= 0
-	private Bool	keyUp
-	private Bool	keyDown
-	private Bool	keyEnter
 
 	Str[]	menu		:= Str[,]
 	Bool	anyKey
@@ -126,29 +123,19 @@ class TitleMenu {
 		if (screen.mouseButtons[1] == true)
 			go?.call(highlighted)
 		
-		if (screen.keys[Key.up] != true)
-			keyUp = false
-		if (screen.keys[Key.down] != true)
-			keyDown = false
-		if (screen.keys[Key.enter] != true)
-			keyEnter = false
-		
-		if (screen.keys[Key.up] == true && keyUp == false) {
-			keyUp = true
+		if (screen.keys.pressed(Key.up)) {
 			if (highlighted > 0) {
 				highlighted -= 1
 			}
 		}
 
-		if (screen.keys[Key.down] == true && keyDown == false) {
-			keyDown = true
+		if (screen.keys.pressed(Key.down)) {
 			if (highlighted < menu.size-1) {
 				highlighted += 1
 			}
 		}
 
-		if (screen.keys[Key.enter] == true && keyEnter == false) {
-			keyEnter = true
+		if (screen.keys.pressed(Key.enter)) {
 			go?.call(highlighted)
 		}
 	}

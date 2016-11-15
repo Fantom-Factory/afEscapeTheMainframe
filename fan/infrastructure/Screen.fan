@@ -8,17 +8,19 @@ class Screen : Canvas {
 	@Inject private EventHub	eventHub
 	@Inject private Pulsar		pulsar
 	@Inject private FannyImages	images
-					Key:Bool	keys		:= Key:Bool[:]
+					TouchMap	touch		:= TouchMap()
+					KeyMap		keys		:= KeyMap()
 					Bool		editMode	:= false
 					Str			editText	:= ""
 					Point?		mousePos {
 						get { pos := &mousePos; &mousePos = null; return pos }
 					}
 					Int:Bool	mouseButtons:= Int:Bool[:]
+					Int			mouseSensitivity := 3
 
 	new make(|This| in) {
 		in(this)
-		doubleBuffered = true
+		this.doubleBuffered = true
 		
 		onKeyDown.add { this.keyDown(it) }
 		onKeyUp	 .add { this.keyUp	(it) }
@@ -29,10 +31,6 @@ class Screen : Canvas {
 	
 	private Void keyDown(Event e) {
 		keys[e.key.primary] = true
-		if (e.key.isShift)
-			keys[Key.shift] = true
-		else
-			keys.remove(Key.shift)
 		
 		if (editMode) {
 			if (e.key.primary == Key.backspace || e.key.primary == Key.delete)
@@ -58,8 +56,19 @@ class Screen : Canvas {
 	}
 
 	private Void mouseMove(Event e) {
-		if (e.pos != null)
-			mousePos = e.pos
+		if (e.pos != null) {
+			oldMousePos := &mousePos
+			mousePos := mousePos = e.pos
+			if (mouseButtons[1] == true && mousePos != null && oldMousePos != null) {
+				dx := (mousePos.x - oldMousePos.x) / mouseSensitivity
+				dy := (mousePos.y - oldMousePos.y) / mouseSensitivity
+				
+				if (dx < 0)	touch[Key.left ] = true
+				if (dx > 0)	touch[Key.right] = true
+				if (dy < 0)	touch[Key.up   ] = true
+				if (dy > 0)	touch[Key.down ] = true
+			}
+		}
 	}
 
 	private Void mouseDown(Event e) {
@@ -72,6 +81,9 @@ class Screen : Canvas {
 		if (e.pos != null)
 			mousePos = e.pos
 		mouseButtons.remove(e.button)
+
+		if (e.button == 1)
+			touch.reset
 	}
 
 	override Void onPaint(Graphics graphics) {
@@ -130,5 +142,83 @@ class Screen : Canvas {
 		}
 		
 		return null
+	}
+}
+
+@Js
+class KeyMap {
+	private Key:Bool	keys	:= Key:Bool[:]
+	
+	Bool pressed(Key key) {
+		keys.remove(key) != null
+	}
+	
+	Bool down(Key key) {
+		keys[key] == true
+	}
+
+	@Operator
+	private Obj? get(Key key) { null }
+//	Bool? get(Key key) { keys[key] }
+
+	@Operator
+	Void set(Key key, Bool val) {
+		keys[key] = val
+	}
+	
+	Void remove(Key key) {
+		keys.remove(key)
+	}
+	
+	Void clear() {
+		keys.clear
+	}
+	
+	Int size() {
+		keys.size
+	}
+	
+	KeyMap dup() {
+		KeyMap { it.keys = this.keys.dup }
+	}
+}
+
+@Js
+class TouchMap {
+	private Key:Bool	keys	:= Key:Bool[:]
+	
+	Bool swiped(Key key) {
+		val := keys[key]
+		if (val == true)
+			keys[key] = false
+		return val == true
+	}
+	
+	Bool moving(Key key) {
+		keys[key] == true
+	}
+
+	@Operator
+	private Obj? get(Key key) { null }
+//	Bool? get(Key key) { keys[key] }
+
+	@Operator
+	Void set(Key key, Bool val) {
+		if (keys[key] == null) {
+			keys[key] = val
+			// nice idea to keep swiping left / right / left / right but doesn't seem to work
+			if (key == Key.up)		keys.remove(Key.down)
+			if (key == Key.down)	keys.remove(Key.up)
+			if (key == Key.left)	keys.remove(Key.right)
+			if (key == Key.right)	keys.remove(Key.up)
+		}
+	}
+	
+	Void reset() {
+		keys.clear
+	}
+	
+	Void clear() {
+		keys.clear
 	}
 }
