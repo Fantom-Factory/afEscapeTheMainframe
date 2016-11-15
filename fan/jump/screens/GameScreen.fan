@@ -198,11 +198,13 @@ class GameScreen : GameSeg {
 			gameHud.alertLevelUp(data.level)
 		}
 		
-		if (screen.keys.pressed(Key.esc))
-			if (data.dying)
+		if (!data.dying)
+			if (screen.keys.pressed(Key.esc))
+				gameOver()			
+
+		if (data.dying)
+			if (screen.keys.pressed(Key.esc) || screen.mouseButtons[1] == true)
 				gameReallyOver()
-			else
-				gameOver()
 	}
 	
 	Void anim() {
