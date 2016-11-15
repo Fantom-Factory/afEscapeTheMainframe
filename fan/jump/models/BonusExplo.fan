@@ -1,57 +1,76 @@
 using gfx::Color
 using gfx::Rect
+using gfx::Point
 
 @Js
 class BonusExplo : Model {
-	GameData 			data
 	Bool				killMe
-	Int					killMeCountdown
 	BonusExploSquare[]	squares
 	
-	new make(GameData data, |This| in) : super(in) {
-		this.data = data
-	}
+	new make(|This| in) : super(in) { }
 	
 	override Void draw(Gfx3d g3d) {
-		squares.each { it.draw(g3d) }
+		g2d := g3d.g2d
+		squares.each { it.draw(g2d) }
 	}
 	
 	override Void anim() {
 		squares.each { it.anim }
-		if (killMeCountdown++ > 50)
+		if (squares.first.size <= 0f)
 			killMe = true
 	}
 }
 
 @Js
-class BonusExploSquare : Model {
-	GameData 	data
+class BonusExploSquare {
 	Float		force	:= 10f
-	Float		size	:= 0.35f
-	Point3d		movementVector
+	Float		size	:= 0.21f
+	Point2d[]	points	:= Point2d#.emptyList
+	Point2d		movementVector
 
-	new make(GameData data, |This| in) : super(in) {
-		this.data = data
-	}
+	Float	x
+	Float	y
+	Float	az
+	Float	dx
+	
+	new make(|This| f) { f(this) }
 
-	override Void anim() {		
+	Void anim() {		
 		thing := movementVector.scale(force)
-		x += thing.x
+		x += thing.x - dx
 		y += thing.y
-		z += thing.z
-		
-		x -= (data.floorSpeed / 2)
-		
+
 		force = 0f.max(force - 0.18f)
 		
 		az += 0.04f
 				
 		points = [
-			Point3d(  0f, 100f, 0f),
-			Point3d(-87f, -50f, 0f),
-			Point3d( 87f, -50f, 0f),
+			Point2d(-100f,  100f),
+			Point2d( 100f,  100f),
+			Point2d( 100f, -100f),
+			Point2d(-100f, -100f),
 		]
 		scale(size)
-		size -= 0.005f
+		size = 0f.max(size-0.007f)
+	}
+	
+	Void draw(Gfx g2d) {
+		if ((g2d.ox + x) < 0f)	return
+		if ((g2d.oy + y) < 0f)	return
+
+		pts2d := points
+			.map |pt| { pt.rotate(az).translate(x, y) }
+			.map |Point2d pt -> Point| { Point(g2d.ox + pt.x.toInt, g2d.oy - pt.y.toInt) }
+
+		g2d.g.brush = Models.cube_fill
+		g2d.g.fillPolygon(pts2d)
+
+		g2d.g.brush = Models.cube_edge
+		g2d.g.drawPolygon(pts2d)		
+	}
+	
+	This scale(Float sx, Float sy := sx) {
+		points = points.map { it.scale(sx, sy) }
+		return this
 	}
 }
