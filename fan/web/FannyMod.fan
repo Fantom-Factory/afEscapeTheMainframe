@@ -89,7 +89,7 @@ const class FannyMod : WebMod {
 			              	
 			              	var touches = event.changedTouches, first = touches[0], type = '';
 			              	switch(event.type) {
-			              	  case 'touchstart':  type = 'mousedown'; break;
+			              	  case 'touchstart':  type = 'mousedown'; event.preventDefault(); break;
 			              	  case 'touchmove':   type = 'mousemove'; event.preventDefault(); break;		
 			              	  case 'touchend':    type = 'mouseup';   break;
 			              	  case 'touchcancel': type = 'mouseup';   break;
