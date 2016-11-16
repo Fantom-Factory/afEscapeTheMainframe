@@ -85,6 +85,9 @@ const class FannyMod : WebMod {
 			// http://stackoverflow.com/a/26543616/1532548
 			out.script.w("document.getElementById('fwtRoot').addEventListener('keydown', function (e) { e.preventDefault(); });").scriptEnd
 			out.script.w("document.getElementById('fwtRoot').addEventListener('contextmenu', function (e) { e.preventDefault(); });").scriptEnd
+		
+			// convert touch events into mouse events
+			// preventDefault() on mousedown to prevent long squishes from selecting the game canvas
 			out.script.w("function touchHandler(event) {
 			              	
 			              	var touches = event.changedTouches, first = touches[0], type = '';
