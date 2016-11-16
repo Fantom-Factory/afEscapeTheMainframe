@@ -80,6 +80,10 @@ html, body {
   height: 288px;
   border: 8px solid #000; }
 
+.game div,
+.game canvas {
+  border-width: 0 }
+
 .noTouch {
   position: absolute;
   width: 100%;
