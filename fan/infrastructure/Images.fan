@@ -26,7 +26,7 @@ class Images {
 	protected Image load(Str imageName) {
 		images.getOrAdd(imageName) |->Image| {
 			log.info("Loading Image $imageName")
-			return Image.make(`fan://${typeof.pod}/res/${imageName}`)
+			return Image.make(`fan://${typeof.pod}/res/images/${imageName}`)
 		}
 	}
 }

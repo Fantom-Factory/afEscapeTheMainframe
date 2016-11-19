@@ -38,6 +38,6 @@ class Build : BuildPod {
 
 		srcDirs = [`fan/`, `fan/gaming/`, `fan/infrastructure/`, `fan/jump/`, `fan/jump/models/`, `fan/jump/screens/`, `fan/sinedots/`, `fan/web/`]
 		jsDirs	= [`js/`]
-		resDirs = [`doc/`, `res/`, `res/web/`]
+		resDirs = [`doc/`, `res/images/`, `res/web/`]
 	}
 }
