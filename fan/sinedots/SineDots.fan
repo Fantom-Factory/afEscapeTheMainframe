@@ -16,7 +16,7 @@ class SineDots {
 	new make(|This| in) {
 		in(this)		
 		
-		imgUrl	:= `res/fanny-x180.png`
+		imgUrl	:= `res/images/fanny-x180.png`
 		imgBuffer := loadImg(imgUrl.toFile, 50, 50)
 		imgW := imgBuffer.getWidth
 		imgH := imgBuffer.getHeight
