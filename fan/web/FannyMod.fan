@@ -154,9 +154,14 @@ const class FannyMod : WebMod {
 		out.htmlEnd
 	}
 
+   	** Serve up pod resources.
 	Void onPodFile() {
-    	// serve up pod resources
-    	File file := ("fan://" + req.uri[1..-1]).toUri.get
+		path := req.uri[1..-1]
+		// stoopid cached css files!
+		if (path.path.size == 3 && path.ext == "png")
+			path = `${path.parent}images/${path.name}`
+		
+    	File file := `fan://${path}`.get
     	if (!file.exists) { res.sendErr(404); return }
     	FileWeblet(file).onService
    	}
