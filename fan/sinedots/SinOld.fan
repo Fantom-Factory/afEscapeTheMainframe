@@ -1,4 +1,5 @@
 
+@Js
 const class SinOld {
 	
 	static const SinOld instance := SinOld()

@@ -16,9 +16,9 @@ const class AppModule {
 		// TODO maybe put the qname of this class in pod meta -> for a generic gaming infrastructure
 		bob.onScopeCreate("uiThread") |Configuration config| {
 			config["eagerLoad"] = |->| {
-				config.scope.serviceByType(App#)
+//				config.scope.serviceByType(App#)
 
-//				config.build(SineApp#)
+				config.build(SineApp#)
 			}
 		}
 	}
