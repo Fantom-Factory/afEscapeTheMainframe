@@ -4,14 +4,14 @@ using gfx
 class Images {
 	private const Log log := typeof.pod.log
 
-	private [Str:Image] images := [:]
+	private Str:Image images := Str:Image[:]
 	
 	
 	
 	Image[] preloadImages() {
 		typeof.methods.findAll |method| {
 			(method.returns == Image#) && (method.isPublic) && (!method.isStatic) && (method.params.size == 0)
-		}.map |Method method->Image?| {
+		}.map |Method method->Image| {
 			method.callOn(this, null)
 		}
 	}

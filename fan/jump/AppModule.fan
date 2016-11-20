@@ -9,6 +9,7 @@ const class AppModule {
 		bob.addService(BgGlow#)
 		bob.addService(HiScores#)
 		bob.addService(FannyImages#)
+		bob.addService(FannySounds#)
 		bob.addService(FloorCache#)
 		bob.addService(BlockCache#)
 
