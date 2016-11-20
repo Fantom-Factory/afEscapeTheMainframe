@@ -61,9 +61,6 @@ class IntroAnim {
 			Int		time	:= 1
 			Bool	finished
 
-			Point3d camera	:= Point3d(0f, 42f, -500f) 
-			Point3d target	:= Point3d(0f, -75f, 0f)
-
 	new make(FannyImages images) {
 		this.images = images
 		initTweans

@@ -13,6 +13,7 @@ class App : DemoEvents {
 	@Autobuild	private AboutScreen			aboutScreen
 	@Autobuild	private HiScoreScreen		hiScoreScreen
 	@Autobuild	private HiScoreEntryScreen	hiScoreEntryScreen
+	@Autobuild	private CreditsScreen		creditsScreen
 				private GameSeg?			activeScreen
 						Bool				offline
 						Bool				offlineMode
@@ -50,6 +51,10 @@ class App : DemoEvents {
 	
 	Void showHiScores() {
 		activeScreen = deactivate.hiScoreScreen.onInit		
+	}
+	
+	Void showCredits() {
+		activeScreen = deactivate.creditsScreen.onInit		
 	}
 	
 	Void gameOver(Int score, Int level, Bool training, Bool showOutro) {

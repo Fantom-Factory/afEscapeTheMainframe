@@ -57,4 +57,9 @@ const class Sin {
 		idx := ((angle - angle.floor) * max).toInt % max
 		return cosTable[idx]
 	}
+
+	static Float sinSimple(Float angle) {
+		idx := (angle * max).toInt % max
+		return sinTable[idx]
+	}
 }

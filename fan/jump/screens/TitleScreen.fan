@@ -23,6 +23,7 @@ class TitleScreen : GameSeg {
 			menu.add("Start Game")
 			menu.add("Hi-Scores")
 			menu.add("About")	//menu.add("Instructions")
+			menu.add("Credits")
 //			menu.add("Exit")	// don't know how to quit!!!
 			tit := it
 			go = |high| {
@@ -32,6 +33,8 @@ class TitleScreen : GameSeg {
 					app().showHiScores
 				if (high == 2)
 					app().showAbout
+				if (high == 3)
+					app().showCredits
 			}
 		}
 		return this
@@ -97,7 +100,7 @@ class TitleMenu {
 	Void draw(Gfx g2d) {
 		menu.each |str, i| {
 			x := 216 + ((10 - str.size) * 16 / 2)
-			y := (12 * 16) + (i * 20)
+			y := (11 * 16) + (i * 20)
 			
 			if (i == highlighted) {
 				g2d.brush = Color.gray
