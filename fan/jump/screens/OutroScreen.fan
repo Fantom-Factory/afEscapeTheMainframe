@@ -89,7 +89,7 @@ class OutroAnim {
 				it.startY		=  it.finalY
 				it.finalX		=  768
 				it.finalY		=    0
-				it.tweanIn		= false
+				it.easeIn		= false
 			}
 			
 			tweanExplo = TweanExplo {
@@ -160,18 +160,10 @@ class TweanFanny3 : Twean {
 	}
 	
 	override Void doDrawImage(Gfx g2d, Int x, Int y) {
-		if (time < 75) {
-			frame := time - startFrame
+		if (time < 75) {			
+			sinio := ratio(time, easeIn)
 			
-			ratio := frame.toFloat / (endFrame - startFrame)
-			angle := ratio * 0.25f
-			if (!tweanIn)
-				angle += 0.25f
-			sinio := Sin.sin(angle)
-			if (!tweanIn)
-				sinio = 1f - sinio
-			
-			w := ((imgWidth - 40) * sinio) + 40
+			w := ((imgWidth  - 40) * sinio) + 40
 			h := ((imgHeight - 40) * sinio) + 40
 
 			g2d.g.copyImage(img, Rect(0, 0, imgWidth, imgHeight), Rect(x, y, w.toInt, h.toInt))

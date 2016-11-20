@@ -94,7 +94,7 @@ class TitleBg {
 
 @Js
 class Twean {
-	Image	img
+	Image?	img
 	Int		startFrame
 	Int		endFrame
 	Int		imgWidth
@@ -103,28 +103,33 @@ class Twean {
 	Int		startY
 	Int		finalX
 	Int		finalY
-	Bool	tweanIn	:= true
+	Bool	easeIn	:= true
 	Bool	endOffScreen
 	
 	new make(|This| f) { f(this) }
 
+	Float ratio(Int time, Bool easeIn, Int startFrame := this.startFrame, Int endFrame := this.endFrame) {
+		frame := time - startFrame
+		
+		ratio := frame.toFloat / (endFrame - startFrame)
+		angle := ratio * 0.25f
+		if (!easeIn)
+			angle += 0.25f
+		sinio := Sin.sin(angle)
+		if (!easeIn)
+			sinio = 1f - sinio
+		return ratio
+	}
+	
 	virtual Void draw(Gfx g2d, Int time) {
 		if (time <= startFrame)
 			return
 		
-		if (time > startFrame && time < endFrame) {
-			frame := time - startFrame
+		if (time > startFrame && time < endFrame) {			
+			ratio := ratio(time, easeIn)
 			
-			ratio := frame.toFloat / (endFrame - startFrame)
-			angle := ratio * 0.25f
-			if (!tweanIn)
-				angle += 0.25f
-			sinio := Sin.sin(angle)
-			if (!tweanIn)
-				sinio = 1f - sinio
-			
-			x := ((finalX - startX) * sinio) + startX
-			y := ((finalY - startY) * sinio) + startY
+			x := ((finalX - startX) * ratio) + startX
+			y := ((finalY - startY) * ratio) + startY
 			doDrawImage(g2d, x.toInt, y.toInt)
 			return
 		}
