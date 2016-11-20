@@ -6,6 +6,7 @@ using fwt
 class HiScoreScreen : GameSeg {
 	
 	@Inject	private Screen		screen
+	@Inject	private FannySounds	sounds
 	@Inject	private |->App|		app
 	@Inject	private HiScores	hiScores
 	@Inject	private BgGlow		bgGlow
@@ -46,9 +47,10 @@ class HiScoreScreen : GameSeg {
 	override Void onDraw(Gfx g2d) {
 		bgGlow.draw(g2d)
 
-		pages.onJiffy(screen)
+		pages.onJiffy(screen, sounds)
 		
 		if (pages.anyKey || screen.touch.swiped(Key.enter)) {
+			sounds.menuSelect.play
 			app().showTitles
 		}
 		
@@ -87,7 +89,7 @@ class PagesScreen {
 
 	new make(|This| f) { f(this) }
 	
-	Void onJiffy(Screen screen) {
+	Void onJiffy(Screen screen, FannySounds sounds) {
 		anyKey = screen.keys.dup {
 			remove(Key.up)
 			remove(Key.down)
@@ -99,6 +101,7 @@ class PagesScreen {
 			if (scoreTarget > 0) {
 				speedX = -speed
 				scoreTarget -= 30
+				sounds.menuMove.play
 			}
 		}
 
@@ -106,6 +109,7 @@ class PagesScreen {
 			if (scoreTarget < (30 * (noOfPages-2))) {
 				speedX = speed
 				scoreTarget += 30
+				sounds.menuMove.play
 			}
 		}
 		

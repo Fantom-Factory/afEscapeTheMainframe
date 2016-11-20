@@ -40,7 +40,6 @@ fan.afFannyTheFantom.SoundClipJs.make = function(soundUri) {
 	request.onload = function() {
 		context.decodeAudioData(request.response, function(buffer) {
 			soundJs.m_buffer = buffer;
-			soundJs.play();
 		});
 	}
 	request.send();
@@ -49,7 +48,7 @@ fan.afFannyTheFantom.SoundClipJs.make = function(soundUri) {
 }
 
 fan.afFannyTheFantom.SoundClipJs.prototype.loaded = function() {
-	this.m_buffer !== null
+	return this.m_buffer != null
 }
 
 fan.afFannyTheFantom.SoundClipJs.prototype.play = function() {

@@ -6,6 +6,7 @@ using fwt
 class AboutScreen : GameSeg {
 	
 	@Inject	private Screen		screen
+	@Inject	private FannySounds	sounds
 	@Inject	private |->App|		app
 	@Inject	private BgGlow		bgGlow
 //			private Image?		imgScores
@@ -47,6 +48,7 @@ class AboutScreen : GameSeg {
 		
 		anyKey := screen.keys.size > 0 || screen.touch.swiped(Key.enter)
 		if (anyKey) {
+			sounds.menuSelect.play
 			app().showTitles
 		}
 		

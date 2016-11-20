@@ -6,6 +6,7 @@ class LoadingScreen : GameSeg {
 	
 	@Inject	private |->App|		app
 	@Inject	private FannyImages	images
+	@Inject	private FannySounds	sounds
 	@Inject	private FloorCache	floorCache
 	@Inject	private BlockCache	blockCache
 			private Int			draws
@@ -21,9 +22,10 @@ class LoadingScreen : GameSeg {
 	override Void onKill() { }
 
 	override Void onDraw(Gfx g2d) {
-		percent := preloadImages
+		percentImages := preloadImages
+		percentSounds := preloadSounds
 
-		if (percent >= 100 && (!Runtime.isJs || showPreCalc)) {
+		if (percentImages >= 100 && percentSounds >= 100 && (!Runtime.isJs || showPreCalc)) {
 			floorCache.init
 			blockCache.init
 			return app().showTitles
@@ -35,27 +37,33 @@ class LoadingScreen : GameSeg {
 		drawFont8Centred (g2d, "presents",		(16 *  3)+10)
 		drawFont16Centred(g2d, "  \"F A N N Y   the   F A N T O M\"",	(16 *  7))
 		
-		if (percent < 100)
-			drawFont8Centred(g2d, "loading images - ${percent.toStr.justr(3)}%", (16 * 12))
+		if (percentImages < 100)
+			drawFont8Centred(g2d, "loading images - ${percentImages.toStr.justr(3)}%", (16 * 12))
 		else {
-			drawFont8Centred(g2d, "pre-calculating vectors...", (16 * 12))
-			showPreCalc = true			
+			if (percentSounds < 100)
+				drawFont8Centred(g2d, "loading sounds - ${percentSounds.toStr.justr(3)}%", (16 * 12))
+			else {
+				drawFont8Centred(g2d, "pre-calculating vectors...", (16 * 12))
+				showPreCalc = true
+			}
 		}
 
 		draws++
 	}
 	
 	private Int preloadImages() {
-		images := images.preloadImages
-		noOfImages := images.size
-		
-		unloadedNames := images.findAll |image| {
-			image.size == Size.defVal
-		}.map |Image image->Str| {
-			image.uri.name
-		}
-
-		percent := ((noOfImages - unloadedNames.size) * 100) / noOfImages 
+		images		:= images.preloadImages
+		noOfImages	:= images.size
+		unloaded	:= images.findAll { it.size == Size.defVal }
+		percent		:= ((noOfImages - unloaded.size) * 100) / noOfImages 
+		return percent
+	}
+	
+	private Int preloadSounds() {
+		sounds		:= sounds.preloadSounds
+		noOfSounds	:= sounds.size
+		unloaded	:= sounds.findAll { it.loaded.not }
+		percent		:= ((noOfSounds - unloaded.size) * 100) / noOfSounds 
 		return percent
 	}
 	

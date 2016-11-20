@@ -6,6 +6,7 @@ using fwt
 class HiScoreEntryScreen : GameSeg {
 	
 	@Inject	private Screen		screen
+	@Inject	private FannySounds	sounds
 	@Inject	private |->App|		app
 	@Inject	private HiScores	hiScores
 	@Inject	private BgGlow		bgGlow
@@ -68,6 +69,7 @@ class HiScoreEntryScreen : GameSeg {
 		if (screen.keys.pressed(Key.esc) || screen.touch.swiped(Key.left) || screen.touch.swiped(Key.right)) {
 			screen.editMode = false
 			hiScores.editing = false
+			sounds.menuSelect.play
 			app().showTitles			
 		}
 
@@ -79,8 +81,10 @@ class HiScoreEntryScreen : GameSeg {
 					hiScores.saveScore(hiScores[newPosition], level)
 				}
 				
-			} else
+			} else {
+				sounds.menuSelect.play
 				app().showTitles
+			}
 		}
 		
 		

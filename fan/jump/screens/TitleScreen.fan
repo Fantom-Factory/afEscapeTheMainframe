@@ -8,6 +8,7 @@ using afIoc::Scope
 class TitleScreen : GameSeg {
 
 	@Inject	private Screen		screen
+	@Inject	private FannySounds	sounds
 	@Inject	private |->App|		app
 	@Inject	private BgGlow		bgGlow
 	@Inject	private FannyImages	images
@@ -18,7 +19,7 @@ class TitleScreen : GameSeg {
 
 	override This onInit() {
 		titleBg		= TitleBg(images)
-		titleMenu	= TitleMenu {
+		titleMenu	= TitleMenu(screen, sounds) {
 			menu.add("Start Game")
 			menu.add("Hi-Scores")
 			menu.add("About")	//menu.add("Instructions")
@@ -44,7 +45,7 @@ class TitleScreen : GameSeg {
 	override Void onKill() { }
 
 	override Void onDraw(Gfx g2d) {
-		titleMenu.keys(screen)
+		titleMenu.keys()
 
 		if (titleMenu.anyKey) {			
 			level := null as Int
@@ -80,11 +81,18 @@ class TitleScreen : GameSeg {
 
 @Js
 class TitleMenu {
-	private Int		highlighted	:= 0
+	private Screen		screen
+	private FannySounds	sounds
+	private Int			highlighted	:= 0
 
 	Str[]	menu		:= Str[,]
 	Bool	anyKey
 	|Int|?	go
+	
+	new make(Screen screen, FannySounds sounds) {
+		this.screen = screen
+		this.sounds = sounds
+	}
 	
 	Void draw(Gfx g2d) {
 		menu.each |str, i| {
@@ -100,7 +108,7 @@ class TitleMenu {
 		}
 	}
 	
-	Void keys(Screen screen) {
+	Void keys() {
 		anyKey = screen.keys.dup {
 			remove(Key.up)
 			remove(Key.down)
@@ -122,16 +130,19 @@ class TitleMenu {
 		if (screen.keys.pressed(Key.up) || screen.touch.swiped(Key.up)) {
 			if (highlighted > 0) {
 				highlighted -= 1
+				sounds.menuMove.play
 			}
 		}
 
 		if (screen.keys.pressed(Key.down) || screen.touch.swiped(Key.down)) {
 			if (highlighted < menu.size-1) {
 				highlighted += 1
+				sounds.menuMove.play
 			}
 		}
 
 		if (screen.keys.pressed(Key.enter) || screen.touch.swiped(Key.enter)) {
+			sounds.menuSelect.play
 			go?.call(highlighted)
 		}
 	}

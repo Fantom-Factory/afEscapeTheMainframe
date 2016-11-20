@@ -8,7 +8,7 @@ using [java] javax.sound.sampled::FloatControl$Type as FType
 
 @Js
 class SoundClips {
-	private Uri:SoundClip soundClips := [:]
+	private Str:SoundClip soundClips := Str:SoundClip[:]
 
 	Void stopAll() {
 		soundClips.each |soundClip| {
@@ -17,9 +17,9 @@ class SoundClips {
 	}
 	
 	SoundClip loadSoundClip(Uri soundUrl) {
-		return soundClips.getOrAdd(soundUrl) |->SoundClip| {
-			return Env.cur.runtime == "js"
-				? SoundClipJs(soundUrl)
+		soundClips.getOrAdd(soundUrl.toStr) |->SoundClip| {
+			Env.cur.runtime == "js"
+				? typeof.pod.type("SoundClipJs"  ).make([soundUrl])
 				: typeof.pod.type("SoundClipJava").make([soundUrl])
 		}
 	}
@@ -34,10 +34,11 @@ mixin SoundClip {
 }
 
 class SoundClipJava : SoundClip {
-	private Clip clip
+	private Uri		soundUri
+	private Clip	clip
 	
-	internal new make(Uri fileUrl) {
-		soundFile			:= fileUrl.get as File
+	new make(Uri soundUri) {
+		soundFile			:= soundUri.get as File
 		soundStream 		:= Interop.toJava(soundFile.in)
 	    audioInputStream	:= AudioSystem.getAudioInputStream(soundStream)
    	 	audioFormat			:= audioInputStream.getFormat
@@ -45,7 +46,8 @@ class SoundClipJava : SoundClip {
         clip 				:= AudioSystem.getLine(dataLineInfo) as Clip
         clip.open(audioInputStream)
 		
-		this.clip = clip
+		this.clip		= clip
+		this.soundUri	= soundUri
 	}
 	
 	// see http://stackoverflow.com/questions/40514910/set-volume-of-java-clip/40698149#40698149
@@ -75,6 +77,10 @@ class SoundClipJava : SoundClip {
 			clip.stop
 			clip.flush
 		}
+	}
+	
+	override Str toStr() {
+		soundUri.name
 	}
 }
 
