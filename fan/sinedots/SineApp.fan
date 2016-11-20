@@ -1,6 +1,7 @@
 using afIoc
 
 ** To see, eager load SineApp in AppModule
+@Js
 class SineApp : DemoEvents {
 
 	@Autobuild	private SineDots	sineDots
