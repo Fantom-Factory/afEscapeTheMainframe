@@ -97,7 +97,7 @@ class IntroAnim {
 				it.startY		=  288 - it.imgHeight - 40
 				it.finalX		=  768 + it.imgWidth
 				it.finalY		=  288 - it.imgHeight - 40
-				it.tweanIn		= false
+				it.easeIn		= false
 			}
 		
 			tweanKeyboard.with {
@@ -107,7 +107,7 @@ class IntroAnim {
 				it.startY		=  288 - it.imgHeight - 40
 				it.finalX		=  768 + -180 - 40
 				it.finalY		=  288 + it.imgHeight
-				it.tweanIn		= false
+				it.easeIn		= false
 			}
 		}
 		
@@ -127,7 +127,7 @@ class IntroAnim {
 			it.startY		=  -35
 			it.finalX		= it.startX
 			it.finalY		= it.startY - it.imgHeight
-			it.tweanIn		= false
+			it.easeIn		= false
 			it.endOffScreen	= true
 		}
 	
@@ -141,7 +141,7 @@ class IntroAnim {
 			it.startY		=   25
 			it.finalX		= 768 + it.imgWidth
 			it.finalY		= -it.imgHeight
-			it.tweanIn		= false
+			it.easeIn		= false
 			it.endOffScreen	= true
 		}
 	
@@ -155,7 +155,7 @@ class IntroAnim {
 			it.startY		=   60
 			it.finalX		= it.startX + imgWidth
 			it.finalY		= it.startY
-			it.tweanIn		= false
+			it.easeIn		= false
 			it.endOffScreen	= true
 		}
 	
@@ -198,13 +198,13 @@ class IntroAnim {
 		tweanLazer1		= TweanLazer {
 			it.startFrame	=   40
 			it.endFrame		=   70
-			it.tweanIn		= false
+			it.easeIn		= false
 		}
 		
 		tweanLazer2		= TweanLazer {
 			it.startFrame	=   60
 			it.endFrame		=   90
-			it.tweanIn		= false
+			it.easeIn		= false
 		}
 		
 		tweanGrid		= TweanGrid {
@@ -232,7 +232,7 @@ class TweanLazer {
 	Float	pt1y
 	Float	pt2x
 	Float	pt2y
-	Bool	tweanIn	:= true
+	Bool	easeIn	:= true
 	
 	new make(|This| f) { f(this) }
 
@@ -250,10 +250,10 @@ class TweanLazer {
 
 			ratio := frame.toFloat / (endFrame - startFrame)
 			angle := ratio * 0.25f
-			if (!tweanIn)
+			if (!easeIn)
 				angle += 0.25f
 			sinio := Sin.sin(angle)
-			if (!tweanIn)
+			if (!easeIn)
 				sinio = 1f - sinio
 
 			startX := monitorX + 130
