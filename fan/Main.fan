@@ -25,6 +25,7 @@ class Main : AbstractMain {
 				it.httpPort = this.port
 				it.root = FannyMod()
 			}
+			echo("Fanny the Fantom website now available on http://localhost:${this.port}/")
 			return runServices([wisp])			
 		}
 		
