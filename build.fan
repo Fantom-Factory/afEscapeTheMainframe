@@ -12,8 +12,6 @@ class Build : BuildPod {
 			"pod.dis"			: "Fanny the Fantom",
 			"pod.displayName"	: "Fanny the Fantom",
 			"repo.public"		: "true",
-
-			"afIoc.module"		: "afFannyTheFantom::DemoModule"
 		]
 
 		depends = [	
