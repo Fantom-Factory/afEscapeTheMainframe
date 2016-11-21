@@ -8,7 +8,7 @@ const class FannyMod : WebMod {
 
 	private const Str	windowTitle	:= FannyTheFantom.windowTitle
 	private const Size	windowSize	:= FannyTheFantom.windowSize
-	private const Str	windowDesc	:= "Fanny the Fantom :: A 3D vector jump game written in Fantom, created by Alien-Factory"
+	private const Str	windowDesc	:= "Fanny the Fantom :: A retro 3D vector jump game, written in Fantom, created by Alien-Factory"
 	private const Pod[] pods
 	
 	new make() {
