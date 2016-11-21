@@ -110,7 +110,7 @@ class CreditScroll {
 	
 	new make(Screen screen) {
 		
-		imgCredits = Image.makePainted(Size(FannyTheFantom.windowSize.w / 2, 1500)) |g| {
+		imgCredits = Image.makePainted(Size(FannyTheFantom.windowSize.w / 2, 1200)) |g| {
 			g2d := screen.gfx(g)
 			g2d.clear	//(Models.bgColour)
 			
@@ -142,7 +142,7 @@ class CreditScroll {
 //			y = drawCredits(g2d, y, "Stunt Doubles", "Sam Jeapes\nElsie Jeapes")
 //			y = drawCredits(g2d, y, "Special Thanks To", "Sam Jeapes\nElsie Jeapes")
 
-			echo(y + 288)
+			echo(y)
 		}
 
 	}
