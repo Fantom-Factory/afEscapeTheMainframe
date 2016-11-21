@@ -71,25 +71,30 @@ class CreditsAnim {
 				it.startFrame	= 100
 			},
 			CreditTwean {
-				it.title		= "FANNY the FANTOM"
-				it.name			= "The Game"
-				it.flip			= true
+				it.title		= "A Game written in"
+				it.name			= "The Fantom Language"
 				it.startFrame	= 100 + (250 * 1)
 			},
 			CreditTwean {
-				it.title		= "Coding & Game Design"
-				it.name			= "Steve Eynon"
+				it.title		= "Fanny the Fantom"
+				it.name			= "Escape the Mainframe"
+				it.flip			= true
 				it.startFrame	= 100 + (250 * 2)
+			},
+			CreditTwean {
+				it.title		= "Coding / Programming"
+				it.name			= "SlimerDude"
+				it.startFrame	= 100 + (250 * 3)
 			},
 			CreditTwean {
 				it.title		= "Sound Effects"
 				it.name			= "Modulate"
-				it.startFrame	= 100 + (250 * 3)
+				it.startFrame	= 100 + (250 * 4)
 			},
 			CreditTwean {
 				it.title		= "Cartoon Graphics"
 				it.name			= "Ajordaz"
-				it.startFrame	= 100 + (250 * 4)
+				it.startFrame	= 100 + (250 * 5)
 			},
 		]
 	}
@@ -98,25 +103,39 @@ class CreditsAnim {
 @Js
 class CreditScroll {
 
-//	Int		startFrame	:= 0
-	Int		startFrame	:= 100 + (250 * 5)
+	Int		startFrame	:= 100 + (250 * 6)
 	Float	startY
 	Image?	imgCredits
 	Bool	finished
 	
 	new make(Screen screen) {
 		
-		imgCredits = Image.makePainted(Size(FannyTheFantom.windowSize.w / 2, 1000)) |g| {
+		imgCredits = Image.makePainted(Size(FannyTheFantom.windowSize.w / 2, 2000)) |g| {
 			g2d := screen.gfx(g)
 			g2d.clear	//(Models.bgColour)
 			
 			y := FannyTheFantom.windowSize.h
 			y = drawCredits(g2d, y, "Alien-Factory", "Presents", true)
-			y = drawCredits(g2d, y, "FANNY the FANTOM", "The Game", true)
-			y = drawCredits(g2d, y, "Written in", "Fantom Language")
-			y = drawCredits(g2d, y, "Coding & Game Design", "Steve Eynon\nThe Dude")
-			y = drawCredits(g2d, y, "Sound Effects", "Modulate")
+			y = drawCredits(g2d, y, "A Game written in", "The Fantom Language")
+			y = drawCredits(g2d, y, "Fanny the Fantom", "Escape the Mainframe", true)
+			y = drawCredits(g2d, y, "Game Design", "Steve Eynon\nEmma Eynon")
+			y = drawCredits(g2d, y, "Coding / Programming", "SlimerDude") - 100
+			g2d.drawFont8Centred("aka", y)
+			y+=8
+			g2d.drawFont16Centred("Steve Eynon", y)
+			y+=16+100
+			
+			y = drawCredits(g2d, y, "Sound Effects", "Modulate") - 100
+			g2d.drawFont8Centred("aka", y)
+			y+=8
+			g2d.drawFont16Centred("Geoff Lee", y)
+			y+=16+100
+
 			y = drawCredits(g2d, y, "Cartoon Graphics", "Ajordaz")
+			y = drawCredits(g2d, y, "3D Vector Graphics", "Steve Eynon")
+			y = drawCredits(g2d, y, "Stunt Doubles", "Steve Eynon")
+			y = drawCredits(g2d, y, "Kung Fu Choreography", "Emma Eynon")
+			y = drawCredits(g2d, y, "Special Thanks To", "Sam Jessops\nElsie Jessops")
 
 			echo(y)
 		}
@@ -254,7 +273,6 @@ class CreditTwean : Twean {
 		
 		if (!easeIn && time >= (endFrame+10)) {
 			finished = true
-			echo(time)
 		}
 	}
 }

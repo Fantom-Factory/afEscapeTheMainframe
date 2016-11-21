@@ -14,10 +14,12 @@ class TitleScreen : GameSeg {
 	@Inject	private FannyImages	images
 			private TitleBg?	titleBg
 			private TitleMenu?	titleMenu
+			private Duration?	startedAt
 	
 	new make(|This| in) { in(this) }
 
 	override This onInit() {
+		startedAt	= Duration.now
 		titleBg		= TitleBg(images)
 		titleMenu	= TitleMenu(screen, sounds) {
 			menu.add("Start Game")
@@ -64,11 +66,15 @@ class TitleScreen : GameSeg {
 			if (screen.keys.pressed(Key.num0))	level = 10
 
 			if (level != null)
-				app().startGame(level)
+				return app().startGame(level)
 			else
-				app().showIntro(titleBg.fannyY)
+				return app().showIntro(titleBg.fannyY)
 		}
 
+		if ((Duration.now - startedAt) > 25sec) {
+			return app().showCredits()
+		}
+		
 		bgGlow.draw(g2d)
 		titleBg.draw(g2d)
 		
