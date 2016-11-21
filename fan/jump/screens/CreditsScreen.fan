@@ -93,7 +93,7 @@ class CreditsAnim {
 			},
 			CreditTwean {
 				it.title		= "Cartoon Graphics"
-				it.name			= "Ajordaz"
+				it.name			= "Anibal Ordaz"
 				it.startFrame	= 100 + (250 * 5)
 			},
 		]
@@ -134,7 +134,7 @@ class CreditScroll {
 			g2d.drawFont16Centred("Geoff Lee", y)
 			y+=16+spacing
 
-			y = drawCredits(g2d, y, "Cartoon Graphics", "Ajordaz")
+			y = drawCredits(g2d, y, "Cartoon Graphics", "Anibal Ordaz")
 			y = drawCredits(g2d, y, "3D Vector Graphics", "Steve Eynon")
 //			y = drawCredits(g2d, y, "Stunt Doubles", "Steve Eynon")
 			y = drawCredits(g2d, y, "Key Grip", "Tracey Jeapes")
