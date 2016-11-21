@@ -17,6 +17,7 @@ class Screen : Canvas {
 					}
 					Int:Bool	mouseButtons:= Int:Bool[:]
 					Int			mouseSensitivity := 3
+					|->|?		mouseDownFunc
 
 	new make(|This| in) {
 		in(this)
@@ -75,6 +76,7 @@ class Screen : Canvas {
 		if (e.pos != null)
 			mousePos = e.pos
 		mouseButtons[e.button] = true
+		mouseDownFunc?.call()
 	}
 
 	private Void mouseUp(Event e) {

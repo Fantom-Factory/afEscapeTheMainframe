@@ -6,6 +6,7 @@ class App : DemoEvents {
 	@Inject		private Screen				screen
 	@Inject		private HiScores			hiScores
 	@Autobuild	private LoadingScreen		loadingScreen
+	@Autobuild	private TouchScreen			touchScreen
 	@Autobuild	private TitleScreen			titleScreen
 	@Autobuild	private IntroScreen			introScreen
 	@Autobuild	private GameScreen			gameScreen
@@ -25,12 +26,15 @@ class App : DemoEvents {
 
 	override Void onStartup() {
 		activeScreen = loadingScreen.onInit
-//		activeScreen = creditsScreen.onInit
 		hiScores.loadScores
 	}
 	
 	override Void onDraw(Gfx g) {
 		activeScreen?.onDraw(g)
+	}
+	
+	Void showTouch() {
+		activeScreen = deactivate.touchScreen.onInit		
 	}
 	
 	Void showTitles() {
