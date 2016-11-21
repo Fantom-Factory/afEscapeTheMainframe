@@ -124,7 +124,13 @@ class TitleMenu {
 		if (mousePos != null)
 			menu.each |str, i| {
 				x := 216 + ((10 - str.size) * 16 / 2)
-				y := (12 * 16) + (i * 20)
+				y := (11 * 16) + (i * 20)
+				
+				// add the border width
+				if (Runtime.isJs) {
+					x += 8
+					y += 8
+				}
 				
 				if (Rect(x - 2, y-1, (str.size * 16) + 4, 16+2).contains(mousePos.x, mousePos.y))
 					highlighted = i
