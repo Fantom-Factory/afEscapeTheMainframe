@@ -8,7 +8,8 @@ using [java] javax.sound.sampled::FloatControl$Type as FType
 
 @Js
 class SoundClips {
-	private Str:SoundClip soundClips := Str:SoundClip[:]
+	private const Log		log			:= typeof.pod.log
+	private Str:SoundClip	soundClips	:= Str:SoundClip[:]
 
 	Void stopAll() {
 		soundClips.each |soundClip| {
@@ -18,7 +19,8 @@ class SoundClips {
 	
 	SoundClip loadSoundClip(Uri soundUrl) {
 		soundClips.getOrAdd(soundUrl.toStr) |->SoundClip| {
-			Env.cur.runtime == "js"
+			log.info("Loading Sound ${soundUrl.name}")
+			return Env.cur.runtime == "js"
 				? typeof.pod.type("SoundClipJs"  ).make([soundUrl])
 				: typeof.pod.type("SoundClipJava").make([soundUrl])
 		}
