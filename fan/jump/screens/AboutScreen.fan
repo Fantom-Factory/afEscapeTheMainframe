@@ -52,11 +52,7 @@ class AboutScreen : GameSeg {
 			app().showTitles
 		}
 		
-		head := "|---------------------||---------------------|
-		                The Plot                 Keys
-		                --------                 ----"
-		
-		text := " Fanny the Fantom has been captured by the  
+		plot := " Fanny the Fantom has been captured by the  
 		          evil Mainframe. Help Fanny escape bad 
 		          programming by avoiding obstacles and 
 		          collecting bonus cubes.
@@ -67,29 +63,44 @@ class AboutScreen : GameSeg {
 		          Can you escape the Mainframe!? 
 		         "
 
-		keys := "           Use cursor keys to play:  
+		keys := " Touch swipe or use cursor keys to play:  
 		           
 		                          Up  :  Jump 
 		                         Down : Squish
 		          
 		          Hold 'up' to jump higher. Can you must master 
 		          the Squish Jump to complete the game!? 
-		           
+		          
 		          Press numbers '0' to '9' to start game in  
 		          training mode. Training scores are not saved.
 		         "
 		
-		head.splitLines.each |str, i| {
-			if (i == 0) return
-			g2d.drawFont16(str, 0, i * 16)
-		}
+		
+		g2d.g.brush = Models.brand_lightBlue
 
-		text.splitLines.each |str, i| {
-			g2d.drawFont8(str, 0, (i * 16)+64)
+		halfWidth := g2d.bounds.w / 2
+		g2d.drawFont16("The Plot", ((halfWidth - ("The Plot".size * 16)) / 2), 16)
+		g2d.drawFont16("Keys"    , ((halfWidth - ("Keys"    .size * 16)) / 2) + halfWidth, 16)
+
+		t1Size := "The Plot ".size * 16
+		x1 := ((halfWidth - t1Size) / 2)
+		x2 := x1 + t1Size
+		g2d.drawLine(x1, 34, x2, 34)
+
+		t2Size := "Keys ".size * 16
+		x1 = ((halfWidth - t2Size) / 2) + halfWidth
+		x2 = x1 + t2Size
+		g2d.drawLine(x1, 34, x2, 34)		
+
+		g2d.g.brush = Color.white
+		g2d.g.font = Desktop.sysFontMonospace.toSize(Runtime.isJs ? 14 : 10)
+
+		plot.splitLines.each |str, i| {
+			g2d.g.drawText(str, 0, (i * 16) + 64)
 		}
 
 		keys.splitLines.each |str, i| {
-			g2d.drawFont8(str, 46*8, (i * 16)+64)
+			g2d.g.drawText(str, halfWidth, (i * 16) + 64)
 		}
 		
 		chars := 19
