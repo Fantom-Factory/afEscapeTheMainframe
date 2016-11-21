@@ -102,7 +102,7 @@ class CreditsAnim {
 
 @Js
 class CreditScroll {
-
+	const	Int spacing	:= 60
 	Int		startFrame	:= 100 + (250 * 6)
 	Float	startY
 	Image?	imgCredits
@@ -110,34 +110,39 @@ class CreditScroll {
 	
 	new make(Screen screen) {
 		
-		imgCredits = Image.makePainted(Size(FannyTheFantom.windowSize.w / 2, 2000)) |g| {
+		imgCredits = Image.makePainted(Size(FannyTheFantom.windowSize.w / 2, 1500)) |g| {
 			g2d := screen.gfx(g)
 			g2d.clear	//(Models.bgColour)
 			
 			y := FannyTheFantom.windowSize.h
 			y = drawCredits(g2d, y, "Alien-Factory", "Presents", true)
-			y = drawCredits(g2d, y, "A Game written in", "The Fantom Language")
+//			y = drawCredits(g2d, y, "A Game written in", "The Fantom Language")
 			y = drawCredits(g2d, y, "Fanny the Fantom", "Escape the Mainframe", true)
+			
+			y+=spacing
+			
 			y = drawCredits(g2d, y, "Game Design", "Steve Eynon\nEmma Eynon")
-			y = drawCredits(g2d, y, "Coding / Programming", "SlimerDude") - 100
+			y = drawCredits(g2d, y, "Coding / Programming", "SlimerDude") - spacing
 			g2d.drawFont8Centred("aka", y)
 			y+=8
 			g2d.drawFont16Centred("Steve Eynon", y)
-			y+=16+100
+			y+=16+spacing
 			
-			y = drawCredits(g2d, y, "Sound Effects", "Modulate") - 100
+			y = drawCredits(g2d, y, "Sound Effects", "Modulate") - spacing
 			g2d.drawFont8Centred("aka", y)
 			y+=8
 			g2d.drawFont16Centred("Geoff Lee", y)
-			y+=16+100
+			y+=16+spacing
 
 			y = drawCredits(g2d, y, "Cartoon Graphics", "Ajordaz")
 			y = drawCredits(g2d, y, "3D Vector Graphics", "Steve Eynon")
-			y = drawCredits(g2d, y, "Stunt Doubles", "Steve Eynon")
+//			y = drawCredits(g2d, y, "Stunt Doubles", "Steve Eynon")
+			y = drawCredits(g2d, y, "Key Grip", "Tracey Jeapes")
 			y = drawCredits(g2d, y, "Kung Fu Choreography", "Emma Eynon")
-			y = drawCredits(g2d, y, "Special Thanks To", "Sam Jessops\nElsie Jessops")
+//			y = drawCredits(g2d, y, "Stunt Doubles", "Sam Jeapes\nElsie Jeapes")
+//			y = drawCredits(g2d, y, "Special Thanks To", "Sam Jeapes\nElsie Jeapes")
 
-			echo(y)
+			echo(y + 288)
 		}
 
 	}
@@ -161,7 +166,7 @@ class CreditScroll {
 			g2d.drawFont16Centred(name, y + 13)
 		}
 		
-		return y + 29 + 100
+		return y + 29 + spacing
 	}
 	
 	Void draw(Gfx g2d, Int time) {
