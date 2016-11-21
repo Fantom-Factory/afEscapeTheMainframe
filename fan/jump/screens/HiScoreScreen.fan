@@ -24,12 +24,12 @@ class HiScoreScreen : GameSeg {
 		
 		pages = PagesScreen {
 			it.noOfPages = noOfPages
-			it.pageWidth = 768 / 2
+			it.pageWidth = FannyTheFantom.windowSize.w / 2
 		}
 
-		imgScores = Image.makePainted(Size(768*10, 160+16)) |g| {
+		imgScores = Image.makePainted(Size(FannyTheFantom.windowSize.w * 10 / 2, 160+16)) |g| {
 			g2d := screen.gfx(g)
-			g2d.clear
+			g2d.clear(Models.bgColour)
 			
 			10.times |i| {
 				line := ""
