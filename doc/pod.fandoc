@@ -1,10 +1,16 @@
 Overview
 ********
-Fanny the Fantom is a 3D vector jump game, written enirely in the Fantom programming language, that runs on both the desktop and in a browser!
+Fanny the Fantom is a simple jump and duck game to test your reflexes, rendered in stunning retro 3D vector graphics. Written enirely in the Fantom programming language, Fanny the Fantom runs on both the desktop and in a browser!
 
 ![Fanny the Fantom Screenshot]`screenshot.jpg`
 
-Visit [http://fanny.fantomfactory.org/]`http://fannt.fantomfactory.org/` to play Fanny the Fantom online!
+Fanny the Fantom has been captured by the evil Mainframe. Help Fanny escape dodgy programming by avoiding obstacles and collecting bonus cubes.
+
+Fanny must jump and duck through 10 frantic levels in this tense retro 3D vector game.
+
+*Can you escape the Mainframe!?*
+
+Visit [http://fanny.fantomfactory.org/]`http://fannt.fantomfactory.org/` to play Fanny the Fantom online in your browser!
 
 Or [download]`https://bitbucket.org/AlienFactory/affannythefantom/downloads` to play the desktop version.
 
@@ -14,7 +20,7 @@ About
 *****
 Fanny the Fantom is a side project I wrote to help raise awareness of the [Fantom programming language]`http://fantom-lang.org/`.
 
-Yes, Fantom is great for advanced server side development. Yes, Fantom is awesome at creating web applications. But I wanted to show that Fantom is good for fun things too!
+*Yes*, Fantom is great for advanced server side development. *Yes*, Fantom is awesome at creating web applications. But I wanted to show that Fantom is good for fun things too!
 
 
 Credits
@@ -33,10 +39,10 @@ If you install the Fanny the Fantom pod into your Fantom environment then you ca
 
   C:\> fan afFannyTheFantom
 
-Or you may start a web server with:
+Or you may start a local web server with:
 
   C:\> fan afFannyTheFantom -webServer
 
-Then Fanny the Fantom may be played in a browser by visiting `http://localhost:8069/`.
+Fanny the Fantom may then be played locally in a browser by visiting `http://localhost:8069/`.
 
 
