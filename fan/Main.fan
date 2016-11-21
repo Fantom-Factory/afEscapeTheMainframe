@@ -14,7 +14,6 @@ class Main : AbstractMain {
 	
 	@NoDoc
 	override Int run() {
-		usage
 		
 		if (!webServer) {
 			FannyTheFantom().main
@@ -29,6 +28,7 @@ class Main : AbstractMain {
 			return runServices([wisp])			
 		}
 		
+		usage
 		return 1
 	}
 }

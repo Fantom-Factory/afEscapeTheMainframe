@@ -1,0 +1,42 @@
+Overview
+********
+Fanny the Fantom is a 3D vector jump game, written enirely in the Fantom programming language, that runs on both the desktop and in a browser!
+
+![Fanny the Fantom Screenshot]`screenshot.jpg`
+
+Visit [http://fanny.fantomfactory.org/]`http://fannt.fantomfactory.org/` to play Fanny the Fantom online!
+
+Or [download]`https://bitbucket.org/AlienFactory/affannythefantom/downloads` to play the desktop version.
+
+
+
+About
+*****
+Fanny the Fantom is a side project I wrote to help raise awareness of the [Fantom programming language]`http://fantom-lang.org/`.
+
+Yes, Fantom is great for advanced server side development. Yes, Fantom is awesome at creating web applications. But I wanted to show that Fantom is good for fun things too!
+
+
+Credits
+*******
+
+ - **Game Design:**  Steve & Emma Eynon
+ - **Coding:**  [SlimerDude]`http://www.alienfactory.co.uk/`
+ - **Sound Effects:**  [Modulate]`https://web.facebook.com/Modulate/`
+ - **Cartoon Graphics:**  [Ajordaz]`https://www.fiverr.com/ajordaz`
+
+
+
+Fantom Development
+******************
+If you install the Fanny the Fantom pod into your Fantom environment then you can launch the desktop version with the following command:
+
+  C:\> fan afFannyTheFantom
+
+Or you may start a web server with:
+
+  C:\> fan afFannyTheFantom -webServer
+
+Then Fanny the Fantom may be played in a browser by visiting `http://localhost:8069/`.
+
+
