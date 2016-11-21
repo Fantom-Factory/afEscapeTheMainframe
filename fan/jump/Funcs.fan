@@ -91,8 +91,8 @@ class Funcs {
 	
 	Bool funcNewBlock(Int level, Float distance, Float speed) {
 
-		shortest :=   600f - (level *  15)				//  575 -> 450  
-		longest	 := (1500f - (level * 175)).max(575f)	// 1500 -> 575
+		shortest :=   615f - (level *  15)				//  575 -> 465  
+		longest	 := (1500f - (level * 175)).max(600f)	// 1500 -> 600
 
 		if (level == 11) {
 			shortest = 2000f
@@ -135,7 +135,7 @@ class Funcs {
 //				allowedLevels = allowedLevels.exclude { (it.and(y2) != 0 || it.and(y3) != 0 || it.and(y4) != 0) && it.and(z0) != 0 }
 
 			// give clearance for the next high jump
-			if (distance < 490f)
+			if (distance < 500f)
 				allowedLevels = allowedLevels.exclude { it.and(y4) != 0 && it.and(z0) != 0 }
 		}
 		
