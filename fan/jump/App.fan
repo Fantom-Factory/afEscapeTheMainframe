@@ -24,8 +24,8 @@ class App : DemoEvents {
 	}
 
 	override Void onStartup() {
-//		activeScreen = loadingScreen.onInit
-		activeScreen = creditsScreen.onInit
+		activeScreen = loadingScreen.onInit
+//		activeScreen = creditsScreen.onInit
 		hiScores.loadScores
 	}
 	

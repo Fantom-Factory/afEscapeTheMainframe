@@ -3,6 +3,7 @@ using gfx::Rect
 
 @Js
 class Models {
+	static const Color	bgColour		:= Color(0xFF_00_08_1A)
 	
 	static const Color	brand_darkBlue	:= Color(0xFF_00_00_33)
 	static const Color	brand_lightBlue	:= Color(0xFF_33_66_FF)

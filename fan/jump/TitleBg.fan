@@ -72,7 +72,7 @@ class TitleBg {
 			it.imgHeight	=  197
 			it.startFrame	=   65
 			it.endFrame		=   80
-			it.startX		=  768
+			it.startX		=  FannyTheFantom.windowSize.w
 			it.startY		=   60
 			it.finalX		=  360
 			it.finalY		=   60

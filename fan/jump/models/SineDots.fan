@@ -26,8 +26,8 @@ class SineDots {
 				
 				dot := Dot {
 					// forced perspective
-					it.x  = (xx*7) - (yy / 2) + xb
-					it.y  = (yy*7) - (xx / 2) + yb
+					it.x  = (xx*6) - (yy / 2) + xb
+					it.y  = (yy*6) - (xx / 2) + yb
 					it.v  = 40	// how many pix it moves
 
 					it.ax = ((xx * 5f) + (yy * 4f)) / 360f

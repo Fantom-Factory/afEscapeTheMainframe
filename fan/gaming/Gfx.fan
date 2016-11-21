@@ -91,8 +91,10 @@ class Gfx {
 	}
 	
 	This drawFont8Centred(Str text, Int y) {
-		x := (g.clipBounds.w - (text.size * 8)) / 2
-		drawFont8(text, x, y)
+		text.splitLines.each |line, i| {			
+			x := (g.clipBounds.w - (line.size * 8)) / 2
+			drawFont8(line, x, y + (i*8))
+		}
 		return this
 	}
 
@@ -102,8 +104,10 @@ class Gfx {
 	}
 
 	This drawFont16Centred(Str text, Int y) {
-		x := (g.clipBounds.w - (text.size * 16)) / 2
-		drawFont16(text, x, y)
+		text.splitLines.each |line, i| {			
+			x := (g.clipBounds.w - (line.size * 16)) / 2
+			drawFont16(line, x, y + (i*16))
+		}
 		return this
 	}
 

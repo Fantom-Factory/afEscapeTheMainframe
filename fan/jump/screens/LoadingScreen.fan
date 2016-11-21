@@ -31,7 +31,7 @@ class LoadingScreen : GameSeg {
 			return app().showTitles
 		}
 
-		g2d.clear(Color.makeRgb(BgGlow.bgR, BgGlow.bgG, BgGlow.bgB))
+		g2d.clear(Models.bgColour)
 		
 		drawFont8Centred (g2d, "Alien-Factory",	(16 *  3))
 		drawFont8Centred (g2d, "presents",		(16 *  3)+10)
