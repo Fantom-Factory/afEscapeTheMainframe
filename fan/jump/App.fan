@@ -34,7 +34,7 @@ class App : DemoEvents {
 	}
 	
 	Void showTouch() {
-		activeScreen = deactivate.touchScreen.onInit		
+		activeScreen = deactivate.touchScreen.onInit
 	}
 	
 	Void showTitles() {
