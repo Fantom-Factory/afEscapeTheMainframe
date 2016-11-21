@@ -28,7 +28,10 @@ class LoadingScreen : GameSeg {
 		if (percentImages >= 100 && percentSounds >= 100 && (!Runtime.isJs || showPreCalc)) {
 			floorCache.init
 			blockCache.init
-			return app().showTitles
+			if (Runtime.isJs)
+				return app().showTouch
+			else
+				return app().showTitles
 		}
 
 		g2d.clear(Models.bgColour)
