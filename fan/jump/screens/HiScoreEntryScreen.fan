@@ -54,17 +54,22 @@ class HiScoreEntryScreen : GameSeg {
 		return this
 	}
 	
-	override Void onKill() { }
+	override Void onKill() {
+		screen.editMode = false
+	}
 
 	override Void onDraw(Gfx g2d) {
 		bgGlow.draw(g2d)
 	
+		if (screen.editText.size > HiScores.maxNameSize)
+			screen.editText = screen.editText[0..<HiScores.maxNameSize]
+
 		if (newName != screen.editText) {
 			newName = screen.editText
 			hiScores[newPosition].name = screen.editText
 		}
 		
-		// TODO touch screens can't bring up a keyboard! So let them just close it instead.
+		// touch screens can't bring up a keyboard! So let them just close it instead.
 		// http://stackoverflow.com/questions/9703271/force-keyboard-open-on-android
 		if (screen.keys.pressed(Key.esc) || screen.touch.swiped(Key.left) || screen.touch.swiped(Key.right)) {
 			screen.editMode = false

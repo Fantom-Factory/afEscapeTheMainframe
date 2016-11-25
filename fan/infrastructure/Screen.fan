@@ -34,8 +34,10 @@ class Screen : Canvas {
 		keys[e.key.primary] = true
 		
 		if (editMode) {
-			if (e.key.primary == Key.backspace || e.key.primary == Key.delete)
-				editText = editText[0..<-1]
+			if (e.key.primary == Key.backspace || e.key.primary == Key.delete) {
+				if (editText.size > 0)
+					editText = editText[0..<-1]
+			}
 			
 			else {
 				// TODO JS Bug - e.keyChar doesn't exist so we do it manually 
@@ -45,10 +47,7 @@ class Screen : Canvas {
 				if (e.keyChar != null && e.keyChar >= ' ' && e.keyChar < ' ' + (8 * 12)) {
 					editText += e.keyChar.toChar
 				}
-			}
-			
-			if (editText.size > HiScores.maxNameSize)
-				editText = editText[1..-1]
+			}			
 		}
 	}
 	
