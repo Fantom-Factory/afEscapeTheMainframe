@@ -20,4 +20,6 @@ class GameData {
 	Int		blocksJumpedInGame
 	
 	Int		cubeBlocks
+	
+	Bool	cheating
 }

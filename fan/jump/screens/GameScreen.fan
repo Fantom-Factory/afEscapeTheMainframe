@@ -194,6 +194,7 @@ class GameScreen : GameSeg {
 		fanny.squish(squish)
 
 		if (screen.keys.pressed(Key.g) && exitBlock == null) {
+			data.cheating = true
 			data.level = 11
 			gameHud.alertLevelUp(data.level)
 		}
@@ -206,7 +207,7 @@ class GameScreen : GameSeg {
 			if (screen.keys.pressed(Key.esc) || screen.touch.swiped(Key.enter))
 				gameReallyOver()
 	}
-	
+
 	Void anim() {
 		floor.anim
 		blcks.each { it.anim }
@@ -225,8 +226,11 @@ class GameScreen : GameSeg {
 		bonusExplo = bonusExplo.exclude { it.killMe }
 		
 		exitBlock?.anim
-		if (exitBlock != null && exitBlock.x <= fanny.x)
+		if (exitBlock != null && exitBlock.x <= fanny.x) {
+			if (!data.cheating)
+				data.score += 250	// add the end game bonus!
 			gameOver()
+		}
 	}
 	
 	Void draw(Gfx g2d) {
