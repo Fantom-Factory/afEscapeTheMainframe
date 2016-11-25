@@ -62,15 +62,15 @@ class App : DemoEvents {
 		activeScreen = deactivate.creditsScreen.onInit		
 	}
 	
-	Void gameOver(Int score, Int level, Bool training, Bool showOutro) {
+	Void gameOver(Int score, Int level, Bool cheating, Bool showOutro) {
 		deactivate
-	
+
 		if (level == 11 && showOutro) {
-			activeScreen = outroScreen.onInit.setMeta(score, level, training)
+			activeScreen = outroScreen.onInit.setMeta(score, level, cheating)
 			return
 		}
 		
-		if (!training && hiScores.isHiScore(score))
+		if (!cheating && hiScores.isHiScore(score))
 			activeScreen = hiScoreEntryScreen.onInit.setScore(score, level)
 		else
 			activeScreen = titleScreen.onInit

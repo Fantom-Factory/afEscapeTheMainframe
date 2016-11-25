@@ -24,6 +24,7 @@ class GameScreen : GameSeg {
 				private ExitBlock?		exitBlock
 				private GameHud			gameHud		:= GameHud()
 				private	GameData?		data
+				private Log 			log			:= typeof.pod.log
 	
 	new make(|This| in) { in(this) }
 
@@ -39,6 +40,9 @@ class GameScreen : GameSeg {
 		
 		gameHud	= GameHud()
 		gameHud.alertGameStart
+		
+		screen.editMode = true
+		screen.editText = ""
 		return this
 	}
 	
@@ -51,7 +55,9 @@ class GameScreen : GameSeg {
 		return this
 	}
 	
-	override Void onKill() { }
+	override Void onKill() {
+		screen.editMode = false
+	}
 
 	override Void onDraw(Gfx g2d) {
 		keyLogic()
@@ -71,7 +77,7 @@ class GameScreen : GameSeg {
 			gameHud.alertLevelUp(data.level)
 
 		if (data.level == 11)
-			data.invincible = 2000	// so fanny doesn't get killed by the blocks already on the screen
+			data.invisible = 2000	// so fanny doesn't get killed by the blocks already on the screen
 		
 		data.distSinceLastBlock += data.floorSpeed
 		data.newBlockPlease = funcs.funcNewBlock(data.level, data.distSinceLastBlock, data.floorSpeed)
@@ -87,7 +93,7 @@ class GameScreen : GameSeg {
 				}
 				
 			} else {			
-				// FIXME Top block MUST be drawn first! And then fanny in the middle
+				// Ensure top block MUST be drawn first! And then fanny in the middle
 				blks := funcs.funcBlock(data, data.level, data.distSinceLastBlock, blcks.last)
 				blcks.addAll(blks)
 				
@@ -115,7 +121,7 @@ class GameScreen : GameSeg {
 				return col
 			}
 
-			if (crash && !data.isInvincible) {
+			if (crash && !data.isInvisible && !data.godMode) {
 				gameOver()
 			}
 			
@@ -143,7 +149,8 @@ class GameScreen : GameSeg {
 					explo := Models.bonusExplo(data, cube.x, cube.y)
 					bonusExplo.add(explo)
 					
-					data.invincible = 40
+					if (data.invisible < 40)
+						data.invisible = 40
 				}
 			}
 		}
@@ -192,12 +199,6 @@ class GameScreen : GameSeg {
 
 		fanny.jump(jump)
 		fanny.squish(squish)
-
-		if (screen.keys.pressed(Key.g) && exitBlock == null) {
-			data.cheating = true
-			data.level = 11
-			gameHud.alertLevelUp(data.level)
-		}
 		
 		if (!data.dying)
 			if (screen.keys.pressed(Key.esc))
@@ -206,6 +207,33 @@ class GameScreen : GameSeg {
 		if (data.dying)
 			if (screen.keys.pressed(Key.esc) || screen.touch.swiped(Key.enter))
 				gameReallyOver()
+
+		// cheat codes!
+		if (!data.dying) {
+			cheatTextEq := |Str text -> Bool| {
+				cheating := screen.editText.size >= text.size && screen.editText[-text.size..-1] == text
+				if (cheating) {
+					data.cheating = true
+					screen.editText = ""
+					log.info("Cheat code: ${text.toDisplayName}")
+				}
+				return cheating
+			}
+			
+			if (cheatTextEq("game over") && exitBlock == null) {
+				data.level = 11
+				gameHud.alertLevelUp(data.level)
+			}
+
+			if (cheatTextEq("invisible")) {
+				data.invisible = Int.maxVal
+			}
+
+			if (cheatTextEq("god mode")) {
+				data.godMode = true
+				fanny.drawablesDup[7] = Fill(Models.brand_white)
+			}
+		}
 	}
 
 	Void anim() {
@@ -215,9 +243,9 @@ class GameScreen : GameSeg {
 			fanny.anim
 		fannyExplo?.anim
 		
-		fanny.ghost(data.isInvincible)
-		if (data.isInvincible)
-			data.invincible--
+		fanny.ghost(data.isInvisible)
+		if (data.isInvisible)
+			data.invisible--
 		
 		bonusCubes.each { it.anim }
 		bonusCubes = bonusCubes.exclude { it.killMe }
@@ -321,7 +349,7 @@ class GameScreen : GameSeg {
 	}
 	
 	Void gameReallyOver() {
-		app().gameOver(data.score, data.level, data.training, true)
+		app().gameOver(data.score, data.level, data.training || data.cheating, true)
 	}
 	
 	Float dx	:= 0f

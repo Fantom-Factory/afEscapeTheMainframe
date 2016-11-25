@@ -12,8 +12,8 @@ class GameData {
 	Bool	dying
 	Int		deathCryIdx
 	
-	Int		invincible			//:= 9999999
-	Bool	isInvincible() { invincible > 0 }
+	Int		invisible			//:= 9999999
+	Bool	isInvisible() { invisible > 0 }
 
 	Int		score
 	Int		blocksJumpedInLevel
@@ -22,4 +22,5 @@ class GameData {
 	Int		cubeBlocks
 	
 	Bool	cheating
+	Bool	godMode
 }

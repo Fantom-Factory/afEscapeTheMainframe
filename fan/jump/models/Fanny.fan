@@ -84,7 +84,11 @@ class Fanny : Model {
 			drawablesDup[0] = Fill(null) 
 			drawablesDup[1] = Edge(Models.fanny_silver)
 		} else {
-			drawablesDup[0] = Fill(Models.fanny_silver) 
+			fillCol := Models.fanny_silver
+			
+			if (data.godMode)
+				fillCol = fillCol.darker(0.1f)
+			drawablesDup[0] = Fill(fillCol)
 			drawablesDup[1] = Edge(Models.brand_white)
 		}
 	}

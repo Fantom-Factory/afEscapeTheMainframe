@@ -15,7 +15,7 @@ class OutroScreen : GameSeg {
 			private OutroAnim?	outroAnim
 			private Int			score
 			private Int			level
-			private Bool		training
+			private Bool		cheating
 	
 	new make(|This| in) { in(this) }
 
@@ -24,10 +24,10 @@ class OutroScreen : GameSeg {
 		return this
 	}
 	
-	This setMeta(Int score, Int level, Bool training) {
+	This setMeta(Int score, Int level, Bool cheating) {
 		this.score = score
 		this.level = level
-		this.training = training
+		this.cheating = cheating
 		return this
 	}
 	
@@ -38,7 +38,7 @@ class OutroScreen : GameSeg {
 //		anyKey := screen.keys.size > 0 || screen.mouseButtons.size > 0
 //		if (anyKey || outroAnim.finished) {
 		if (outroAnim.finished) {
-			app().gameOver(score, level, training, false)
+			app().gameOver(score, level, cheating, false)
 		}
 
 		bgGlow.draw(g2d)
