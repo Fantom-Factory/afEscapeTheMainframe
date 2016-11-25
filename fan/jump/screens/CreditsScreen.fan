@@ -2,6 +2,7 @@ using afIoc
 using gfx
 using fwt
 
+** The CreditsScreen takes about a min to scroll through
 @Js
 class CreditsScreen : GameSeg {
 	
@@ -22,8 +23,7 @@ class CreditsScreen : GameSeg {
 		return this
 	}
 	
-	override Void onKill() {
-	}
+	override Void onKill() { }
 
 	override Void onDraw(Gfx g2d) {
 		anyKey := screen.keys.size > 0 || screen.touch.swiped(Key.enter)
@@ -110,12 +110,13 @@ class CreditScroll {
 	
 	new make(Screen screen) {
 		
-		imgCredits = Image.makePainted(Size(FannyTheFantom.windowSize.w / 2, 1200)) |g| {
+		imgCredits = Image.makePainted(Size(FannyTheFantom.windowSize.w / 2, 1200 + FannyTheFantom.windowSize.h)) |g| {
 			g2d := screen.gfx(g)
 			g2d.clear	//(Models.bgColour)
 			
 			y := FannyTheFantom.windowSize.h
 			y = drawCredits(g2d, y, "Alien-Factory", "Presents", true)
+			y-= spacing / 2
 //			y = drawCredits(g2d, y, "A Game written in", "The Fantom Language")
 			y = drawCredits(g2d, y, "Fanny the Fantom", "Escape the Mainframe", true)
 			
@@ -142,7 +143,7 @@ class CreditScroll {
 //			y = drawCredits(g2d, y, "Stunt Doubles", "Sam Jeapes\nElsie Jeapes")
 //			y = drawCredits(g2d, y, "Special Thanks To", "Sam Jeapes\nElsie Jeapes")
 
-			echo(y)
+//			echo(y)
 		}
 
 	}
