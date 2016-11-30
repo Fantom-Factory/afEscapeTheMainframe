@@ -29,8 +29,10 @@ class IntroScreen : GameSeg {
 		return this
 	}
 	
-	override Void onKill() { }
-
+	override Void onKill() {
+		sounds.scanned.stop
+	}
+	
 	override Void onDraw(Gfx g2d) {
 		
 		anyKey := screen.keys.size > 0 || screen.touch.swiped(Key.enter)
@@ -93,7 +95,7 @@ class IntroAnim {
 		tweanGrid		.draw(g3d, time)
 		tweanFloor		.draw(g3d, time)
 		
-		if (time == 75)
+		if (time == 70)
 			sounds.scanned.play
 		
 		if (time == 215) {
