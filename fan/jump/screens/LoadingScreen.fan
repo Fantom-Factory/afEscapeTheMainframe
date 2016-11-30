@@ -23,7 +23,7 @@ class LoadingScreen : GameSeg {
 
 	override Void onDraw(Gfx g2d) {
 		percentImages := preloadImages
-		percentSounds := preloadSounds
+		percentSounds := percentImages < 80 ? 0 : preloadSounds
 
 		if (percentImages >= 100 && percentSounds >= 100 && (!Runtime.isJs || showPreCalc)) {
 			floorCache.init
