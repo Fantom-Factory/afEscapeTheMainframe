@@ -4,9 +4,11 @@ using gfx::Rect
 class Fanny : Model {
 	GameData	data
 	Float		sy
+	Float		syOld
 	Bool		jumpHeld
 	Bool		jumpEnabled	:= true
 	Bool		squished
+	Bool		squishedOld
 	Drawable[]	drawablesDup
 	FannySounds?	sounds
 
@@ -80,6 +82,12 @@ class Fanny : Model {
 
 	Void squish(Bool squish) {
 		squished = squish
+		
+		if (squished && !squishedOld) {
+			sounds.squish.play
+		}
+		
+		squishedOld = squished
 	}
 	
 	Void ghost(Bool ghost) {
@@ -110,6 +118,26 @@ class Fanny : Model {
 	}
 	
 	override Void anim() {
+		
+		if (syOld == 0f && sy > 0f) {
+			if (squished)
+				sounds.squishJump.play
+			else
+				sounds.jump.play
+		}
+		if (sy < 0f) {
+			sounds.jump.stop
+			sounds.squishJump.stop
+		}
+//		if ((syOld > 0f || syOld == 0f) && sy < 0f) {
+//			sounds.jumpDown.play
+//		}
+//		if (sy == 0f) {
+//			sounds.jumpDown.stop			
+//		}
+		
+		syOld = sy 
+		
 		y += sy
 		if (y <= -110f) {
 			y = -110f

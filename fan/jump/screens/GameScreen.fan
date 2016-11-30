@@ -64,8 +64,9 @@ class GameScreen : GameSeg {
 		screen.editMode = false
 
 		sounds.jump.stop
-		sounds.jumpSquish.stop
+		sounds.jumpDown.stop
 		sounds.squish.stop
+		sounds.squishJump.stop
 		
 		sounds.levelUp.stop
 		sounds.randomJingle.stop
