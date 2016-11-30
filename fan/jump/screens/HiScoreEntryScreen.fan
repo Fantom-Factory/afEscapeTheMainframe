@@ -22,6 +22,7 @@ class HiScoreEntryScreen : GameSeg {
 	new make(|This| f) { f(this) }
 
 	override This onInit() {
+		sounds.winner.play
 		return this
 	}
 	
@@ -56,6 +57,7 @@ class HiScoreEntryScreen : GameSeg {
 	
 	override Void onKill() {
 		screen.editMode = false
+		sounds.winner.stop
 	}
 
 	override Void onDraw(Gfx g2d) {
