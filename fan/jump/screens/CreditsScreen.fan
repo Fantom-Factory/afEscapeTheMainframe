@@ -88,7 +88,7 @@ class CreditsAnim {
 			},
 			CreditTwean {
 				it.title		= "Sound Effects"
-				it.name			= "Modulate"
+				it.name			= "Modulate/QLERIK"
 				it.startFrame	= 100 + (250 * 4)
 			},
 			CreditTwean {
@@ -129,10 +129,8 @@ class CreditScroll {
 			g2d.drawFont16Centred("Steve Eynon", y)
 			y+=16+spacing
 			
-			y = drawCredits(g2d, y, "Sound Effects", "Modulate") - spacing
-			g2d.drawFont8Centred("aka", y)
-			y+=8
-			g2d.drawFont16Centred("Geoff Lee", y)
+			y = drawCredits(g2d, y, "Sound Effects", "    Geoff Lee    ") - spacing
+			g2d.drawFont16Centred("(Modulate/QLERIK)", y)
 			y+=16+spacing
 
 			y = drawCredits(g2d, y, "Cartoon Graphics", "Anibal Ordaz")
