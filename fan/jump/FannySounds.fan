@@ -8,8 +8,9 @@ class FannySounds : SoundClips {
 	SoundClip	scanned() 			{ load("scanned_22khz.wav")			}
 	SoundClip	startGame() 		{ load("startGameJingle_22khz.wav")	{ it.volume = 0.5f }  }
 	SoundClip	jump() 				{ load("jump_22khz.wav")			}
-	SoundClip	jumpSquish() 		{ load("jumpSquish_22khz.wav")		}
+	SoundClip	jumpDown() 			{ load("jumpSquish_22khz.wav")		}
 	SoundClip	squish() 			{ load("crouch_22khz.wav")			}
+	SoundClip	squishJump() 		{ load("superJump_22khz.wav")		}
 	SoundClip	bonusCube() 		{ load("levelUp_22khz.wav")			}
 	SoundClip	levelUp() 			{ load("bonusCube_22khz.wav")		}
 	SoundClip	randomJingle() 		{ load("randomJingle_22khz.wav")	}

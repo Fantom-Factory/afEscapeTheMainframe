@@ -6,7 +6,7 @@ class Build : BuildPod {
 	new make() {
 		podName = "afFannyTheFantom"
 		summary = "A jump game rendered in stunning retro 3D vector graphics - Escape the Mainframe!"
-		version = Version("0.1.4")
+		version = Version("0.2.0")
 
 		meta = [
 			"pod.dis"			: "Fanny the Fantom",
