@@ -8,6 +8,7 @@ class Fanny : Model {
 	Bool		jumpEnabled	:= true
 	Bool		squished
 	Drawable[]	drawablesDup
+	FannySounds?	sounds
 
 	Point3d[] normPoints := Point3d[
 		// body
@@ -45,8 +46,9 @@ class Fanny : Model {
 		Point3d( 45f, -35f, -15f),
 	]
 	
-	new make(GameData data, |This| in) : super(in) {
+	new make(GameData data, FannySounds? sounds, |This| in) : super(in) {
 		this.data = data
+		this.sounds = sounds
 		
 		x = -420f
 		y = -110f
@@ -59,7 +61,7 @@ class Fanny : Model {
 		if (!jump) {
 			jumpHeld = false
 
-		} else
+		} else {
 			if (jumpEnabled || jumpHeld) {
 				sy += 15f
 				sy = sy.min(15f)
@@ -73,6 +75,7 @@ class Fanny : Model {
 				if (y > 25f)
 					jumpHeld = false		
 			}
+		}
 	}
 
 	Void squish(Bool squish) {

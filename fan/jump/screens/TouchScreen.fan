@@ -16,7 +16,7 @@ class TouchScreen : GameSeg {
 	override This onInit() {
 		screen.mouseDownFunc = |->| {
 			screen.mouseDownFunc = null
-			sounds.menuSelect.play
+			sounds.insertCoin.play
 			app().showTitles
 		}
 		return this

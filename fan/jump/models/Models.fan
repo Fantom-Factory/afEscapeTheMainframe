@@ -256,8 +256,8 @@ class Models {
 		}
 	}
 
-	static Fanny fanny(GameData data) {
-		Fanny(data) {
+	static Fanny fanny(GameData data, FannySounds? sounds) {
+		Fanny(data, sounds) {
 			points = [
 				// body
 				Point3d(-15f,  40f, -25f),

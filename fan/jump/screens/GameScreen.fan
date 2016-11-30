@@ -12,6 +12,7 @@ class GameScreen : GameSeg {
 
 	@Inject		private Screen			screen
 	@Inject		private |->App|			app
+	@Inject		private FannySounds		sounds
 	@Inject		private BgGlow			bgGlow
 	@Inject		private FloorCache		floorCache
 	@Autobuild	private	Funcs			funcs
@@ -32,7 +33,7 @@ class GameScreen : GameSeg {
 		data	= GameData()
 		blcks.clear
 		floor	= Models.fakeFloor(data, floorCache) { it.x = Actor.locals["afFanny.floorX"] ?: 0f }
-		fanny	= Models.fanny(data) { it.y = 200f }
+		fanny	= Models.fanny(data, sounds) { it.y = 200f }
 		bonusCubes.clear
 		bonusExplo.clear
 		fannyExplo = null
@@ -43,6 +44,10 @@ class GameScreen : GameSeg {
 		
 		screen.editMode = true
 		screen.editText = ""
+		
+		sounds.scanned.stop
+		sounds.startGame.play
+
 		return this
 	}
 	
@@ -57,6 +62,17 @@ class GameScreen : GameSeg {
 	
 	override Void onKill() {
 		screen.editMode = false
+
+		sounds.jump.stop
+		sounds.jumpSquish.stop
+		sounds.squish.stop
+		
+		sounds.levelUp.stop
+		sounds.randomJingle.stop
+		
+		sounds.bonusCube.stop
+		sounds.deathCry.stop
+		sounds.gameOver.stop
 	}
 
 	override Void onDraw(Gfx g2d) {
@@ -73,11 +89,17 @@ class GameScreen : GameSeg {
 		data.level		= funcs.funcLevel(data)
 		data.floorSpeed	= funcs.funcfloorSpeed(data.level)
 		
-		if (oldLevel != data.level)
+		if (oldLevel != data.level) {
 			gameHud.alertLevelUp(data.level)
+			
+			if (data.level == 11) {
+				data.invisible = 2000	// so fanny doesn't get killed by the blocks already on the screen
+				sounds.randomJingle.play
+			} else {
+				sounds.levelUp.play
+			}
+		}
 
-		if (data.level == 11)
-			data.invisible = 2000	// so fanny doesn't get killed by the blocks already on the screen
 		
 		data.distSinceLastBlock += data.floorSpeed
 		data.newBlockPlease = funcs.funcNewBlock(data.level, data.distSinceLastBlock, data.floorSpeed)
@@ -148,6 +170,7 @@ class GameScreen : GameSeg {
 					
 					explo := Models.bonusExplo(data, cube.x, cube.y)
 					bonusExplo.add(explo)
+					sounds.bonusCube.play
 					
 					if (data.invisible < 40)
 						data.invisible = 40
@@ -158,7 +181,12 @@ class GameScreen : GameSeg {
 		if (data.dying) {
 			data.deathCryIdx++
 		
-			if (data.deathCryIdx == 160) {
+			if (data.deathCryIdx == 70 && data.level < 11) {
+				sounds.gameOver.play
+			}
+
+//			if (data.deathCryIdx == 160) {
+			if (data.deathCryIdx == 210) {
 				gameReallyOver()
 			}
 		}
@@ -222,6 +250,8 @@ class GameScreen : GameSeg {
 			
 			if (cheatTextEq("game over") && exitBlock == null) {
 				data.level = 11
+				data.invisible = 2000
+				sounds.randomJingle.play
 				gameHud.alertLevelUp(data.level)
 			}
 
@@ -346,6 +376,8 @@ class GameScreen : GameSeg {
 		screen.keys.clear
 		screen.touch.clear
 		screen.mouseButtons.clear
+		
+		sounds.deathCry.play
 	}
 	
 	Void gameReallyOver() {

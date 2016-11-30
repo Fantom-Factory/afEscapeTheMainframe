@@ -10,6 +10,7 @@ class OutroScreen : GameSeg {
 
 	@Inject	private Screen		screen
 	@Inject	private |->App|		app
+	@Inject	private FannySounds	sounds
 	@Inject	private BgGlow		bgGlow
 	@Inject	private FannyImages	images
 			private OutroAnim?	outroAnim
@@ -20,7 +21,7 @@ class OutroScreen : GameSeg {
 	new make(|This| in) { in(this) }
 
 	override This onInit() {
-		outroAnim = OutroAnim(images)
+		outroAnim = OutroAnim(images, sounds)
 		return this
 	}
 	
@@ -31,7 +32,9 @@ class OutroScreen : GameSeg {
 		return this
 	}
 	
-	override Void onKill() { }
+	override Void onKill() {
+		sounds.deathCry.stop
+	}
 
 	override Void onDraw(Gfx g2d) {
 		
@@ -50,6 +53,7 @@ class OutroScreen : GameSeg {
 class OutroAnim {
 
 	private FannyImages	images
+	private FannySounds	sounds
 	private TweanFanny3?tweanFanny
 	private Twean?		tweanMonitor
 	private Twean?		tweanKeyboard
@@ -62,8 +66,9 @@ class OutroAnim {
 			Point3d camera	:= Point3d(0f, 42f, -500f) 
 			Point3d target	:= Point3d(0f, -75f, 0f)
 
-	new make(FannyImages images) {
+	new make(FannyImages images, FannySounds sounds) {
 		this.images = images
+		this.sounds = sounds
 		initTweans
 	}
 
@@ -98,7 +103,11 @@ class OutroAnim {
 				it.startY		=   0f
 			}
 		}
+
+		if (time == tweanExplo.startFrame)
+			sounds.deathCry.play
 		
+
 		finished = time == 250
 		
 		time++

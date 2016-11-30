@@ -13,12 +13,14 @@ class IntroScreen : GameSeg {
 	@Inject	private |->App|		app
 	@Inject	private BgGlow		bgGlow
 	@Inject	private FannyImages	images
+	@Inject	private FannySounds	sounds
 			private IntroAnim?	intoAnim
 	
 	new make(|This| in) { in(this) }
 
 	override This onInit() {
-		intoAnim = IntroAnim(images)
+		sounds.insertCoin.play
+		intoAnim = IntroAnim(images, sounds)
 		return this
 	}
 	
@@ -45,6 +47,7 @@ class IntroScreen : GameSeg {
 class IntroAnim {
 
 	private FannyImages	images
+	private FannySounds	sounds
 	private Twean?		tweanLogoFanny
 	private Twean?		tweanLogoThe
 	private Twean?		tweanLogoFantom
@@ -61,8 +64,9 @@ class IntroAnim {
 			Int		time	:= 1
 			Bool	finished
 
-	new make(FannyImages images) {
+	new make(FannyImages images, FannySounds sounds) {
 		this.images = images
+		this.sounds = sounds
 		initTweans
 	}
 
@@ -88,6 +92,9 @@ class IntroAnim {
 		tweanKeyboard	.draw(g2d, time)
 		tweanGrid		.draw(g3d, time)
 		tweanFloor		.draw(g3d, time)
+		
+		if (time == 75)
+			sounds.scanned.play
 		
 		if (time == 215) {
 			tweanMonitor.with {
@@ -330,7 +337,7 @@ class TweanFanny {
 	Int		startFrame
 	Int		endFrame
 	Int		fannyY
-	Model	fanny	:= Models.fanny(GameData()).scale(1.6f)
+	Model	fanny	:= Models.fanny(GameData(), null).scale(1.6f)
 	
 	new make(|This| f) { f(this) }
 
@@ -352,7 +359,7 @@ class TweanFanny {
 				sinio = 1f - sinio
 				
 				scale := ((0.6f - 1.6f) * sinio) + 1.6f
-				fanny = Models.fanny(GameData()).scale(scale)
+				fanny = Models.fanny(GameData(), null).scale(scale)
 
 				startX := -360f
 				finalX := 380f
