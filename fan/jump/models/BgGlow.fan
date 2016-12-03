@@ -26,7 +26,7 @@ class BgGlow {
 		
 	}
 	
-	Void draw(Gfx g2d, Int? level := null) {
+	Void draw(Gfx g2d, Int catchUp, Int? level := null) {
 		if (gameBg == null) {
 			gameBg = Image.makePainted(Size(768, 88)) |Graphics g| {
 				gfx := Gfx(g)
@@ -45,9 +45,9 @@ class BgGlow {
 		}
 		
 		
-		bgIndex += 0.0015f
+		bgIndex += (0.0015f * catchUp)
 		if (level != null)
-			bgIndex += (level - 1) * 0.0005f
+			bgIndex += ((level - 1) * 0.0005f * catchUp)
 		if (bgIndex > 1f)
 			bgIndex -= 1f
 

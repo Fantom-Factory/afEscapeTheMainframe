@@ -49,7 +49,7 @@ class TitleScreen : GameSeg {
 	
 	override Void onKill() { }
 
-	override Void onDraw(Gfx g2d) {
+	override Void onDraw(Gfx g2d, Int catchUp) {
 		titleMenu.keys()
 
 		if (titleMenu.anyKey) {			
@@ -75,7 +75,7 @@ class TitleScreen : GameSeg {
 			return app().showCredits()
 		}
 		
-		bgGlow.draw(g2d)
+		bgGlow.draw(g2d, catchUp)
 		titleBg.draw(g2d)
 		
 		if (titleBg.time > 105) {

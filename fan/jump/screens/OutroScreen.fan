@@ -36,16 +36,13 @@ class OutroScreen : GameSeg {
 		sounds.deathCry.stop
 	}
 
-	override Void onDraw(Gfx g2d) {
-		
-//		anyKey := screen.keys.size > 0 || screen.mouseButtons.size > 0
-//		if (anyKey || outroAnim.finished) {
+	override Void onDraw(Gfx g2d, Int catchUp) {
 		if (outroAnim.finished) {
 			app().gameOver(score, level, cheating, false)
 		}
 
-		bgGlow.draw(g2d)
-		outroAnim.draw(g2d)	
+		bgGlow.draw(g2d, catchUp)
+		outroAnim.draw(g2d, catchUp)	
 	}
 }
 
@@ -72,7 +69,7 @@ class OutroAnim {
 		initTweans
 	}
 
-	Void draw(Gfx g2d) {
+	Void draw(Gfx g2d, Int catchUp) {
 		y := (Sin.sin(fannyY) * 15f).toInt + (288 - 180) / 2
 		tweanFanny.finalY = y.toInt
 		fannyY += 0.007f
@@ -86,7 +83,7 @@ class OutroAnim {
 		tweanKeyboard	.draw(g2d, time)
 		tweanExplo		.draw(g3d, time)
 		
-		if (time == 180) {
+		if (timeEq(time, 180, catchUp)) {
 			tweanFanny.with {
 				it.startFrame	=  180
 				it.endFrame		=  210
@@ -108,9 +105,13 @@ class OutroAnim {
 			sounds.deathCry.play
 		
 
-		finished = time == 250
+		finished = timeEq(time, 250, catchUp)
 		
-		time++
+		time += catchUp
+	}
+	
+	private Bool timeEq(Int time, Int val, Int catchUp) {
+		time == val || (catchUp > 0 && time < val && (time + catchUp) > val)
 	}
 	
 	Void initTweans() {	

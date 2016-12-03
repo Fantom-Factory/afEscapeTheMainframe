@@ -21,7 +21,7 @@ class LoadingScreen : GameSeg {
 	
 	override Void onKill() { }
 
-	override Void onDraw(Gfx g2d) {
+	override Void onDraw(Gfx g2d, Int catchUp) {
 		percentImages := preloadImages
 		percentSounds := percentImages < 80 ? 0 : preloadSounds
 

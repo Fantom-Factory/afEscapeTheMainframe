@@ -33,7 +33,7 @@ class Pulsar {
 	Void stop(|->|? callback := null) {
 		if (state != PulsarState.running) {
 			log.warn("Cannot 'stop' if not 'running' : state = ${state}")
-			Safe(callback).run
+			Safe(callback).run(1)
 			return
 		}
 		stopCallback = callback
@@ -57,30 +57,33 @@ class Pulsar {
 		if (state == PulsarState.stopping) {
 			state  = PulsarState.stopped
 			log.info("Pulsar stopped...")
-			Safe(stopCallback).run
+			Safe(stopCallback).run(1)
 			return
 		}
-		
-		pulseListeners.each |listener| {
-			Safe(listener).run
-		}
-		
+
 		timeOfNextPulse  = timeOfNextPulse + frequency
 		timeToNextPulse := timeOfNextPulse - Duration.now
+		catchUp			:= 1
 
 		if (timeToNextPulse <= 0ms) {
 			logOverloadWarning(timeToNextPulse, Duration.now)
-			
-			// keep a reasonable positive wait duration
-			// timeToNextPulse = 2ms
 
-			// reset time on pulse so we can catch up (we may have been hibernating!)
-			timeOfNextPulse = (Duration.now + frequency)
+			catchUp += -timeToNextPulse.ticks / frequency.ticks
+			
+			// keep our pulses at even intervals
+			timeToNextPulse = Duration(-timeToNextPulse.ticks % frequency.ticks)
+
+			// reset time on pulse so we can catch up (we may have been hibernating and will never catch up!)
+			timeOfNextPulse  = Duration.now + timeToNextPulse
 		}
 		
 		// we may be stopping and stepping...
 		if (state != PulsarState.stopped)
 			pulseIn(timeToNextPulse)
+
+		pulseListeners.each |listener| {
+			Safe(listener).run(catchUp)
+		}
 	}
 	
 	internal Void logOverloadWarning(Duration timeToNextPulse, Duration now) {
@@ -96,6 +99,7 @@ class Pulsar {
 		if (lastOverloadTime == null) 
 			return true;
 
+		// log new overloads ever 5 secs
 		if ((now - lastOverloadTime) > 5sec)
 			return true
 		
@@ -128,16 +132,16 @@ enum class PulsarState {
 internal class Safe {
 	private static const Log log := Log.get("Safe")
 	
-	private |->Obj?|? f
+	private |Int->Obj?|? f
 	
-	new make(|->Obj?|? f) {
+	new make(|Int->Obj?|? f) {
 		this.f = f
 	}
 	
 	// TODO: add alternative error handling
-	Obj? run() {
+	Obj? run(Int catchUp) {
 		try {
-			return f?.call
+			return f?.call(catchUp)
 		} catch (Err e) {
 			log.err(e.msg, e)
 			return null

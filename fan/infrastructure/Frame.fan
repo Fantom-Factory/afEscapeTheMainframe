@@ -22,7 +22,7 @@ class Frame {
 		scope.inject(this)
 
 		pulsar.frequency = 1sec / 60 // 60 FPS
-		pulsar.addListener |->| { screen.repaint }
+		pulsar.addListener |Int catchUp| { screen.catchUp = catchUp; screen.repaint() }
 	}
 	
 	Screen widget() {

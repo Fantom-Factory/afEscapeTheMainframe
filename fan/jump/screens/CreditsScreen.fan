@@ -25,7 +25,7 @@ class CreditsScreen : GameSeg {
 	
 	override Void onKill() { }
 
-	override Void onDraw(Gfx g2d) {
+	override Void onDraw(Gfx g2d, Int catchUp) {
 		anyKey := screen.keys.size > 0 || screen.touch.swiped(Key.enter)
 		if (anyKey || creditsAnim.finished) {
 			app().showTitles()
