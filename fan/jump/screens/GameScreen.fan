@@ -77,9 +77,8 @@ class GameScreen : GameSeg {
 	}
 
 	override Void onDraw(Gfx g2d, Int catchUp) {
-		keyLogic()
+		keyLogic(catchUp)
 		
-		concurrent::Actor.sleep(20ms)
 		catchUp.times {
 			gameLogic()
 			anim()
@@ -199,7 +198,7 @@ class GameScreen : GameSeg {
 	}
 	
 	Bool?	touchUp
-	Void keyLogic() {
+	Void keyLogic(Int catchUp) {
 		jump 	:= screen.keys.down(Key.up  ) || screen.keys.down(Key.w) || screen.keys.down(Key.space)
 		squish	:= screen.keys.down(Key.down) || screen.keys.down(Key.s)  
 
@@ -231,8 +230,10 @@ class GameScreen : GameSeg {
 		} else
 			touchUp = null
 
-		fanny.jump(jump)
-		fanny.squish(squish)
+		catchUp.times { 
+			fanny.jump(jump)
+			fanny.squish(squish)
+		}
 		
 		if (!data.dying)
 			if (screen.keys.pressed(Key.esc))

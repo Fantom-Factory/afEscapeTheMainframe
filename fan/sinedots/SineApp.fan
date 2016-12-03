@@ -13,6 +13,6 @@ class SineApp : DemoEvents {
 
 	override Void onDraw(Gfx g, Int catchUp) {
 		g.clear
-		sineDots.draw(g)
+		sineDots.draw(g, catchUp)
 	}
 }

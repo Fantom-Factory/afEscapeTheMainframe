@@ -71,7 +71,7 @@ class Pulsar {
 			catchUp += -timeToNextPulse.ticks / frequency.ticks
 			
 			// keep our pulses at even intervals
-			timeToNextPulse = Duration(-timeToNextPulse.ticks % frequency.ticks)
+			timeToNextPulse = frequency - Duration(-timeToNextPulse.ticks % frequency.ticks)
 
 			// reset time on pulse so we can catch up (we may have been hibernating and will never catch up!)
 			timeOfNextPulse  = Duration.now + timeToNextPulse
