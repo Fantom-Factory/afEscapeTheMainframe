@@ -44,8 +44,8 @@ class HiScoreScreen : GameSeg {
 	
 	override Void onKill() { }
 
-	override Void onDraw(Gfx g2d) {
-		bgGlow.draw(g2d)
+	override Void onDraw(Gfx g2d, Int catchUp) {
+		bgGlow.draw(g2d, catchUp)
 
 		pages.onJiffy(screen, sounds)
 		

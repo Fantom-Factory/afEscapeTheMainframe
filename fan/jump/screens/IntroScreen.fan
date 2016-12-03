@@ -33,21 +33,20 @@ class IntroScreen : GameSeg {
 		sounds.scanned.stop
 	}
 	
-	override Void onDraw(Gfx g2d) {
+	override Void onDraw(Gfx g2d, Int catchUp) {
 		
 		anyKey := screen.keys.size > 0 || screen.touch.swiped(Key.enter)
 		if (anyKey || intoAnim.finished) {
 			app().startGame(null)
 		}
 
-		bgGlow.draw(g2d)
-		intoAnim.draw(g2d)	
+		bgGlow.draw(g2d, catchUp)
+		intoAnim.draw(g2d, catchUp)
 	}
 }
 
 @Js
 class IntroAnim {
-
 	private FannyImages	images
 	private FannySounds	sounds
 	private Twean?		tweanLogoFanny
@@ -72,7 +71,7 @@ class IntroAnim {
 		initTweans
 	}
 
-	Void draw(Gfx g2d) {
+	Void draw(Gfx g2d, Int catchUp) {
 		y := (Sin.sin(fannyY) * 15f).toInt + (288 - 180) / 2
 		tweanTheFanny.startY = y.toInt
 		tweanTheFanny.finalY = y.toInt
@@ -93,12 +92,12 @@ class IntroAnim {
 		tweanMonitor	.draw(g2d, time)
 		tweanKeyboard	.draw(g2d, time)
 		tweanGrid		.draw(g3d, time)
-		tweanFloor		.draw(g3d, time)
+		tweanFloor		.draw(g3d, time, catchUp)
 		
-		if (time == 70)
+		if (timeEq(time, 70, catchUp))
 			sounds.scanned.play
 		
-		if (time == 215) {
+		if (timeEq(time, 215, catchUp)) {
 			tweanMonitor.with {
 				it.startFrame	=  215
 				it.endFrame		=  230
@@ -122,9 +121,13 @@ class IntroAnim {
 		
 		finished = tweanFloor.finished
 		
-		time++
+		time += catchUp
 	}
 	
+	private Bool timeEq(Int time, Int val, Int catchUp) {
+		time == val || (catchUp > 1 && time < val && (time + catchUp) > val)
+	}
+
 	Void initTweans() {
 		tweanLogoFanny = Twean {
 			it.img			= images.logoFanny
@@ -412,11 +415,13 @@ class TweanFloor {
 	
 	new make(|This| f) { f(this) }
 
-	Void draw(Gfx3d g3d, Int time) {
+	Void draw(Gfx3d g3d, Int time, Int catchUp) {
 		if (time <= startFrame)
 			return
 		
-		floor.anim
+		catchUp.times {
+			floor.anim
+		}
 		
 		if (floor.x <= 0f) {
 			finished = true

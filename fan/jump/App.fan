@@ -29,8 +29,8 @@ class App : DemoEvents {
 		hiScores.loadScores
 	}
 	
-	override Void onDraw(Gfx g) {
-		activeScreen?.onDraw(g)
+	override Void onDraw(Gfx g, Int catchUp) {
+		activeScreen?.onDraw(g, catchUp)
 	}
 	
 	Void showTouch() {
@@ -89,5 +89,5 @@ class App : DemoEvents {
 mixin GameSeg {
 	abstract This onInit()
 	abstract Void onKill()
-	abstract Void onDraw(Gfx g2d)
+	abstract Void onDraw(Gfx g2d, Int catchUp)
 }

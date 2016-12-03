@@ -18,6 +18,7 @@ class Screen : Canvas {
 					Int:Bool	mouseButtons:= Int:Bool[:]
 					Int			mouseSensitivity := 3
 					|->|?		mouseDownFunc
+					Int			catchUp
 
 	new make(|This| in) {
 		in(this)
@@ -97,8 +98,10 @@ class Screen : Canvas {
 			}
 		}
 		
-		if (pulsar.isRunning)
-			eventHub.fireEvent(DemoEvents#onDraw, [g2d])
+		if (pulsar.isRunning) {
+			eventHub.fireEvent(DemoEvents#onDraw, [g2d, catchUp])
+			catchUp = 0
+		}
 	}
 	
 	Gfx gfx(Graphics graphics) {

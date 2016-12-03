@@ -76,11 +76,16 @@ class GameScreen : GameSeg {
 		sounds.gameOver.stop
 	}
 
-	override Void onDraw(Gfx g2d) {
+	override Void onDraw(Gfx g2d, Int catchUp) {
 		keyLogic()
-		gameLogic()
-		anim()
-		draw(g2d)
+		
+		concurrent::Actor.sleep(20ms)
+		catchUp.times {
+			gameLogic()
+			anim()
+		}
+		
+		draw(g2d, catchUp)
 	}
 	
 	Void gameLogic() {
@@ -292,8 +297,8 @@ class GameScreen : GameSeg {
 		}
 	}
 	
-	Void draw(Gfx g2d) {
-		bgGlow.draw(g2d, data.level)
+	Void draw(Gfx g2d, Int catchUp) {
+		bgGlow.draw(g2d, catchUp, data.level)
 		
 		g3d := Gfx3d(g2d.offsetCentre).lookAt(camera, target)
 

@@ -24,7 +24,7 @@ class TouchScreen : GameSeg {
 	
 	override Void onKill() { }
 
-	override Void onDraw(Gfx g2d) {
+	override Void onDraw(Gfx g2d, Int catchUp) {
 		g2d.clear(Models.bgColour)
 
 		g2d.offsetCentre

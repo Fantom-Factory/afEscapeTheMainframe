@@ -11,7 +11,7 @@ class SineApp : DemoEvents {
 		eventHub.register(this)
 	}
 
-	override Void onDraw(Gfx g) {
+	override Void onDraw(Gfx g, Int catchUp) {
 		g.clear
 		sineDots.draw(g)
 	}

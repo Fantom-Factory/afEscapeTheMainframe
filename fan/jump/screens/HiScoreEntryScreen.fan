@@ -60,8 +60,8 @@ class HiScoreEntryScreen : GameSeg {
 		sounds.winner.stop
 	}
 
-	override Void onDraw(Gfx g2d) {
-		bgGlow.draw(g2d)
+	override Void onDraw(Gfx g2d, Int catchUp) {
+		bgGlow.draw(g2d, catchUp)
 	
 		if (screen.editText.size > HiScores.maxNameSize)
 			screen.editText = screen.editText[0..<HiScores.maxNameSize]
