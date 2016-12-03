@@ -44,8 +44,14 @@ class SineDots {
 //		echo("$dots.size dots")
 	}
 
-	Void draw(Gfx g) {
+	Void draw(Gfx g, Int catchUp) {
 		dots.each { it.draw(g).animate }
+
+		if (catchUp > 1) {
+			catchUp.decrement.times { 
+				dots.each { it.animate }
+			}
+		}
 	}
 }
 

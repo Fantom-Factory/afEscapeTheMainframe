@@ -32,8 +32,8 @@ class CreditsScreen : GameSeg {
 		}
 
 		g2d.clear	//(Models.bgColour)
-		sineDots.draw(g2d)
-		creditsAnim.draw(g2d)
+		sineDots.draw(g2d, catchUp)
+		creditsAnim.draw(g2d, catchUp)
 	}
 }
 
@@ -54,10 +54,13 @@ class CreditsAnim {
 		initTweans
 	}
 	
-	Void draw(Gfx g2d) {
-		credits.each { it.draw(g2d, time) }
-		creditScroll.draw(g2d, time)
-		time++
+	Void draw(Gfx g2d, Int catchUp) {
+		credits.each {
+			it.draw(g2d, time)
+			it.anim(time, catchUp)
+		}
+		creditScroll.draw(g2d, time, catchUp)
+		time += catchUp
 		
 		this.finished = creditScroll.finished
 	}
@@ -168,12 +171,12 @@ class CreditScroll {
 		return y + 29 + spacing
 	}
 	
-	Void draw(Gfx g2d, Int time) {
+	Void draw(Gfx g2d, Int time, Int catchUp) {
 		if (time < startFrame)	return
 		
 		g2d.g.copyImage(imgCredits, Rect(0, startY.toInt, FannyTheFantom.windowSize.w / 2, FannyTheFantom.windowSize.h), Rect(FannyTheFantom.windowSize.w / 2, 0, FannyTheFantom.windowSize.w / 2, FannyTheFantom.windowSize.h))
 		
-		startY += 0.6f
+		startY += (0.6f * catchUp)
 		
 		if (startY.toInt >= (imgCredits.size.h - FannyTheFantom.windowSize.h))
 			finished = true
@@ -260,11 +263,16 @@ class CreditTwean : Twean {
 				g2d.drawFont16(name, x.toInt, finalY + 13)				
 			}
 		}
-		
+	}
+	
+	Void anim(Int time, Int catchUp) {
+		if ((time <= startFrame && easeIn) || finished)
+			return
+
 		if (easeIn)
-			finalX += 1
+			finalX += catchUp
 		else
-			startX += 1
+			startX += catchUp
 
 		if (easeIn && finalX > ((FannyTheFantom.windowSize.w * 4 / 5) - width)) {
 			easeIn = false
