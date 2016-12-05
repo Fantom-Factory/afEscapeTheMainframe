@@ -54,8 +54,16 @@ class HiScoreScreen : GameSeg {
 			app().showTitles
 		}
 		
-		g2d.drawFont16Centred("Fanny Hi-Scorers", 1 * 16)
-		g2d.drawFont16Centred("----------------", 2 * 16)
+		tit := "Fanny Hi-Scorers"
+		g2d.drawFont16Centred(tit, 1 * 16)
+		
+		g2d.g.brush = Models.brand_lightBlue
+		halfWidth := g2d.bounds.w
+		t1Size := (tit.size + 1) * 16
+		x1 := (halfWidth - t1Size) / 2
+		x2 := x1 + t1Size
+		g2d.drawLine(x1, 34, x2, 34)
+
 		
 		g2d.drawImage(imgScores, pages.pageX, (4 * 16)-8) 
 		
