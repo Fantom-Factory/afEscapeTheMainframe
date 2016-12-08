@@ -8,7 +8,7 @@
 
 Fanny the Fantom is a simple jump and duck game to test your reflexes, rendered in stunning retro 3D vector graphics. Written entirely in the Fantom programming language, Fanny the Fantom runs on both the desktop and in a browser!
 
-![Fanny the Fantom Screenshot](http://pods.fantomfactory.org/pods/afFannyTheFantom/doc/screenshot.png)
+![Fanny the Fantom Screenshot](http://eggbox.fantomfactory.org/pods/afFannyTheFantom/doc/screenshot.png)
 
 *Fanny the Fantom has been captured by the evil Mainframe. Help Fanny escape dodgy programming by avoiding obstacles and collecting bonus cubes.*
 
@@ -22,13 +22,13 @@ Or [download](https://bitbucket.org/AlienFactory/affannythefantom/downloads) to 
 
 ## Install
 
-Install `Fanny the Fantom` with the Fantom Pod Manager ( [FPM](http://pods.fantomfactory.org/pods/afFpm) ):
+Install `Fanny the Fantom` with the Fantom Pod Manager ( [FPM](http://eggbox.fantomfactory.org/pods/afFpm) ):
 
     C:\> fpm install afFannyTheFantom
 
 Or install `Fanny the Fantom` with [fanr](http://fantom.org/doc/docFanr/Tool.html#install):
 
-    C:\> fanr install -r http://pods.fantomfactory.org/fanr/ afFannyTheFantom
+    C:\> fanr install -r http://eggbox.fantomfactory.org/fanr/ afFannyTheFantom
 
 To use in a [Fantom](http://fantom-lang.org/) project, add a dependency to `build.fan`:
 
@@ -71,7 +71,7 @@ Fanny was always meant to be played in a browser, but I admit that (as I don't o
 
 Fanny the Fantom is coded by me, SlimerDude also known as Steve Eynon. *Hello!*
 
-The game is extremely low level and does not make use of any external libraries, be they OpenGL, graphics, sound, 3D or otherwise. In fact, the only non-core library used is my own [IoC](http://pods.fantomfactory.org/pods/afIoc).
+The game is extremely low level and does not make use of any external libraries, be they OpenGL, graphics, sound, 3D or otherwise. In fact, the only non-core library used is my own [IoC](http://eggbox.fantomfactory.org/pods/afIoc).
 
 All 3D graphics are calculated from the one [3D matrix rotation formula](https://en.wikipedia.org/wiki/Rotation_matrix#In_three_dimensions):
 
@@ -100,13 +100,13 @@ Geoff did the music for our [Amiga demos](http://www.alienfactory.co.uk/equinox/
 
 Unsurprisingly, Geoff followed his passion and became a successful international music producer and DJ, mainly under the guise of [Modulate](https://www.facebook.com/Modulate/). See [Soundcloud](https://soundcloud.com/modulate) for samples and remixes.
 
-Geoff was naturally my first choice when it came to the audio side of Fanny and I was very happy when he graciously accepted!
+Geoff was naturally my first choice when it came to generating the audio side of Fanny and I was very happy when he graciously accepted!
 
 Note Geoff is also involved in a new techno inspired music project called QLERIK. See  [facebook](https://www.facebook.com/QLERIK/) for details.
 
 ### Cartoon Graphics
 
-The cartoon graphics, such as Fanny himself and the mainframe computer are drawn by  [Anibal Ordaz](https://www.fiverr.com/ajordaz); a talented artist I found on *fiverr.com*.
+The cartoon graphics, such as Fanny himself and the mainframe computer are drawn by [Anibal Ordaz](https://www.fiverr.com/ajordaz); a talented artist I found on *fiverr.com*.
 
 See the [Branding page](http://fantom-lang.org/branding) on *fantom-lang.org* should wish to download / use Fanny in any of your work.
 
@@ -114,7 +114,7 @@ See the [Branding page](http://fantom-lang.org/branding) on *fantom-lang.org* sh
 
 Start a game by pressing a number `0 -> 9` to activate *Training Mode!* Training mode starts the game at the specified level, and keeps the game at that level until you die.
 
-Note that hi-score achieved in training mode are not saved.
+Note that any hi-scores achieved in training mode are not saved.
 
 ## Cheat Codes
 
@@ -125,8 +125,9 @@ Enter any of the following during play to activate:
 - `game over` - displays end game sequence as if you completed level 10
 - `invisible` - permanently activates *ghost* mode making you impervious to obstacles
 - `god mode` - like *invisible* only with different colour scheme
+- `rainbow` - multi-coloured blocks
 
-Note that hi-score achieved when cheating are not saved.
+Note that any hi-scores achieved while cheating are not saved.
 
 ## Running Locally
 

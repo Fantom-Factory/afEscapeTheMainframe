@@ -219,6 +219,70 @@ class Models {
 		}
 	}
 
+	static const Color[] colBlkFills := Color[
+		// deep colours
+		Color(0xFF_2222FF),
+		Color(0xFF_A90CFF),
+		Color(0xFF_FF004D),
+		Color(0xFF_FF7400),
+		Color(0xFF_FFBF00),
+		Color(0xFF_FFFF00),
+		Color(0xFF_74FF00),
+		Color(0xFF_00FFFF),
+		
+		// light colours
+		Color(0xFF_336699),
+		Color(0xFF_573AA2),
+		Color(0xFF_A32E95),
+		Color(0xFF_EC4E42),
+		Color(0xFF_ECA742),
+		Color(0xFF_ECD142),
+		Color(0xFF_C1E23F),
+		Color(0xFF_33B449),
+		
+		// dark colours
+		Color(0xFF_00_00_33),
+		Color(0xFF_1F_00_31),
+		Color(0xFF_41_00_14),
+		Color(0xFF_49_21_00),
+		Color(0xFF_49_37_00),
+		Color(0xFF_49_49_00),
+		Color(0xFF_1D_41_00),
+		Color(0xFF_2C_2C_00),
+	]
+	
+	static const Color[] colBlkEdges := Color[
+		// deep colours
+		Color(0xFF_7272FD),
+		Color(0xFF_C662FD),
+		Color(0xFF_FE598B),
+		Color(0xFF_FFA55A),
+		Color(0xFF_FFD65A),
+		Color(0xFF_FFFF5A),
+		Color(0xFF_A4FE59),
+		Color(0xFF_59FDFD),
+
+		// light colours
+		Color(0xFF_7BA3CA),
+		Color(0xFF_9782D0),
+		Color(0xFF_D179C6),
+		Color(0xFF_FF9B93),
+		Color(0xFF_FFD393),
+		Color(0xFF_FFEE93),
+		Color(0xFF_E4F990),
+		Color(0xFF_7FDC8F),
+		
+		// dark colours
+		Color(0xFF_00_00_76),
+		Color(0xFF_49_00_71),
+		Color(0xFF_97_00_2E),
+		Color(0xFF_A9_4C_00),
+		Color(0xFF_A9_7F_00),
+		Color(0xFF_A9_A9_00),
+		Color(0xFF_44_96_00),
+		Color(0xFF_65_65_00),
+	]
+	
 	static Block block(GameData data, BlockCache blockCache, Int x, Int y) {
 		Block(data, blockCache) {
 			xMax := 25f + (x * 50f)
@@ -234,9 +298,18 @@ class Models {
 				Point3d( -25f, -25f ,  175f),
 			]
 			
+			fill := brand_darkBlue
+			edge := brand_lightBlue
+			
+			if (data.rainbowMode) {
+				i := (1..colBlkEdges.size).random - 1
+				fill = colBlkFills[i]
+				edge = colBlkEdges[i]
+			}
+			
 			drawables = [
-				Fill(brand_darkBlue),
-				Edge(brand_lightBlue),
+				Fill(fill),
+				Edge(edge),
 				Poly([0, 1, 2, 3], true),	// front
 				Poly([4, 0, 3, 7], false),	// left
 				Poly([1, 5, 6, 2], false),	// right

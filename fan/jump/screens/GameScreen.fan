@@ -38,16 +38,19 @@ class GameScreen : GameSeg {
 		bonusExplo.clear
 		fannyExplo = null
 		exitBlock = null
+
+		if ((1..30).random == 2)
+			data.rainbowMode = true
 		
 		gameHud	= GameHud()
-		gameHud.alertGameStart
+		gameHud.alertGameStart(data)
 		
 		screen.editMode = true
 		screen.editText = ""
 		
 		sounds.scanned.stop
 		sounds.startGame.play
-
+		
 		return this
 	}
 	
@@ -138,8 +141,6 @@ class GameScreen : GameSeg {
 				col := fanny.intersects(blck)
 				
 				if (!col) {
-//					blck.drawables[0] = Fill(Models.brand_darkBlue)
-//					blck.drawables[1] = Edge(Models.brand_lightBlue)
 					return false
 				}
 				
@@ -190,7 +191,6 @@ class GameScreen : GameSeg {
 				sounds.gameOver.play
 			}
 
-//			if (data.deathCryIdx == 160) {
 			if (data.deathCryIdx == 210) {
 				gameReallyOver()
 			}
@@ -269,6 +269,10 @@ class GameScreen : GameSeg {
 			if (cheatTextEq("god mode")) {
 				data.godMode = true
 				fanny.drawablesDup[7] = Fill(Models.brand_white)
+			}
+
+			if (cheatTextEq("rainbow")) {
+				data.rainbowMode = true
 			}
 		}
 	}
