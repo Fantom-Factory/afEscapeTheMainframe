@@ -6,9 +6,32 @@ class GameHud {
 	Str?	alertText
 	Int		alertIndex
 
-	Void alertGameStart() {
+	Void alertGameStart(GameData data) {
 		alertText = "Escape the Mainframe!"
+		
+		if (data.rainbowMode)
+			alertText = "Escape the Rainbow!"
+
+		if (todayIs(1, Month.jan))
+			alertText = "Happy New Year!"
+		if (todayIs(25, Month.dec)) {
+			alertText = "Merry Christmas!"
+			if (Float.random >= 0.5f)
+				data.rainbowMode = true
+		}
+		
+		if (todayIs(22, Month.feb))
+			alertText = "Happy Birthday Steve!"
+		if (todayIs(23, Month.mar))
+			alertText = "Happy Birthday Emma!"
+		if (todayIs(18, Month.nov))
+			alertText = "Happy Birthday Geoff!"
+		
 		alertIndex = 120
+	}
+	
+	private Bool todayIs(Int day, Month month) {
+		Date.today.day == day && Date.today.month == month 
 	}
 	
 	Void alertTraining(Int level) {

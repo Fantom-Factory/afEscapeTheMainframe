@@ -23,4 +23,5 @@ class GameData {
 	
 	Bool	cheating
 	Bool	godMode
+	Bool	rainbowMode
 }

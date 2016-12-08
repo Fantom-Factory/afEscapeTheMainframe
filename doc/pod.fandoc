@@ -88,7 +88,7 @@ Geoff did the music for our [Amiga demos]`http://www.alienfactory.co.uk/equinox/
 
 Unsurprisingly, Geoff followed his passion and became a successful international music producer and DJ, mainly under the guise of [Modulate]`https://www.facebook.com/Modulate/`. See [Soundcloud]`https://soundcloud.com/modulate` for samples and remixes.
 
-Geoff was naturally my first choice when it came to the audio side of Fanny and I was very happy when he graciously accepted!
+Geoff was naturally my first choice when it came to generating the audio side of Fanny and I was very happy when he graciously accepted!
 
 Note Geoff is also involved in a new techno inspired music project called QLERIK. See  [facebook]`https://www.facebook.com/QLERIK/` for details.
 
@@ -96,7 +96,7 @@ Note Geoff is also involved in a new techno inspired music project called QLERIK
 
 Cartoon Graphics
 ================
-The cartoon graphics, such as Fanny himself and the mainframe computer are drawn by  [Anibal Ordaz]`https://www.fiverr.com/ajordaz`; a talented artist I found on *fiverr.com*.
+The cartoon graphics, such as Fanny himself and the mainframe computer are drawn by [Anibal Ordaz]`https://www.fiverr.com/ajordaz`; a talented artist I found on *fiverr.com*.
 
 See the [Branding page]`http://fantom-lang.org/branding` on *fantom-lang.org* should wish to download / use Fanny in any of your work.
 
@@ -106,7 +106,7 @@ Training Levels
 ***************
 Start a game by pressing a number '0 -> 9' to activate *Training Mode!* Training mode starts the game at the specified level, and keeps the game at that level until you die.
 
-Note that hi-score achieved in training mode are not saved.
+Note that any hi-scores achieved in training mode are not saved.
 
 
 
@@ -119,8 +119,9 @@ Enter any of the following during play to activate:
  - 'game over' - displays end game sequence as if you completed level 10
  - 'invisible' - permanently activates *ghost* mode making you impervious to obstacles
  - 'god mode' - like *invisible* only with different colour scheme
+ - 'rainbow' - multi-coloured blocks
 
-Note that hi-score achieved when cheating are not saved.
+Note that any hi-scores achieved while cheating are not saved.
 
 
 
