@@ -273,6 +273,7 @@ class GameScreen : GameSeg {
 
 			if (cheatTextEq("rainbow")) {
 				data.rainbowMode = true
+				data.cheating = false
 			}
 		}
 	}
