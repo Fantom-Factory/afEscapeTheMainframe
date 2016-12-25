@@ -88,7 +88,7 @@ class TitleScreen : GameSeg {
 			g2d.drawFont8(str, x, 278)
 		}
 		
-		if (timeEq(titleBg.time, 75, catchUp))
+		if (timeEq(titleBg.time, 75, catchUp) && catchUp < 5)	// catch up gets huge if you're tabbed out
 			sounds.levelUp.play
 	}
 	
