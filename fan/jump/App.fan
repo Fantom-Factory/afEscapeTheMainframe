@@ -26,7 +26,6 @@ class App : DemoEvents {
 
 	override Void onStartup() {
 		activeScreen = loadingScreen.onInit
-		hiScores.loadScores
 	}
 	
 	override Void onDraw(Gfx g, Int catchUp) {
@@ -38,6 +37,7 @@ class App : DemoEvents {
 	}
 	
 	Void showTitles() {
+		hiScores.loadScores
 		activeScreen = deactivate.titleScreen.onInit.delay		
 	}
 	
