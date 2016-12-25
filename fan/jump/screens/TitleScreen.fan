@@ -47,7 +47,9 @@ class TitleScreen : GameSeg {
 		return this
 	}
 	
-	override Void onKill() { }
+	override Void onKill() {
+		sounds.levelUp.stop
+	}
 
 	override Void onDraw(Gfx g2d, Int catchUp) {
 		titleMenu.keys()
@@ -80,11 +82,18 @@ class TitleScreen : GameSeg {
 		
 		if (titleBg.time > 105) {
 			titleMenu.draw(g2d)
-//			str := "http://fantom-lang.org/"
-			str := "www.alienfactory.co.uk"
+			str := "fantom-lang.org"
+//			str := "www.alienfactory.co.uk"
 			x := 224 + ((18 - str.size) * 8 / 2)
 			g2d.drawFont8(str, x, 278)
 		}
+		
+		if (timeEq(titleBg.time, 75, catchUp))
+			sounds.levelUp.play
+	}
+	
+	private Bool timeEq(Int time, Int val, Int catchUp) {
+		time == val || (catchUp > 1 && time < val && (time + catchUp) > val)
 	}
 }
 
@@ -143,17 +152,19 @@ class TitleMenu {
 			}
 
 		if (screen.keys.pressed(Key.up) || screen.touch.swiped(Key.up)) {
-			if (highlighted > 0) {
+			if (highlighted > 0)
 				highlighted -= 1
-				sounds.menuMove.play
-			}
+			else
+				highlighted = menu.size-1
+			sounds.menuMove.play
 		}
 
 		if (screen.keys.pressed(Key.down) || screen.touch.swiped(Key.down)) {
-			if (highlighted < menu.size-1) {
+			if (highlighted < menu.size-1)
 				highlighted += 1
-				sounds.menuMove.play
-			}
+			else
+				highlighted = 0
+			sounds.menuMove.play
 		}
 
 		if (screen.keys.pressed(Key.enter) || screen.touch.swiped(Key.enter)) {
