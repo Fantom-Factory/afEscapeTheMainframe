@@ -142,7 +142,7 @@ class CreditScroll {
 			y = drawCredits(g2d, y, "3D Vector Graphics", "Steve Eynon")
 //			y = drawCredits(g2d, y, "Stunt Doubles", "Steve Eynon")
 			y = drawCredits(g2d, y, "Key Grip", "Tracey Jeapes")
-			y = drawCredits(g2d, y, "Kung Fu Choreography", "Emma Eynon")
+			y = drawCredits(g2d, y, "Kung Fu Choreography", "Tony Eynon")
 //			y = drawCredits(g2d, y, "Stunt Doubles", "Sam Jeapes\nElsie Jeapes")
 //			y = drawCredits(g2d, y, "Special Thanks To", "Sam Jeapes\nElsie Jeapes")
 
