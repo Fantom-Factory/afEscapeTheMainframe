@@ -70,6 +70,10 @@ class Pulsar {
 
 			catchUp += -timeToNextPulse.ticks / frequency.ticks
 			
+			// we've probably been sleeping or something, so ignore the catchup
+			if (catchUp > 8)
+				catchUp = 1
+			
 			// keep our pulses at even intervals
 			timeToNextPulse = frequency - Duration(-timeToNextPulse.ticks % frequency.ticks)
 
