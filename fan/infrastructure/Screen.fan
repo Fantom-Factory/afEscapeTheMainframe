@@ -31,6 +31,13 @@ class Screen : Canvas {
 		onMouseUp	.add { this.mouseUp  (it) }
 	}
 	
+	Void reset() {
+		touch.reset
+		keys.clear
+		mouseButtons.clear
+		editText = ""
+	}
+	
 	private Void keyDown(Event e) {
 		keys[e.key.primary] = true
 		
