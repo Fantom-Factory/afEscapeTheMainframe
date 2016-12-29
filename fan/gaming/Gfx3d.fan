@@ -3,6 +3,7 @@ using gfx::Point
 using gfx::Brush
 using gfx::Rect
 
+// http://www.opengl-tutorial.org/intermediate-tutorials/tutorial-17-quaternions/
 @Js
 class Gfx3d {
 
