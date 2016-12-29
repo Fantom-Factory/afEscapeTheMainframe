@@ -16,6 +16,7 @@ class App : DemoEvents {
 	@Autobuild	private HiScoreEntryScreen	hiScoreEntryScreen
 	@Autobuild	private CreditsScreen		creditsScreen
 				private GameSeg?			activeScreen
+				private Bool				loadScoresOnTitleScreen
 						Bool				offline
 						Bool				offlineMode
 
@@ -26,6 +27,7 @@ class App : DemoEvents {
 
 	override Void onStartup() {
 		activeScreen = loadingScreen.onInit
+		hiScores.loadScores
 	}
 	
 	override Void onDraw(Gfx g, Int catchUp) {
@@ -37,8 +39,10 @@ class App : DemoEvents {
 	}
 	
 	Void showTitles() {
-		hiScores.loadScores
-		activeScreen = deactivate.titleScreen.onInit.delay		
+		activeScreen = deactivate.titleScreen.onInit.delay
+		if (loadScoresOnTitleScreen)
+			hiScores.loadScores
+		loadScoresOnTitleScreen = true
 	}
 	
 	Void showIntro(Float fannyY) {
@@ -77,9 +81,7 @@ class App : DemoEvents {
 	}
 
 	private This deactivate() {
-		screen.keys.clear
-		screen.touch.clear
-		screen.mouseButtons.clear
+		screen.reset
 		activeScreen.onKill
 		return this
 	}
