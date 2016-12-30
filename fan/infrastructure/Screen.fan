@@ -32,8 +32,8 @@ class Screen : Canvas {
 	}
 	
 	Void reset() {
-		touch.reset
 		keys.clear
+		touch.clear
 		mouseButtons.clear
 		editText = ""
 	}
