@@ -85,14 +85,13 @@ class Funcs {
 	}
 	
 	Float funcfloorSpeed(Int level) {
-//		((25f - 8f) * (level / 9f)) + 8f
 		10f + (level * 0.5f)
 	}
 	
 	Bool funcNewBlock(Int level, Float distance, Float speed) {
 
-		shortest :=   615f - (level *  15)				//  575 -> 465  
-		longest	 := (1500f - (level * 175)).max(600f)	// 1500 -> 600
+		shortest := ( 615f - (level *  15)).max(480f)	//  575 -> 480  
+		longest	 := (1500f - (level * 175)).max(615f)	// 1500 -> 615
 
 		if (level == 11) {
 			shortest = 2000f
@@ -122,20 +121,20 @@ class Funcs {
 		lastKey := lastBlock?.blockKey
 		if (lastKey != null) {
 			// if we've just done a high jump, don't immediately follow it with another
-			if (distance < 475f && lastKey.and(y3) != 0 && lastKey.and(z0) != 0)
+			if (distance < (475f + data.level) && lastKey.and(y3) != 0 && lastKey.and(z0) != 0)
 				allowedLevels = allowedLevels.exclude { (it.and(y3) != 0 || it.and(y4) != 0) && it.and(z0) != 0 }
 
-			if (distance < 490f && lastKey.and(y4) != 0 && lastKey.and(z0) != 0)
+			if (distance < (490f + data.level) && lastKey.and(y4) != 0 && lastKey.and(z0) != 0)
 				allowedLevels = allowedLevels.exclude { (it.and(y3) != 0 || it.and(y4) != 0) && it.and(z0) != 0 }
 
-//			if (distance < 475f && lastKey.and(z0) != 0)
+//			if (distance < (475f  + data.level) && lastKey.and(z0) != 0)
 //				allowedLevels = allowedLevels.exclude { it.and(z0) != 0 }
 //
-//			if (distance < 475f && lastKey.and(z1) != 0)
+//			if (distance < (475f  + data.level) && lastKey.and(z1) != 0)
 //				allowedLevels = allowedLevels.exclude { (it.and(y2) != 0 || it.and(y3) != 0 || it.and(y4) != 0) && it.and(z0) != 0 }
 
 			// give clearance for the next high jump
-			if (distance < 500f)
+			if (distance < (500f + data.level))
 				allowedLevels = allowedLevels.exclude { it.and(y4) != 0 && it.and(z0) != 0 }
 		}
 		
