@@ -135,7 +135,7 @@ class CreditScroll {
 			y = drawCredits(g2d, y, "Sound Effects", "    Geoff Lee    ") - spacing
 			g2d.drawFont8Centred("aka", y)
 			y+=8
-			g2d.drawFont16Centred("(Modulate/QLERIK)", y)
+			g2d.drawFont16Centred("Modulate/QLERIK", y)
 			y+=16+spacing
 
 			y = drawCredits(g2d, y, "Cartoon Graphics", "Anibal Ordaz")
