@@ -56,6 +56,16 @@ fan.afFannyTheFantom.SoundClipJs.prototype.loaded = function() {
 	return this.m_buffer != null || fan.afFannyTheFantom.SoundClipJs.context == null;
 }
 
+fan.afFannyTheFantom.SoundClipJs.prototype.volume = function() { return fan.sys.Float.make(this.m_gainNode.gain.value); }
+fan.afFannyTheFantom.SoundClipJs.prototype.volume$ = function(volume) {
+	var volVal = volume.valueOf();
+	if (volVal < 0 || volVal > 1)
+		throw fan.sys.ArgErr.make("Invalid volume: " + volVal);
+
+	if (this.m_gainNode != null)
+		this.m_gainNode.gain.value = volVal;
+}
+
 fan.afFannyTheFantom.SoundClipJs.prototype.play = function() {
 	var context = fan.afFannyTheFantom.SoundClipJs.context;
 	if (context == null)
@@ -68,6 +78,10 @@ fan.afFannyTheFantom.SoundClipJs.prototype.play = function() {
 	this.m_source.connect(this.m_gainNode);
 	this.m_gainNode.connect(context.destination);
 	this.m_source.start();
+
+	var volume = this.volume();
+	var curTime = context.currentTime;
+	this.m_gainNode.gain.exponentialRampToValueAtTime(volume.valueOf(), curTime);
 }
 
 fan.afFannyTheFantom.SoundClipJs.prototype.stop = function() {
@@ -76,14 +90,15 @@ fan.afFannyTheFantom.SoundClipJs.prototype.stop = function() {
 	this.m_source.stop();
 }
 
-fan.afFannyTheFantom.SoundClipJs.prototype.m_volume = 1;
-fan.afFannyTheFantom.SoundClipJs.prototype.volume = function() { return this.m_volume; }
-fan.afFannyTheFantom.SoundClipJs.prototype.volume$ = function(volume) {
-	var volVal = volume.valueOf();
-	if (volVal < 0 || volVal > 1)
-		throw fan.sys.ArgErr.make("Invalid volume: " + volVal);
-	this.m_volume = volVal;
+fan.afFannyTheFantom.SoundClipJs.prototype.fadeOut = function(duration) {
+	if (this.m_source == null)
+		return;
+	var volume  = this.volume();
+	var context = fan.afFannyTheFantom.SoundClipJs.context;
+	var curTime = context.currentTime;
+	this.m_gainNode.gain.exponentialRampToValueAtTime(volume.valueOf(), curTime);
+	this.m_gainNode.gain.exponentialRampToValueAtTime(0.01, curTime + (duration.toMillis() / 1000));
 
-	if (this.m_gainNode != null)
-		this.m_gainNode.gain.value = volVal;
+	var that = this;
+	window.setTimeout(function() { that.stop(); }, duration.toMillis());
 }
