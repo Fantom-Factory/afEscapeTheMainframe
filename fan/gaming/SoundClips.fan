@@ -5,6 +5,7 @@ using [java] javax.sound.sampled::Clip
 using [java] javax.sound.sampled::DataLine$Info as Info
 using [java] javax.sound.sampled::FloatControl
 using [java] javax.sound.sampled::FloatControl$Type as FType
+using concurrent
 
 @Js
 class SoundClips {
@@ -33,11 +34,12 @@ mixin SoundClip {
 	abstract Bool loaded()
 	abstract Void play()
 	abstract Void stop()
+	abstract Void fadeOut(Duration duration)
 }
 
 class SoundClipJava : SoundClip {
-	private Uri		soundUri
-	private Clip	clip
+	private Uri			soundUri
+	private Clip		clip
 	
 	new make(Uri soundUri) {
 		soundFile			:= soundUri.get as File
@@ -78,7 +80,28 @@ class SoundClipJava : SoundClip {
 		if (clip.isRunning) {
 			clip.stop
 			clip.flush
+			clip.drain
 		}
+	}
+	
+	override Void fadeOut(Duration duration) {
+		thisRef := Unsafe(this)
+		Actor(ActorPool()) |->| {
+			that := (SoundClipJava) thisRef.val
+			try {
+				vol  := that.volume
+				incs := vol / (duration.toMillis / 50)
+				gain := (FloatControl) that.clip.getControl(FType.MASTER_GAIN)
+				time := Duration.now + duration
+				while (Duration.now < time) {
+					vol = (vol - incs).max(0.01f)
+					gain.setValue(20f * vol.log10)
+					Actor.sleep(50ms)
+				}
+			} catch (Err err)
+				err.trace
+			that.stop
+		}.send(null)
 	}
 	
 	override Str toStr() {
@@ -97,4 +120,6 @@ native class SoundClipJs : SoundClip {
 
 	override Void play()
 	override Void stop()
+	
+	override Void fadeOut(Duration duration)
 }

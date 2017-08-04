@@ -90,14 +90,19 @@ class CreditsAnim {
 				it.startFrame	= 100 + (250 * 3)
 			},
 			CreditTwean {
+				it.title		= "Chip Tunes"
+				it.name			= "ZeroCakes"
+				it.startFrame	= 100 + (250 * 4)
+			},
+			CreditTwean {
 				it.title		= "Sound Effects"
 				it.name			= "Modulate/QLERIK"
-				it.startFrame	= 100 + (250 * 4)
+				it.startFrame	= 100 + (250 * 5)
 			},
 			CreditTwean {
 				it.title		= "Cartoon Graphics"
 				it.name			= "Anibal Ordaz"
-				it.startFrame	= 100 + (250 * 5)
+				it.startFrame	= 100 + (250 * 6)
 			},
 		]
 	}
@@ -132,6 +137,12 @@ class CreditScroll {
 			g2d.drawFont16Centred("Steve Eynon", y)
 			y+=16+spacing
 			
+			y = drawCredits(g2d, y, "Chip Tunes", "Morgan Hesmondhalgh") - spacing
+			g2d.drawFont8Centred("aka", y)
+			y+=8
+			g2d.drawFont16Centred("ZeroCakes", y)
+			y+=16+spacing
+			
 			y = drawCredits(g2d, y, "Sound Effects", "    Geoff Lee    ") - spacing
 			g2d.drawFont8Centred("aka", y)
 			y+=8
@@ -142,7 +153,10 @@ class CreditScroll {
 			y = drawCredits(g2d, y, "3D Vector Graphics", "Steve Eynon")
 //			y = drawCredits(g2d, y, "Stunt Doubles", "Steve Eynon")
 			y = drawCredits(g2d, y, "Key Grip", "Tracey Jeapes")
+
 			y = drawCredits(g2d, y, "Kung Fu Choreography", "Tony Eynon")
+//			y = drawCredits(g2d, y, "Spearo Supreme", "Tony Eynon")
+			
 //			y = drawCredits(g2d, y, "Stunt Doubles", "Sam Jeapes\nElsie Jeapes")
 //			y = drawCredits(g2d, y, "Special Thanks To", "Sam Jeapes\nElsie Jeapes")
 

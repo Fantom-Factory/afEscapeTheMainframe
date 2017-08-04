@@ -68,6 +68,7 @@ const class FannyMod : WebMod {
 				out.div("class='logoFantom'").divEnd
 				out.div("class='bigFanny'").divEnd
 				out.div("class='mask'").divEnd
+		// FIXME Use up / down cursor keys or swipe to play
 				out.div("class='noTouch'").span.spanEnd.divEnd
 				out.div("class='twits'")
 					out.a(`https://twitter.com/intent/tweet`, "class='twitter-share-button' data-text='Fanny the Fantom; a jump game rendered in stunning retro 3D vector graphics, written in #FantomLang' data-url='http://fanny.fantomfactory.org/'").w("Tweet").aEnd
