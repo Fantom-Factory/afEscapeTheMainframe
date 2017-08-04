@@ -39,6 +39,9 @@ class TitleScreen : GameSeg {
 					app().showCredits
 			}
 		}
+		
+		sounds.titleTune.play
+		
 		return this
 	}
 	
@@ -48,7 +51,7 @@ class TitleScreen : GameSeg {
 	}
 	
 	override Void onKill() {
-		sounds.levelUp.stop
+		sounds.titleTune.fadeOut(1.5sec)
 	}
 
 	override Void onDraw(Gfx g2d, Int catchUp) {
@@ -87,9 +90,6 @@ class TitleScreen : GameSeg {
 			x := 224 + ((18 - str.size) * 8 / 2)
 			g2d.drawFont8(str, x, 278)
 		}
-		
-		if (timeEq(titleBg.time, 75, catchUp) && catchUp < 5)	// catch up gets huge if you're tabbed out
-			sounds.levelUp.play
 	}
 	
 	private Bool timeEq(Int time, Int val, Int catchUp) {
