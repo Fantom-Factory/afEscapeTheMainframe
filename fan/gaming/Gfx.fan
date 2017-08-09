@@ -19,9 +19,10 @@ class Gfx {
 		g.antialias = true
 	}
 	
-	Void offset(Int x, Int y) {
+	This offset(Int x, Int y) {
 		ox = x
 		oy = y
+		return this
 	}
 
 	This offsetCentre() {

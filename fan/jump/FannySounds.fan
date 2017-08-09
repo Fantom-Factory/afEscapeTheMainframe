@@ -13,7 +13,7 @@ class FannySounds : SoundClips {
 	SoundClip	jumpDown() 			{ load("sounds/jumpSquish_22khz.wav")		{ it.volume = 0.25f } }
 	SoundClip	squish() 			{ load("sounds/crouch_22khz.wav")			{ it.volume = 0.25f } }
 	SoundClip	squishJump() 		{ load("sounds/superJump_22khz.wav")		{ it.volume = 0.25f } }
-	SoundClip	bonusCube() 		{ load("sounds/levelUp_22khz.wav")			{ it.volume = 1.0f } }
+	SoundClip	bonusCube() 		{ load("sounds/levelUp_22khz.wav")			{ it.volume = 1.00f } }
 	SoundClip	levelUp() 			{ load("sounds/bonusCube_22khz.wav")		{ it.volume = 0.25f } }
 	SoundClip	randomJingle() 		{ load("sounds/randomJingle_22khz.wav")		{ it.volume = 0.25f } }
 	SoundClip	deathCry() 			{ load("sounds/deathCry_22khz.wav")			{ it.volume = 0.25f } }
