@@ -8,6 +8,7 @@ class Screen : Canvas {
 	@Inject private EventHub	eventHub
 	@Inject private Pulsar		pulsar
 	@Inject private FannyImages	images
+	@Inject private FannySounds	sounds
 					TouchMap	touch		:= TouchMap()
 					KeyMap		keys		:= KeyMap()
 					Bool		editMode	:= false
@@ -81,21 +82,35 @@ class Screen : Canvas {
 
 	private Void mouseDown(Event e) {
 		if (e.pos != null)
+			if (e.pos.x < 28+2+2 && e.pos.y > FannyTheFantom.windowSize.h - 24 - 2 - 2) {
+				echo("sound")
+				sounds.mute = sounds.mute.not
+				return
+			}
+			
+		if (e.pos != null)
 			mousePos = e.pos
+		
 		mouseButtons[e.button] = true
 		mouseDownFunc?.call()
 	}
 
 	private Void mouseUp(Event e) {
 		if (e.pos != null)
+			if (e.pos.x < 28+2+2 && e.pos.y > FannyTheFantom.windowSize.h - 24 - 2 - 2) {
+				return
+			}
+	
+		if (e.pos != null)
 			mousePos = e.pos
+		
 		mouseButtons.remove(e.button)
 
 		if (e.button == 1)
 			touch.reset
 	}
 
-	override Void onPaint(Graphics graphics) {
+	final override Void onPaint(Graphics graphics) {
 		g2d := gfx(graphics) 
 
 		if (!Runtime.isJs) {
@@ -108,8 +123,11 @@ class Screen : Canvas {
 		if (pulsar.isRunning) {
 			eventHub.fireEvent(DemoEvents#onDraw, [g2d, catchUp])
 			catchUp = 0
+			
+			g2d.offset(0, 0).drawImage(sounds.mute ? images.volumeOff : images.volumeOn, 2, FannyTheFantom.windowSize.h - 24 - 2)
 		}
 	}
+	Int col
 	
 	Gfx gfx(Graphics graphics) {
 		Gfx(graphics) {

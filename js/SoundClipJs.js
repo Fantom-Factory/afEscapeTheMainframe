@@ -19,12 +19,16 @@ fan.afFannyTheFantom.SoundClipJs.prototype.$typeof = function() {
 	return fan.afFannyTheFantom.SoundClipJs.$type;
 }
 
-fan.afFannyTheFantom.SoundClipJs.prototype.m_buffer   = null;
-fan.afFannyTheFantom.SoundClipJs.prototype.m_source   = null;
-fan.afFannyTheFantom.SoundClipJs.prototype.m_gainNode = null;
+fan.afFannyTheFantom.SoundClipJs.prototype.m_url        = null;
+fan.afFannyTheFantom.SoundClipJs.prototype.m_soundClips = null;
+fan.afFannyTheFantom.SoundClipJs.prototype.m_buffer     = null;
+fan.afFannyTheFantom.SoundClipJs.prototype.m_source     = null;
+fan.afFannyTheFantom.SoundClipJs.prototype.m_gainNode   = null;
 
-fan.afFannyTheFantom.SoundClipJs.make = function(soundUri) {
+fan.afFannyTheFantom.SoundClipJs.make = function(soundUri, soundClips) {
 	var soundJs = new fan.afFannyTheFantom.SoundClipJs();
+
+	soundJs.m_soundClips = soundClips;
 
 	if (soundUri.scheme() != "fan")
 		throw fan.sys.ArgErr.make("Uri scheme must be 'fan': " + soundUri.toStr());
@@ -67,6 +71,8 @@ fan.afFannyTheFantom.SoundClipJs.prototype.volume$ = function(volume) {
 }
 
 fan.afFannyTheFantom.SoundClipJs.prototype.play = function() {
+	if (this.m_soundClips.mute() === true) return;
+
 	var context = fan.afFannyTheFantom.SoundClipJs.context;
 	if (context == null)
 		return;

@@ -12,6 +12,13 @@ class SoundClips {
 	private const Log		log			:= typeof.pod.log
 	private Str:SoundClip	soundClips	:= Str:SoundClip[:]
 
+	Bool mute {
+		set {
+			&mute = it
+			if (it) stopAll
+		}
+	}
+	
 	Void stopAll() {
 		soundClips.each |soundClip| {
 			soundClip.stop
@@ -22,8 +29,8 @@ class SoundClips {
 		soundClips.getOrAdd(soundUrl.toStr) |->SoundClip| {
 			log.info("Loading Sound ${soundUrl.name}")
 			return Env.cur.runtime == "js"
-				? typeof.pod.type("SoundClipJs"  ).make([soundUrl])
-				: typeof.pod.type("SoundClipJava").make([soundUrl])
+				? typeof.pod.type("SoundClipJs"  ).make([soundUrl, this])
+				: typeof.pod.type("SoundClipJava").make([soundUrl, this])
 		}
 	}
 }
@@ -40,8 +47,9 @@ mixin SoundClip {
 class SoundClipJava : SoundClip {
 	private Uri			soundUri
 	private Clip		clip
+	private SoundClips	soundClips
 	
-	new make(Uri soundUri) {
+	new make(Uri soundUri, SoundClips soundClips) {
 		soundFile			:= soundUri.get as File
 		soundStream 		:= Interop.toJava(soundFile.in)
 	    audioInputStream	:= AudioSystem.getAudioInputStream(soundStream)
@@ -52,6 +60,7 @@ class SoundClipJava : SoundClip {
 		
 		this.clip		= clip
 		this.soundUri	= soundUri
+		this.soundClips	= soundClips
 	}
 	
 	// see http://stackoverflow.com/questions/40514910/set-volume-of-java-clip/40698149#40698149
@@ -71,6 +80,8 @@ class SoundClipJava : SoundClip {
 	override Bool loaded() { true }
 	
 	override Void play() {
+		if (soundClips.mute) return
+
 		stop
 		clip.setFramePosition(0)
 		clip.start
@@ -114,7 +125,7 @@ native class SoundClipJs : SoundClip {
 	
 	override Float volume
 	
-	new make(Uri soundUrl)
+	new make(Uri soundUrl, SoundClips soundClips)
 	
 	override Bool loaded()
 

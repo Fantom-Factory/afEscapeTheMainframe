@@ -17,4 +17,6 @@ class FannyImages : Images {
 	Image	compMonitor()	{ load("computerMonitor.png")	}
 	Image	compKeyboard()	{ load("computerKeyboard.png")	}
 
+	Image	volumeOn()		{ load("volumeOn.png")	}
+	Image	volumeOff()		{ load("volumeOff.png")	}
 }
