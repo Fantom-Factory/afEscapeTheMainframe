@@ -79,30 +79,19 @@ class CreditsAnim {
 				it.startFrame	= 100 + (250 * 1)
 			},
 			CreditTwean {
-				it.title		= "Fanny the Fantom"
-				it.name			= "Escape the Mainframe"
-				it.flip			= true
+				it.title		= "Featuring"
+				it.name			= "Fanny the Fantom"
 				it.startFrame	= 100 + (250 * 2)
 			},
 			CreditTwean {
-				it.title		= "Coding / Programming"
-				it.name			= "SlimerDude"
+				it.title		= "in"
+				it.name			= "Escape the Mainframe"
 				it.startFrame	= 100 + (250 * 3)
 			},
 			CreditTwean {
-				it.title		= "Chip Tunes"
-				it.name			= "ZeroCakes"
+				it.title		= "Written by"
+				it.name			= "Steve Eynon"
 				it.startFrame	= 100 + (250 * 4)
-			},
-			CreditTwean {
-				it.title		= "Sound Effects"
-				it.name			= "Modulate/QLERIK"
-				it.startFrame	= 100 + (250 * 5)
-			},
-			CreditTwean {
-				it.title		= "Cartoon Graphics"
-				it.name			= "Anibal Ordaz"
-				it.startFrame	= 100 + (250 * 6)
 			},
 		]
 	}
@@ -111,14 +100,14 @@ class CreditsAnim {
 @Js
 class CreditScroll {
 	const	Int spacing	:= 60
-	Int		startFrame	:= 100 + (250 * 6)
+	Int		startFrame	:= 100 + (250 * 5)
 	Float	startY
 	Image?	imgCredits
 	Bool	finished
 	
 	new make(Screen screen) {
 		
-		imgCredits = Image.makePainted(Size(FannyTheFantom.windowSize.w / 2, 1200 + FannyTheFantom.windowSize.h)) |g| {
+		imgCredits = Image.makePainted(Size(FannyTheFantom.windowSize.w / 2, 1300 + FannyTheFantom.windowSize.h)) |g| {
 			g2d := screen.gfx(g)
 			g2d.clear	//(Models.bgColour)
 			
@@ -131,10 +120,11 @@ class CreditScroll {
 			y+=spacing
 			
 			y = drawCredits(g2d, y, "Game Design", "Steve Eynon\nEmma Eynon")
-			y = drawCredits(g2d, y, "Coding / Programming", "SlimerDude") - spacing
+
+			y = drawCredits(g2d, y, "Coding / Programming", "Steve Eynon") - spacing
 			g2d.drawFont8Centred("aka", y)
 			y+=8
-			g2d.drawFont16Centred("Steve Eynon", y)
+			g2d.drawFont16Centred("SlimerDude", y)
 			y+=16+spacing
 			
 			y = drawCredits(g2d, y, "Chip Tunes", "Morgan Hesmondhalgh") - spacing
@@ -154,8 +144,8 @@ class CreditScroll {
 //			y = drawCredits(g2d, y, "Stunt Doubles", "Steve Eynon")
 			y = drawCredits(g2d, y, "Key Grip", "Tracey Jeapes")
 
-			y = drawCredits(g2d, y, "Kung Fu Choreography", "Tony Eynon")
-//			y = drawCredits(g2d, y, "Spearo Supreme", "Tony Eynon")
+//			y = drawCredits(g2d, y, "Kung Fu Choreography", "Tony Eynon")
+			y = drawCredits(g2d, y, "World Record Holder", "Tony Eynon")
 			
 //			y = drawCredits(g2d, y, "Stunt Doubles", "Sam Jeapes\nElsie Jeapes")
 //			y = drawCredits(g2d, y, "Special Thanks To", "Sam Jeapes\nElsie Jeapes")
