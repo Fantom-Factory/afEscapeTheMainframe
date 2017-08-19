@@ -61,24 +61,30 @@ class Pulsar {
 			return
 		}
 
+		now				:= Duration.now
 		timeOfNextPulse  = timeOfNextPulse + frequency
-		timeToNextPulse := timeOfNextPulse - Duration.now
+		timeToNextPulse := timeOfNextPulse - now
 		catchUp			:= 1
 
 		if (timeToNextPulse <= 0ms) {
-			logOverloadWarning(timeToNextPulse, Duration.now)
+			catchUp++
+			logOverloadWarning(timeToNextPulse, now)
 
 			catchUp += -timeToNextPulse.ticks / frequency.ticks
-			
-			// we've probably been sleeping or something, so ignore the catchup
-			if (catchUp > 8)
+
+			if (-timeToNextPulse > 1sec) {
+				// we've probably been sleeping or something, so ignore the catchup
 				catchUp = 1
 			
+				// reset time on pulse so we can quickly catch up
+				timeOfNextPulse  = now + frequency
+			} else
+				// else keep the periodocity!
+				while (timeOfNextPulse <= now)
+					timeOfNextPulse += frequency 
+			
 			// keep our pulses at even intervals
-			timeToNextPulse = frequency - Duration(-timeToNextPulse.ticks % frequency.ticks)
-
-			// reset time on pulse so we can catch up (we may have been hibernating and will never catch up!)
-			timeOfNextPulse  = Duration.now + timeToNextPulse
+			timeToNextPulse = timeOfNextPulse - now
 		}
 		
 		// we may be stopping and stepping...
