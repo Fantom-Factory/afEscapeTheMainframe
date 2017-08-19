@@ -35,7 +35,7 @@ class Sequence {
 
 			if (seq.isLoop) {
 				seq.count++
-				if (seq.count >= seq.loopCount) {
+				if (seq.count >= seq.loopCount && seq.loopCount != -1) {
 					seq.count = 0
 				} else {
 					index = seq.loopPos - 1

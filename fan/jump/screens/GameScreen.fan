@@ -97,7 +97,11 @@ class GameScreen : GameSeg {
 			anim()
 		}
 		
-		fannySequencer.wannaPlay.unique.each {
+		seqs := fannySequencer.wannaPlay
+		// JS Bug: see http://fantom.org/forum/topic/2629
+		if (Env.cur.runtime != "js")
+			seqs = seqs.unique
+		seqs.each {
 			if (!sequencer.has(it))
 				sequencer.playNow(it)
 		}
@@ -122,6 +126,8 @@ class GameScreen : GameSeg {
 			} else {
 				sounds.levelUp.play
 			}
+			
+			fannySequencer.playArpeggio2
 		}
 
 		
@@ -176,6 +182,16 @@ class GameScreen : GameSeg {
 						data.blocksJumpedInGame++
 						data.blocksJumpedInLevel++
 						data.score += blck.score
+						
+						rand := Int.random.abs % 5
+						if (blck.yMin > fanny.yMax) {
+							if (blck.score >= rand)
+								fannySequencer.playExtraBass
+						} else {
+							if (blck.score >= rand)
+								fannySequencer.playHiHatFillIn
+						}
+
 						blck.score = 0
 					}
 				}
@@ -196,6 +212,9 @@ class GameScreen : GameSeg {
 					
 					if (data.invisible < 40)
 						data.invisible = 40
+					
+					if ((Int.random % 3) == 2)
+						fannySequencer.playArpeggio1
 				}
 			}
 		}

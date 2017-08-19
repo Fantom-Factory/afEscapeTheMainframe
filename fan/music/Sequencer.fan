@@ -32,7 +32,6 @@ class Sequencer {
 		
 		count += catchUp
 		if (count >= 24) {
-			echo(count)
 			count = count % 24
 			beat = true
 		}
@@ -59,7 +58,7 @@ class Sequencer {
 	}
 	
 	Bool has(Sequence seq) {
-		sequences.indexSame(seq) != null
+		sequences.find { seq === it } != null
 	}
 	
 	Void onPlay() {
@@ -123,26 +122,24 @@ class FannySequencer {
 			Sequent.play(sounds.tuneArpeggio),
 			Sequent.pause(15),
 		])
-		
-		mainBass = extraBass
 	}
 	
 	Void playMainBass() {
 		wannaPlay.add(mainBass)
-//		if (!sequencer.has(mainBass))
-//			sequencer.playSeq(mainBass)
 	}
 
 	Void playHiHatFillIn() {
-		wannaPlay.add(hiHatFillIn)
-//		if (!sequencer.has(hiHatFillIn))
-//			sequencer.playSeq(hiHatFillIn)
+		if (sequencer.has(hiHatFillIn))
+			hiHatFillIn.sequents[2].count = 0
+		else
+			wannaPlay.add(hiHatFillIn)
 	}
 	
 	Void playExtraBass() {
+		if (sequencer.has(extraBass))
+			extraBass.sequents[3].count = 0
+		else
 		wannaPlay.add(extraBass)
-//		if (!sequencer.has(extraBass))
-//			sequencer.playSeq(extraBass)
 	}
 	
 	Void playArpeggio1() {
