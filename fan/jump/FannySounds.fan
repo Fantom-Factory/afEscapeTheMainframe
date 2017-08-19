@@ -20,8 +20,16 @@ class FannySounds : SoundClips {
 	SoundClip	gameOver() 			{ load("sounds/gameOver_22khz.wav") 		{ it.volume = 0.18f } }
 	SoundClip	winner() 			{ load("sounds/winner_22khz.wav")			{ it.volume = 0.25f } }
 
+	SoundClip	bassMain1() 		{ load("music/bassMain1.wav")				{ it.volume = 0.75f } }
+	SoundClip	bassMain2() 		{ load("music/bassMain2.wav")				{ it.volume = 0.75f } }
+	SoundClip	bassMain3() 		{ load("music/bassMain2.wav")				{ it.volume = 0.75f } }
+	SoundClip	bassExtra1() 		{ load("music/bassExtra1.wav")				{ it.volume = 0.75f } }
+	SoundClip	bassExtra2() 		{ load("music/bassExtra2.wav")				{ it.volume = 0.75f } }
+	SoundClip	fillinHihat() 		{ load("music/fillinHihat.wav")				{ it.volume = 0.75f } }
+	SoundClip	fillinArpeggio() 	{ load("music/fillinArpeggio.wav")			{ it.volume = 0.75f } }
+	SoundClip	tuneArpeggio() 		{ load("music/tuneArpeggio.wav")			{ it.volume = 0.75f } }
 
-	
+
 	SoundClip load(Str name) {
 		loadSoundClip(`fan://${typeof.pod}/res/${name}`)
 	}

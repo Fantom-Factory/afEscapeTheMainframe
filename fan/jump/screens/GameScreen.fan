@@ -26,6 +26,9 @@ class GameScreen : GameSeg {
 				private GameHud			gameHud		:= GameHud()
 				private	GameData?		data
 				private Log 			log			:= typeof.pod.log
+
+	@Inject		private Sequencer		sequencer
+	@Inject		private FannySequencer	fannySequencer
 	
 	new make(|This| in) { in(this) }
 
@@ -50,6 +53,9 @@ class GameScreen : GameSeg {
 		
 		sounds.scanned.stop
 		sounds.startGame.play
+		
+		sequencer.onPlay
+		fannySequencer.playMainBass
 		
 		return this
 	}
@@ -77,9 +83,13 @@ class GameScreen : GameSeg {
 		sounds.bonusCube.stop
 		sounds.deathCry.stop
 		sounds.gameOver.stop
+		
+		sequencer.onStop
 	}
 
 	override Void onDraw(Gfx g2d, Int catchUp) {
+		sequencer.onBeat(catchUp)
+
 		keyLogic(catchUp)
 		
 		catchUp.times {
@@ -87,6 +97,12 @@ class GameScreen : GameSeg {
 			anim()
 		}
 		
+		fannySequencer.wannaPlay.unique.each {
+			if (!sequencer.has(it))
+				sequencer.playNow(it)
+		}
+		fannySequencer.wannaPlay.clear
+
 		draw(g2d, catchUp)
 	}
 	
@@ -200,8 +216,7 @@ class GameScreen : GameSeg {
 	Bool?	touchUp
 	Void keyLogic(Int catchUp) {
 		jump 	:= screen.keys.down(Key.up  ) || screen.keys.down(Key.w) || screen.keys.down(Key.space)
-		squish	:= screen.keys.down(Key.down) || screen.keys.down(Key.s)  
-
+		squish	:= screen.keys.down(Key.down) || screen.keys.down(Key.s)
 		
 		if (screen.mouseButtons[1] == true) {
 			tSquish := true
@@ -215,7 +230,7 @@ class GameScreen : GameSeg {
 
 			if (touchUp == true) {
 				tSquish = false
-				tJump	= true
+				tJump	= true				
 			}
 
 			if (screen.touch.moving(Key.down)) {
