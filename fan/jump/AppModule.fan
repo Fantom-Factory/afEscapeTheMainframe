@@ -13,6 +13,9 @@ const class AppModule {
 		bob.addService(FloorCache#)
 		bob.addService(BlockCache#)
 
+		bob.addService(Sequencer#)
+		bob.addService(FannySequencer#)
+
 		bob.onScopeCreate("uiThread") |Configuration config| {
 			config["eagerLoad"] = |->| {
 				// maybe put the qname of this class in pod meta -> for a generic gaming infrastructure

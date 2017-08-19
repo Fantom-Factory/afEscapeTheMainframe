@@ -34,7 +34,7 @@ class Build : BuildPod {
 			"webmod       1.0.69 - 1.0",
 		]
 
-		srcDirs = [`fan/`, `fan/gaming/`, `fan/infrastructure/`, `fan/jump/`, `fan/jump/models/`, `fan/jump/screens/`, `fan/sinedots/`, `fan/web/`]
+		srcDirs = [`fan/`, `fan/gaming/`, `fan/infrastructure/`, `fan/jump/`, `fan/jump/models/`, `fan/jump/screens/`, `fan/music/`, `fan/sinedots/`, `fan/web/`, `test/`]
 		jsDirs	= [`js/`]
 		resDirs = [`doc/`, `res/`, `res/images/`, `res/sounds/`, `res/music/`, `res/web/`]
 	}
