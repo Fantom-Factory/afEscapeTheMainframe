@@ -14,15 +14,18 @@ class TrainScreen : GameSeg {
 	@Inject	private BgGlow		bgGlow
 			private TrainMenu?	trainMenu
 			private	TrainAnim?	trainAnim
+					Int			highlighted := 0
 	
 	new make(|This| in) { in(this) }
 
 	override This onInit() {
 		trainMenu	= TrainMenu(screen, sounds) {
 			menu = "1 2 3 4 5 6 7 8 9 10".split
-			go 	 = |Int high| {
-				app().startGame(high + 1)
+			go 	 = |Int level| {
+				this.highlighted = level
+				app().startGame(level + 1)
 			}
+			it.highlighted = this.highlighted
 		}
 		trainAnim = TrainAnim(images, sounds)
 		
@@ -70,7 +73,7 @@ class TrainScreen : GameSeg {
 class TrainMenu {
 	private Screen		screen
 	private FannySounds	sounds
-	private Int			highlighted	:= 0
+			Int			highlighted	:= 0
 
 	Str[]	menu		:= Str[,]
 	Bool	anyKey
