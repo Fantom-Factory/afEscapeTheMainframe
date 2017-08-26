@@ -14,13 +14,16 @@ class IntroScreen : GameSeg {
 	@Inject	private BgGlow		bgGlow
 	@Inject	private FannyImages	images
 	@Inject	private FannySounds	sounds
+	@Inject	private Sequencer		sequencer
+	@Inject	private FannySequencer	fannySequencer
 			private IntroAnim?	intoAnim
 	
 	new make(|This| in) { in(this) }
 
 	override This onInit() {
+		sounds.titleTune.fadeOut(1.5sec)
 		sounds.insertCoin.play
-		intoAnim = IntroAnim(images, sounds)
+		intoAnim = IntroAnim(images, sounds, sequencer, fannySequencer)
 		return this
 	}
 	
@@ -34,7 +37,8 @@ class IntroScreen : GameSeg {
 	}
 	
 	override Void onDraw(Gfx g2d, Int catchUp) {
-		
+		sequencer.onBeat(catchUp)
+
 		anyKey := screen.keys.size > 0 || screen.touch.swiped(Key.enter)
 		if (anyKey || intoAnim.finished) {
 			app().startGame(null)
@@ -47,8 +51,10 @@ class IntroScreen : GameSeg {
 
 @Js
 class IntroAnim {
-	private FannyImages	images
-	private FannySounds	sounds
+	private FannyImages		images
+	private FannySounds		sounds
+	private Sequencer		sequencer
+	private FannySequencer	fannySequencer
 	private Twean?		tweanLogoFanny
 	private Twean?		tweanLogoThe
 	private Twean?		tweanLogoFantom
@@ -65,9 +71,11 @@ class IntroAnim {
 			Int		time	:= 1
 			Bool	finished
 
-	new make(FannyImages images, FannySounds sounds) {
-		this.images = images
-		this.sounds = sounds
+	new make(FannyImages images, FannySounds sounds, Sequencer sequencer, FannySequencer fannySequencer) {
+		this.images 		= images
+		this.sounds 		= sounds
+		this.sequencer 		= sequencer
+		this.fannySequencer = fannySequencer
 		initTweans
 	}
 
@@ -117,6 +125,11 @@ class IntroAnim {
 				it.finalY		=  288 + it.imgHeight
 				it.easeIn		= false
 			}
+		}
+				
+		if (timeEq(time, 230, catchUp)) {
+			sequencer.onPlay
+			fannySequencer.playMainBass			
 		}
 		
 		finished = tweanFloor.finished

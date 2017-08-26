@@ -9,6 +9,7 @@ class App : DemoEvents {
 	@Autobuild	private TouchScreen			touchScreen
 	@Autobuild	private TitleScreen			titleScreen
 	@Autobuild	private IntroScreen			introScreen
+	@Autobuild	private TrainScreen			trainScreen
 	@Autobuild	private GameScreen			gameScreen
 	@Autobuild	private OutroScreen			outroScreen
 	@Autobuild	private AboutScreen			aboutScreen
@@ -38,8 +39,8 @@ class App : DemoEvents {
 		activeScreen = deactivate.touchScreen.onInit
 	}
 	
-	Void showTitles() {
-		activeScreen = deactivate.titleScreen.onInit.delay
+	Void showTitles(Bool restartTune, Bool skipIntro := false, Float? fannyY := null) {
+		activeScreen = deactivate.titleScreen.onInit.playTune(restartTune).delay(skipIntro, fannyY)
 		if (loadScoresOnTitleScreen)
 			hiScores.loadScores
 		loadScoresOnTitleScreen = true
@@ -52,6 +53,10 @@ class App : DemoEvents {
 	Void startGame(Int? level) {
 		activeScreen = deactivate.gameScreen.onInit.trainingLevel(level)
 		hiScores.loadScores
+	}
+	
+	Void showTraining(Float fannyY) {
+		activeScreen = deactivate.trainScreen.onInit.setFannyY(fannyY)
 	}
 	
 	Void showAbout() {

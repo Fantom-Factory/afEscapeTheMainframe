@@ -5,68 +5,43 @@ using afIoc::Inject
 using afIoc::Scope
 
 @Js
-class TitleScreen : GameSeg {
+class TrainScreen : GameSeg {
 
 	@Inject	private Screen		screen
+	@Inject	private FannyImages	images
 	@Inject	private FannySounds	sounds
 	@Inject	private |->App|		app
 	@Inject	private BgGlow		bgGlow
-	@Inject	private FannyImages	images
-			private TitleBg?	titleBg
-			private TitleMenu?	titleMenu
-			private Duration?	startedAt
+			private TrainMenu?	trainMenu
+			private	TrainAnim?	trainAnim
 	
 	new make(|This| in) { in(this) }
 
 	override This onInit() {
-		startedAt	= Duration.now
-		titleBg		= TitleBg(images)
-		titleMenu	= TitleMenu(screen, sounds) {
-			menu.add("Start Game")
-			menu.add("Training Mode")
-			menu.add("Hi-Scores")
-			menu.add("About")	//menu.add("Instructions")
-			menu.add("Credits")
-//			menu.add("Exit")	// don't know how to quit!!!
-			tit := it
-			go = |high| {
-				if (high == 0)
-					tit.anyKey = true
-				if (high == 1)
-					app().showTraining(titleBg.fannyY)
-				if (high == 2)
-					app().showHiScores
-				if (high == 3)
-					app().showAbout
-				if (high == 4)
-					app().showCredits
+		trainMenu	= TrainMenu(screen, sounds) {
+			menu = "1 2 3 4 5 6 7 8 9 10".split
+			go 	 = |Int high| {
+				app().startGame(high + 1)
 			}
 		}
+		trainAnim = TrainAnim(images, sounds)
+		
 		return this
 	}
-	
-	This playTune(Bool restart) {
-		if (restart)
-			sounds.titleTune.play
+
+	This setFannyY(Float fannyY) {
+		trainAnim.fannyY = fannyY
 		return this
 	}
-	
-	This delay(Bool skipIntro, Float? fannyY := null) {
-		// note this is nothing to do with waiting for the credits to show!
-		titleBg.time = 40	// no need to wait for long
-		if (skipIntro)
-			titleBg.time = 120
-		if (fannyY != null)
-			titleBg.fannyY = fannyY
-		return this
-	}
-	
+
 	override Void onKill() { }
 
 	override Void onDraw(Gfx g2d, Int catchUp) {
-		titleMenu.keys()
+		trainMenu.keys()
 
-		if (titleMenu.anyKey) {			
+		if (trainMenu.anyKey) {			
+			sounds.menuSelect.play
+
 			level := null as Int
 			if (screen.keys.pressed(Key.num1))	level = 1
 			if (screen.keys.pressed(Key.num2))	level = 2
@@ -80,34 +55,19 @@ class TitleScreen : GameSeg {
 			if (screen.keys.pressed(Key.num0))	level = 10
 
 			if (level != null)
-				return app().startGame(level)
+				return trainMenu.go(level-1)
 			else
-				return app().showIntro(titleBg.fannyY)
-		}
-
-		if ((Duration.now - startedAt) > 31sec) {
-			return app().showCredits()
+				return app().showTitles(false, true, trainAnim.fannyY)
 		}
 		
 		bgGlow.draw(g2d, catchUp)
-		titleBg.draw(g2d)
-		
-		if (titleBg.time > 105) {
-			titleMenu.draw(g2d)
-			str := "fantom-lang.org"
-//			str := "www.alienfactory.co.uk"
-			x := 224 + ((18 - str.size) * 8 / 2)
-			g2d.drawFont8(str, x, 278)
-		}
-	}
-	
-	private Bool timeEq(Int time, Int val, Int catchUp) {
-		time == val || (catchUp > 1 && time < val && (time + catchUp) > val)
+		trainAnim.draw(g2d, catchUp)
+		trainMenu.draw(g2d)
 	}
 }
 
 @Js
-class TitleMenu {
+class TrainMenu {
 	private Screen		screen
 	private FannySounds	sounds
 	private Int			highlighted	:= 0
@@ -122,10 +82,12 @@ class TitleMenu {
 	}
 	
 	Void draw(Gfx g2d) {
+		g2d.drawFont16("Select Training Level", 216 - 16, 13 * 16)
+
 		menu.each |str, i| {
-			x := 216 + ((10 - str.size) * 16 / 2)
-			y := (11 * 16) + (i * 20) - 16
-			
+			x := 216 + (i * 32) - 8
+			y := (15 * 16)
+
 			if (i == highlighted) {
 				g2d.brush = Color.gray
 				g2d.fillRoundRect(x - 2, y-1, (str.size * 16) + 4, 16+2, 5, 5)
@@ -134,7 +96,7 @@ class TitleMenu {
 			g2d.drawFont16(str, x, y)
 		}
 	}
-	
+
 	Void keys() {
 		anyKey = screen.keys.dup {
 			remove(Key.up)
@@ -147,8 +109,8 @@ class TitleMenu {
 		mousePos := screen.mousePos
 		if (mousePos != null)
 			menu.each |str, i| {
-				x := 216 + ((10 - str.size) * 16 / 2)
-				y := (11 * 16) + (i * 20) - 16
+				x := 216 + (i * 32) - 8
+				y := (15 * 16)
 				
 				// add the border width
 				if (Runtime.isJs) {
@@ -160,7 +122,7 @@ class TitleMenu {
 					highlighted = i
 			}
 
-		if (screen.keys.pressed(Key.up) || screen.touch.swiped(Key.up)) {
+		if (screen.keys.pressed(Key.left) || screen.touch.swiped(Key.left)) {
 			if (highlighted > 0)
 				highlighted -= 1
 			else
@@ -168,7 +130,7 @@ class TitleMenu {
 			sounds.menuMove.play
 		}
 
-		if (screen.keys.pressed(Key.down) || screen.touch.swiped(Key.down)) {
+		if (screen.keys.pressed(Key.right) || screen.touch.swiped(Key.right)) {
 			if (highlighted < menu.size-1)
 				highlighted += 1
 			else
@@ -179,6 +141,50 @@ class TitleMenu {
 		if (screen.keys.pressed(Key.enter) || screen.touch.swiped(Key.enter)) {
 			sounds.menuSelect.play
 			go?.call(highlighted)
+		}
+	}
+}
+
+
+@Js
+class TrainAnim {
+	private FannyImages	images
+	private FannySounds	sounds
+	private Twean?		tweanTheFanny
+			Float 		fannyY
+
+	new make(FannyImages images, FannySounds sounds) {
+		this.images = images
+		this.sounds = sounds
+		initTweans
+	}
+
+	Void draw(Gfx g2d, Int catchUp) {
+		y := (Sin.sin(fannyY) * 15f).toInt + (288 - 180) / 2
+		tweanTheFanny.startY = y.toInt
+		tweanTheFanny.finalY = y.toInt
+		fannyY += 0.007f
+		if (fannyY > 1f)
+			fannyY -= 1f
+		
+		tweanTheFanny.draw(g2d, 1)
+		g2d.drawImage(images.logoFanny,	 255, -35)
+		g2d.drawImage(images.logoThe,	 410,  25)
+		g2d.drawImage(images.logoFantom, 360,  60)
+
+	}
+	
+	Void initTweans() {
+		tweanTheFanny	= TweanFanny2 {
+			it.img			= images.fanny_x180
+			it.imgWidth		=  180
+			it.imgHeight	=  180
+			it.startFrame	=    0
+			it.endFrame		=    1
+			it.startX		=   30
+			it.startY		=    0
+			it.finalX		=   30
+			it.finalY		=    0
 		}
 	}
 }

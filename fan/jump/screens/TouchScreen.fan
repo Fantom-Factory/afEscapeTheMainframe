@@ -17,7 +17,7 @@ class TouchScreen : GameSeg {
 		screen.mouseDownFunc = |->| {
 			screen.mouseDownFunc = null
 			sounds.insertCoin.play
-			app().showTitles
+			app().showTitles(true)
 		}
 		return this
 	}

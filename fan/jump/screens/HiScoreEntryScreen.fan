@@ -77,7 +77,7 @@ class HiScoreEntryScreen : GameSeg {
 			screen.editMode = false
 			hiScores.editing = false
 			sounds.menuSelect.play
-			app().showTitles			
+			app().showTitles(true)		
 		}
 
 		if (screen.keys.pressed(Key.enter)) {
@@ -90,7 +90,7 @@ class HiScoreEntryScreen : GameSeg {
 				
 			} else {
 				sounds.menuSelect.play
-				app().showTitles
+				app().showTitles(true)
 			}
 		}
 		
