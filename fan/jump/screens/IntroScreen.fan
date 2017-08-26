@@ -46,6 +46,16 @@ class IntroScreen : GameSeg {
 
 		bgGlow.draw(g2d, catchUp)
 		intoAnim.draw(g2d, catchUp)
+		
+		seqs := fannySequencer.wannaPlay
+		// JS Bug: see http://fantom.org/forum/topic/2629
+		if (Env.cur.runtime != "js")
+			seqs = seqs.unique
+		seqs.each {
+			if (!sequencer.has(it))
+				sequencer.playNow(it)
+		}
+		fannySequencer.wannaPlay.clear
 	}
 }
 
@@ -127,9 +137,9 @@ class IntroAnim {
 			}
 		}
 				
-		if (timeEq(time, 230, catchUp)) {
+		if (timeEq(time, 210, catchUp)) {	// 210-ish! Sounds about right
 			sequencer.onPlay
-			fannySequencer.playMainBass			
+			fannySequencer.playMainBass	
 		}
 		
 		finished = tweanFloor.finished

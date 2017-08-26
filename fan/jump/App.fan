@@ -82,7 +82,7 @@ class App : DemoEvents {
 		if (!cheating && hiScores.isHiScore(score))
 			activeScreen = hiScoreEntryScreen.onInit.setScore(score, level)
 		else
-			activeScreen = titleScreen.onInit
+			activeScreen = titleScreen.onInit.playTune(true)
 	}
 
 	private This deactivate() {
