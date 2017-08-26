@@ -51,7 +51,7 @@ class HiScoreScreen : GameSeg {
 		
 		if (pages.anyKey || screen.touch.swiped(Key.enter)) {
 			sounds.menuSelect.play
-			app().showTitles
+			app().showTitles(false)
 		}
 		
 		tit := "Fanny Hi-Scorers"

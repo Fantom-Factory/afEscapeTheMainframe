@@ -7,7 +7,7 @@ class Sequencer {
 	
 	private Duration	lastBeat	:= Duration.now
 	private Int 		count
-	private Bool		play
+	public	Bool		play
 	internal Int		beatCount
 	
 	Void playSeq(Sequence seq) {

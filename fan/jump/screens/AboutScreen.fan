@@ -25,7 +25,7 @@ class AboutScreen : GameSeg {
 		anyKey := screen.keys.size > 0 || screen.touch.swiped(Key.enter)
 		if (anyKey) {
 			sounds.menuSelect.play
-			app().showTitles
+			app().showTitles(false)
 		}
 		
 		plot := " Fanny the Fantom has been captured by the  

@@ -51,11 +51,14 @@ class GameScreen : GameSeg {
 		screen.editMode = true
 		screen.editText = ""
 		
+		sounds.titleTune.stop
 		sounds.scanned.stop
 		sounds.startGame.play
 		
-		sequencer.onPlay
-		fannySequencer.playMainBass
+		if (!sequencer.play) {
+			sequencer.onPlay
+			fannySequencer.playMainBass
+		}
 		
 		return this
 	}

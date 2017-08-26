@@ -31,7 +31,7 @@ class LoadingScreen : GameSeg {
 			if (Runtime.isJs)
 				return app().showTouch
 			else
-				return app().showTitles
+				return app().showTitles(true)
 		}
 
 		g2d.clear(Models.bgColour)
