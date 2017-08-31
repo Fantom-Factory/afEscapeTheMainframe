@@ -10,6 +10,7 @@ class CreditsScreen : GameSeg {
 	@Inject	private FannyImages		images
 	@Inject	private FannySounds		sounds
 	@Inject	private |->App|			app
+	@Inject	private Sequencer		sequencer
 			private SineDots		sineDots		:= SineDots()
 			private CreditsAnim?	creditsAnim
 
@@ -26,6 +27,8 @@ class CreditsScreen : GameSeg {
 	override Void onKill() { }
 
 	override Void onDraw(Gfx g2d, Int catchUp) {
+		sequencer.onBeat(catchUp)
+
 		anyKey := screen.keys.size > 0 || screen.touch.swiped(Key.enter)
 		if (anyKey || creditsAnim.finished) {
 			app().showTitles(false)
@@ -115,7 +118,7 @@ class CreditScroll {
 			y = drawCredits(g2d, y, "Alien-Factory", "Presents", true)
 			y-= spacing / 2
 //			y = drawCredits(g2d, y, "A Game written in", "The Fantom Language")
-			y = drawCredits(g2d, y, "Fanny the Fantom", "Escape the Mainframe", true)
+			y = drawCredits(g2d, y, "Fanny the Fantom", "Escape the Mainframe")
 			
 			y+=spacing
 			
@@ -133,7 +136,7 @@ class CreditScroll {
 			g2d.drawFont16Centred("ZeroCakes", y)
 			y+=16+spacing
 			
-			y = drawCredits(g2d, y, "Sound Effects", "    Geoff Lee    ") - spacing
+			y = drawCredits(g2d, y, "Sound Effects", "   Geoff Lee   ") - spacing
 			g2d.drawFont8Centred("aka", y)
 			y+=8
 			g2d.drawFont16Centred("Modulate/QLERIK", y)

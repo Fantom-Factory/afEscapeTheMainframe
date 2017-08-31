@@ -12,6 +12,8 @@ class TitleScreen : GameSeg {
 	@Inject	private |->App|		app
 	@Inject	private BgGlow		bgGlow
 	@Inject	private FannyImages	images
+	@Inject	private Sequencer	sequencer
+	@Inject	private FannySequencer	fanSeq
 			private TitleBg?	titleBg
 			private TitleMenu?	titleMenu
 			private Duration?	startedAt
@@ -46,8 +48,11 @@ class TitleScreen : GameSeg {
 	}
 	
 	This playTune(Bool restart) {
-		if (restart)
-			sounds.titleTune.play
+		if (restart) {
+			sequencer.onStop
+			fanSeq.playTitleTune
+			sequencer.onPlay
+		}
 		return this
 	}
 	
@@ -64,6 +69,8 @@ class TitleScreen : GameSeg {
 	override Void onKill() { }
 
 	override Void onDraw(Gfx g2d, Int catchUp) {
+		sequencer.onBeat(catchUp)
+
 		titleMenu.keys()
 
 		if (titleMenu.anyKey) {			

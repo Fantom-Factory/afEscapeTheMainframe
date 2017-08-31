@@ -12,6 +12,7 @@ class TrainScreen : GameSeg {
 	@Inject	private FannySounds	sounds
 	@Inject	private |->App|		app
 	@Inject	private BgGlow		bgGlow
+	@Inject	private Sequencer	sequencer
 			private TrainMenu?	trainMenu
 			private	TrainAnim?	trainAnim
 					Int			highlighted := 0
@@ -40,6 +41,8 @@ class TrainScreen : GameSeg {
 	override Void onKill() { }
 
 	override Void onDraw(Gfx g2d, Int catchUp) {
+		sequencer.onBeat(catchUp)
+
 		trainMenu.keys()
 
 		if (trainMenu.anyKey) {			
