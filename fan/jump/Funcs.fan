@@ -113,6 +113,9 @@ class Funcs {
 		return (Float.random < probability) //{ if (it) echo(distance) }
 	}
 	
+	|Int->Bool| bigBlocksAndjumpBlocks := |Int key->Bool| {
+		key.and(x3) != 0 || key.and(y3) != 0 || key.and(y4) != 0 || key.and(z0) != 0
+	}
 	
 	Block[] funcBlock(GameData data, Int level, Float distance, Block? lastBlock) {
 		
@@ -120,22 +123,30 @@ class Funcs {
 		
 		lastKey := lastBlock?.blockKey
 		if (lastKey != null) {
-			// if we've just done a high jump, don't immediately follow it with another
-			if (distance < (475f + data.level) && lastKey.and(y3) != 0 && lastKey.and(z0) != 0)
-				allowedLevels = allowedLevels.exclude { (it.and(y3) != 0 || it.and(y4) != 0) && it.and(z0) != 0 }
-
-			if (distance < (490f + data.level) && lastKey.and(y4) != 0 && lastKey.and(z0) != 0)
-				allowedLevels = allowedLevels.exclude { (it.and(y3) != 0 || it.and(y4) != 0) && it.and(z0) != 0 }
-
-//			if (distance < (475f  + data.level) && lastKey.and(z0) != 0)
-//				allowedLevels = allowedLevels.exclude { it.and(z0) != 0 }
+//			// if we've just done a high jump, don't immediately follow it with another
+//			if (distance < (475f + data.level) && lastKey.and(y3) != 0 && lastKey.and(z0) != 0)
+//				allowedLevels = allowedLevels.exclude { (it.and(y3) != 0 || it.and(y4) != 0) && it.and(z0) != 0 }
 //
-//			if (distance < (475f  + data.level) && lastKey.and(z1) != 0)
-//				allowedLevels = allowedLevels.exclude { (it.and(y2) != 0 || it.and(y3) != 0 || it.and(y4) != 0) && it.and(z0) != 0 }
-
+//			if (distance < (490f + data.level) && lastKey.and(y4) != 0 && lastKey.and(z0) != 0)
+//				allowedLevels = allowedLevels.exclude { (it.and(y3) != 0 || it.and(y4) != 0) && it.and(z0) != 0 }
+//
+////			if (distance < (475f  + data.level) && lastKey.and(z0) != 0)
+////				allowedLevels = allowedLevels.exclude { it.and(z0) != 0 }
+////
+////			if (distance < (475f  + data.level) && lastKey.and(z1) != 0)
+////				allowedLevels = allowedLevels.exclude { (it.and(y2) != 0 || it.and(y3) != 0 || it.and(y4) != 0) && it.and(z0) != 0 }
+//
+//			// give clearance for the next high jump
+//			if (distance < (500f + data.level))
+//				allowedLevels = allowedLevels.exclude { it.and(y4) != 0 && it.and(z0) != 0 }
+			
+			// if we've just done a high jump, don't immediately follow it with another
 			// give clearance for the next high jump
-			if (distance < (500f + data.level))
-				allowedLevels = allowedLevels.exclude { it.and(y4) != 0 && it.and(z0) != 0 }
+			if (distance < (500f + (data.level * 2)))
+				allowedLevels = allowedLevels.exclude(bigBlocksAndjumpBlocks)
+			
+			
+			
 		}
 		
 		key	:= allowedLevels.random
