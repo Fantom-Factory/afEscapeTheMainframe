@@ -83,6 +83,9 @@ class FannySequencer {
 	private Sequence extraBass
 	private Sequence arpeggio1
 	private Sequence arpeggio2
+	private Sequence squareBeeps
+	private Sequence melody1
+	private Sequence melody2
 	
 	Sequence[] wannaPlay := Sequence[,]
 	
@@ -101,26 +104,46 @@ class FannySequencer {
 		hiHatFillIn = Sequence("hiHatFillIn", Sequent[
 			Sequent.even(),
 			Sequent.play(sounds.fillinHihat),
-			Sequent.loop(1, 4),
+			Sequent.loop(1, 6),
 		])
 	
 		extraBass = Sequence("extraBass", Sequent[
 			Sequent.even(),
 			Sequent.play(sounds.bassExtra1),
 			Sequent.play(sounds.bassExtra2),
-			Sequent.loop(1, 2),
+			Sequent.loop(1, 3),
 		])
 		
 		arpeggio1 = Sequence("arpeggio1", Sequent[
 			Sequent.even(),
-			Sequent.play(sounds.fillinArpeggio),
+			Sequent.play(sounds.fillinArpeggio1),
 			Sequent.pause(3),
+			Sequent.loop(1, 2),
 		])
 		
 		arpeggio2 = Sequence("arpeggio2", Sequent[
 			Sequent.even(),
-			Sequent.play(sounds.tuneArpeggio),
+			Sequent.play(sounds.fillinArpeggio2),
 			Sequent.pause(15),
+		])
+		
+		melody1 = Sequence("melody1", Sequent[
+			Sequent.even(),
+			Sequent.play(sounds.melody1),
+			Sequent.pause(15),
+		])
+		
+		melody2 = Sequence("melody2", Sequent[
+			Sequent.even(),
+			Sequent.play(sounds.melody2),
+			Sequent.pause(15),
+		])
+
+		squareBeeps = Sequence("squareBeeps", Sequent[
+			Sequent.even(),
+			Sequent.play(sounds.fillinSquare),
+			Sequent.pause(7),
+			//Sequent.loop(1, 2),
 		])
 	}
 	
@@ -128,30 +151,51 @@ class FannySequencer {
 		wannaPlay.add(mainBass)
 	}
 
-	Void playHiHatFillIn() {
+	Void playHiHatFillIn(Int blockScore) {
+		if (Int.random.abs % 5 > blockScore) return
 		if (sequencer.has(hiHatFillIn))
 			hiHatFillIn.sequents[2].count = 0
 		else
 			wannaPlay.add(hiHatFillIn)
 	}
 	
-	Void playExtraBass() {
+	Void playExtraBass(Int blockScore) {
+		if (Int.random.abs % 5 > blockScore) return
 		if (sequencer.has(extraBass))
 			extraBass.sequents[3].count = 0
 		else
-		wannaPlay.add(extraBass)
+			wannaPlay.add(extraBass)
 	}
 	
-	Void playArpeggio1() {
+	Void playArpeggio1(Int level) {
+//		if (Int.random.abs % 5 > level) return
 		wannaPlay.add(arpeggio1)
-//		if (!sequencer.has(arpeggio1))
-//			sequencer.playSeq(arpeggio1)
 	}
 	
-	Void playArpeggio2() {
-		wannaPlay.add(arpeggio2)
-//		if (!sequencer.has(arpeggio2))
-//			sequencer.playSeq(arpeggio2)
+	Void playWow() {
+		beeps := Float.random >= 0.25f
+			? [squareBeeps, arpeggio2, melody2]
+			: [arpeggio2, squareBeeps, melody2]
+		if (!sequencer.has(beeps[0])) {
+			wannaPlay.add(beeps[0])
+			return
+		}
+		if (!sequencer.has(beeps[1])) {
+			wannaPlay.add(beeps[1])
+			return
+		}
+		if (!sequencer.has(beeps[2])) {
+			wannaPlay.add(beeps[2])
+			return
+		}
+	}
+	
+	Void playMelody() {
+		wannaPlay.add(Float.random >= 0.25f ? melody1 : melody2)
+	}
+	
+	Void playBeeps() {
+		wannaPlay.add(squareBeeps)
 	}
 	
 }
