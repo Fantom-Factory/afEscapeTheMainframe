@@ -20,18 +20,22 @@ class FannySounds : SoundClips {
 	SoundClip	gameOver() 			{ load("sounds/gameOver_22khz.wav") 		{ it.volume = 0.18f } }
 	SoundClip	winner() 			{ load("sounds/winner_22khz.wav")			{ it.volume = 0.25f } }
 
-	SoundClip	bassMain1() 		{ load("music/bassMain1_22khz.wav")			{ it.volume = 0.65f } }
-	SoundClip	bassMain2() 		{ load("music/bassMain2_22khz.wav")			{ it.volume = 0.65f } }
-	SoundClip	bassMain3() 		{ load("music/bassMain3_22khz.wav")			{ it.volume = 0.65f } }
-	SoundClip	bassExtra1() 		{ load("music/bassExtra1_22khz.wav")		{ it.volume = 0.65f } }
-	SoundClip	bassExtra2() 		{ load("music/bassExtra2_22khz.wav")		{ it.volume = 0.65f } }
-	SoundClip	fillinHihat() 		{ load("music/fillinHihat_22khz.wav")		{ it.volume = 0.65f } }
-	SoundClip	fillinArpeggio() 	{ load("music/fillinArpeggio_22khz.wav")	{ it.volume = 0.65f } }
-	SoundClip	tuneArpeggio() 		{ load("music/tuneArpeggio_22khz.wav")		{ it.volume = 0.65f } }
-
+	SoundClip	bassMain1() 		{ load("music/bassMain1_22khz.wav")			{ it.volume = 0.50f } }
+	SoundClip	bassMain2() 		{ load("music/bassMain2_22khz.wav")			{ it.volume = 0.50f } }
+	SoundClip	bassMain3() 		{ load("music/bassMain3_22khz.wav")			{ it.volume = 0.50f } }
+	SoundClip	bassExtra1() 		{ load("music/bassExtra1_22khz.wav")		{ it.volume = 0.50f } }
+	SoundClip	bassExtra2() 		{ load("music/bassExtra2_22khz.wav")		{ it.volume = 0.50f } }
+	SoundClip	fillinHihat() 		{ load("music/fillinHihat_22khz.wav")		{ it.volume = 0.50f } }
+	SoundClip	fillinArpeggio1() 	{ load("music/fillinArpeggio1_22khz.wav")	{ it.volume = 0.50f } }
+	SoundClip	fillinArpeggio2()	{ load("music/fillinArpeggio2_22khz.wav")	{ it.volume = 0.75f } }
+	SoundClip	fillinSquare()		{ load("music/fillinSquareBeeps_22khz.wav")	{ it.volume = 0.50f } }
+	SoundClip	melody1()			{ load("music/melody1_22khz.wav")			{ it.volume = 0.50f } }
+	SoundClip	melody2()			{ load("music/melody2_22khz.wav")			{ it.volume = 0.50f } }
 
 	SoundClip load(Str name) {
-		loadSoundClip(`fan://${typeof.pod}/res/${name}`)
+		name.startsWith("music") && !name.startsWith("music/titleTune") && Env.cur.runtime != "js"
+			? loadSoundClip(`fan://${typeof.pod}/res/${name[0..<-10]}.wav`)
+			: loadSoundClip(`fan://${typeof.pod}/res/${name}`)
 	}
 	
 	SoundClip[] preloadSounds() {

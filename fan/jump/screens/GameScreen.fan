@@ -130,7 +130,7 @@ class GameScreen : GameSeg {
 				sounds.levelUp.play
 			}
 			
-			fannySequencer.playArpeggio2
+			fannySequencer.playMelody
 		}
 
 		
@@ -155,9 +155,6 @@ class GameScreen : GameSeg {
 				bonusCube := funcs.funcBonusCube(data, blks.first)
 				if (bonusCube != null)
 					bonusCubes.add(bonusCube)
-
-				// set by funcBlock
-//				data.distSinceLastBlock = 0f
 			}
 		}
 		
@@ -178,27 +175,31 @@ class GameScreen : GameSeg {
 				gameOver()
 			}
 			
+			blocksJumped := 0
 			fannyXmin	:= fanny.xMin
 			blcks.each |blck| {
 				if (blck.score > 0) {
 					if (blck.xMax < fannyXmin) {
+						     blocksJumped++
 						data.blocksJumpedInGame++
 						data.blocksJumpedInLevel++
 						data.score += blck.score
 						
-						rand := Int.random.abs % 5
 						if (blck.yMin > fanny.yMax) {
-							if (blck.score >= rand)
-								fannySequencer.playExtraBass
+							fannySequencer.playExtraBass(blck.score)
 						} else {
-							if (blck.score >= rand)
-								fannySequencer.playHiHatFillIn
+							fannySequencer.playHiHatFillIn(blck.score)
 						}
 
+						if (blck.blockKey.and(Funcs.y4) != 0)
+							fannySequencer.playWow
+						
 						blck.score = 0
 					}
 				}
 			}
+			if (blocksJumped >= 2)
+				fannySequencer.playBeeps
 		}
 		
 		if (!data.dying) {
@@ -216,8 +217,7 @@ class GameScreen : GameSeg {
 					if (data.invisible < 40)
 						data.invisible = 40
 					
-					if ((Int.random % 3) == 2)
-						fannySequencer.playArpeggio1
+					fannySequencer.playArpeggio1(data.level)
 				}
 			}
 		}
@@ -334,8 +334,6 @@ class GameScreen : GameSeg {
 		
 		exitBlock?.anim
 		if (exitBlock != null && exitBlock.x <= fanny.x) {
-			if (!data.cheating)
-				data.score += 250	// add the end game bonus!
 			gameOver()
 		}
 	}
@@ -414,13 +412,15 @@ class GameScreen : GameSeg {
 	
 	Void gameOver() {
 		if (data.dying) return
-		
 		data.dying = true
 
 		fannyExplo = Models.fannyExplo(data, fanny)
 		
 		if (data.level != 11)
 			gameHud.alertGameOver
+		else
+			if (!data.cheating)
+				data.score += 250	// add the end game bonus!
 		
 		screen.keys.clear
 		screen.touch.clear
