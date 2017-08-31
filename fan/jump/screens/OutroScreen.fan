@@ -104,8 +104,25 @@ class OutroAnim {
 		if (time == tweanExplo.startFrame)
 			sounds.deathCry.play
 		
+		if (time > 230) {
+			g2d.offsetCentre
 
-		finished = timeEq(time, 250, catchUp)
+			alertText := "Congratulations!"
+			x := -alertText.size * 16 / 2
+			y  = -3 * 16
+			g2d.brush = Color.gray
+			g2d.fillRoundRect(x - 2, y-1, (alertText.size * 16) + 4, 16 + 2, 5, 5)					
+			g2d.drawFont16(alertText, x, y)
+
+			alertText = "Fanny has left the Mainframe!"
+			x = -alertText.size * 16 / 2
+			y  = -0 * 16
+			g2d.brush = Color.gray
+			g2d.fillRoundRect(x - 2, y-1, (alertText.size * 16) + 4, 16 + 2, 5, 5)					
+			g2d.drawFont16(alertText, x, y)
+		}
+		
+		finished = timeEq(time, 450, catchUp)
 		
 		time += catchUp
 	}
