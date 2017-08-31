@@ -54,11 +54,14 @@ class Sequencer {
 		
 			beatCount = (beatCount+1) % 16
 		}
-		
 	}
-	
+
 	Bool has(Sequence seq) {
 		sequences.find { seq === it } != null
+	}
+	
+	Void remove(Sequence seq) {
+		sequences.removeSame(seq)
 	}
 	
 	Void onPlay() {
@@ -78,6 +81,7 @@ class FannySequencer {
 	@Inject FannySounds	sounds
 	@Inject Sequencer 	sequencer
 	
+	private Sequence titleTune
 	private Sequence mainBass
 	private Sequence hiHatFillIn
 	private Sequence extraBass
@@ -91,6 +95,12 @@ class FannySequencer {
 	
 	new make(|This| f) {
 		f(this)
+		
+		titleTune = Sequence("titleTune", Sequent[
+			Sequent.play(sounds.titleTune),
+			Sequent.pause(71),
+			Sequent.loop(0, -1),
+		])
 		
 		mainBass = Sequence("mainBass", Sequent[
 			Sequent.even(),
@@ -147,6 +157,18 @@ class FannySequencer {
 		])
 	}
 	
+	Void playTitleTune() {
+		sounds.titleTune.volume = 1.00f
+		titleTune.sequents[1].count = 0
+		titleTune.index = 0
+		sequencer.playNow(titleTune)
+	}
+	
+	Void stopTitleTune() {
+		sequencer.remove(titleTune)
+		sounds.titleTune.fadeOut(1.5sec)
+	}
+	
 	Void playMainBass() {
 		wannaPlay.add(mainBass)
 	}
@@ -197,5 +219,4 @@ class FannySequencer {
 	Void playBeeps() {
 		wannaPlay.add(squareBeeps)
 	}
-	
 }

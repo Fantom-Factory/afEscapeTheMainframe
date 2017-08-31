@@ -43,6 +43,7 @@ class Sequence {
 			}
 
 			if (seq.isPlay) {
+				seq.soundClip?.stop
 				seq.soundClip?.play
 				looping = false
 			}

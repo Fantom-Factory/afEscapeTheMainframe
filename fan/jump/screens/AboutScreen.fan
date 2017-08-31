@@ -9,6 +9,7 @@ class AboutScreen : GameSeg {
 	@Inject	private FannySounds	sounds
 	@Inject	private |->App|		app
 	@Inject	private BgGlow		bgGlow
+	@Inject	private Sequencer	sequencer
 	
 	
 	new make(|This| in) {
@@ -20,6 +21,8 @@ class AboutScreen : GameSeg {
 	override Void onKill() { }
 
 	override Void onDraw(Gfx g2d, Int catchUp) {
+		sequencer.onBeat(catchUp)
+
 		bgGlow.draw(g2d, catchUp)
 
 		anyKey := screen.keys.size > 0 || screen.touch.swiped(Key.enter)

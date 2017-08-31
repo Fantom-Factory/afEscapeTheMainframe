@@ -10,6 +10,7 @@ class HiScoreScreen : GameSeg {
 	@Inject	private |->App|		app
 	@Inject	private HiScores	hiScores
 	@Inject	private BgGlow		bgGlow
+	@Inject	private Sequencer	sequencer
 			private Image?		imgScores
 
 			private	PagesScreen?	pages
@@ -45,6 +46,8 @@ class HiScoreScreen : GameSeg {
 	override Void onKill() { }
 
 	override Void onDraw(Gfx g2d, Int catchUp) {
+		sequencer.onBeat(catchUp)
+
 		bgGlow.draw(g2d, catchUp)
 
 		pages.onJiffy(screen, sounds)
