@@ -8,9 +8,12 @@ class BgGlow {
 	static const Int	bgR				:= 0x00
 	static const Int	bgG				:= 0x08
 	static const Int	bgB				:= 0x1A
-	static const Int	bgHighlightR	:= 0x33
-	static const Int	bgHighlightG	:= 0x66
-	static const Int	bgHighlightB	:= 0x99
+//	static const Int	bgHighlightR	:= 0x33
+//	static const Int	bgHighlightG	:= 0x66
+//	static const Int	bgHighlightB	:= 0x99
+	static const Int	bgHighlightR	:= 0x00
+	static const Int	bgHighlightG	:= 0xA0
+	static const Int	bgHighlightB	:= 0xA0
 	
 	private 	Float	bgIndex			:= 0.5f
 	private 	Float	bgHexX			:=   0f
@@ -59,26 +62,24 @@ class BgGlow {
 		if (level == null) {
 			g2d.brush = Color.makeArgb(0xFF, cR, cG, cB)
 			g2d.fillRect(0, 0, g2d.bounds.w, g2d.bounds.h)
-			g2d.drawImage(images.bgHex_x288 , bgHexX.toInt, 0)			
 			
+			w := 768
+			h := 288
+			x := -bgHexX.toInt
+			g2d.g.copyImage(images.bgCircuit, Rect(x, 0, w-x, h), Rect(0, 0, w-x, h))
+			g2d.g.copyImage(images.bgCircuit, Rect(0, 0, x, h), Rect(w-x, 0, x, h))
+
 		} else {
 			g2d.brush = Color.makeArgb(0xFF, cR, cG, cB)
 			g2d.fillRect(0, 0, g2d.bounds.w, 200)
-			g2d.drawImage(images.bgHex_x200, bgHexX.toInt, 0)
 
-			g2d.drawImage(gameBg, 0, 200)
+			w := 768
+			h := 200
+			x := -bgHexX.toInt
+			g2d.g.copyImage(images.bgCircuit, Rect(x, 0, w-x, h), Rect(0, 0, w-x, h))
+			g2d.g.copyImage(images.bgCircuit, Rect(0, 0, x, h), Rect(w-x, 0, x, h))
 			
-//				g2d.brush = Models.brand_darkBlue
-//				g2d.fillRect(0, 200, g2d.bounds.w, 288)
-//				
-//				g2d.brush = Models.brand_lightBlue
-//				midY := g2d.bounds.h / 2
-//				g2d.drawLine(0, midY +  55, g2d.bounds.w, midY +  55)
-//				g2d.drawLine(0, midY +  65, g2d.bounds.w, midY +  65)
-//				g2d.drawLine(0, midY +  77, g2d.bounds.w, midY +  77)
-//				g2d.drawLine(0, midY +  92, g2d.bounds.w, midY +  92)
-//				g2d.drawLine(0, midY + 112, g2d.bounds.w, midY + 112)
-//				g2d.drawLine(0, midY + 142, g2d.bounds.w, midY + 142)
+			g2d.drawImage(gameBg, 0, 200)			
 		}
 
 		// don't flash during games - it's off-putting!
@@ -94,8 +95,8 @@ class BgGlow {
 		
 		if (level != null) {
 			bgHexX -= level / 3f
-			if (bgHexX < -111f)
-				bgHexX += 111f
+			if (bgHexX < -768f)
+				bgHexX += 768f
 		}
 	}
 }

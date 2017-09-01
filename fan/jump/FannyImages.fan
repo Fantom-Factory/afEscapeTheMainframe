@@ -6,8 +6,7 @@ class FannyImages : Images {
 	Image	font8x8() 		{ load("xenonFont8x8.png")		}
 	Image	font16x16()		{ load("xenonFont16x16.png")	}
 
-	Image	bgHex_x200()	{ load("bgHex-x200.png")		}
-	Image	bgHex_x288()	{ load("bgHex-x288.png")		}
+	Image	bgCircuit()		{ load("bgCircuit.png")			}
 	
 	Image	logoFanny()		{ load("logo-fanny.png")		}
 	Image	logoThe()		{ load("logo-the.png")			}
@@ -17,6 +16,6 @@ class FannyImages : Images {
 	Image	compMonitor()	{ load("computerMonitor.png")	}
 	Image	compKeyboard()	{ load("computerKeyboard.png")	}
 
-	Image	volumeOn()		{ load("volumeOn.png")	}
-	Image	volumeOff()		{ load("volumeOff.png")	}
+	Image	volumeOn()		{ load("volumeOn.png")			}
+	Image	volumeOff()		{ load("volumeOff.png")			}
 }
