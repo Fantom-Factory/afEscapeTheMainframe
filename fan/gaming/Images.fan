@@ -18,14 +18,14 @@ class Images {
 
 	Void disposeAll() {
 		images.each |image, imageName| {
-			log.info("Disposing Image $imageName")
+			log.debug("Disposing Image $imageName")
 			image.dispose
 		}
 	}
 
 	protected Image load(Str imageName) {
 		images.getOrAdd(imageName) |->Image| {
-			log.info("Loading Image $imageName")
+			log.debug("Loading Image $imageName")
 			return Image.make(`fan://${typeof.pod}/res/images/${imageName}`)
 		}
 	}

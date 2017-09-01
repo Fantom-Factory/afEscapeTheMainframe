@@ -27,7 +27,7 @@ class SoundClips {
 	
 	SoundClip loadSoundClip(Uri soundUrl) {
 		soundClips.getOrAdd(soundUrl.toStr) |->SoundClip| {
-			log.info("Loading Sound ${soundUrl.name}")
+			log.debug("Loading Sound ${soundUrl.name}")
 			return Env.cur.runtime == "js"
 				? typeof.pod.type("SoundClipJs"  ).make([soundUrl, this])
 				: typeof.pod.type("SoundClipJava").make([soundUrl, this])
