@@ -12,7 +12,7 @@ class GameData {
 	Bool	dying
 	Int		deathCryIdx
 	
-	Int		invisible			//:= 9999999
+	Int		invisible	//:= 9999999
 	Bool	isInvisible() { invisible > 0 }
 
 	Int		score

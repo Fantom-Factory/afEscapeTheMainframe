@@ -84,7 +84,7 @@ class Funcs {
 		this.allowedLevels = allowedLevels
 	}
 	
-	Float funcfloorSpeed(Int level) {
+	static Float funcfloorSpeed(Int level) {
 		10f + (level * 0.5f)
 	}
 	

@@ -78,6 +78,7 @@ class BgGlow {
 			g2d.fillRect(0, 0, g2d.bounds.w, 200)
 
 //			y := ((bgHexY + 110) * 88 / 250).toInt / 4
+//			y := 60 - (((bgHexY + 110) * 88 / 250).toInt / 4)
 			y := 0	// disable the bouncing background
 			
 			w := 768
@@ -102,7 +103,20 @@ class BgGlow {
 		}
 		
 		if (level != null) {
-			bgHexX -= level * 2f / 3
+			
+//			mod := Models.floor(GameData())
+//			g3d := Gfx3d(g2d).lookAtDef
+//			p1  := mod.points[0]
+//			p2  := mod.points[8]
+//			p3  := g3d.to2d(p1)
+//			p4  := g3d.to2d(p2)
+//			rat := (p4.x - p3.x) / (p2.x - p1.x)
+			rat := 0.43483794061932707f	// map the floorspeed in 3D world to 2D pixels
+
+			// keep the background scrolling at the same speed as the floor - make it look like you're *inside* the mainfame! 
+			floorSpeedInPixels := Funcs.funcfloorSpeed(level) * rat * catchUp
+			bgHexX -= floorSpeedInPixels
+
 			if (bgHexX < -768f)
 				bgHexX += 768f
 		}

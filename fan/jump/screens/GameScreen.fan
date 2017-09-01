@@ -124,7 +124,7 @@ class GameScreen : GameSeg {
 		
 		oldLevel := data.level
 		data.level		= funcs.funcLevel(data)
-		data.floorSpeed	= funcs.funcfloorSpeed(data.level)
+		data.floorSpeed	= Funcs.funcfloorSpeed(data.level)
 		
 		if (oldLevel != data.level) {
 			gameHud.alertLevelUp(data.level)
