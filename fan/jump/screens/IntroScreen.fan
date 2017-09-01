@@ -433,7 +433,7 @@ class TweanFanny2 : Twean {
 class TweanFloor {
 	Int		startFrame
 	Int		endFrame
-	Floor	floor	:= Models.floor(GameData() { it.floorSpeed = Funcs(null).funcfloorSpeed(30) }) { it.x = 1550f }
+	Floor	floor	:= Models.floor(GameData() { it.floorSpeed = Funcs.funcfloorSpeed(30) }) { it.x = 1550f }
 	Bool	finished
 	
 	new make(|This| f) { f(this) }
