@@ -22,6 +22,6 @@ class GameData {
 	Int		cubeBlocks
 	
 	Bool	cheating
-	Bool	godMode
+	Bool	godMode		//:=true
 	Bool	rainbowMode
 }
