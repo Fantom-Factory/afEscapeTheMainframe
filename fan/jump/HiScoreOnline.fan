@@ -70,8 +70,7 @@ abstract class HiScoreOnline {
 	abstract Void doSaveScore(Uri hiScoreUrl, HiScore his)
 	
 	Uri gameName() {
-//		encodeUri("${typeof.pod.name}-${typeof.pod.version}")
-		encodeUri("${typeof.pod.name}-0.0.4")	// keep the old scores
+		encodeUri("afFannyTheFantom")	// this is now fixed
 	}
 	
 	private static const Int[] delims := ":/?#[]@\\".chars
