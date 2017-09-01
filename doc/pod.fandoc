@@ -30,25 +30,26 @@ Credits
  - **Game Design:**  Steve & Emma Eynon
  - **Coding:**  [SlimerDude]`http://www.alienfactory.co.uk/aboutMe`
  - **Sound Effects:**  [Modulate]`https://web.facebook.com/Modulate/`
+ - **Music:**  [Zerocakes]`https://www.fiverr.com/zerocakes`
  - **Cartoon Graphics:**  [Anibal Ordaz]`https://www.fiverr.com/ajordaz`
 
 
 
 Game Design
 ===========
-I've always wanted to do a simple game in Fantom, much like the interactive [Google Doodles]`https://www.google.com/doodles` or the Chrome [offline T-Rex game]`http://www.trex-game.skipser.com/`. Only I'm no graphics artist. So I do what I usually do, and instead rely on my coding skills to create visual effects. I went back to some 3D vector routines I'd been playing with and decided to turn them into a jump game.
+I've always wanted to do a simple game in Fantom, much like the interactive [Google Doodles]`https://www.google.com/doodles` or the Chrome [offline T-Rex game]`http://www.trex-game.skipser.com/`. Only I'm no graphics artist. So I do what I usually do, and relied on my coding skills to create visual effects. I went back to some old 3D vector routines and turned them into a jump game.
 
 My wife, Emma, helped enormously to guide the game's design and look & feel.
 
 We wanted to incorporate Fanny the Fantom as the main character so the game had tie-in with the language. The black / blue theme is supposed to be reminiscent of [fantomfactory.org]`http://www.fantomfactory.org/`, and also looked suspiciously like a retro [Tron]`https://en.wikipedia.org/wiki/Tron`. We kept the Tron theme and decided to copy the plot, as that would help explain the blocky vector graphics.
 
-Fanny the Fantom was initially a lot faster with the blocks racing across the screen. But you could only have one, maybe two, obstacles on screen at any given time for there wasn't enough reaction or jump time to have more. (Fanny has to land before he can jump again!) By accident, one day I slowed everything right down and ended up having lots & lots of blocks on the screen at the same time. It looked way more impressive. And because you could see what was coming up, it was also a lot more engaging and very tricky! So it stayed this way.
+The game play in Fanny the Fantom was initially quite speedy with blocks racing across the screen. But you could only have one, maybe two, obstacles on screen at any given time for there wasn't enough react and jump time to have more. (Fanny has to land before he can jump again!) By accident, one day I slowed everything right down and ended up having lots & lots of blocks on the screen at the same time. It looked way more impressive. And because you could see what was coming up, it was also a lot more engaging and very tricky! So it stayed this way.
 
 We wanted a bonus scheme to break up the monotony of jump, squish, jump, squish, ... We toyed with the idea of different types of bonus cubes: extra lives, invincibility, points, ... and tried floating the cubes over at different speeds, moving them around the screen, etc. Given we expect very few people to actually complete the game, the main goal would be a hi-score, so we settled on a points only bonus. And fixing the bonus to a block seemed to add enough variety.
 
 An absolute must was the ability to persist hi-scores so we could at least compete against each other! A separate project exposes a REST API and persists scores to a MongoDB database.
 
-Fanny was always meant to be played in a browser, but I admit that (as I don't own a tablet or smart phone) touch devices were an after thought. As such Fanny is easier to play with a real keyboard. But hey, it's still playable, and Fanny is not a serious commercial game - it's a cheap'n'cheerful freebie!
+Fanny was always meant to be played in a browser, but I admit that (as I don't own a tablet or smart phone) touch devices were an after thought. As such Fanny is easier to play with a real keyboard. But hey, it's still playable on a phone, and let's face it - Fanny is not a serious commercial game; it's a cheap'n'cheerful freebie!
 
 
 
@@ -74,7 +75,7 @@ y3 :=  (x2 * sin(-az)) +(y2 * cos(-az))
 
 There is no z-buffering or complex concave hidden surface removal. All objects are convex square-ish shapes with special care taken over their rendering order.
 
-Fanny is cross platform. It runs as a desktop program (in Java) and in an internet browser (in Javascript). All development was done on the desktop because it's easier to run and debug. It then only took some 30 minutes to get it working in Javascript, and that includes writing the web server to serve it up! Thank you Fantom!
+Fanny is cross platform. It runs as a desktop program (in Java) and in an internet browser (in Javascript). All development was done on the desktop because it's easier to run and debug. It then only took some 30 minutes to get it working in Javascript, and that includes writing the web server to serve it up. Thank you Fantom!
 
 During development I was always concerned that it wouldn't run fast enough in a browser, but I actually find Fanny to run better / smoother in Javascript than what it does on the desktop!
 
@@ -86,46 +87,56 @@ All sounds effects and jingles are original and produced by a long standing best
 
 Geoff did the music for our [Amiga demos]`http://www.alienfactory.co.uk/equinox/` when we were in high school - you can sample some of his early tunes on the Equinox  [Slammer]`http://www.alienfactory.co.uk/equinox/slammer` page.
 
-Unsurprisingly, Geoff followed his passion and became a successful international music producer and DJ, mainly under the guise of [Modulate]`https://www.facebook.com/Modulate/`. See [Soundcloud]`https://soundcloud.com/modulate` for samples and remixes.
+Unsurprisingly, Geoff followed his passion and became a successful international music producer and DJ, mainly under the industrial rubric of [Modulate]`https://www.facebook.com/Modulate/` and the more techno inspired [QLERIK]`https://www.facebook.com/QLERIK/`. See [Soundcloud]`https://soundcloud.com/modulate` for samples and remixes.
 
-Geoff was naturally my first choice when it came to generating the audio side of Fanny and I was very happy when he graciously accepted!
+Geoff was naturally my first choice when it came to generating the audio side of Fanny, and after the sounds effects I was really looking forward to him producing the music too. But life happened and he became a single Dad of two wonderful twins who were (are!) far more deserving of his time, forcing me to look elsewhere.
 
-Note Geoff is also involved in a new techno inspired music project called QLERIK. See  [facebook]`https://www.facebook.com/QLERIK/` for details.
+
+
+Music
+=====
+Music is composed by the uber talented chiptune enthusiast, [Zerocakes]`https://www.fiverr.com/zerocakes` who really gave the title tune a *ghostly* feel and a cartoon overture.
+
+When it came to a tune for the main game, I was very concerned that any formal composition would soon become annoying and irritating to the player. So I thought about how the player may compose their own tune as the game progresses...
+
+I asked Zerocakes to loop the main bass line from the title tune and create a number of musical fill-ins and melodies to play over the top. These are then played, in time with the bass line, whenever you jump or duck over an obstacle, level up, or perform a tricky manoeuvre. Throw in a quick probability function to ensure more fill-ins are played the higher the level, and you have a coherent tune that never repeats and builds up musical layers the longer a game lasts.
+
+While plugging all this into the game tune, I was careful not to create a blatant cacophony of noise. Some may say I failed but I think it largely works!
 
 
 
 Cartoon Graphics
 ================
-The cartoon graphics, such as Fanny himself and the mainframe computer are drawn by [Anibal Ordaz]`https://www.fiverr.com/ajordaz`; a talented artist I found on *fiverr.com*.
+The cartoon graphics, such as the Fanny mascot himself, the background, and the mainframe computer are drawn by [Anibal Ordaz]`https://www.fiverr.com/ajordaz`; a talented vector artist in Venezuela.
 
-See the [Branding page]`http://fantom-lang.org/branding` on *fantom-lang.org* should wish to download / use Fanny in any of your work.
+See the [Branding page]`http://fantom-lang.org/branding` on *fantom-lang.org* for examples of other Fanny cartoons, all free to download and use in your own work.
 
 
 
 Training Levels
 ***************
-Start a game by pressing a number '0 -> 9' to activate *Training Mode!* Training mode starts the game at the specified level, and keeps the game at that level until you die.
+The later levels can be quite fun, but not everyone has the skills to easily reach them, so we introduced training levels whereby you can trial any difficultly level.
 
-Note that any hi-scores achieved in training mode are not saved.
+Training mode keeps the game at the same level until you die, but any score achieved is NOT saved to the Hi-Score board. So no cheating!
 
 
 
 Cheat Codes
 ***********
-Like any decent game, Fanny the Fantom has cheat codes!
+Like any decent retro game, Fanny the Fantom has cheat codes!
 
 Enter any of the following during play to activate:
 
  - 'game over' - displays end game sequence as if you completed level 10
  - 'invisible' - permanently activates *ghost* mode making you impervious to obstacles
- - 'god mode' - like *invisible* only with different colour scheme
+ - 'god mode' - like *invisible* only with a different colour scheme
  - 'rainbow' - multi-coloured blocks
 
-Note that any hi-scores achieved while cheating are not saved.
+Note that, similar to training mode, any score achieved while cheating is NOT saved to the Hi-Score board.
 
 
 
-Running Locally
+Play on Desktop
 ***************
 If you install 'afFannyTheFantom.pod' into your Fantom environment then you can launch the desktop version with the following command:
 

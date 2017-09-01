@@ -47,11 +47,10 @@ class AboutScreen : GameSeg {
 		                          Up  :  Jump 
 		                         Down : Squish
 		          
-		          Hold 'up' to jump higher. Can you must master 
-		          the Squish Jump to complete the game!? 
+		          Swipe or hold 'up' to jump higher.  
 		          
-		          Press numbers '0' to '9' to start game in  
-		          training mode. Training scores are not saved.
+		          Can you must master the Squish Jump to 
+		          complete the game!? 
 		         "
 		
 		
