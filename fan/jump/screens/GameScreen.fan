@@ -55,10 +55,10 @@ class GameScreen : GameSeg {
 		sounds.scanned.stop
 		sounds.startGame.play
 		
-		if (!sequencer.play) {
+		fannySequencer.stopTitleTune
+		if (!sequencer.play)
 			sequencer.onPlay
-			fannySequencer.playMainBass
-		}
+		fannySequencer.playMainBass
 		
 		return this
 	}

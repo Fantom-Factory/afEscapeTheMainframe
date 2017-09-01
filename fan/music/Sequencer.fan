@@ -164,9 +164,14 @@ class FannySequencer {
 		sequencer.playNow(titleTune)
 	}
 	
-	Void stopTitleTune() {
+	Void fadeTitleTune() {
 		sequencer.remove(titleTune)
 		sounds.titleTune.fadeOut(1.5sec)
+	}
+	
+	Void stopTitleTune() {
+		sounds.titleTune.stop
+		sequencer.remove(titleTune)
 	}
 	
 	Void playMainBass() {

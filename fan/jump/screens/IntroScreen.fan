@@ -21,7 +21,7 @@ class IntroScreen : GameSeg {
 	new make(|This| in) { in(this) }
 
 	override This onInit() {
-		fannySequencer.stopTitleTune
+		fannySequencer.fadeTitleTune
 		sounds.insertCoin.play
 		intoAnim = IntroAnim(images, sounds, sequencer, fannySequencer)
 		return this
