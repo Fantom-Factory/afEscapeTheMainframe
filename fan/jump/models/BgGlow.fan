@@ -65,7 +65,8 @@ class BgGlow {
 			h := 288
 			x := -bgHexX.toInt
 			g2d.g.copyImage(images.bgCircuit, Rect(x, 0, w-x, h), Rect(  0, -1, w-x, h))
-			g2d.g.copyImage(images.bgCircuit, Rect(0, 0,   x, h), Rect(w-x, -1,   x, h))
+			if (x > 0)	// bug fix for firefox
+				g2d.g.copyImage(images.bgCircuit, Rect(0, 0,   x, h), Rect(w-x, -1,   x, h))
 			
 			// we get a light blue line otherwise!
 			// and on desktop at least, we need that h-1...?
@@ -76,13 +77,15 @@ class BgGlow {
 			g2d.brush = Color.makeArgb(0xFF, cR, cG, cB)
 			g2d.fillRect(0, 0, g2d.bounds.w, 200)
 
-			y := ((bgHexY + 110) * 88 / 250).toInt / 4
+//			y := ((bgHexY + 110) * 88 / 250).toInt / 4
+			y := 0	// disable the bouncing background
 			
 			w := 768
 			h := 201
 			x := -bgHexX.toInt
 			g2d.g.copyImage(images.bgCircuit, Rect(x, y, w-x, h), Rect(  0, -1, w-x, h))
-			g2d.g.copyImage(images.bgCircuit, Rect(0, y,   x, h), Rect(w-x, -1,   x, h))
+			if (x > 0)	// bug fix for firefox
+				g2d.g.copyImage(images.bgCircuit, Rect(0, y,   x, h), Rect(w-x, -1,   x, h))
 			
 			g2d.drawImage(gameBg, 0, 200)			
 		}

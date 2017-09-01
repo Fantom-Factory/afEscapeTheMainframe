@@ -21,13 +21,13 @@ abstract class HiScoreOnline {
 
 	Void loadScores() {
 		if (app().offlineMode) {
-			log.info("Not downloading Hi-Scores - offline mode Activated")
+			log.debug("Not downloading Hi-Scores - offline mode Activated")
 			return
 		}
 		
 		if (lastSync != null && (Duration.now - lastSync) < 2min) {
 			lastSyncDur := Duration.now - lastSync
-			log.info("Not downloading Hi-Scores - last sync only ${lastSyncDur.toLocale} ago")
+			log.debug("Not downloading Hi-Scores - last sync only ${lastSyncDur.toLocale} ago")
 			return
 		}
 		
@@ -55,7 +55,7 @@ abstract class HiScoreOnline {
 		}
 		app.offline = false
 
-		log.info("Downloaded ${newScores.size} Hi-Scores from ${gameName}")
+		log.debug("Downloaded ${newScores.size} Hi-Scores from ${gameName}")
 		
 		if (hiScores.editing) {
 			log.warn("Ignoring server scores - User is entering a new Hi-Score")
@@ -175,7 +175,7 @@ class HiScoreOnlineJs : HiScoreOnline {
 				return log.err("Hi-Score Server Error - Status ${res.status}")
 			}
 			
-			log.info("Uploaded ${his} to ${gameName}")
+			log.info("Uploaded [${his}] to ${gameName}")
 			serverScores := JsonInStream(res.content.in).readJson
 			setScores(app(), hiScores(), serverScores)
 		}
