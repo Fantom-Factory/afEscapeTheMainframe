@@ -26,6 +26,7 @@ class GameScreen : GameSeg {
 				private GameHud			gameHud		:= GameHud()
 				private	GameData?		data
 				private Log 			log			:= typeof.pod.log
+				private Bool			initDrop
 
 	@Inject		private Sequencer		sequencer
 	@Inject		private FannySequencer	fannySequencer
@@ -41,6 +42,7 @@ class GameScreen : GameSeg {
 		bonusExplo.clear
 		fannyExplo = null
 		exitBlock = null
+		initDrop = true
 
 		if ((1..30).random == 2)
 			data.rainbowMode = true
@@ -110,6 +112,10 @@ class GameScreen : GameSeg {
 		}
 		fannySequencer.wannaPlay.clear
 
+		if (fanny.y <= -110f)
+			initDrop = false
+		if (initDrop.not)
+			bgGlow.bgHexY = fanny.y
 		draw(g2d, catchUp)
 	}
 	
@@ -318,8 +324,7 @@ class GameScreen : GameSeg {
 	Void anim() {
 		floor.anim
 		blcks.each { it.anim }
-		if (!data.dying)
-			fanny.anim
+		fanny.anim	// keep the anim to lower the background from a jump
 		fannyExplo?.anim
 		
 		fanny.ghost(data.isInvisible)
