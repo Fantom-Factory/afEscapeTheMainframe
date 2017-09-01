@@ -122,7 +122,7 @@ const class FannyMod : WebMod {
 			              }
 			              
 			              initHandlers(document.getElementById('fwtRoot'));")
-			out.scriptEnd		
+			out.scriptEnd
 		
 			// http://stackoverflow.com/questions/13200950/set-min-width-of-content-with-viewport-meta-tag#22768362
 			// 768 + 8px + 8px borders = 784
