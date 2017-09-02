@@ -172,5 +172,5 @@ const class FannyMod : WebMod {
     	File file := (`fan://afFannyTheFantom/res/web/${url}`).get
     	if (!file.exists) { res.sendErr(404); return }
     	FileWeblet(file).onService
-   	}
+   	}	
 }

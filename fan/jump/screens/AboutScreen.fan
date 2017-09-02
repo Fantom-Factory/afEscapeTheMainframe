@@ -44,10 +44,10 @@ class AboutScreen : GameSeg {
 
 		keys := " Touch swipe or use cursor keys to play:  
 		           
-		                          Up  :  Jump 
-		                         Down : Squish
+		                 Jump   : Up, W, Space 
+		                 Squish : Down, S
 		          
-		          Swipe or hold 'up' to jump higher.  
+		          Swipe or hold 'Up' to jump higher.  
 		          
 		          Can you must master the Squish Jump to 
 		          complete the game!? 
