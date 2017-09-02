@@ -10,7 +10,6 @@ class Build : BuildPod {
 
 		meta = [
 			"pod.dis"			: "Fanny the Fantom",
-			"pod.displayName"	: "Fanny the Fantom",
 			"repo.public"		: "true",
 		]
 
@@ -21,7 +20,6 @@ class Build : BuildPod {
 			"util         1.0.69 - 1.0",
 
 			// ---- Core ----
-			"afBeanUtils  1.0.8  - 1.0",
 			"afIoc        3.0.4  - 3.0",
 			
 			// ---- Online Hi-Scores ----
