@@ -1,7 +1,7 @@
 using afIoc
 using concurrent
 using dom
-using util
+using util::JsonInStream
 
 @Js
 abstract class HiScoreOnline {

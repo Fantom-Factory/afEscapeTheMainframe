@@ -30,9 +30,9 @@ fan.afFannyTheFantom.SoundClipJs.make = function(soundUri, soundClips) {
 
 	soundJs.m_soundClips = soundClips;
 
-	if (soundUri.scheme() != "fan")
-		throw fan.sys.ArgErr.make("Uri scheme must be 'fan': " + soundUri.toStr());
-	var soundUrl = fan.sys.UriPodBase + soundUri.host() + soundUri.pathStr();
+	var soundUrl = soundUri.encode();
+	if (soundUri.scheme() == "fan")
+		soundUrl = fan.sys.UriPodBase + soundUri.host() + soundUri.pathStr();
 	soundJs.m_url = soundUrl;
 
 	var context = fan.afFannyTheFantom.SoundClipJs.context;

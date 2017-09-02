@@ -83,7 +83,6 @@ class Screen : Canvas {
 	private Void mouseDown(Event e) {
 		if (e.pos != null)
 			if (e.pos.x < 28+2+2 && e.pos.y > FannyTheFantom.windowSize.h - 24 - 2 - 2) {
-				echo("sound")
 				sounds.mute = sounds.mute.not
 				return
 			}

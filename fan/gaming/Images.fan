@@ -1,4 +1,5 @@
-using gfx
+using gfx::Image
+using concurrent::Actor
 
 @Js
 class Images {
@@ -26,7 +27,8 @@ class Images {
 	protected Image load(Str imageName) {
 		images.getOrAdd(imageName) |->Image| {
 			log.debug("Loading Image $imageName")
-			return Image.make(`fan://${typeof.pod}/res/images/${imageName}`)
+			urlHook := (|Uri->Uri|?) Actor.locals["skySpark.urlHook"] ?: |Uri uri->Uri| { uri }
+			return Image.make(urlHook(`fan://${typeof.pod}/res/images/${imageName}`))
 		}
 	}
 }
