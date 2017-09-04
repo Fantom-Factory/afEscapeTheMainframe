@@ -17,9 +17,9 @@ Fanny the Fantom is a simple jump and duck game to test your reflexes, rendered 
 
 *Can you escape the Mainframe!?*
 
-Visit [http://fanny.fantomfactory.org/](http://fanny.fantomfactory.org/) to play Fanny the Fantom online in your browser!
+Visit [http://fanny.fantomfactory.org/](http://fanny.fantomfactory.org/) to play Fanny the Fantom online!
 
-Or [download](https://bitbucket.org/AlienFactory/affannythefantom/downloads) to play the desktop version.
+Or [download](https://bitbucket.org/AlienFactory/affannythefantom/downloads) the desktop version!
 
 ## Install
 

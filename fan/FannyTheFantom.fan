@@ -4,13 +4,12 @@ using afIoc
 
 @Js
 class FannyTheFantom {
-
 	static const Str 	windowTitle	:= "Fanny the Fantom :: Escape the Mainframe!"
 	static const Size 	windowSize 	:= Size(768, 288)
 
 	new make() { }
 	
-	Void main() {
+	Window main() {
 		// TODO specify offline mode
 		
 		doMain([AppModule#]) |win| {
@@ -19,11 +18,11 @@ class FannyTheFantom {
 			win.title = windowTitle
 			win.icon = Image(`fan://afFannyTheFantom/res/images/fanny-x32.png`)
 		}
-	}	
+	}
 	
-	Void doMain(Type[] modules, |Window, Scope|? onOpen := null) {
+	Window doMain(Type[] modules, |Window, Scope|? onOpen := null) {
 		frame := Frame(modules)
-		Window(null) {
+		win := Window(null) {
 			win := it
 			it.resizable = false
 			it.add(frame.widget)
@@ -34,11 +33,17 @@ class FannyTheFantom {
 					win.children.each |w| { w.repaint; w.focus }
 				}
 			}
-			it.onClose.add |->| { typeof.pod.log.info("Bye!") }
+			it.onClose.add |->| {
+				typeof.pod.log.info("Bye!")
+				if (Env.cur.runtime == "js")
+					frame.shutdown			
+			}
 			onOpen?.call(win, frame.scope)
-		}.open
+		}
+		win.open
 		
 		if (Env.cur.runtime != "js")
 			frame.shutdown
+		return win
 	}
 }

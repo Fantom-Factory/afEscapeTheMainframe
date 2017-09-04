@@ -8,6 +8,7 @@ class Frame {
 	@Inject	private		Screen		screen
 	@Inject	private		EventHub	eventHub
 	@Inject	private		Pulsar		pulsar
+	@Inject	private		FannySounds	sounds
 			private		Registry	registry
 			internal	Scope?		scope
 
@@ -35,7 +36,9 @@ class Frame {
 	}
 	
 	Void shutdown() {
-		pulsar.stop
+		sounds.stopAll
+		if (pulsar.isRunning)
+			pulsar.stop
 		eventHub.fireEvent(DemoEvents#onShutdown)
 		scope.destroy
 		registry.shutdown
