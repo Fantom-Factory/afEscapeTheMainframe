@@ -33,9 +33,16 @@ class FannySounds : SoundClips {
 	SoundClip	melody2()			{ load("music/melody2_22khz.wav")			{ it.volume = 0.50f } }
 
 	SoundClip load(Str name) {
-		name.startsWith("music") && !name.startsWith("music/titleTune") && Env.cur.runtime != "js"
-			? loadSoundClip(`fan://${typeof.pod}/res/${name[0..<-10]}.wav`)
-			: loadSoundClip(`fan://${typeof.pod}/res/${name}`)
+		url := `fan://${typeof.pod}/res/${name}`
+		
+		// my Win7 really struggles to play the 22 KHz samples, but is fine with 96 Khz!? 
+		if (name.startsWith("music") && !name.startsWith("music/titleTune") && Env.cur.runtime != "js") {
+			alt := `fan://${typeof.pod}/res/${name[0..<-10]}.wav`
+			if (alt.get(null, false) != null)
+				url = alt
+		}
+
+		return loadSoundClip(url)
 	}
 	
 	SoundClip[] preloadSounds() {
