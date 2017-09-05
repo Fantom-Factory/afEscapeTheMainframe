@@ -6,16 +6,22 @@ using wisp
 @NoDoc
 const class FannyMod : WebMod {
 
-	private const Str	windowTitle	:= FannyTheFantom.windowTitle
-	private const Size	windowSize	:= FannyTheFantom.windowSize
-	private const Str	windowDesc	:= "Fanny the Fantom :: A retro 3D vector jump game, written in Fantom, created by Alien-Factory"
+	private const Str	windowTitle	:= EscapeTheMainframe.windowTitle
+	private const Size	windowSize	:= EscapeTheMainframe.windowSize
+	private const Str	windowDesc	:= "Escape the Mainframe :: A retro 3D vector jump game, written in Fantom, created by Alien-Factory"
 	private const Pod[] pods
 	
 	new make() {
-		this.pods = "sys util concurrent gfx fwt web dom afBeanUtils afIoc afFannyTheFantom".split.map |podName| { Pod.find(podName) }
+		this.pods = "sys util concurrent gfx fwt web dom afBeanUtils afIoc afEscapeTheMainframe".split.map |podName| { Pod.find(podName) }
 	}
 
 	override Void onGet() {
+		echo(req.headers["Host"])
+		if (req.headers["Host"] == "fanny.fantomfactory.org") {
+			res.redirect(`http://escape.fantomfactory.org`, 302)
+			return
+		}
+		
 		name := req.modRel.path.first
 		if (name == null)
 			onIndex
@@ -45,11 +51,11 @@ const class FannyMod : WebMod {
 			out.tag("meta", "name='description'        content=\"${windowDesc}\"").nl
 			out.tag("meta", "property='og:type'        content='website'").nl
 			out.tag("meta", "property='og:title'       content='${windowTitle}'").nl
-			out.tag("meta", "property='og:url'         content='http://fanny.fantomfactory.org/'").nl
-			out.tag("meta", "property='og:image'       content='http://fanny.fantomfactory.org/pod/afFannyTheFantom/doc/ogimage.png'").nl
+			out.tag("meta", "property='og:url'         content='http://escape.fantomfactory.org/'").nl
+			out.tag("meta", "property='og:image'       content='http://escape.fantomfactory.org/pod/afEscapeTheMainframe/doc/ogimage.png'").nl
 			out.tag("meta", "property='og:description' content=\"${windowDesc}\"").nl
-			out.tag("link", "href='http://fanny.fantomfactory.org/' rel='canonical'").nl
-			out.tag("link", "href='/pod/afFannyTheFantom/res/web/fanny.css' type='text/css' rel='stylesheet'").nl
+			out.tag("link", "href='http://escape.fantomfactory.org/' rel='canonical'").nl
+			out.tag("link", "href='/pod/afEscapeTheMainframe/res/web/escape.css' type='text/css' rel='stylesheet'").nl
 		
 			pods.each |pod| { 
 				out.includeJs(`/pod/${pod.name}/${pod.name}.js`)				
@@ -57,7 +63,7 @@ const class FannyMod : WebMod {
 
 			// see http://fantom.org/forum/topic/2548
 			out.script.w("fan.sys.TimeZone.m_cur = fan.sys.TimeZone.fromStr('UTC');").scriptEnd
-			WebUtil.jsMain(out, FannyTheFantom#.qname, env)
+			WebUtil.jsMain(out, EscapeTheMainframe#.qname, env)
 		out.headEnd		
 		out.body
 
@@ -71,7 +77,7 @@ const class FannyMod : WebMod {
 		// FIXME Use up / down cursor keys or swipe to play
 				out.div("class='noTouch'").span.spanEnd.divEnd
 				out.div("class='twits'")
-					out.a(`https://twitter.com/intent/tweet`, "class='twitter-share-button' data-text='Fanny the Fantom; a jump game rendered in stunning retro 3D vector graphics, written in #FantomLang' data-url='http://fanny.fantomfactory.org/'").w("Tweet").aEnd
+					out.a(`https://twitter.com/intent/tweet`, "class='twitter-share-button' data-text='Escape the Mainframe; a jump game rendered in stunning retro 3D vector graphics, written in #FantomLang' data-url='http://escape.fantomfactory.org/'").w("Tweet").aEnd
 				out.divEnd
 				out.a(`http://fantom-lang.org/`, "class='fantomLink'").w("""<svg xmlns="http://www.w3.org/2000/svg" width="114" height="20"><linearGradient id="shield-b" x2="0" y2="100%"><stop offset="0" stop-color="#bbb" stop-opacity=".1"></stop><stop offset="1" stop-opacity=".1"></stop></linearGradient><mask id="shield-a"><rect width="114" height="20" rx="3" fill="#fff"></rect></mask><g mask="url(#shield-a)"><path fill="#555" d="M0 0h63v20H0z"></path><path fill="#9f9f9f" d="M63 0h51v20H63z"></path><path fill="url(#shield-b)" d="M0 0h114v20H0z"></path></g><g fill="#fff" text-anchor="middle" font-family="DejaVu Sans,Verdana,Geneva,sans-serif" font-size="11"><text x="31.5" y="15" fill="#010101" fill-opacity=".3">written in</text><text x="31.5" y="14">written in</text><text x="87.5" y="15" fill="#010101" fill-opacity=".3">Fantom</text><text x="87.5" y="14">Fantom</text></g></svg>""").aEnd
 				out.a(`http://www.alienfactory.co.uk/`, "class='alienLink'").img(`data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAKgAAAAQCAMAAAC1DMSeAAAA5FBMVEUAAAAg7iMVUxUg7iEe5SEbnhMUExMVuB8b7iMg3xsTExUTExcg7h4g6x4Tmx0c6yMfzhgUKhQUIBMXzCIUOBYe6yIZ2iIVrB4YbxMVsx8duxYYYBMWIBMa5iMX0iIg5h0dwRccsBUTixoTbBoTQxgexxcUTBYTIBUWQhMa6SMZ4SMWwB8fyxgYWRMXySAg6Bwf4hsThhsf2RoVZBgcuBcZixMUpB0VmBwg0xkVfxgdtBYZoRYcqBQb3yIWwiAWnh0g5RsZgxUWUBUWvCEZzSAYzR8TkBwf3xsTeBsblRMZth4ZdxMyvLh5AAAAAXRSTlMAQObYZgAAArtJREFUSMfVVVtb2kAQ3WloxCiEYIKCXJWbYpVbVUBU0Fbb/v//07MbBiZfRB74ePA86JJk55w5M7OrvhpuA6q01VZoHU+JcThXu0HrAtGv1Daol2gF60TtBsfGhh/bpJpDhCCxQL+tdoLWJWlUsexR15YJ3B+TQO2RUjNlcFCyfooQedg4zCoBv0SpRerNXwkKcdMjgYZSZ7mAgEQNewVVd1Z3qWLqcoo4c+5QospfWOorlabD4opsj/bzJFA4gp7vodAkYcFwLvHSVhIvy25KB8RIPZFAxrkmRqUNNoYubxpptU1LgZFZsHagofqB0Ow3AQ8fkfUQFzpIUtc7n3Lp33zlu5ruFO/OXUoNB2GApqP/3sFM/d+HC28TLM5eifbtPbqZhZ/dJammDe62vRxZE3YgjSdF9Y58/Q1CsxAKpbWF0PLSDlAXVFoOU4esgqstdcrcAgxOUidz7zGT9QdsdpOFDvUzCgJRKQdz8GAC0nhD6YdHlGmW9F5DNl0W6olA3eMSQ1kdIu0XbenBBXL4WOgZMlpVtQq2QZIjnOJZx0zOsvN/wxGd1wivizGh0WGCUFW/xG5bk3W41BkjVKIDjdqxjPlwjVBJhsgroVbfDKpux6usEoaOeVFDkqOI0OiEaKHKy2G/J/lBGVUDQxu2KegJHB2vcxTZRB0101VVjHOy/ikGjLzx2Npnz0VbbhCqWqY5PxPaMbVT/gUsLUPO2h7tZ6M9qm7NtLLQJPdG2JoF0ax5zN+Ehzw+TBDKStcLZUNDS+XUt4VQgMlGrwTJoS09l6iRjQt9D48rPk+f7WtxzsXPUQg1Sq/jQmOGsqXiHD20I0LlOdrk+ulp7XsxoXmyxqJdUyd8WQCN+M3EDeQ8kryZeoH4hUGHoRw+5YubqVKM3moLMitRgzKwmV1eGYaZ1dzFyfa18B9Iuz7W3SCF2QAAAABJRU5ErkJggg==`).aEnd
@@ -164,8 +170,9 @@ const class FannyMod : WebMod {
    	}
 
 	Void onFile(Str url) {
+		url = url.replace("fanny.css", "escape.css")	// beware the cache!
     	// serve up pod resources
-    	File file := (`fan://afFannyTheFantom/res/web/${url}`).get
+    	File file := (`fan://afEscapeTheMainframe/res/web/${url}`).get
     	if (!file.exists) { res.sendErr(404); return }
     	FileWeblet(file).onService
    	}	

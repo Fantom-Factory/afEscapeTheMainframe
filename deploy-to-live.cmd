@@ -1,2 +1,2 @@
 call setjava8
-fpm run afDeploy fanny
+fpm run afDeploy escape

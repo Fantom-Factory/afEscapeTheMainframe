@@ -1,32 +1,32 @@
 
-fan.afFannyTheFantom.SoundClipJs = fan.sys.Obj.$extend(fan.sys.Obj);
-fan.afFannyTheFantom.SoundClipJs.prototype.$ctor = function() {
-	if (!fan.afFannyTheFantom.SoundClipJs.context)
+fan.afEscapeTheMainframe.SoundClipJs = fan.sys.Obj.$extend(fan.sys.Obj);
+fan.afEscapeTheMainframe.SoundClipJs.prototype.$ctor = function() {
+	if (!fan.afEscapeTheMainframe.SoundClipJs.context)
 		try {
 			window.AudioContext = window.AudioContext || window.webkitAudioContext;
-			fan.afFannyTheFantom.SoundClipJs.context = new AudioContext();
-			var context = fan.afFannyTheFantom.SoundClipJs.context;
+			fan.afEscapeTheMainframe.SoundClipJs.context = new AudioContext();
+			var context = fan.afEscapeTheMainframe.SoundClipJs.context;
 			if (!context.createGain)
 				context.createGain = context.createGainNode;
 		} catch(e) {
 			// console.warn(e);
-			fan.afFannyTheFantom.SoundClipJs.context = null;
+			fan.afEscapeTheMainframe.SoundClipJs.context = null;
 			console.warn("No Audio Context === No Sound Effects ... :(");
 		}
 }
 
-fan.afFannyTheFantom.SoundClipJs.prototype.$typeof = function() {
-	return fan.afFannyTheFantom.SoundClipJs.$type;
+fan.afEscapeTheMainframe.SoundClipJs.prototype.$typeof = function() {
+	return fan.afEscapeTheMainframe.SoundClipJs.$type;
 }
 
-fan.afFannyTheFantom.SoundClipJs.prototype.m_url        = null;
-fan.afFannyTheFantom.SoundClipJs.prototype.m_soundClips = null;
-fan.afFannyTheFantom.SoundClipJs.prototype.m_buffer     = null;
-fan.afFannyTheFantom.SoundClipJs.prototype.m_source     = null;
-fan.afFannyTheFantom.SoundClipJs.prototype.m_gainNode   = null;
+fan.afEscapeTheMainframe.SoundClipJs.prototype.m_url        = null;
+fan.afEscapeTheMainframe.SoundClipJs.prototype.m_soundClips = null;
+fan.afEscapeTheMainframe.SoundClipJs.prototype.m_buffer     = null;
+fan.afEscapeTheMainframe.SoundClipJs.prototype.m_source     = null;
+fan.afEscapeTheMainframe.SoundClipJs.prototype.m_gainNode   = null;
 
-fan.afFannyTheFantom.SoundClipJs.make = function(soundUri, soundClips) {
-	var soundJs = new fan.afFannyTheFantom.SoundClipJs();
+fan.afEscapeTheMainframe.SoundClipJs.make = function(soundUri, soundClips) {
+	var soundJs = new fan.afEscapeTheMainframe.SoundClipJs();
 
 	soundJs.m_soundClips = soundClips;
 
@@ -35,7 +35,7 @@ fan.afFannyTheFantom.SoundClipJs.make = function(soundUri, soundClips) {
 		soundUrl = fan.sys.UriPodBase + soundUri.host() + soundUri.pathStr();
 	soundJs.m_url = soundUrl;
 
-	var context = fan.afFannyTheFantom.SoundClipJs.context;
+	var context = fan.afEscapeTheMainframe.SoundClipJs.context;
 	if (context == null)
 		return soundJs;
 
@@ -55,13 +55,13 @@ fan.afFannyTheFantom.SoundClipJs.make = function(soundUri, soundClips) {
 	return soundJs;
 }
 
-fan.afFannyTheFantom.SoundClipJs.prototype.loaded = function() {
+fan.afEscapeTheMainframe.SoundClipJs.prototype.loaded = function() {
 	// return 'true' if no sounds so the start screen thinks all the clips have loaded.
-	return this.m_buffer != null || fan.afFannyTheFantom.SoundClipJs.context == null;
+	return this.m_buffer != null || fan.afEscapeTheMainframe.SoundClipJs.context == null;
 }
 
-fan.afFannyTheFantom.SoundClipJs.prototype.volume = function() { return fan.sys.Float.make(this.m_gainNode.gain.value); }
-fan.afFannyTheFantom.SoundClipJs.prototype.volume$ = function(volume) {
+fan.afEscapeTheMainframe.SoundClipJs.prototype.volume = function() { return fan.sys.Float.make(this.m_gainNode.gain.value); }
+fan.afEscapeTheMainframe.SoundClipJs.prototype.volume$ = function(volume) {
 	var volVal = volume.valueOf();
 	if (volVal < 0 || volVal > 1)
 		throw fan.sys.ArgErr.make("Invalid volume: " + volVal);
@@ -70,10 +70,10 @@ fan.afFannyTheFantom.SoundClipJs.prototype.volume$ = function(volume) {
 		this.m_gainNode.gain.value = volVal;
 }
 
-fan.afFannyTheFantom.SoundClipJs.prototype.play = function() {
+fan.afEscapeTheMainframe.SoundClipJs.prototype.play = function() {
 	if (this.m_soundClips.mute() === true) return;
 
-	var context = fan.afFannyTheFantom.SoundClipJs.context;
+	var context = fan.afEscapeTheMainframe.SoundClipJs.context;
 	if (context == null)
 		return;
 	if (this.m_buffer == null)
@@ -90,17 +90,17 @@ fan.afFannyTheFantom.SoundClipJs.prototype.play = function() {
 	this.m_gainNode.gain.exponentialRampToValueAtTime(volume.valueOf(), curTime);
 }
 
-fan.afFannyTheFantom.SoundClipJs.prototype.stop = function() {
+fan.afEscapeTheMainframe.SoundClipJs.prototype.stop = function() {
 	if (this.m_source == null)
 		return;
 	this.m_source.stop();
 }
 
-fan.afFannyTheFantom.SoundClipJs.prototype.fadeOut = function(duration) {
+fan.afEscapeTheMainframe.SoundClipJs.prototype.fadeOut = function(duration) {
 	if (this.m_source == null)
 		return;
 	var volume  = this.volume();
-	var context = fan.afFannyTheFantom.SoundClipJs.context;
+	var context = fan.afEscapeTheMainframe.SoundClipJs.context;
 	var curTime = context.currentTime;
 	this.m_gainNode.gain.exponentialRampToValueAtTime(volume.valueOf(), curTime);
 	this.m_gainNode.gain.exponentialRampToValueAtTime(0.01, curTime + (duration.toMillis() / 1000));

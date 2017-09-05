@@ -2,7 +2,7 @@ using util
 using wisp
 
 **
-** Fanny the Fantom :: Escape the Mainframe!
+** Fanny the Fantom in Escape the Mainframe!
 ** 
 class Main : AbstractMain {
 	
@@ -16,7 +16,7 @@ class Main : AbstractMain {
 	override Int run() {
 		
 		if (!webServer) {
-			FannyTheFantom().main
+			EscapeTheMainframe().main
 			return 0
 		}
 
@@ -25,7 +25,7 @@ class Main : AbstractMain {
 				it.httpPort = this.port
 				it.root = FannyMod()
 			}
-			echo("Fanny the Fantom website now available on http://localhost:${this.port}/")
+			echo("Escape the Mainframe website now available on http://localhost:${this.port}/")
 			return runServices([wisp])			
 		}
 		

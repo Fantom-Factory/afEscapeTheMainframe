@@ -3,8 +3,8 @@ using gfx
 using afIoc
 
 @Js
-class FannyTheFantom {
-	static const Str 	windowTitle	:= "Fanny the Fantom :: Escape the Mainframe!"
+class EscapeTheMainframe {
+	static const Str 	windowTitle	:= "Escape the Mainframe!"
 	static const Size 	windowSize 	:= Size(768, 288)
 
 	new make() { }
@@ -16,7 +16,7 @@ class FannyTheFantom {
 			// see https://pacoup.com/2011/06/12/list-of-true-169-resolutions/
 			win.size = Runtime.isJs ? windowSize : Size(windowSize.w + 6, windowSize.h + 27)
 			win.title = windowTitle
-			win.icon = Image(`fan://afFannyTheFantom/res/images/fanny-x32.png`)
+			win.icon = Image(`fan://afEscapeTheMainframe/res/images/fanny-x32.png`)
 		}
 	}
 	
