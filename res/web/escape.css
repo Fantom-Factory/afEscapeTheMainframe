@@ -115,3 +115,7 @@ html, body {
   position: absolute;
   bottom: 10px;
   right: 10px; }
+
+#fwtRoot {
+  background-color: #00081A;
+}
