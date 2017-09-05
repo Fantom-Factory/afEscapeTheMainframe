@@ -16,9 +16,7 @@ const class FannyMod : WebMod {
 	}
 
 	override Void onGet() {
-		echo(req.headers)
-		
-		if (req.headers["Host"] == "fanny.fantomfactory.org") {
+		if (req.headers["X-Forwarded-Host"] == "fanny.fantomfactory.org") {
 			res.redirect(`http://escape.fantomfactory.org`, 302)
 			return
 		}
