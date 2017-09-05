@@ -92,7 +92,7 @@ class TitleScreen : GameSeg {
 				return app().showIntro(titleBg.fannyY)
 		}
 
-		if ((Duration.now - startedAt) > 31sec) {
+		if ((Duration.now - startedAt) > 41sec) {
 			return app().showCredits()
 		}
 		
