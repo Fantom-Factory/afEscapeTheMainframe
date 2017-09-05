@@ -35,5 +35,10 @@ class Build : BuildPod {
 		srcDirs = [`fan/`, `fan/gaming/`, `fan/infrastructure/`, `fan/jump/`, `fan/jump/models/`, `fan/jump/screens/`, `fan/music/`, `fan/sinedots/`, `fan/web/`, `test/`]
 		jsDirs	= [`js/`]
 		resDirs = [`doc/`, `res/`, `res/images/`, `res/sounds/`, `res/music/`, `res/web/`]
+		
+        docApi = false
+        docSrc = true
+        meta["afBuild.docApi"]  = "false"
+        meta["afBuild.docSrc"]  = "true"
 	}
 }
