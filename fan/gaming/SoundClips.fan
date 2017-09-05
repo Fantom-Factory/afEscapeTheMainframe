@@ -28,7 +28,7 @@ class SoundClips {
 	SoundClip loadSoundClip(Uri soundUrl) {
 		soundClips.getOrAdd(soundUrl.toStr) |->SoundClip| {
 			log.debug("Loading Sound ${soundUrl.name}")
-			urlHook := (|Uri->Uri|?) Actor.locals["afFannyTheFantom.urlHook"] ?: |Uri uri->Uri| { uri }
+			urlHook := (|Uri->Uri|?) Actor.locals["afEscapeTheMainframe.urlHook"] ?: |Uri uri->Uri| { uri }
 			return Env.cur.runtime == "js"
 				? typeof.pod.type("SoundClipJs"  ).make([urlHook(soundUrl), this])
 				: typeof.pod.type("SoundClipJava").make([urlHook(soundUrl), this])

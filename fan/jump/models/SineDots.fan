@@ -12,8 +12,8 @@ class SineDots {
 		imgW := 40
 		imgH := 40
 
-		xb	:= FannyTheFantom.windowSize.w / 4
-		yb	:= FannyTheFantom.windowSize.h / 2
+		xb	:= EscapeTheMainframe.windowSize.w / 4
+		yb	:= EscapeTheMainframe.windowSize.h / 2
 		
 		imgW.times |x| {
 			imgH.times |y| {

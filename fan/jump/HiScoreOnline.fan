@@ -70,7 +70,7 @@ abstract class HiScoreOnline {
 	abstract Void doSaveScore(Uri hiScoreUrl, HiScore his)
 	
 	Uri gameName() {
-		encodeUri("afFannyTheFantom")	// this is now fixed
+		encodeUri("afEscapeTheMainframe")	// this is now fixed
 	}
 	
 	private static const Int[] delims := ":/?#[]@\\".chars
@@ -100,7 +100,7 @@ class HiScoreOnlineJava : HiScoreOnline {
 		doStuff |->Obj?| {
 			wc := web::WebClient(hiScoreUrl) {
 				it.reqMethod = "GET"
-				it.reqHeaders["X-afFannyTheFantom.platform"] = "Desktop"
+				it.reqHeaders["X-afEscapeTheMainframe.platform"] = "Desktop"
 			}.writeReq.readRes
 			if (wc.resCode != 200)
 				throw IOErr("Hi-Score Server Error - Status ${wc.resCode}")
@@ -114,7 +114,7 @@ class HiScoreOnlineJava : HiScoreOnline {
 		doStuff |->Obj?| {
 			wc := web::WebClient(hiScoreUrl) {
 				it.reqMethod = "PUT"
-				it.reqHeaders["X-afFannyTheFantom.platform"] = "Desktop"
+				it.reqHeaders["X-afEscapeTheMainframe.platform"] = "Desktop"
 			}.writeReq.readRes
 			if (wc.resCode != 200 && wc.resCode != 201)
 				throw IOErr("Hi-Score Server Error - Status ${wc.resCode}")
@@ -153,7 +153,7 @@ class HiScoreOnlineJs : HiScoreOnline {
 	override Void doLoadScores(Uri hiScoreUrl) {
 		HttpReq {
 			it.uri = hiScoreUrl
-			it.headers["X-afFannyTheFantom.platform"] = "Web"
+			it.headers["X-afEscapeTheMainframe.platform"] = "Web"
 		}.get |res| {
 			if (res.status != 200) {
 				app().offline = true
@@ -168,7 +168,7 @@ class HiScoreOnlineJs : HiScoreOnline {
 	override Void doSaveScore(Uri hiScoreUrl, HiScore his) {
 		HttpReq {
 			it.uri = hiScoreUrl
-			it.headers["X-afFannyTheFantom.platform"] = "Web"
+			it.headers["X-afEscapeTheMainframe.platform"] = "Web"
 		}.send("PUT", null) |res| {
 			if (res.status != 200 && res.status != 201) {
 				app().offline = true

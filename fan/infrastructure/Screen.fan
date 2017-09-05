@@ -82,7 +82,7 @@ class Screen : Canvas {
 
 	private Void mouseDown(Event e) {
 		if (e.pos != null)
-			if (e.pos.x < 28+2+2 && e.pos.y > FannyTheFantom.windowSize.h - 24 - 2 - 2) {
+			if (e.pos.x < 28+2+2 && e.pos.y > EscapeTheMainframe.windowSize.h - 24 - 2 - 2) {
 				sounds.mute = sounds.mute.not
 				return
 			}
@@ -96,7 +96,7 @@ class Screen : Canvas {
 
 	private Void mouseUp(Event e) {
 		if (e.pos != null)
-			if (e.pos.x < 28+2+2 && e.pos.y > FannyTheFantom.windowSize.h - 24 - 2 - 2) {
+			if (e.pos.x < 28+2+2 && e.pos.y > EscapeTheMainframe.windowSize.h - 24 - 2 - 2) {
 				return
 			}
 	
@@ -113,8 +113,8 @@ class Screen : Canvas {
 		g2d := gfx(graphics) 
 
 		if (!Runtime.isJs) {
-			if (g2d.bounds.size != FannyTheFantom.windowSize) {				
-				windowSize := Size(window.size.w - g2d.bounds.w + FannyTheFantom.windowSize.w, window.size.h - g2d.bounds.h + FannyTheFantom.windowSize.h)
+			if (g2d.bounds.size != EscapeTheMainframe.windowSize) {				
+				windowSize := Size(window.size.w - g2d.bounds.w + EscapeTheMainframe.windowSize.w, window.size.h - g2d.bounds.h + EscapeTheMainframe.windowSize.h)
 				window.size = windowSize
 			}
 		}
@@ -123,7 +123,7 @@ class Screen : Canvas {
 			eventHub.fireEvent(DemoEvents#onDraw, [g2d, catchUp])
 			catchUp = 0
 			
-			g2d.offset(0, 0).drawImage(sounds.mute ? images.volumeOff : images.volumeOn, 2, FannyTheFantom.windowSize.h - 24 - 2)
+			g2d.offset(0, 0).drawImage(sounds.mute ? images.volumeOff : images.volumeOn, 2, EscapeTheMainframe.windowSize.h - 24 - 2)
 		}
 	}
 	Int col

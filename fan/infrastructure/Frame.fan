@@ -16,7 +16,7 @@ class Frame {
 		registry = RegistryBuilder() { suppressLogging=true }
 			.addModule(DemoModule#)
 			.addModules(modules)
-			.setOption("afIoc.bannerText", "Fanny the Fantom v${typeof.pod.version}")
+			.setOption("afIoc.bannerText", "Escape the Mainframe v${typeof.pod.version}")
 			.build
 		registry.rootScope.createChild("uiThread") { this.scope = it.jailBreak }
 

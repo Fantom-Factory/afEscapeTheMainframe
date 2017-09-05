@@ -25,10 +25,10 @@ class HiScoreScreen : GameSeg {
 		
 		pages = PagesScreen {
 			it.noOfPages = noOfPages
-			it.pageWidth = FannyTheFantom.windowSize.w / 2
+			it.pageWidth = EscapeTheMainframe.windowSize.w / 2
 		}
 
-		imgScores = Image.makePainted(Size(FannyTheFantom.windowSize.w * 10 / 2, 160+16)) |g| {
+		imgScores = Image.makePainted(Size(EscapeTheMainframe.windowSize.w * 10 / 2, 160+16)) |g| {
 			g2d := screen.gfx(g)
 			g2d.clear(Models.bgColour)
 			

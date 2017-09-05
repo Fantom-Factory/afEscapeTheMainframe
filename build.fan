@@ -4,12 +4,12 @@ using fanr
 class Build : BuildPod {
 
 	new make() {
-		podName = "afFannyTheFantom"
-		summary = "A jump game rendered in stunning retro 3D vector graphics - Escape the Mainframe!"
+		podName = "afEscapeTheMainframe"
+		summary = "A jump game rendered in stunning retro 3D vector graphics!"
 		version = Version("0.3.1.2")
 
 		meta = [
-			"pod.dis"			: "Fanny the Fantom",
+			"pod.dis"			: "Escape the Mainframe",
 			"repo.public"		: "true",
 		]
 

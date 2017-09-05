@@ -89,7 +89,7 @@ class OutroAnim {
 				it.endFrame		=  210
 				it.startX		=  250
 				it.startY		=  it.finalY
-				it.finalX		=  FannyTheFantom.windowSize.w
+				it.finalX		=  EscapeTheMainframe.windowSize.w
 				it.finalY		=    0
 				it.easeIn		= false
 			}

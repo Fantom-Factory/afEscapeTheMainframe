@@ -110,11 +110,11 @@ class CreditScroll {
 	
 	new make(Screen screen) {
 		
-		imgCredits = Image.makePainted(Size(FannyTheFantom.windowSize.w / 2, 1300 + FannyTheFantom.windowSize.h)) |g| {
+		imgCredits = Image.makePainted(Size(EscapeTheMainframe.windowSize.w / 2, 1300 + EscapeTheMainframe.windowSize.h)) |g| {
 			g2d := screen.gfx(g)
 			g2d.clear	//(Models.bgColour)
 			
-			y := FannyTheFantom.windowSize.h
+			y := EscapeTheMainframe.windowSize.h
 			y = drawCredits(g2d, y, "Alien-Factory", "Presents", true)
 			y-= spacing / 2
 //			y = drawCredits(g2d, y, "A Game written in", "The Fantom Language")
@@ -183,11 +183,11 @@ class CreditScroll {
 	Void draw(Gfx g2d, Int time, Int catchUp) {
 		if (time < startFrame)	return
 		
-		g2d.g.copyImage(imgCredits, Rect(0, startY.toInt, FannyTheFantom.windowSize.w / 2, FannyTheFantom.windowSize.h), Rect(FannyTheFantom.windowSize.w / 2, 0, FannyTheFantom.windowSize.w / 2, FannyTheFantom.windowSize.h))
+		g2d.g.copyImage(imgCredits, Rect(0, startY.toInt, EscapeTheMainframe.windowSize.w / 2, EscapeTheMainframe.windowSize.h), Rect(EscapeTheMainframe.windowSize.w / 2, 0, EscapeTheMainframe.windowSize.w / 2, EscapeTheMainframe.windowSize.h))
 		
 		startY += (0.6f * catchUp)
 		
-		if (startY.toInt >= (imgCredits.size.h - FannyTheFantom.windowSize.h))
+		if (startY.toInt >= (imgCredits.size.h - EscapeTheMainframe.windowSize.h))
 			finished = true
 	}
 }
@@ -203,7 +203,7 @@ class CreditTwean : Twean {
 	
 	new make(|This| f) : super(f) {
 		startX = -width
-		finalX = (FannyTheFantom.windowSize.w - width) * 2 / 5
+		finalX = (EscapeTheMainframe.windowSize.w - width) * 2 / 5
 		startY = finalY = 7 * 16
 		endFrame = startFrame + animSpeed
 	}
@@ -283,10 +283,10 @@ class CreditTwean : Twean {
 		else
 			startX += catchUp
 
-		if (easeIn && finalX > ((FannyTheFantom.windowSize.w * 4 / 5) - width)) {
+		if (easeIn && finalX > ((EscapeTheMainframe.windowSize.w * 4 / 5) - width)) {
 			easeIn = false
 			startX = finalX
-			finalX = FannyTheFantom.windowSize.w
+			finalX = EscapeTheMainframe.windowSize.w
 			
 			startFrame	= time
 			endFrame	= time + animSpeed
