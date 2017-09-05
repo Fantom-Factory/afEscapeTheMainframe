@@ -1,15 +1,11 @@
-#Fanny the Fantom v0.3.0.2
+#Escape the Mainframe v1.0.0
 ---
 
 [![Written in: Fantom](http://img.shields.io/badge/written%20in-Fantom-lightgray.svg)](http://fantom-lang.org/)
-[![pod: v0.3.0.2](http://img.shields.io/badge/pod-v0.3.0.2-yellow.svg)](http://www.fantomfactory.org/pods/afFannyTheFantom)
+[![pod: v1.0.0](http://img.shields.io/badge/pod-v1.0.0-yellow.svg)](http://www.fantomfactory.org/pods/afEscapeTheMainframe)
 ![Licence: ISC](http://img.shields.io/badge/licence-ISC-blue.svg)
 
 ## Overview
-
-Fanny the Fantom is a simple jump and duck game to test your reflexes, rendered in stunning retro 3D vector graphics. Written entirely in the Fantom programming language, Fanny the Fantom runs on both the desktop and in a browser!
-
-![Fanny the Fantom Screenshot](http://eggbox.fantomfactory.org/pods/afFannyTheFantom/doc/screenshot.png)
 
 *Fanny the Fantom has been captured by the evil Mainframe. Help Fanny escape dodgy programming by avoiding obstacles and collecting bonus cubes.*
 
@@ -17,33 +13,39 @@ Fanny the Fantom is a simple jump and duck game to test your reflexes, rendered 
 
 *Can you escape the Mainframe!?*
 
-Visit [http://fanny.fantomfactory.org/](http://fanny.fantomfactory.org/) to play Fanny the Fantom online!
+![Escape the Mainframe Screenshot](http://eggbox.fantomfactory.org/pods/afEscapeTheMainframe/doc/screenshot.png)
 
-Or [download](https://bitbucket.org/AlienFactory/affannythefantom/downloads) the desktop version!
+*Escape the Mainframe* is a simple jump and duck game to test your reflexes, rendered in stunning retro 3D vector graphics. Written entirely in the Fantom programming language, Escape the Mainframe runs on both the desktop and in a browser!
+
+Play online at [http://escape.fantomfactory.org/](http://escape.fantomfactory.org/) or download the [desktop version](https://bitbucket.org/AlienFactory/afescapethemainframe/downloads)!
 
 ## Install
 
-Install `Fanny the Fantom` with the Fantom Pod Manager ( [FPM](http://eggbox.fantomfactory.org/pods/afFpm) ):
+Install `Escape the Mainframe` with the Fantom Pod Manager ( [FPM](http://eggbox.fantomfactory.org/pods/afFpm) ):
 
-    C:\> fpm install afFannyTheFantom
+    C:\> fpm install afEscapeTheMainframe
 
-Or install `Fanny the Fantom` with [fanr](http://fantom.org/doc/docFanr/Tool.html#install):
+Or install `Escape the Mainframe` with [fanr](http://fantom.org/doc/docFanr/Tool.html#install):
 
-    C:\> fanr install -r http://eggbox.fantomfactory.org/fanr/ afFannyTheFantom
+    C:\> fanr install -r http://eggbox.fantomfactory.org/fanr/ afEscapeTheMainframe
 
 To use in a [Fantom](http://fantom-lang.org/) project, add a dependency to `build.fan`:
 
-    depends = ["sys 1.0", ..., "afFannyTheFantom 0.3"]
+    depends = ["sys 1.0", ..., "afEscapeTheMainframe 1.0"]
 
 ## Documentation
 
-Full API & fandocs are available on the [Eggbox](http://eggbox.fantomfactory.org/pods/afFannyTheFantom/) - the Fantom Pod Repository.
+Full API & fandocs are available on the [Eggbox](http://eggbox.fantomfactory.org/pods/afEscapeTheMainframe/) - the Fantom Pod Repository.
 
 ## About
 
-Fanny the Fantom is a little side project I wrote to help raise awareness of the [Fantom programming language](http://fantom-lang.org/).
+Escape the Mainframe is a little side project I wrote to raise awareness of the [Fantom programming language](http://fantom-lang.org/).
 
-Fantom is great for advanced server side development, and Fantom is awesome at creating web applications. But I wanted to show that Fantom is good for the fun things too!
+Fantom is great for advanced server side development, and Fantom rocks when it comes to web applications. But I wanted to show that Fantom is good for the fun things too!
+
+Fanny the Fantom is the mascot for Fantom and was named by Andy Frank, one of the creators of Fantom, in a [Forum post](http://fantom.org/forum/topic/2125#c1) back in 2013.
+
+Pictures of Fanny can be downloaded as hi-res images, and as web-friendly Scalable Vector Graphics (SVG), on the [Fantom-Lang Branding](http://fantom-lang.org/branding#more-fanny) page.
 
 ## Credits
 
@@ -55,13 +57,13 @@ Fantom is great for advanced server side development, and Fantom is awesome at c
 
 ### Game Design
 
-I've always wanted to do a simple game in Fantom, much like the interactive [Google Doodles](https://www.google.com/doodles) or the Chrome [offline T-Rex game](http://www.trex-game.skipser.com/). Only I'm no graphics artist. So I do what I usually do, and relied on my coding skills to create visual effects. I went back to some old 3D vector routines and turned them into a jump game.
+I've always wanted to do a simple game in Fantom, much like the interactive [Google Doodles](https://www.google.com/doodles) or the Chrome [offline T-Rex game](http://www.trex-game.skipser.com/). Only I'm no graphics artist. So I do what I usually do, and relied on coding skills to create visual effects. I went back to some old 3D vector routines and turned them into a jump game.
 
 My wife, Emma, helped enormously to guide the game's design and look & feel.
 
 We wanted to incorporate Fanny the Fantom as the main character so the game had tie-in with the language. The black / blue theme is supposed to be reminiscent of [fantomfactory.org](http://www.fantomfactory.org/), and also looked suspiciously like a retro [Tron](https://en.wikipedia.org/wiki/Tron). We kept the Tron theme and decided to copy the plot, as that would help explain the blocky vector graphics.
 
-The game play in Fanny the Fantom was initially quite speedy with blocks racing across the screen. But you could only have one, maybe two, obstacles on screen at any given time for there wasn't enough react and jump time to have more. (Fanny has to land before he can jump again!) By accident, one day I slowed everything right down and ended up having lots & lots of blocks on the screen at the same time. It looked way more impressive. And because you could see what was coming up, it was also a lot more engaging and very tricky! So it stayed this way.
+The game play in Escape the Mainframe was initially quite speedy with blocks racing across the screen. But you could only have one, maybe two, obstacles on screen at any given time - for there wasn't enough react and jump time to have more. (Fanny has to land before he can jump again!) By accident, one day I slowed everything right down and ended up having lots & lots of blocks on the screen at the same time. It looked way more impressive. And because you could see what was coming up, it was also a lot more engaging and very tricky! So it stayed this way.
 
 We wanted a bonus scheme to break up the monotony of jump, squish, jump, squish, ... We toyed with the idea of different types of bonus cubes: extra lives, invincibility, points, ... and tried floating the cubes over at different speeds, moving them around the screen, etc. Given we expect very few people to actually complete the game, the main goal would be a hi-score, so we settled on a points only bonus. And fixing the bonus to a block seemed to add enough variety.
 
@@ -71,7 +73,7 @@ Fanny was always meant to be played in a browser, but I admit that (as I don't o
 
 ### Coding
 
-Fanny the Fantom is coded by me, SlimerDude also known as Steve Eynon. *Hello!*
+Escape the Mainframe is coded by me, SlimerDude also known as Steve Eynon. *Hello!*
 
 The game is extremely low level and does not make use of any external libraries, be they OpenGL, graphics, sound, 3D or otherwise. In fact, the only non-core library used is my own [IoC](http://eggbox.fantomfactory.org/pods/afIoc).
 
@@ -92,13 +94,13 @@ There is no z-buffering or complex concave hidden surface removal. All objects a
 
 Fanny is cross platform. It runs as a desktop program (in Java) and in an internet browser (in Javascript). All development was done on the desktop because it's easier to run and debug. It then only took some 30 minutes to get it working in Javascript, and that includes writing the web server to serve it up. Thank you Fantom!
 
-During development I was always concerned that it wouldn't run fast enough in a browser, but I actually find Fanny to run better / smoother in Javascript than what it does on the desktop!
+During development I was always concerned that it wouldn't run fast enough in a browser, but I actually find Fanny to run faster and smoother in Javascript than what it does on the desktop!
 
 ### Sound Effects
 
 All sounds effects and jingles are original and produced by a long standing best mate, Geoff Lee.
 
-Geoff did the music for our [Amiga demos](http://www.alienfactory.co.uk/equinox/) when we were in high school - you can sample some of his early tunes on the Equinox  [Slammer](http://www.alienfactory.co.uk/equinox/slammer) page.
+Geoff did the music for our [Amiga demos](http://www.alienfactory.co.uk/equinox/) when we were in high school - you can sample some of his very early tunes on the Equinox  [Slammer](http://www.alienfactory.co.uk/equinox/slammer) page.
 
 Unsurprisingly, Geoff followed his passion and became a successful international music producer and DJ, mainly under the industrial rubric of [Modulate](https://www.facebook.com/Modulate/) and the more techno inspired [QLERIK](https://www.facebook.com/QLERIK/). See [Soundcloud](https://soundcloud.com/modulate) for samples and remixes.
 
@@ -128,7 +130,7 @@ Training mode keeps the game at the same level until you die, but any score achi
 
 ## Cheat Codes
 
-Like any decent retro game, Fanny the Fantom has cheat codes!
+Like any decent retro game, Escape the Mainframe has cheat codes!
 
 Enter any of the following during play to activate:
 
@@ -141,13 +143,13 @@ Note that, similar to training mode, any score achieved while cheating is NOT sa
 
 ## Play on Desktop
 
-If you install `afFannyTheFantom.pod` into your Fantom environment then you can launch the desktop version with the following command:
+If you install `afEscapeTheMainframe.pod` into your Fantom environment then you can launch the desktop version with the following command:
 
-    C:\> fan afFannyTheFantom
+    C:\> fan afEscapeTheMainframe
 
 Or you may start a local web server with:
 
-    C:\> fan afFannyTheFantom -webServer
+    C:\> fan afEscapeTheMainframe -webServer
 
-Fanny the Fantom may then be played locally in a browser by visiting [http://localhost:8069/](http://localhost:8069/).
+Escape the Mainframe may then be played locally in a browser by visiting [http://localhost:8069/](http://localhost:8069/).
 
