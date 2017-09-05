@@ -5,7 +5,7 @@
 <stringAttribute key="mainScript" value=""/>
 <stringAttribute key="nature" value="com.xored.fanide.core.nature"/>
 <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_PATHS">
-<listEntry value="/Fanny the Fantom"/>
+<listEntry value="/Escape The Mainframe"/>
 </listAttribute>
 <listAttribute key="org.eclipse.debug.core.MAPPED_RESOURCE_TYPES">
 <listEntry value="4"/>
@@ -14,5 +14,6 @@
 <listEntry value="org.eclipse.debug.ui.launchGroup.debug"/>
 <listEntry value="org.eclipse.debug.ui.launchGroup.run"/>
 </listAttribute>
-<stringAttribute key="project" value="Fanny the Fantom"/>
+<stringAttribute key="project" value="Escape The Mainframe"/>
+<stringAttribute key="scriptArguments" value="-web -port 8069"/>
 </launchConfiguration>

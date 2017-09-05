@@ -38,7 +38,7 @@ class LoadingScreen : GameSeg {
 		
 		drawFont8Centred (g2d, "Alien-Factory",	(16 *  3))
 		drawFont8Centred (g2d, "presents",		(16 *  3)+10)
-		drawFont16Centred(g2d, "  \"F A N N Y   the   F A N T O M\"",	(16 *  7))
+		drawFont16Centred(g2d, "\"E S C A P E   the   M A I N F R A M E\"",	(16 *  7))
 		
 		if (percentImages < 100)
 			drawFont8Centred(g2d, "loading images - ${percentImages.toStr.justr(3)}%", (16 * 12))
