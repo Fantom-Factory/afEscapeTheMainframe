@@ -16,7 +16,8 @@ const class FannyMod : WebMod {
 	}
 
 	override Void onGet() {
-		echo(req.headers["Host"])
+		echo(req.headers)
+		
 		if (req.headers["Host"] == "fanny.fantomfactory.org") {
 			res.redirect(`http://escape.fantomfactory.org`, 302)
 			return
@@ -163,7 +164,7 @@ const class FannyMod : WebMod {
 
    	** Serve up pod resources.
 	Void onPodFile() {
-		path := req.uri[1..-1]
+		path := req.uri[1..-1].encode.replace("afFannyTheFantom", "afEscapeTheMainframe")
     	File file := `fan://${path}`.get
     	if (!file.exists) { res.sendErr(404); return }
     	FileWeblet(file).onService
