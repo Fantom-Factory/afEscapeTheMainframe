@@ -144,9 +144,6 @@ class Funcs {
 			// give clearance for the next high jump
 			if (distance < (500f + (data.level * 2)))
 				allowedLevels = allowedLevels.exclude(bigBlocksAndjumpBlocks)
-			
-			
-			
 		}
 		
 		key	:= allowedLevels.random
