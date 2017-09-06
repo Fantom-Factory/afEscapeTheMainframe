@@ -151,9 +151,12 @@ class HiScoreOnlineJs : HiScoreOnline {
 	new make(|This| f) : super.make(f) { }
 
 	override Void doLoadScores(Uri hiScoreUrl) {
+		platform := Actor.locals["afEscapeTheMainframe.platform"] ?: "Web"
+		echo("Platform = $platform")
+		echo(Actor.locals)
 		HttpReq {
 			it.uri = hiScoreUrl
-			it.headers["X-afEscapeTheMainframe.platform"] = "Web"
+			it.headers["X-afEscapeTheMainframe.platform"] = platform
 		}.get |res| {
 			if (res.status != 200) {
 				app().offline = true
@@ -166,9 +169,10 @@ class HiScoreOnlineJs : HiScoreOnline {
 	}
 
 	override Void doSaveScore(Uri hiScoreUrl, HiScore his) {
+		platform := Actor.locals["afEscapeTheMainframe.platform"] ?: "Web"
 		HttpReq {
 			it.uri = hiScoreUrl
-			it.headers["X-afEscapeTheMainframe.platform"] = "Web"
+			it.headers["X-afEscapeTheMainframe.platform"] = platform
 		}.send("PUT", null) |res| {
 			if (res.status != 200 && res.status != 201) {
 				app().offline = true

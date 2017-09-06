@@ -39,7 +39,7 @@ Full API & fandocs are available on the [Eggbox](http://eggbox.fantomfactory.org
 
 ## About
 
-Escape the Mainframe is a little side project I wrote to raise awareness of the [Fantom programming language](http://fantom-lang.org/).
+Escape the Mainframe is a little program I wrote to raise awareness of the [Fantom programming language](http://fantom-lang.org/).
 
 Fantom is great for advanced server side development, and Fantom rocks when it comes to web applications. But I wanted to show that Fantom is good for the fun things too!
 
