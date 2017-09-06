@@ -8,7 +8,7 @@ const class FannyMod : WebMod {
 
 	private const Str	windowTitle	:= EscapeTheMainframe.windowTitle
 	private const Size	windowSize	:= EscapeTheMainframe.windowSize
-	private const Str	windowDesc	:= "Escape the Mainframe :: A retro 3D vector jump game, written in Fantom, created by Alien-Factory"
+	private const Str	windowDesc	:= "A tense jump and duck game to test your reflexes, rendered in stunning retro 3D vector graphics; written in Fantom, created by Alien-Factory"
 	private const Pod[] pods
 	
 	new make() {
