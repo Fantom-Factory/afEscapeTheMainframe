@@ -9,8 +9,9 @@ class Build : BuildPod {
 		version = Version("1.0.0")
 
 		meta = [
-			"pod.dis"			: "Escape the Mainframe",
-			"repo.public"		: "true",
+			"pod.dis"		: "Escape the Mainframe",
+			"repo.tags"		: "app, game",
+			"repo.public"	: "true",
 		]
 
 		depends = [	
