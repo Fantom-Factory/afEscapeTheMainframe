@@ -46,16 +46,18 @@ const class FannyMod : WebMod {
 			out.title.w(windowTitle).titleEnd
 			out.tag("meta", "charset='utf-8'").nl
 			out.tag("meta", "http-equiv='X-UA-Compatible' content='IE=edge'").nl
-			out.tag("meta", "name='viewport'           content='width=device-width, initial-scale=1' id='myViewport'")
-			out.tag("meta", "name='description'        content=\"${windowDesc}\"").nl
-			out.tag("meta", "property='og:type'        content='website'").nl
-			out.tag("meta", "property='og:title'       content='${windowTitle}'").nl
-			out.tag("meta", "property='og:url'         content='http://escape.fantomfactory.org/'").nl
-			out.tag("meta", "property='og:image'       content='http://escape.fantomfactory.org/pod/afEscapeTheMainframe/doc/ogimage.png'").nl
-			out.tag("meta", "property='og:description' content=\"${windowDesc}\"").nl
+			out.tag("meta", "name='viewport'            content='width=device-width, initial-scale=1' id='myViewport'")
+			out.tag("meta", "name='description'         content=\"${windowDesc}\"").nl
+			out.tag("meta", "property='og:type'         content='website'").nl
+			out.tag("meta", "property='og:title'        content='${windowTitle}'").nl
+			out.tag("meta", "property='og:url'          content='http://escape.fantomfactory.org/'").nl
+			out.tag("meta", "property='og:image'        content='http://escape.fantomfactory.org/pod/afEscapeTheMainframe/doc/ogimage.png'").nl
+			out.tag("meta", "property='og:image:width'  content='1200'").nl
+			out.tag("meta", "property='og:image:height' content='900'").nl		
+			out.tag("meta", "property='og:description'  content=\"${windowDesc}\"").nl
 			out.tag("link", "href='http://escape.fantomfactory.org/' rel='canonical'").nl
 			out.tag("link", "href='/pod/afEscapeTheMainframe/res/web/escape.css' type='text/css' rel='stylesheet'").nl
-		
+
 			pods.each |pod| { 
 				out.includeJs(`/pod/${pod.name}/${pod.name}.js`)				
 			}
