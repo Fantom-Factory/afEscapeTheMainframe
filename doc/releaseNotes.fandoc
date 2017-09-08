@@ -1,3 +1,6 @@
+v1.0.2
+======
+ - Bug: Pressing jump / crouch after you died would still play sound effects. Thanks goto [SamWalton9]`https://www.reddit.com/r/playmygame/comments/6ytu1u/escape_the_mainframe_an_online_retro_3d_jump_game/` for reporting.
 
 v1.0.0
 ======
