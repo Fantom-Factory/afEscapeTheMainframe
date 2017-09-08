@@ -83,7 +83,7 @@ class Fanny : Model {
 	Void squish(Bool squish) {
 		squished = squish
 		
-		if (squished && !squishedOld) {
+		if (squished && !squishedOld && !data.dying) {
 			sounds.squish.play
 		}
 		
@@ -119,7 +119,7 @@ class Fanny : Model {
 	
 	override Void anim() {
 		
-		if (syOld == 0f && sy > 0f) {
+		if (syOld == 0f && sy > 0f && !data.dying) {
 			if (squished)
 				sounds.squishJump.play
 			else

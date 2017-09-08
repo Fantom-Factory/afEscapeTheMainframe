@@ -324,7 +324,7 @@ class GameScreen : GameSeg {
 	Void anim() {
 		floor.anim
 		blcks.each { it.anim }
-		fanny.anim	// keep the anim to lower the background from a jump
+		fanny.anim	// keep the anim even if dead to lower the background from a jump
 		fannyExplo?.anim
 		
 		fanny.ghost(data.isInvisible)
