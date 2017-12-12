@@ -12,7 +12,7 @@ const class FannyMod : WebMod {
 	private const Pod[] pods
 	
 	new make() {
-		this.pods = "sys util concurrent gfx fwt web dom afBeanUtils afIoc afEscapeTheMainframe".split.map |podName| { Pod.find(podName) }
+		this.pods = "sys util concurrent gfx graphics fwt web dom afBeanUtils afIoc afEscapeTheMainframe".split.map |podName| { Pod.find(podName) }
 	}
 
 	override Void onGet() {

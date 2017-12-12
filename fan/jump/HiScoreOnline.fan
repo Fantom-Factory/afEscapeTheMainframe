@@ -153,7 +153,6 @@ class HiScoreOnlineJs : HiScoreOnline {
 	override Void doLoadScores(Uri hiScoreUrl) {
 		platform := Actor.locals["afEscapeTheMainframe.platform"] ?: "Web"
 		echo("Platform = $platform")
-		echo(Actor.locals)
 		HttpReq {
 			it.uri = hiScoreUrl
 			it.headers["X-afEscapeTheMainframe.platform"] = platform

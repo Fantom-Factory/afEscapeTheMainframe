@@ -15,22 +15,22 @@ class Build : BuildPod {
 		]
 
 		depends = [	
-			"sys          1.0.69 - 1.0", 
-			"gfx          1.0.69 - 1.0",
-			"fwt          1.0.69 - 1.0",
-			"util         1.0.69 - 1.0",
+			"sys          1.0.70 - 1.0", 
+			"gfx          1.0.70 - 1.0",
+			"fwt          1.0.70 - 1.0",
+			"util         1.0.70 - 1.0",
 
 			// ---- Core ----
 			"afIoc        3.0.4  - 3.0",
 			
 			// ---- Online Hi-Scores ----
-			"concurrent   1.0.69 - 1.0",
-			"dom          1.0.69 - 1.0",
+			"concurrent   1.0.70 - 1.0",
+			"dom          1.0.70 - 1.0",
 			
 			// ---- Web Server ----
-			"wisp         1.0.69 - 1.0",
-			"web          1.0.69 - 1.0",
-			"webmod       1.0.69 - 1.0",
+			"wisp         1.0.70 - 1.0",
+			"web          1.0.70 - 1.0",
+			"webmod       1.0.70 - 1.0",
 		]
 
 		srcDirs = [`fan/`, `fan/gaming/`, `fan/infrastructure/`, `fan/jump/`, `fan/jump/models/`, `fan/jump/screens/`, `fan/music/`, `fan/sinedots/`, `fan/web/`, `test/`]
