@@ -24,7 +24,6 @@ class Main {
 
 			`res/music-desktop/`.toFile.listFiles.each {
 				url:= `/res/music/`.plusName(it.name)
-				echo(url)
 				data := it.readAllBuf.seek(0)
 				out := zout.writeNext(url)
 				out.writeBuf(data)

@@ -97,10 +97,10 @@ const class Point3d {
 	** Returns the unit vector. A unit vector has the same direction, but a magnitude of 1.
 	Point3d normalise() {
 		s := scalar
-		if (scalar == Float.nan || scalar.toStr == "NaN" || scalar.approx(0f)) {
-			echo("scaler+$s")
-			echo(" + $this")
-		}
+//		if (scalar == Float.nan || scalar.toStr == "NaN" || scalar.approx(0f)) {
+//			echo("scaler+$s")
+//			echo(" + $this")
+//		}
 		return Point3d(x / s, y / s, z / s)
 	}
 	
