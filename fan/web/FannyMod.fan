@@ -163,7 +163,7 @@ const class FannyMod : WebMod {
 
    	** Serve up pod resources.
 	Void onPodFile() {
-		path := req.uri[1..-1].encode.replace("afFannyTheFantom", "afEscapeTheMainframe")
+		path := req.uri[1..-1].encode
     	File file := `fan://${path}`.get
     	if (!file.exists) { res.sendErr(404); return }
     	FileWeblet(file).onService
